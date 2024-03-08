@@ -2,61 +2,52 @@
 
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/ui/icons";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { buttonVariants } from "./ui/button";
 import ThemeToggle from "./theme-toggle";
+import AvatarMenu from "./avatar-menu";
 
 export default function NavBar() {
-  const pathname: string = "/docs/components";
-
   return (
     <>
       <div className="container flex h-14 items-center">
         <div className="mr-4 hidden md:flex">
-          <Link className="mr-6 flex items-center space-x-2" to={"/"}>
-            <Icons.logo className="h-6 w-6" />
-            <span className="hidden font-bold sm:inline-block">
-              {/* {siteConfig.name} */}
+          <NavLink className="mr-8 flex items-center space-x-2" to={"/"}>
+            <Icons.logo />
+            <span className="hidden font-bold text-2xl sm:inline-block">
               RDAS Analytics
             </span>
-          </Link>
+          </NavLink>
           <nav className="flex items-center space-x-6 text-sm font-medium">
-            <Link
-              className={cn(
-                "transition-colors hover:text-foreground/80",
-                pathname === "/docs" ? "text-foreground" : "text-foreground/60"
-              )}
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "text-foreground" : "text-foreground/50"
+              }
               to={"/"}
             >
               Home
-            </Link>
-            <Link
-              className={cn(
-                "transition-colors hover:text-foreground/80",
-                pathname?.startsWith("/docs/components")
-                  ? "text-foreground"
-                  : "text-foreground/60"
-              )}
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "text-foreground" : "text-foreground/50"
+              }
               to={"/"}
             >
-              About
-            </Link>
-            <Link
-              className={cn(
-                "transition-colors hover:text-foreground/80",
-                pathname?.startsWith("/themes")
-                  ? "text-foreground"
-                  : "text-foreground/60"
-              )}
-              to={"/about"}
+              Dashboard
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "text-foreground" : "text-foreground/50"
+              }
+              to={"/login"}
             >
               Login
-            </Link>
+            </NavLink>
           </nav>
         </div>
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-          <nav className="flex items-center">
-            <Link target="_blank" rel="noreferrer" to={"/"}>
+          <nav className="flex items-center gap-2">
+            <NavLink target="_blank" rel="noreferrer" to={"/"}>
               <div
                 className={cn(
                   buttonVariants({
@@ -68,26 +59,9 @@ export default function NavBar() {
                 <Icons.gitHub className="h-4 w-4" />
                 <span className="sr-only">GitHub</span>
               </div>
-            </Link>
-            <Link
-              //   href={siteConfig.links.twitter}
-              target="_blank"
-              rel="noreferrer"
-              to={"/"}
-            >
-              <div
-                className={cn(
-                  buttonVariants({
-                    variant: "ghost",
-                  }),
-                  "w-9 px-0"
-                )}
-              >
-                <Icons.twitter className="h-3 w-3 fill-current" />
-                <span className="sr-only">Twitter</span>
-              </div>
-            </Link>
+            </NavLink>
             <ThemeToggle />
+            <AvatarMenu />
           </nav>
         </div>
       </div>

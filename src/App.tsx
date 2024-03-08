@@ -1,23 +1,40 @@
-import { NavLink, Outlet } from "react-router-dom";
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
+import Home from "./pages/home";
+import NotFoundPage from "./components/404-page";
+import { Content } from "@radix-ui/react-dropdown-menu";
+import Login from "./pages/login";
+import { ThemeProvider } from "./components/theme-provider";
 function App() {
-  const array: any = [1, 2, 3, 4, 5];
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Home />,
+      errorElement: <NotFoundPage />,
+      children: [
+        {
+          path: "/:contentId",
+          element: <Content />,
+        },
+      ],
+    },
+    {
+      path: "/home",
+      element: <Navigate to="/" />,
+    },
+    {
+      path: "/login",
+      element: <Login />,
+    },
+  ]);
+
   return (
-    <div className="flex flex-col gap-3">
-      {array.map((element: any) => {
-        return (
-          <NavLink
-            className={({ isActive }) => {
-              return isActive ? "text-primary-700" : "";
-            }}
-            key={element}
-            to={`/content/${element}`}
-          >
-            Content {element}
-          </NavLink>
-        );
-      })}
-      <Outlet />
-    </div>
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+      <RouterProvider router={router} />
+    </ThemeProvider>
   );
 }
 
