@@ -1,26 +1,21 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "./ui/collapsible";
+import { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 // import { Playlist } from "../data/playlists"
 
-export type Playlist = (typeof playlists)[number];
-
-export const playlists = [
-  "Recently Added",
-  "Recently Played",
-  "Top Songs",
-  "Top Albums",
-  "Top Artists",
-  "Logic Discography",
-  "Bedtime Beats",
-  "Feeling Happy",
-  "I miss Y2K Pop",
-  "Runtober",
-  "Mellow Days",
-  "Eminem Essentials",
-];
-
 export function Sidebar() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div className={cn("pb-12")}>
       <div className="space-y-4 py-4">
@@ -29,9 +24,17 @@ export function Sidebar() {
             Climate
           </h2>
           <div className="space-y-1">
-            <Button variant="secondary" className="w-full justify-start">
+            <Button
+              variant={
+                location.pathname === "/dashboard/elnino"
+                  ? "secondary"
+                  : "ghost"
+              }
+              onClick={() => navigate("/dashboard/elnino")}
+              className="w-full justify-start"
+            >
               <svg
-                className="w-6 h-6 mr-2 text-gray-800 dark:text-white"
+                className="w-5 h-5 mr-2 text-gray-800 dark:text-white"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
@@ -43,8 +46,49 @@ export function Sidebar() {
                   clip-rule="evenodd"
                 />
               </svg>
-              El Nino
+              Climate Behaviors
             </Button>
+            <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+              <CollapsibleTrigger className="w-full">
+                <Button variant="ghost" className="w-full justify-between">
+                  <div className="flex items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-5 h-5 mr-2"
+                    >
+                      <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9" />
+                      <path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5" />
+                      <circle cx="12" cy="12" r="2" />
+                      <path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5" />
+                      <path d="M19.1 4.9C23 8.8 23 15.1 19.1 19" />
+                    </svg>
+                    Climate and Crops
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="w-9 p-0 flex just"
+                  >
+                    {isOpen ? <ChevronUp /> : <ChevronDown />}
+                    <span className="sr-only">Toggle</span>
+                  </Button>
+                </Button>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <Button variant="ghost" className="pl-10 w-full justify-start">
+                  Climate variability and crops
+                </Button>
+                <Button variant="ghost" className="pl-10 w-full justify-start">
+                  ENSO and crops
+                </Button>
+              </CollapsibleContent>
+            </Collapsible>
             <Button variant="ghost" className="w-full justify-start">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -54,25 +98,7 @@ export function Sidebar() {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="mr-2 h-4 w-4"
-              >
-                <rect width="7" height="7" x="3" y="3" rx="1" />
-                <rect width="7" height="7" x="14" y="3" rx="1" />
-                <rect width="7" height="7" x="14" y="14" rx="1" />
-                <rect width="7" height="7" x="3" y="14" rx="1" />
-              </svg>
-              MJO
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="mr-2 h-4 w-4"
+                className="w-5 h-5 mr-2"
               >
                 <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9" />
                 <path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5" />
@@ -80,7 +106,26 @@ export function Sidebar() {
                 <path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5" />
                 <path d="M19.1 4.9C23 8.8 23 15.1 19.1 19" />
               </svg>
-              IOD
+              Climate and Livestock
+            </Button>
+            <Button variant="ghost" className="w-full justify-start">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-5 h-5 mr-2"
+              >
+                <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9" />
+                <path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5" />
+                <circle cx="12" cy="12" r="2" />
+                <path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5" />
+                <path d="M19.1 4.9C23 8.8 23 15.1 19.1 19" />
+              </svg>
+              Climate and Water
             </Button>
           </div>
         </div>
@@ -91,54 +136,46 @@ export function Sidebar() {
           <div className="space-y-1">
             <Button variant="ghost" className="w-full justify-start">
               <svg
+                className="w-5 h-5 mr-2 text-gray-800 dark:text-white"
+                aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
                 fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="mr-2 h-4 w-4"
+                viewBox="0 0 24 24"
               >
-                <path d="M21 15V6" />
-                <path d="M18.5 18a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
-                <path d="M12 12H3" />
-                <path d="M16 6H3" />
-                <path d="M12 18H3" />
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M10 3v4c0 .6-.4 1-1 1H5m4 10v-2m3 2v-6m3 6v-3m4-11v16c0 .6-.4 1-1 1H6a1 1 0 0 1-1-1V8c0-.4.1-.6.3-.8l4-4 .6-.2H18c.6 0 1 .4 1 1Z"
+                />
               </svg>
-              Playlists
+              Crops
             </Button>
             <Button variant="ghost" className="w-full justify-start">
               <svg
+                className="w-5 h-5 mr-2 text-gray-800 dark:text-white"
+                aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
                 fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="mr-2 h-4 w-4"
-              >
-                <circle cx="8" cy="18" r="4" />
-                <path d="M12 18V2l7 4" />
-              </svg>
-              Songs
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="mr-2 h-4 w-4"
               >
-                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M10 6a7.5 7.5 0 1 0 8 8h-8V6Z"
+                />
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M13.5 3H13v8h8v-.5A7.5 7.5 0 0 0 13.5 3Z"
+                />
               </svg>
-              Made for You
+              Livestock
             </Button>
           </div>
         </div>
