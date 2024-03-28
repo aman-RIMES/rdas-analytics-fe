@@ -8,18 +8,13 @@ import NotFoundPage from "./components/404-page";
 import Login from "./pages/login";
 import { ThemeProvider } from "./components/theme-provider";
 import ElNino from "./components/el-nino";
+import Content from "./components/content";
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Home />,
       errorElement: <NotFoundPage />,
-      // children: [
-      //   {
-      //     path: "/elnino",
-      //     element: <ElNino />,
-      //   },
-      // ],
     },
     {
       path: "/home",
@@ -30,8 +25,16 @@ function App() {
       element: <Home />,
       children: [
         {
-          path: "/dashboard/elnino",
+          path: "/dashboard/content",
+          element: <Content />,
+        },
+        {
+          path: "/dashboard/:topic",
           element: <ElNino />,
+        },
+        {
+          path: "/dashboard/:topic/analyze",
+          element: <Content />,
         },
       ],
     },

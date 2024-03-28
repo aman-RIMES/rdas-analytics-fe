@@ -1,135 +1,111 @@
-import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import ReactApexChart from "react-apexcharts";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
+import { useNavigate, useParams } from "react-router-dom";
+import { analysisTopics } from "@/constants";
+import NotFoundPage from "./404-page";
+import { AnalysisMenuOptions } from "@/types";
 
 const ElNino = () => {
-  const [data] = useState({
-    series: [
-      {
-        name: "SST",
-        data: [
-          -0.86, 0.44, 0.17, 0.71, -0.38, -0.95, -0.58, 0.96, 0.83, 0.13, 0.06,
-          -0.03, -0.21, 0.66, -0.35, 0.9, 0.38, -0.3, 0.14, 0.74, -0.33, -0.94,
-          0.93, -0.63, -0.88, -1.06, -0.05, 0.5, -0.1, 0.24, 0.26, -0.28, 1.01,
-          0.48, -0.49, -0.6, 0.24, 1.28, -0.82, -0.61, 0.31, 0.64, 0.64, 0.33,
-          0.48, -0.16, -0.47, 1.17, -0.07, -1.23, -0.83, -0.3, 0.63, 0.26, 0.46,
-          0.03, 0.06, -0.61, -0.78, 0.3, -0.48, -0.85, -0.15, -0.33, 0.11, 1.46,
-          0.33, -0.21, 0.01, 0.48, -0.37, -0.73, -0.94, 0.83,
-        ],
-      },
-    ],
-    options: {
-      chart: {
-        height: 350,
-        type: "line",
-        zoom: {
-          enabled: false,
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      annotations: {
-        yaxis: [
-          {
-            y: 0.5,
-            borderColor: "#e5ff00",
-            label: {
-              borderColor: "#e5ff00",
-              style: {
-                color: "#000",
-                background: "#e5ff00",
-              },
-              text: "Weak El Nino",
-            },
-          },
-          {
-            y: 1.0,
-            borderColor: "#FF4560",
-            label: {
-              borderColor: "#FF4560",
-              style: {
-                color: "#000",
-                background: "#FF4560",
-              },
-              text: "Strong El Nino",
-            },
-          },
-        ],
-      },
-      stroke: {
-        curve: "straight",
-      },
-      title: {
-        text: "El Nino Index",
-        align: "left",
-      },
-      // grid: {
-      //   row: {
-      //     colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-      //     opacity: 0.5,
-      //   },
-      // },
-      xaxis: {
-        tickAmount: 30,
-        categories: [
-          1950, 1951, 1952, 1953, 1954, 1955, 1956, 1957, 1958, 1959, 1960,
-          1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1969, 1970, 1971,
-          1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979, 1980, 1981, 1982,
-          1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993,
-          1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004,
-          2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015,
-          2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023,
-        ],
-      },
-    },
-  });
-  const ninoYears = [
-    { title: "Total Occurences", value: 25 },
-    { title: "Total Occurences", value: 19 },
-    { title: "Total Occurences", value: 12 },
-  ];
+  const [chosenSubject, setChosenSubject] = useState<AnalysisMenuOptions>();
+  const navigate = useNavigate();
+  const { topic } = useParams();
+  const analysisSubject = analysisTopics.find(
+    (element) => element.name === topic
+  );
+  if (!analysisSubject) return <NotFoundPage />;
+  console.log(analysisSubject);
 
   return (
     <>
-      <div className="grid gap-4 mb-6 md:grid-cols-2 lg:grid-cols-3">
-        {ninoYears.map((element) => (
-          <div key={element.value}>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  {element.title}
-                </CardTitle>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  className="h-4 w-4 text-muted-foreground"
+      <div className="flex justify-center my-1">
+        <h1 className="text-3xl font-bold">{analysisSubject.title}</h1>
+      </div>
+      <div className="w-full h-full flex gap-10 justify-center items-center mb-6">
+        {analysisSubject.options.map((element) => (
+          <div key={element.id}>
+            <Dialog>
+              <DialogTrigger>
+                <Card
+                  onClick={() => setChosenSubject(element)}
+                  className="hover:cursor-pointer hover:border-black hover:border-2"
                 >
-                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                </svg>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{element.value}</div>
+                  <div className="flex justify-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-40 h-40"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z"
+                      />
+                    </svg>
+                  </div>
+                  <CardHeader className="flex flex-row items-center justify-center space-y-0 pb-2">
+                    <CardTitle className="text-xl font-medium flex justify-center p-2 rounded-sm">
+                      {element.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    {/* <div className="text-2xl font-bold">{element.value}</div>
                 <p className="text-xs text-muted-foreground">
                   Reported since 1950
-                </p>
-              </CardContent>
-            </Card>
+                </p> */}
+                  </CardContent>
+                </Card>
+              </DialogTrigger>
+              <DialogContent className="max-w-80">
+                <DialogHeader>
+                  <DialogTitle className="text-center mb-2">
+                    {element.title}
+                  </DialogTitle>
+                  <DialogDescription className="text-center text-md mb-2">
+                    Choose number of years of analysis
+                  </DialogDescription>
+                  <div className="flex flex-col gap-2">
+                    {chosenSubject?.analysisYears.map((year) => (
+                      <div
+                        key={year.value}
+                        onClick={() =>
+                          navigate(
+                            `/dashboard/${topic}/analyze?year=${year.value}`
+                          )
+                        }
+                        className="text-md font-medium flex justify-center border p-2 rounded-sm hover:border-black hover:cursor-pointer"
+                      >
+                        {year.label}
+                      </div>
+                    ))}
+                  </div>
+                </DialogHeader>
+                <DialogClose>
+                  <div className="text-md text-white bg-black hover:bg-white hover:text-black hover:border-black font-medium flex justify-center border p-2 rounded-sm">
+                    Cancel
+                  </div>
+                </DialogClose>
+              </DialogContent>
+            </Dialog>
           </div>
         ))}
       </div>
-      <ReactApexChart
-        // @ts-expect-error: weird type error with chart options
-        options={data.options}
-        series={data.series}
-        type="line"
-        height={350}
-      />
     </>
   );
 };

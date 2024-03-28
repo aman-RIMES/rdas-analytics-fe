@@ -21,7 +21,7 @@ const AvatarMenu = () => {
             Profile
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => console.log("dark")}>
-            Accout Details
+            Account Details
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => console.log("system")}>
             <span className="text-red-500">Logout</span>

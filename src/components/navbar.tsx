@@ -42,17 +42,6 @@ export default function NavBar() {
             >
               Dashboard
             </NavLink>
-            <NavLink
-              className={cn(
-                location.pathname === "/login"
-                  ? "text-foreground"
-                  : "text-foreground/50",
-                "transition-colors hover:text-foreground/80"
-              )}
-              to={"/login"}
-            >
-              Login
-            </NavLink>
           </nav>
         </div>
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">

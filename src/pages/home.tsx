@@ -9,7 +9,7 @@ const Home = () => {
       <hr />
       <div className="grid grid-cols-5">
         <Sidebar />
-        <div className="col-span-4 p-16">
+        <div className="col-span-4 p-8">
           <Outlet />
         </div>
       </div>

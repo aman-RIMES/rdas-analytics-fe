@@ -9,11 +9,10 @@ import {
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-// import { Playlist } from "../data/playlists"
-
 export function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isClimateBehaviorsOpen, setIsClimateBehaviorsOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -24,30 +23,55 @@ export function Sidebar() {
             Climate
           </h2>
           <div className="space-y-1">
-            <Button
-              variant={
-                location.pathname === "/dashboard/elnino"
-                  ? "secondary"
-                  : "ghost"
-              }
-              onClick={() => navigate("/dashboard/elnino")}
-              className="w-full justify-start"
+            <Collapsible
+              open={isClimateBehaviorsOpen}
+              onOpenChange={setIsClimateBehaviorsOpen}
             >
-              <svg
-                className="w-5 h-5 mr-2 text-gray-800 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M12 2a3 3 0 0 0-2.1.9l-.9.9a1 1 0 0 1-.7.3H7a3 3 0 0 0-3 3v1.2c0 .3 0 .5-.2.7l-1 .9a3 3 0 0 0 0 4.2l1 .9c.2.2.3.4.3.7V17a3 3 0 0 0 3 3h1.2c.3 0 .5 0 .7.2l.9 1a3 3 0 0 0 4.2 0l.9-1c.2-.2.4-.3.7-.3H17a3 3 0 0 0 3-3v-1.2c0-.3 0-.5.2-.7l1-.9a3 3 0 0 0 0-4.2l-1-.9a1 1 0 0 1-.3-.7V7a3 3 0 0 0-3-3h-1.2a1 1 0 0 1-.7-.2l-.9-1A3 3 0 0 0 12 2Zm3.7 7.7a1 1 0 1 0-1.4-1.4L10 12.6l-1.3-1.3a1 1 0 0 0-1.4 1.4l2 2c.4.4 1 .4 1.4 0l5-5Z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              Climate Behaviors
-            </Button>
+              <CollapsibleTrigger className="w-full">
+                <Button variant="ghost" className="w-full justify-between">
+                  <div className="flex items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-5 h-5 mr-2"
+                    >
+                      <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9" />
+                      <path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5" />
+                      <circle cx="12" cy="12" r="2" />
+                      <path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5" />
+                      <path d="M19.1 4.9C23 8.8 23 15.1 19.1 19" />
+                    </svg>
+                    Climate Behaviors
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="w-9 p-0 flex just"
+                  >
+                    {isClimateBehaviorsOpen ? <ChevronUp /> : <ChevronDown />}
+                    <span className="sr-only">Toggle</span>
+                  </Button>
+                </Button>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <Button
+                  variant={
+                    location.pathname === "/dashboard/elnino"
+                      ? "secondary"
+                      : "ghost"
+                  }
+                  onClick={() => navigate("/dashboard/elnino")}
+                  className="pl-10 w-full justify-start"
+                >
+                  El Nino
+                </Button>
+              </CollapsibleContent>
+            </Collapsible>
             <Collapsible open={isOpen} onOpenChange={setIsOpen}>
               <CollapsibleTrigger className="w-full">
                 <Button variant="ghost" className="w-full justify-between">
@@ -81,7 +105,11 @@ export function Sidebar() {
                 </Button>
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <Button variant="ghost" className="pl-10 w-full justify-start">
+                <Button
+                  onClick={() => navigate("/dashboard/climate-variability")}
+                  variant="ghost"
+                  className="pl-10 w-full justify-start"
+                >
                   Climate variability and crops
                 </Button>
                 <Button variant="ghost" className="pl-10 w-full justify-start">
