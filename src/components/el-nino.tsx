@@ -86,7 +86,7 @@ const ElNino = () => {
                         key={year.value}
                         onClick={() =>
                           navigate(
-                            `/dashboard/${topic}/analyze?year=${year.value}`
+                            `/dashboard/${topic}/analyze?title=${chosenSubject.title}&year=${year.value}&custom=true`
                           )
                         }
                         className="text-md font-medium flex justify-center border p-2 rounded-sm hover:border-black hover:cursor-pointer"

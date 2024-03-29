@@ -22,7 +22,7 @@ const Content = () => {
   const [temperatureData, setTemperatureData] = useState("local");
   const [extremeData, setExtremeData] = useState("local");
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   console.log(searchParams.get("year"));
   const { topic } = useParams();
   const analysisSubject = analysisTopics.find(
@@ -54,14 +54,14 @@ const Content = () => {
   return (
     <>
       <div className="flex justify-center mb-7">
-        <h1 className="text-3xl">El Nino</h1>
+        <h1 className="text-3xl">{searchParams.get("title")}</h1>
       </div>
       <div className="grid gap-4 mb-6 md:grid-cols-2 lg:grid-cols-3">
         {datasets.map((element) => (
           <div key={element.title}>
             <Card
               className={cn(
-                element.dataset === "custom"
+                searchParams.get("custom") === "custom"
                   ? "border-green-500 shadow-green-500"
                   : "border-gray-200",
                 "border-2 shadow-md"
@@ -77,8 +77,14 @@ const Content = () => {
               </CardHeader>
               <CardContent>
                 <RadioGroup
-                  onValueChange={(value) => element.setData(value)}
-                  value={element.dataset}
+                  // onValueChange={(value) => element.setData(value)}
+                  onValueChange={(value) =>
+                    setSearchParams((params) => ({
+                      ...params,
+                      custom: value,
+                    }))
+                  }
+                  value={searchParams.get("custom") || "local"}
                   defaultValue={element.dataset}
                   className="pb-0"
                 >
@@ -93,14 +99,14 @@ const Content = () => {
                     </Label>
                   </div>
                 </RadioGroup>
-                {element.dataset === "custom" && (
+                {searchParams.get("custom") === "custom" && (
                   <div className="grid w-full max-w-sm items-center gap-1.5 pt-4">
                     <Label className="text-xs" htmlFor="picture">
                       Upload Custom Dataset
                     </Label>
                     <Input
                       className={cn(
-                        element.dataset === "custom"
+                        searchParams.get("custom") === "custom"
                           ? "border-green-500 text-green-800"
                           : ""
                       )}
