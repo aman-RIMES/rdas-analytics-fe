@@ -7,9 +7,11 @@ const Home = () => {
     <>
       <NavBar />
       <hr />
-      <div className="grid grid-cols-5">
-        <Sidebar />
-        <div className="col-span-4 p-8">
+      <div className="px-10 grid grid-cols-5">
+        <div className="hidden lg:flex">
+          <Sidebar />
+        </div>
+        <div className="col-span-5 lg:col-span-4  p-8">
           <Outlet />
         </div>
       </div>
