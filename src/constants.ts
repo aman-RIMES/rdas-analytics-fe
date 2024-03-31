@@ -1,3 +1,5 @@
+import { Icons } from "./components/ui/icons";
+
 export const analysisTopics = [
   {
     id: 1,
@@ -12,6 +14,29 @@ export const analysisTopics = [
           { value: 40, label: "40 Years" },
           { value: 50, label: "50 Years" },
           { value: 0, label: "Others" },
+        ],
+        datasets: [
+          {
+            id: 1,
+            title: "Observed Rainfall",
+            icon: Icons.rainfall,
+            dataset: "rainfallData",
+            setData: "setRainfallData",
+          },
+          {
+            id: 2,
+            title: "Observed Temperature",
+            icon: Icons.temperature,
+            dataset: "temperatureData",
+            setData: "setTemperatureData",
+          },
+          {
+            id: 3,
+            title: "Observed Extremes",
+            icon: Icons.extremes,
+            dataset: "extremeData",
+            setData: "setExtremeData",
+          },
         ],
       },
     ],
@@ -30,6 +55,29 @@ export const analysisTopics = [
           { value: 50, label: "50 Years" },
           { value: 0, label: "Others" },
         ],
+        datasets: [
+          {
+            id: 1,
+            title: "Observed Rainfall",
+            icon: Icons.rainfall,
+            dataset: "rainfallData",
+            setData: "setRainfallData",
+          },
+          {
+            id: 2,
+            title: "Observed Temperature",
+            icon: Icons.temperature,
+            dataset: "temperatureData",
+            setData: "setTemperatureData",
+          },
+          {
+            id: 3,
+            title: "Observed Extremes",
+            icon: Icons.extremes,
+            dataset: "extremeData",
+            setData: "setExtremeData",
+          },
+        ],
       },
       {
         id: 2,
@@ -39,6 +87,22 @@ export const analysisTopics = [
           { value: 40, label: "40 Years" },
           { value: 50, label: "50 Years" },
           { value: 0, label: "Others" },
+        ],
+        datasets: [
+          {
+            id: 1,
+            title: "Observed Rainfall",
+            icon: Icons.rainfall,
+            dataset: "rainfallData",
+            setData: "setRainfallData",
+          },
+          {
+            id: 2,
+            title: "Observed Temperature",
+            icon: Icons.temperature,
+            dataset: "temperatureData",
+            setData: "setTemperatureData",
+          },
         ],
       },
     ],

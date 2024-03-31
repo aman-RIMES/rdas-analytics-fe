@@ -12,17 +12,17 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { analysisTopics } from "@/constants";
 import NotFoundPage from "./404-page";
-import { AnalysisMenuOptions } from "@/types";
+import { AnalysisSubject } from "@/types";
 
 const ElNino = () => {
-  const [chosenSubject, setChosenSubject] = useState<AnalysisMenuOptions>();
+  const [chosenSubject, setChosenSubject] = useState<AnalysisSubject>();
   const navigate = useNavigate();
   const { topic } = useParams();
   const analysisSubject = analysisTopics.find(
     (element) => element.name === topic
   );
   if (!analysisSubject) return <NotFoundPage />;
-  console.log(analysisSubject);
+  // console.log(analysisSubject);
 
   return (
     <>
@@ -86,7 +86,9 @@ const ElNino = () => {
                         key={year.value}
                         onClick={() =>
                           navigate(
-                            `/dashboard/${topic}/analyze?title=${chosenSubject.title}&year=${year.value}&custom=true`
+                            `/dashboard/${topic}/analyze?subject-id=${chosenSubject.id.toString()}&year=${
+                              year.value
+                            }`
                           )
                         }
                         className="text-md font-medium flex justify-center border p-2 rounded-sm hover:border-black hover:cursor-pointer"
