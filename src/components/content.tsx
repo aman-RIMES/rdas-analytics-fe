@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import ReactApexChart from "react-apexcharts";
 import {
   Card,
@@ -7,7 +8,6 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Badge } from "./ui/badge";
-import { Icons } from "./ui/icons";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
@@ -16,18 +16,16 @@ import { analysisTopics, sampleChartData } from "@/constants";
 import { useParams, useSearchParams } from "react-router-dom";
 import NotFoundPage from "./404-page";
 
-//TODO: Replace all unknown types with their corresponding types/interfaces
+//TODO: Replace all unknown/any types with their corresponding types/interfaces
 const Content = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  // console.log(searchParams.get("year"));
   const { topic } = useParams();
   const analysisSubject = analysisTopics.find(
     (element) => element.name === topic
   );
   if (!analysisSubject) return <NotFoundPage />;
-  // const option = analysisSubject.options.find(title => title === searchParams.get("title"))
-  const id: string = searchParams.get("subject-id");
-  const subject: unknown = analysisSubject.options.find(
+  const id: string = searchParams.get("subject-id") || "";
+  const subject: any = analysisSubject.options.find(
     (option) => option.id === parseInt(id)
   );
 
@@ -35,15 +33,13 @@ const Content = () => {
     return searchParams.get("custom-datasets")?.includes(id);
   }
 
-  console.log(searchParams);
-
   return (
     <>
       <div className="flex justify-center mb-7">
         <h1 className="text-3xl">{subject.title}</h1>
       </div>
       <div className="grid gap-4 mb-6 md:grid-cols-2 lg:grid-cols-3">
-        {subject.datasets.map((element) => (
+        {subject.datasets.map((element: any) => (
           <div key={element.title}>
             <Card
               className={cn(
@@ -66,13 +62,10 @@ const Content = () => {
                   onValueChange={() => {
                     const prev = searchParams.get("custom-datasets") || "";
                     let array: string[] = prev.split("_");
-                    console.log(array);
 
                     array.includes(element.id.toString())
                       ? (array = array.filter((e: string) => e != element.id))
                       : array.push(element.id);
-                    console.log(array);
-                    console.log(array.join("_"));
 
                     searchParams.set("custom-datasets", array.join("_"));
                     setSearchParams(searchParams);

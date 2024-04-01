@@ -8,11 +8,11 @@ import {
 } from "./ui/collapsible";
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { Icons } from "./ui/icons";
 
 export function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isClimateBehaviorsOpen, setIsClimateBehaviorsOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -23,75 +23,17 @@ export function Sidebar() {
             Climate
           </h2>
           <div className="space-y-1">
-            <Collapsible
-              open={isClimateBehaviorsOpen}
-              onOpenChange={setIsClimateBehaviorsOpen}
-            >
-              <CollapsibleTrigger className="w-full">
-                <Button variant="ghost" className="w-full justify-between">
-                  <div className="flex items-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="w-5 h-5 mr-2"
-                    >
-                      <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9" />
-                      <path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5" />
-                      <circle cx="12" cy="12" r="2" />
-                      <path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5" />
-                      <path d="M19.1 4.9C23 8.8 23 15.1 19.1 19" />
-                    </svg>
-                    Climate Behaviors
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="w-9 p-0 flex just"
-                  >
-                    {isClimateBehaviorsOpen ? <ChevronUp /> : <ChevronDown />}
-                    <span className="sr-only">Toggle</span>
-                  </Button>
-                </Button>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <Button
-                  variant={
-                    location.pathname === "/dashboard/elnino"
-                      ? "secondary"
-                      : "ghost"
-                  }
-                  onClick={() => navigate("/dashboard/elnino")}
-                  className="pl-10 w-full justify-start"
-                >
-                  El Nino
-                </Button>
-              </CollapsibleContent>
-            </Collapsible>
+            <Button variant="ghost" className="w-full justify-between">
+              <div className="flex items-center">
+                <Icons.climate_behaviors />
+                Climate Behaviors
+              </div>
+            </Button>
             <Collapsible open={isOpen} onOpenChange={setIsOpen}>
               <CollapsibleTrigger className="w-full">
                 <Button variant="ghost" className="w-full justify-between">
                   <div className="flex items-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="w-5 h-5 mr-2"
-                    >
-                      <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9" />
-                      <path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5" />
-                      <circle cx="12" cy="12" r="2" />
-                      <path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5" />
-                      <path d="M19.1 4.9C23 8.8 23 15.1 19.1 19" />
-                    </svg>
+                    <Icons.climate_and_crops />
                     Climate and Crops
                   </div>
                   <Button
@@ -107,12 +49,26 @@ export function Sidebar() {
               <CollapsibleContent>
                 <Button
                   onClick={() => navigate("/dashboard/climate-variability")}
-                  variant="ghost"
+                  variant={
+                    location.pathname.startsWith(
+                      "/dashboard/climate-variability"
+                    )
+                      ? "secondary"
+                      : "ghost"
+                  }
                   className="pl-10 w-full justify-start"
                 >
                   Climate variability and crops
                 </Button>
-                <Button variant="ghost" className="pl-10 w-full justify-start">
+                <Button
+                  onClick={() => navigate("/dashboard/enso-and-crops")}
+                  variant={
+                    location.pathname.startsWith("/dashboard/enso-and-crops")
+                      ? "secondary"
+                      : "ghost"
+                  }
+                  className="pl-10 w-full justify-start"
+                >
                   ENSO and crops
                 </Button>
               </CollapsibleContent>
@@ -136,24 +92,11 @@ export function Sidebar() {
               </svg>
               Climate and Livestock
             </Button>
-            <Button variant="ghost" className="w-full justify-start">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="w-5 h-5 mr-2"
-              >
-                <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9" />
-                <path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5" />
-                <circle cx="12" cy="12" r="2" />
-                <path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5" />
-                <path d="M19.1 4.9C23 8.8 23 15.1 19.1 19" />
-              </svg>
-              Climate and Water
+            <Button variant="ghost" className="w-full justify-between">
+              <div className="flex items-center">
+                <Icons.climate_and_water />
+                Climate and Water
+              </div>
             </Button>
           </div>
         </div>

@@ -14,7 +14,7 @@ import { analysisTopics } from "@/constants";
 import NotFoundPage from "./404-page";
 import { AnalysisSubject } from "@/types";
 
-const ElNino = () => {
+const AnalysisTopics = () => {
   const [chosenSubject, setChosenSubject] = useState<AnalysisSubject>();
   const navigate = useNavigate();
   const { topic } = useParams();
@@ -22,12 +22,12 @@ const ElNino = () => {
     (element) => element.name === topic
   );
   if (!analysisSubject) return <NotFoundPage />;
-  // console.log(analysisSubject);
+  console.log(analysisSubject);
 
   return (
     <>
       <div className="flex justify-center my-1">
-        <h1 className="text-3xl font-bold">{analysisSubject.title}</h1>
+        <h1 className="text-3xl">{analysisSubject.title}</h1>
       </div>
       <div className="w-full h-full flex gap-10 justify-center items-center mb-6">
         {analysisSubject.options.map((element) => (
@@ -43,7 +43,7 @@ const ElNino = () => {
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
-                      strokeWidth={1.5}
+                      strokeWidth={1}
                       stroke="currentColor"
                       className="w-40 h-40"
                     >
@@ -112,4 +112,4 @@ const ElNino = () => {
   );
 };
 
-export default ElNino;
+export default AnalysisTopics;

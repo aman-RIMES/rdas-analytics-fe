@@ -7,8 +7,8 @@ import Home from "./pages/home";
 import NotFoundPage from "./components/404-page";
 import Login from "./pages/login";
 import { ThemeProvider } from "./components/theme-provider";
-import ElNino from "./components/el-nino";
 import Content from "./components/content";
+import AnalysisTopics from "./components/anlysis-topics";
 function App() {
   const router = createBrowserRouter([
     {
@@ -30,7 +30,7 @@ function App() {
         },
         {
           path: "/dashboard/:topic",
-          element: <ElNino />,
+          element: <AnalysisTopics />,
         },
         {
           path: "/dashboard/:topic/analyze",

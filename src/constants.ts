@@ -2,46 +2,6 @@ import { Icons } from "./components/ui/icons";
 
 export const analysisTopics = [
   {
-    id: 1,
-    name: "elnino",
-    title: "El Nino",
-    options: [
-      {
-        id: 1,
-        title: "Analyze El Nino",
-        analysisYears: [
-          { value: 30, label: "30 Years" },
-          { value: 40, label: "40 Years" },
-          { value: 50, label: "50 Years" },
-          { value: 0, label: "Others" },
-        ],
-        datasets: [
-          {
-            id: 1,
-            title: "Observed Rainfall",
-            icon: Icons.rainfall,
-            dataset: "rainfallData",
-            setData: "setRainfallData",
-          },
-          {
-            id: 2,
-            title: "Observed Temperature",
-            icon: Icons.temperature,
-            dataset: "temperatureData",
-            setData: "setTemperatureData",
-          },
-          {
-            id: 3,
-            title: "Observed Extremes",
-            icon: Icons.extremes,
-            dataset: "extremeData",
-            setData: "setExtremeData",
-          },
-        ],
-      },
-    ],
-  },
-  {
     id: 2,
     name: "climate-variability",
     title: "Climate variability and crops",
@@ -60,22 +20,16 @@ export const analysisTopics = [
             id: 1,
             title: "Observed Rainfall",
             icon: Icons.rainfall,
-            dataset: "rainfallData",
-            setData: "setRainfallData",
           },
           {
             id: 2,
             title: "Observed Temperature",
             icon: Icons.temperature,
-            dataset: "temperatureData",
-            setData: "setTemperatureData",
           },
           {
             id: 3,
-            title: "Observed Extremes",
+            title: "Cropping Calendar",
             icon: Icons.extremes,
-            dataset: "extremeData",
-            setData: "setExtremeData",
           },
         ],
       },
@@ -93,15 +47,73 @@ export const analysisTopics = [
             id: 1,
             title: "Observed Rainfall",
             icon: Icons.rainfall,
-            dataset: "rainfallData",
-            setData: "setRainfallData",
           },
           {
             id: 2,
             title: "Observed Temperature",
             icon: Icons.temperature,
-            dataset: "temperatureData",
-            setData: "setTemperatureData",
+          },
+          {
+            id: 3,
+            title: "Observed Crop Production",
+            icon: Icons.temperature,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 1,
+    name: "enso-and-crops",
+    title: "ENSO and Crops",
+    options: [
+      {
+        id: 1,
+        title: "El Nino and climate variability",
+        analysisYears: [
+          { value: 30, label: "30 Years" },
+          { value: 40, label: "40 Years" },
+        ],
+        datasets: [
+          {
+            id: 1,
+            title: "Observed Crop Production",
+            icon: Icons.rainfall,
+          },
+        ],
+      },
+      {
+        id: 2,
+        title: "Historical El Nino and crops production",
+        analysisYears: [
+          { value: 30, label: "30 Years" },
+          { value: 40, label: "40 Years" },
+        ],
+        datasets: [
+          {
+            id: 1,
+            title: "Observed Rainfall",
+            icon: Icons.rainfall,
+          },
+          {
+            id: 2,
+            title: "Observed Temperature",
+            icon: Icons.temperature,
+          },
+        ],
+      },
+      {
+        id: 3,
+        title: "Analysis of Impacts of 2023 El Nino",
+        analysisYears: [
+          { value: 30, label: "30 Years" },
+          { value: 40, label: "40 Years" },
+        ],
+        datasets: [
+          {
+            id: 1,
+            title: "Observed Crop Production",
+            icon: Icons.rainfall,
           },
         ],
       },
