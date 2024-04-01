@@ -67,8 +67,13 @@ const Content = () => {
                       ? (array = array.filter((e: string) => e != element.id))
                       : array.push(element.id);
 
-                    searchParams.set("custom-datasets", array.join("_"));
-                    setSearchParams(searchParams);
+                    setSearchParams(
+                      (prev) => {
+                        prev.set("custom-datasets", array.join("_"));
+                        return prev;
+                      },
+                      { replace: true }
+                    );
                   }}
                   value={
                     searchParams.get("custom-datasets")?.includes(element.id)
