@@ -121,7 +121,13 @@ export const analysisTopics = [
   },
 ];
 
-export const sampleChartData = {
+export const chartOptions = {
+  title: {
+    text: "El Nino Index",
+  },
+  subtitle: {
+    text: "El Nino vs Season Rainfall",
+  },
   series: [
     {
       name: "SST",
@@ -136,69 +142,52 @@ export const sampleChartData = {
       ],
     },
   ],
-  options: {
-    chart: {
-      height: 350,
-      type: "line",
-      zoom: {
-        enabled: false,
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    annotations: {
-      yaxis: [
-        {
-          y: 0.5,
-          borderColor: "#e5ff00",
-          label: {
-            borderColor: "#e5ff00",
-            style: {
-              color: "#000",
-              background: "#e5ff00",
-            },
-            text: "Weak El Nino",
-          },
-        },
-        {
-          y: 1.0,
-          borderColor: "#FF4560",
-          label: {
-            borderColor: "#FF4560",
-            style: {
-              color: "#000",
-              background: "#FF4560",
-            },
-            text: "Strong El Nino",
-          },
-        },
-      ],
-    },
-    stroke: {
-      curve: "straight",
-    },
+  xAxis: {
     title: {
-      text: "El Nino Index",
-      align: "left",
+      text: "Years",
     },
-    // grid: {
-    //   row: {
-    //     colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-    //     opacity: 0.5,
-    //   },
-    // },
-    xaxis: {
-      tickAmount: 30,
-      categories: [
-        1950, 1951, 1952, 1953, 1954, 1955, 1956, 1957, 1958, 1959, 1960, 1961,
-        1962, 1963, 1964, 1965, 1966, 1967, 1968, 1969, 1970, 1971, 1972, 1973,
-        1974, 1975, 1976, 1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985,
-        1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997,
-        1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
-        2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021,
-        2022, 2023,
-      ],
+    tickInterval: 1,
+    categories: [
+      1951, 1952, 1953, 1954, 1955, 1956, 1957, 1958, 1959, 1960, 1961, 1962,
+      1963, 1964, 1965, 1966, 1967, 1968, 1969, 1970, 1971, 1972, 1973, 1974,
+      1975, 1976, 1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986,
+      1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
+      1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
+      2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022,
+    ],
+  },
+  yAxis: {
+    title: {
+      text: "SST",
     },
+    tickInterval: 0.5,
+    plotLines: [
+      {
+        color: "grey",
+        dashStyle: "dashdot",
+        value: 0,
+        width: 2,
+      },
+      {
+        label: {
+          text: "Weak El Nino",
+          align: "right",
+        },
+        color: "purple",
+        dashStyle: "dashdot",
+        value: 0.5,
+        width: 2,
+      },
+      {
+        label: {
+          text: "Strong El Nino",
+          align: "right",
+        },
+        color: "red",
+        dashStyle: "dashdot",
+        value: 1,
+        width: 2,
+      },
+    ],
   },
 };
