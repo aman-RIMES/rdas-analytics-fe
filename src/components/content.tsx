@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import ReactApexChart from "react-apexcharts";
 import {
   Card,
   CardContent,
@@ -12,9 +11,12 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { analysisTopics, sampleChartData } from "@/constants";
+import { analysisTopics, chartOptions } from "@/constants";
 import { useParams, useSearchParams } from "react-router-dom";
 import NotFoundPage from "./404-page";
+
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 
 //TODO: Replace all unknown/any types with their corresponding types/interfaces
 const Content = () => {
@@ -131,13 +133,8 @@ const Content = () => {
           </div>
         ))}
       </div>
-      <ReactApexChart
-        // @ts-expect-error: weird type error with chart options
-        options={sampleChartData.options}
-        series={sampleChartData.series}
-        type="line"
-        height={350}
-      />
+
+      <HighchartsReact highcharts={Highcharts} options={chartOptions} />
     </>
   );
 };
