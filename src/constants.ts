@@ -1,5 +1,135 @@
 import { Icons } from "./components/ui/icons";
 
+export const menus = [
+  {
+    id: 1,
+    title: "Climate Dynamic Graphs",
+    datasets: [
+      {
+        id: 1,
+        title: "Observed Rainfall",
+        icon: Icons.rainfall,
+      },
+      {
+        id: 2,
+        title: "Observed Temperature",
+        icon: Icons.temperature,
+      },
+      {
+        id: 3,
+        title: "Cropping Calendar",
+        icon: Icons.extremes,
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "Climate Correlation Coefficient",
+    datasets: [
+      {
+        id: 1,
+        title: "Observed Rainfall",
+        icon: Icons.rainfall,
+      },
+      {
+        id: 2,
+        title: "Observed Temperature",
+        icon: Icons.temperature,
+      },
+      {
+        id: 3,
+        title: "Cropping Calendar",
+        icon: Icons.extremes,
+      },
+    ],
+  },
+  {
+    id: 3,
+    title: "Climate Dynamic Graphs",
+    datasets: [
+      {
+        id: 1,
+        title: "Observed Rainfall",
+        icon: Icons.rainfall,
+      },
+      {
+        id: 2,
+        title: "Observed Temperature",
+        icon: Icons.temperature,
+      },
+      {
+        id: 3,
+        title: "Cropping Calendar",
+        icon: Icons.extremes,
+      },
+    ],
+  },
+  {
+    id: 4,
+    title: "Climate Correlation Coefficient",
+    datasets: [
+      {
+        id: 1,
+        title: "Observed Rainfall",
+        icon: Icons.rainfall,
+      },
+      {
+        id: 2,
+        title: "Observed Temperature",
+        icon: Icons.temperature,
+      },
+      {
+        id: 3,
+        title: "Cropping Calendar",
+        icon: Icons.extremes,
+      },
+    ],
+  },
+
+  {
+    id: 5,
+    title: "Climate Dynamic Graphs",
+    datasets: [
+      {
+        id: 1,
+        title: "Observed Rainfall",
+        icon: Icons.rainfall,
+      },
+      {
+        id: 2,
+        title: "Observed Temperature",
+        icon: Icons.temperature,
+      },
+      {
+        id: 3,
+        title: "Cropping Calendar",
+        icon: Icons.extremes,
+      },
+    ],
+  },
+  {
+    id: 6,
+    title: "Climate Correlation Coefficient",
+    datasets: [
+      {
+        id: 1,
+        title: "Observed Rainfall",
+        icon: Icons.rainfall,
+      },
+      {
+        id: 2,
+        title: "Observed Temperature",
+        icon: Icons.temperature,
+      },
+      {
+        id: 3,
+        title: "Cropping Calendar",
+        icon: Icons.extremes,
+      },
+    ],
+  },
+];
+
 export const analysisTopics = [
   {
     id: 2,

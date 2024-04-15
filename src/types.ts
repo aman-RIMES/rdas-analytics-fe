@@ -20,5 +20,17 @@ export interface AnalysisYear {
 export interface Dataset {
   id: number;
   title: string;
-  icon: string;
+  icon: any;
+}
+
+export interface Menu {
+  climate: SubMenu[];
+  agriculture: SubMenu[];
+  transport: SubMenu[];
+}
+
+export interface SubMenu {
+  id: number;
+  title: string;
+  datasets: Dataset[];
 }

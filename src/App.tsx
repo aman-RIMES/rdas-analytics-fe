@@ -8,13 +8,23 @@ import NotFoundPage from "./components/404-page";
 import Login from "./pages/login";
 import { ThemeProvider } from "./components/theme-provider";
 import Content from "./components/content";
-import AnalysisTopics from "./components/anlysis-topics";
+import AnalysisTopics from "./components/analysis-topics";
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Home />,
       errorElement: <NotFoundPage />,
+      children: [
+        {
+          path: "/content",
+          element: <Content />,
+        },
+        {
+          path: "/analyze",
+          element: <Content />,
+        },
+      ],
     },
     {
       path: "/home",
