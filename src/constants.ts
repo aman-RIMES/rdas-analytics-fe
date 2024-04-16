@@ -7,17 +7,17 @@ export const menus = [
     datasets: [
       {
         id: 1,
-        title: "Observed Rainfall",
+        title: "Seasonal Rainfall",
         icon: Icons.rainfall,
       },
       {
         id: 2,
-        title: "Observed Temperature",
+        title: "Seasonal Crop Production",
         icon: Icons.temperature,
       },
       {
         id: 3,
-        title: "Cropping Calendar",
+        title: "Seasonal Adaptation measures",
         icon: Icons.extremes,
       },
     ],
@@ -28,17 +28,17 @@ export const menus = [
     datasets: [
       {
         id: 1,
-        title: "Observed Rainfall",
+        title: "Seasonal Rainfall",
         icon: Icons.rainfall,
       },
       {
         id: 2,
-        title: "Observed Temperature",
+        title: "Seasonal Crop Production",
         icon: Icons.temperature,
       },
       {
         id: 3,
-        title: "Cropping Calendar",
+        title: "Seasonal Adaptation measures",
         icon: Icons.extremes,
       },
     ],
@@ -49,17 +49,22 @@ export const menus = [
     datasets: [
       {
         id: 1,
-        title: "Observed Rainfall",
+        title: "El Nino Events",
         icon: Icons.rainfall,
       },
       {
         id: 2,
-        title: "Observed Temperature",
+        title: "Normal Rainfall",
         icon: Icons.temperature,
       },
       {
         id: 3,
-        title: "Cropping Calendar",
+        title: "Seasonal Rainfall",
+        icon: Icons.extremes,
+      },
+      {
+        id: 4,
+        title: "Seasonal Crop Production",
         icon: Icons.extremes,
       },
     ],
@@ -70,17 +75,22 @@ export const menus = [
     datasets: [
       {
         id: 1,
-        title: "Observed Rainfall",
+        title: "El Nino Events",
         icon: Icons.rainfall,
       },
       {
         id: 2,
-        title: "Observed Temperature",
+        title: "Normal Rainfall",
         icon: Icons.temperature,
       },
       {
         id: 3,
-        title: "Cropping Calendar",
+        title: "Seasonal Rainfall",
+        icon: Icons.extremes,
+      },
+      {
+        id: 4,
+        title: "Seasonal Crop Production",
         icon: Icons.extremes,
       },
     ],
@@ -92,18 +102,13 @@ export const menus = [
     datasets: [
       {
         id: 1,
-        title: "Observed Rainfall",
+        title: "Rainfall / Fog",
         icon: Icons.rainfall,
       },
       {
         id: 2,
-        title: "Observed Temperature",
+        title: "Vehicular Accidents",
         icon: Icons.temperature,
-      },
-      {
-        id: 3,
-        title: "Cropping Calendar",
-        icon: Icons.extremes,
       },
     ],
   },
@@ -113,18 +118,13 @@ export const menus = [
     datasets: [
       {
         id: 1,
-        title: "Observed Rainfall",
+        title: "Rainfall / Fog",
         icon: Icons.rainfall,
       },
       {
         id: 2,
-        title: "Observed Temperature",
+        title: "Vehicular Accidents",
         icon: Icons.temperature,
-      },
-      {
-        id: 3,
-        title: "Cropping Calendar",
-        icon: Icons.extremes,
       },
     ],
   },

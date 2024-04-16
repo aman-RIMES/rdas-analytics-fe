@@ -1,25 +1,17 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { useLocation, useNavigate } from "react-router-dom";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "./ui/collapsible";
-import { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Icons } from "./ui/icons";
-import { analysisTopics2, menus } from "@/constants";
 
 export function Sidebar() {
   const navigate = useNavigate();
 
   return (
     <div className={cn("pb-12")}>
-      <div className="space-y-4 py-4">
-        <div className="px-3 py-2">
-          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-            Climate
+      <div className="space-y-4 my-5">
+        <div className="pl-3 py-2 max-w-80">
+          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight ">
+            Climate, Agriculture and Adaptation Measures
           </h2>
           <div className="space-y-1">
             <Button
@@ -44,12 +36,16 @@ export function Sidebar() {
             </Button>
           </div>
         </div>
-        <div className="px-3 py-2">
+        <div className="pl-3 py-2 max-w-80">
           <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-            Agriculture
+            El Nino, Climate and Agriculture production
           </h2>
           <div className="space-y-1">
-            <Button variant="ghost" className="w-full justify-start">
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+              onClick={() => navigate("/analyze/3")}
+            >
               <svg
                 className="w-5 h-5 mr-2 text-gray-800 dark:text-white"
                 aria-hidden="true"
@@ -67,7 +63,11 @@ export function Sidebar() {
               </svg>
               Agriculture Dynamic Graphs
             </Button>
-            <Button variant="ghost" className="w-full justify-start">
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+              onClick={() => navigate("/analyze/4")}
+            >
               <svg
                 className="w-5 h-5 mr-2 text-gray-800 dark:text-white"
                 aria-hidden="true"
@@ -94,12 +94,16 @@ export function Sidebar() {
             </Button>
           </div>
         </div>
-        <div className="px-3 py-2">
+        <div className="pl-3 py-2 max-w-80">
           <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-            Transport
+            Climate Variability and Transport Vehicular Accidents
           </h2>
           <div className="space-y-1">
-            <Button variant="ghost" className="w-full justify-start">
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+              onClick={() => navigate("/analyze/5")}
+            >
               <svg
                 className="w-5 h-5 mr-2 text-gray-800 dark:text-white"
                 aria-hidden="true"
@@ -115,9 +119,13 @@ export function Sidebar() {
                   d="M10 3v4c0 .6-.4 1-1 1H5m4 10v-2m3 2v-6m3 6v-3m4-11v16c0 .6-.4 1-1 1H6a1 1 0 0 1-1-1V8c0-.4.1-.6.3-.8l4-4 .6-.2H18c.6 0 1 .4 1 1Z"
                 />
               </svg>
-              Transport Dynamic Graphs
+              Transport dynamic graphs
             </Button>
-            <Button variant="ghost" className="w-full justify-start">
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+              onClick={() => navigate("/analyze/6")}
+            >
               <svg
                 className="w-5 h-5 mr-2 text-gray-800 dark:text-white"
                 aria-hidden="true"

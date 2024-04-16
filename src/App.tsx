@@ -21,7 +21,7 @@ function App() {
           element: <Content />,
         },
         {
-          path: "/analyze",
+          path: "/analyze/:topic",
           element: <Content />,
         },
       ],

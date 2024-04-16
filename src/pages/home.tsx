@@ -11,7 +11,7 @@ const Home = () => {
         <div className="hidden lg:flex">
           <Sidebar />
         </div>
-        <div className="col-span-5 lg:col-span-4  p-8">
+        <div className="col-span-5 lg:col-span-4  p-8 px-20">
           <Outlet />
         </div>
       </div>

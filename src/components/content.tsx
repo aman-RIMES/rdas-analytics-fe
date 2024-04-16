@@ -11,7 +11,7 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { analysisTopics, chartOptions } from "@/constants";
+import { chartOptions, menus } from "@/constants";
 import { useParams, useSearchParams } from "react-router-dom";
 import NotFoundPage from "./404-page";
 
@@ -22,14 +22,10 @@ import HighchartsReact from "highcharts-react-official";
 const Content = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { topic } = useParams();
-  const analysisSubject = analysisTopics.find(
-    (element) => element.name === topic
+  const subject: any = menus.find(
+    (menu) => menu.id === parseInt(topic as string)
   );
-  if (!analysisSubject) return <NotFoundPage />;
-  const id: string = searchParams.get("subject-id") || "";
-  const subject: any = analysisSubject.options.find(
-    (option) => option.id === parseInt(id)
-  );
+  if (!subject) return <NotFoundPage />;
 
   function isUsingCustomDataset(id: string) {
     return searchParams.get("custom-datasets")?.includes(id);
@@ -40,7 +36,14 @@ const Content = () => {
       <div className="flex justify-center mb-7">
         <h1 className="text-3xl">{subject.title}</h1>
       </div>
-      <div className="grid gap-4 mb-6 md:grid-cols-2 lg:grid-cols-3">
+      <div
+        className={cn(
+          subject.datasets.length > 4
+            ? "lg:grid-cols-4"
+            : `lg:grid-cols-${subject.datasets.length}`,
+          "grid gap-4 grid-flow-row-dense mb-6 md:grid-cols-2"
+        )}
+      >
         {subject.datasets.map((element: any) => (
           <div key={element.title}>
             <Card

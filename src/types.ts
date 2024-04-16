@@ -3,14 +3,12 @@ export interface AnalysisTopics {
   id: number;
   name: string;
   title: string;
-  options: AnalysisSubject[];
 }
 
-export interface AnalysisSubject {
+export interface Menu {
   id: number;
   title: string;
-  analysisYears: AnalysisYear[];
-  datasets?: any[];
+  datasets?: Dataset[];
 }
 export interface AnalysisYear {
   value: number;
