@@ -3,6 +3,7 @@ import { Icons } from "./components/ui/icons";
 export const menus = [
   {
     id: 1,
+    category: "Climate, Agriculture and Adaptation Measures",
     title: "Climate Dynamic Graphs",
     datasets: [
       {
@@ -13,7 +14,7 @@ export const menus = [
       {
         id: 2,
         title: "Seasonal Crop Production",
-        icon: Icons.temperature,
+        icon: Icons.plant,
       },
       {
         id: 3,
@@ -24,6 +25,7 @@ export const menus = [
   },
   {
     id: 2,
+    category: "Climate, Agriculture and Adaptation Measures",
     title: "Climate Correlation Coefficient",
     datasets: [
       {
@@ -34,7 +36,7 @@ export const menus = [
       {
         id: 2,
         title: "Seasonal Crop Production",
-        icon: Icons.temperature,
+        icon: Icons.plant,
       },
       {
         id: 3,
@@ -45,17 +47,18 @@ export const menus = [
   },
   {
     id: 3,
+    category: "El Nino, Climate and Agriculture production",
     title: "Climate Dynamic Graphs",
     datasets: [
       {
         id: 1,
         title: "El Nino Events",
-        icon: Icons.rainfall,
+        icon: Icons.fog,
       },
       {
         id: 2,
         title: "Normal Rainfall",
-        icon: Icons.temperature,
+        icon: Icons.rainfall,
       },
       {
         id: 3,
@@ -65,23 +68,24 @@ export const menus = [
       {
         id: 4,
         title: "Seasonal Crop Production",
-        icon: Icons.extremes,
+        icon: Icons.plant,
       },
     ],
   },
   {
     id: 4,
+    category: "El Nino, Climate and Agriculture production",
     title: "Climate Correlation Coefficient",
     datasets: [
       {
         id: 1,
         title: "El Nino Events",
-        icon: Icons.rainfall,
+        icon: Icons.fog,
       },
       {
         id: 2,
         title: "Normal Rainfall",
-        icon: Icons.temperature,
+        icon: Icons.rainfall,
       },
       {
         id: 3,
@@ -91,40 +95,42 @@ export const menus = [
       {
         id: 4,
         title: "Seasonal Crop Production",
-        icon: Icons.extremes,
+        icon: Icons.plant,
       },
     ],
   },
 
   {
     id: 5,
+    category: "Climate Variability and Transport Vehicular Accidents",
     title: "Climate Dynamic Graphs",
     datasets: [
       {
         id: 1,
         title: "Rainfall / Fog",
-        icon: Icons.rainfall,
+        icon: Icons.fog,
       },
       {
         id: 2,
         title: "Vehicular Accidents",
-        icon: Icons.temperature,
+        icon: Icons.car,
       },
     ],
   },
   {
     id: 6,
+    category: "Climate Variability and Transport Vehicular Accidents",
     title: "Climate Correlation Coefficient",
     datasets: [
       {
         id: 1,
         title: "Rainfall / Fog",
-        icon: Icons.rainfall,
+        icon: Icons.fog,
       },
       {
         id: 2,
         title: "Vehicular Accidents",
-        icon: Icons.temperature,
+        icon: Icons.car,
       },
     ],
   },
@@ -253,10 +259,10 @@ export const analysisTopics = [
 
 export const chartOptions = {
   title: {
-    text: "El Nino Index",
+    text: "Sample Chart",
   },
   subtitle: {
-    text: "El Nino vs Season Rainfall",
+    text: "Highcharts",
   },
   series: [
     {

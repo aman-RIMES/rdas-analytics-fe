@@ -33,15 +33,20 @@ const Content = () => {
 
   return (
     <>
-      <div className="flex justify-center mb-7">
-        <h1 className="text-3xl">{subject.title}</h1>
+      <div className="flex flex-col items-center justify-center gap-3 mb-7">
+        <h1 className="text-3xl">{subject.category}</h1>
+        <h1 className="text-2xl">
+          {parseInt(topic as string) % 2 === 0
+            ? "Correlation Coefficient"
+            : "Dynamic Graphs"}
+        </h1>
       </div>
       <div
         className={cn(
-          subject.datasets.length > 4
+          subject.datasets.length >= 4
             ? "lg:grid-cols-4"
             : `lg:grid-cols-${subject.datasets.length}`,
-          "grid gap-4 grid-flow-row-dense mb-6 md:grid-cols-2"
+          "grid gap-4 mb-6 md:grid-cols-2"
         )}
       >
         {subject.datasets.map((element: any) => (

@@ -30,7 +30,7 @@ export function Sidebar() {
               onClick={() => navigate("/analyze/2")}
             >
               <div className="flex items-center">
-                <Icons.climate_and_water />
+                <Icons.report className="w-5 h-5 mr-2 text-gray-800 dark:text-white" />
                 Climate Correlation Coefficient
               </div>
             </Button>
@@ -46,21 +46,7 @@ export function Sidebar() {
               className="w-full justify-start"
               onClick={() => navigate("/analyze/3")}
             >
-              <svg
-                className="w-5 h-5 mr-2 text-gray-800 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M10 3v4c0 .6-.4 1-1 1H5m4 10v-2m3 2v-6m3 6v-3m4-11v16c0 .6-.4 1-1 1H6a1 1 0 0 1-1-1V8c0-.4.1-.6.3-.8l4-4 .6-.2H18c.6 0 1 .4 1 1Z"
-                />
-              </svg>
+              <Icons.climate_and_crops className="w-5 h-5 mr-2" />
               Agriculture Dynamic Graphs
             </Button>
             <Button
@@ -68,28 +54,7 @@ export function Sidebar() {
               className="w-full justify-start"
               onClick={() => navigate("/analyze/4")}
             >
-              <svg
-                className="w-5 h-5 mr-2 text-gray-800 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M10 6a7.5 7.5 0 1 0 8 8h-8V6Z"
-                />
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M13.5 3H13v8h8v-.5A7.5 7.5 0 0 0 13.5 3Z"
-                />
-              </svg>
+              <Icons.report className="w-5 h-5 mr-2 text-gray-800 dark:text-white" />
               Agriculture Correlation Coefficient
             </Button>
           </div>
@@ -104,21 +69,7 @@ export function Sidebar() {
               className="w-full justify-start"
               onClick={() => navigate("/analyze/5")}
             >
-              <svg
-                className="w-5 h-5 mr-2 text-gray-800 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M10 3v4c0 .6-.4 1-1 1H5m4 10v-2m3 2v-6m3 6v-3m4-11v16c0 .6-.4 1-1 1H6a1 1 0 0 1-1-1V8c0-.4.1-.6.3-.8l4-4 .6-.2H18c.6 0 1 .4 1 1Z"
-                />
-              </svg>
+              <Icons.accidents className="w-5 h-5 mr-2" />
               Transport dynamic graphs
             </Button>
             <Button
@@ -126,28 +77,7 @@ export function Sidebar() {
               className="w-full justify-start"
               onClick={() => navigate("/analyze/6")}
             >
-              <svg
-                className="w-5 h-5 mr-2 text-gray-800 dark:text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M10 6a7.5 7.5 0 1 0 8 8h-8V6Z"
-                />
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M13.5 3H13v8h8v-.5A7.5 7.5 0 0 0 13.5 3Z"
-                />
-              </svg>
+              <Icons.report className="w-5 h-5 mr-2 text-gray-800 dark:text-white" />
               Transport Correlation Coefficient
             </Button>
           </div>
