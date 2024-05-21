@@ -1,0 +1,29 @@
+name: Publish Docker Image
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Log message
+        run: echo Starting Job!
+
+      - name: Build the Docker image
+        run: |
+          echo Logging into docker,
+          docker login -u amanryder -p ${{ secrets.GH_TOKEN }} ghcr.io
+          echo Building Image.
+          docker build -t ghcr.io/amanryder/rdas-analytics:latest .
+
+      - name: Push the Docker image
+        run: |
+          echo Pushing Image.
+          docker push ghcr.io/amanryder/rdas-analytics
