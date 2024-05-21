@@ -14,13 +14,14 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { chartOptions, mapOptions, menus } from "@/constants";
 import { useParams, useSearchParams } from "react-router-dom";
 import NotFoundPage from "./404-page";
-
 import Highcharts from "highcharts/highmaps";
 import HighchartsReact from "highcharts-react-official";
+import Filter from "./filter";
 
 //TODO: Replace all unknown/any types with their corresponding types/interfaces
 const Content = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+
   const { topic } = useParams();
   const subject: any = menus.find(
     (menu) => menu.id === parseInt(topic as string)
@@ -142,7 +143,10 @@ const Content = () => {
         ))}
       </div>
 
-      <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+      <div className="mt-10 border rounded-lg">
+        <Filter />
+        <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+      </div>
 
       <div className="mt-10 mb-20 border rounded-lg">
         <HighchartsReact

@@ -1,0 +1,44 @@
+{
+  "source": {
+    "MSWEP": {
+      "name": "Multi-Source Weighted-Ensemble Precipitation (MSWEP)",
+      "url": "https://www.gloh2o.org/mswep/"
+    },
+    "ERA5": {
+      "name": "ECMWF Reanalysis v5 (ERA5)",
+      "url": "https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels?tab=overview"
+    },
+    "APHRODITE": {
+      "name": "Asian Precipitation - Highly-Resolved Observational Data Integration Towards Evaluation (APHRODITE)",
+      "url": "https://climatedataguide.ucar.edu/climate-data/aphrodite-asian-precipitation-highly-resolved-observational-data-integration-towards"
+    },
+    "CRU": {
+      "name": "Climatic Research Unit (CRU)",
+      "url": "https://www.uea.ac.uk/groups-and-centres/climatic-research-unit"
+    },
+    "CHIRPS": {
+      "name": "Climate Hazards Group InfraRed Precipitation with Station (CHIRPS)",
+      "url": "https://www.chc.ucsb.edu/data/chirps"
+    },
+    "GPCC": {
+      "name": "Global Precipitation Climatology Centre (GPCC)",
+      "url": "https://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/global-precipitation-climatology-centre-gpcc"
+    }
+  },
+  "country": {
+    "NPL": "Nepal",
+    "PAK": "Pakistan",
+    "IND": "India",
+    "BGD": "Bangladesh"
+  },
+  "indic": {
+    "rainfall": "Rainfall",
+    "temperature": "Temperature"
+  },
+  "period": {
+    "annual": "Annual",
+    "daily": "Daily",
+    "monthly": "Monthly",
+    "seasonal": "Seasonal"
+  }
+}
