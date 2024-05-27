@@ -31,14 +31,968 @@
     "IND": "India",
     "BGD": "Bangladesh"
   },
+  "district": [
+    {
+      "district_code": "NPL001",
+      "district_name": "TAPLEJUNG"
+    },
+    {
+      "district_code": "NPL002",
+      "district_name": "PANCHTHAR"
+    },
+    {
+      "district_code": "NPL003",
+      "district_name": "ILAM"
+    },
+    {
+      "district_code": "NPL004",
+      "district_name": "JHAPA"
+    },
+    {
+      "district_code": "NPL005",
+      "district_name": "MORANG"
+    },
+    {
+      "district_code": "NPL006",
+      "district_name": "SUNSARI"
+    },
+    {
+      "district_code": "NPL007",
+      "district_name": "DHANKUTA"
+    },
+    {
+      "district_code": "NPL008",
+      "district_name": "TERHATHUM"
+    },
+    {
+      "district_code": "NPL009",
+      "district_name": "SANKHUWASABHA"
+    },
+    {
+      "district_code": "NPL010",
+      "district_name": "BHOJPUR"
+    },
+    {
+      "district_code": "NPL011",
+      "district_name": "SOLUKHUMBU"
+    },
+    {
+      "district_code": "NPL012",
+      "district_name": "OKHALDHUNGA"
+    },
+    {
+      "district_code": "NPL013",
+      "district_name": "KHOTANG"
+    },
+    {
+      "district_code": "NPL014",
+      "district_name": "UDAYAPUR"
+    },
+    {
+      "district_code": "NPL015",
+      "district_name": "SAPTARI"
+    },
+    {
+      "district_code": "NPL016",
+      "district_name": "SIRAHA"
+    },
+    {
+      "district_code": "NPL017",
+      "district_name": "DHANUSHA"
+    },
+    {
+      "district_code": "NPL018",
+      "district_name": "MAHOTTARI"
+    },
+    {
+      "district_code": "NPL019",
+      "district_name": "SARLAHI"
+    },
+    {
+      "district_code": "NPL020",
+      "district_name": "SINDHULI"
+    },
+    {
+      "district_code": "NPL021",
+      "district_name": "RAMECHHAP"
+    },
+    {
+      "district_code": "NPL022",
+      "district_name": "DOLAKHA"
+    },
+    {
+      "district_code": "NPL023",
+      "district_name": "SINDHUPALCHOK"
+    },
+    {
+      "district_code": "NPL024",
+      "district_name": "KABHREPALANCHOK"
+    },
+    {
+      "district_code": "NPL025",
+      "district_name": "LALITPUR"
+    },
+    {
+      "district_code": "NPL026",
+      "district_name": "BHAKTAPUR"
+    },
+    {
+      "district_code": "NPL027",
+      "district_name": "KATHMANDU"
+    },
+    {
+      "district_code": "NPL028",
+      "district_name": "NUWAKOT"
+    },
+    {
+      "district_code": "NPL029",
+      "district_name": "RASUWA"
+    },
+    {
+      "district_code": "NPL030",
+      "district_name": "DHADING"
+    },
+    {
+      "district_code": "NPL031",
+      "district_name": "MAKAWANPUR"
+    },
+    {
+      "district_code": "NPL032",
+      "district_name": "RAUTAHAT"
+    },
+    {
+      "district_code": "NPL033",
+      "district_name": "BARA"
+    },
+    {
+      "district_code": "NPL034",
+      "district_name": "PARSA"
+    },
+    {
+      "district_code": "NPL035",
+      "district_name": "CHITAWAN"
+    },
+    {
+      "district_code": "NPL036",
+      "district_name": "GORKHA"
+    },
+    {
+      "district_code": "NPL037",
+      "district_name": "LAMJUNG"
+    },
+    {
+      "district_code": "NPL038",
+      "district_name": "TANAHU"
+    },
+    {
+      "district_code": "NPL039",
+      "district_name": "SYANGJA"
+    },
+    {
+      "district_code": "NPL040",
+      "district_name": "KASKI"
+    },
+    {
+      "district_code": "NPL041",
+      "district_name": "MANANG"
+    },
+    {
+      "district_code": "NPL042",
+      "district_name": "MUSTANG"
+    },
+    {
+      "district_code": "NPL043",
+      "district_name": "MYAGDI"
+    },
+    {
+      "district_code": "NPL044",
+      "district_name": "PARBAT"
+    },
+    {
+      "district_code": "NPL045",
+      "district_name": "BAGLUNG"
+    },
+    {
+      "district_code": "NPL046",
+      "district_name": "GULMI"
+    },
+    {
+      "district_code": "NPL047",
+      "district_name": "PALPA"
+    },
+    {
+      "district_code": "NPL048",
+      "district_name": "NAWALPARASI_W"
+    },
+    {
+      "district_code": "NPL049",
+      "district_name": "RUPANDEHI"
+    },
+    {
+      "district_code": "NPL050",
+      "district_name": "KAPILBASTU"
+    },
+    {
+      "district_code": "NPL051",
+      "district_name": "ARGHAKHANCHI"
+    },
+    {
+      "district_code": "NPL052",
+      "district_name": "PYUTHAN"
+    },
+    {
+      "district_code": "NPL053",
+      "district_name": "ROLPA"
+    },
+    {
+      "district_code": "NPL054",
+      "district_name": "RUKUM_W"
+    },
+    {
+      "district_code": "NPL055",
+      "district_name": "SALYAN"
+    },
+    {
+      "district_code": "NPL056",
+      "district_name": "DANG"
+    },
+    {
+      "district_code": "NPL057",
+      "district_name": "BANKE"
+    },
+    {
+      "district_code": "NPL058",
+      "district_name": "BARDIYA"
+    },
+    {
+      "district_code": "NPL059",
+      "district_name": "SURKHET"
+    },
+    {
+      "district_code": "NPL060",
+      "district_name": "DAILEKH"
+    },
+    {
+      "district_code": "NPL061",
+      "district_name": "JAJARKOT"
+    },
+    {
+      "district_code": "NPL062",
+      "district_name": "DOLPA"
+    },
+    {
+      "district_code": "NPL063",
+      "district_name": "JUMLA"
+    },
+    {
+      "district_code": "NPL064",
+      "district_name": "KALIKOT"
+    },
+    {
+      "district_code": "NPL065",
+      "district_name": "MUGU"
+    },
+    {
+      "district_code": "NPL066",
+      "district_name": "HUMLA"
+    },
+    {
+      "district_code": "NPL067",
+      "district_name": "BAJURA"
+    },
+    {
+      "district_code": "NPL068",
+      "district_name": "BAJHANG"
+    },
+    {
+      "district_code": "NPL069",
+      "district_name": "ACHHAM"
+    },
+    {
+      "district_code": "NPL070",
+      "district_name": "DOTI"
+    },
+    {
+      "district_code": "NPL071",
+      "district_name": "KAILALI"
+    },
+    {
+      "district_code": "NPL072",
+      "district_name": "KANCHANPUR"
+    },
+    {
+      "district_code": "NPL073",
+      "district_name": "DADELDHURA"
+    },
+    {
+      "district_code": "NPL074",
+      "district_name": "BAITADI"
+    },
+    {
+      "district_code": "NPL075",
+      "district_name": "DARCHULA"
+    },
+    {
+      "district_code": "NPL076",
+      "district_name": "NAWALPARASI_E"
+    },
+    {
+      "district_code": "NPL077",
+      "district_name": "RUKUM_E"
+    },
+    {
+      "district_code": "PAK101",
+      "district_name": "Bagh"
+    },
+    {
+      "district_code": "PAK102",
+      "district_name": "Bhimber"
+    },
+    {
+      "district_code": "PAK103",
+      "district_name": "Jhelum Valley"
+    },
+    {
+      "district_code": "PAK104",
+      "district_name": "Haveli"
+    },
+    {
+      "district_code": "PAK105",
+      "district_name": "Kotli"
+    },
+    {
+      "district_code": "PAK106",
+      "district_name": "Mirpur"
+    },
+    {
+      "district_code": "PAK107",
+      "district_name": "Muzaffarabad"
+    },
+    {
+      "district_code": "PAK108",
+      "district_name": "Neelum"
+    },
+    {
+      "district_code": "PAK109",
+      "district_name": "Poonch"
+    },
+    {
+      "district_code": "PAK110",
+      "district_name": "Sudhnoti"
+    },
+    {
+      "district_code": "PAK201",
+      "district_name": "Awaran"
+    },
+    {
+      "district_code": "PAK202",
+      "district_name": "Barkhan"
+    },
+    {
+      "district_code": "PAK203",
+      "district_name": "Chagai"
+    },
+    {
+      "district_code": "PAK204",
+      "district_name": "Dera Bugti"
+    },
+    {
+      "district_code": "PAK205",
+      "district_name": "Gwadar"
+    },
+    {
+      "district_code": "PAK206",
+      "district_name": "Harnai"
+    },
+    {
+      "district_code": "PAK207",
+      "district_name": "Jaffarabad"
+    },
+    {
+      "district_code": "PAK208",
+      "district_name": "Jhal Magsi"
+    },
+    {
+      "district_code": "PAK209",
+      "district_name": "Kachhi"
+    },
+    {
+      "district_code": "PAK210",
+      "district_name": "Kalat"
+    },
+    {
+      "district_code": "PAK211",
+      "district_name": "Kech"
+    },
+    {
+      "district_code": "PAK212",
+      "district_name": "Kharan"
+    },
+    {
+      "district_code": "PAK213",
+      "district_name": "Khuzdar"
+    },
+    {
+      "district_code": "PAK214",
+      "district_name": "Killa Abdullah"
+    },
+    {
+      "district_code": "PAK215",
+      "district_name": "Killa Saifullah"
+    },
+    {
+      "district_code": "PAK216",
+      "district_name": "Kohlu"
+    },
+    {
+      "district_code": "PAK217",
+      "district_name": "Lasbela"
+    },
+    {
+      "district_code": "PAK218",
+      "district_name": "Lehri"
+    },
+    {
+      "district_code": "PAK219",
+      "district_name": "Loralai"
+    },
+    {
+      "district_code": "PAK220",
+      "district_name": "Mastung"
+    },
+    {
+      "district_code": "PAK221",
+      "district_name": "Musakhel"
+    },
+    {
+      "district_code": "PAK222",
+      "district_name": "Nasirabad"
+    },
+    {
+      "district_code": "PAK223",
+      "district_name": "Nushki"
+    },
+    {
+      "district_code": "PAK224",
+      "district_name": "Panjgur"
+    },
+    {
+      "district_code": "PAK225",
+      "district_name": "Pishin"
+    },
+    {
+      "district_code": "PAK226",
+      "district_name": "Quetta"
+    },
+    {
+      "district_code": "PAK227",
+      "district_name": "Sherani"
+    },
+    {
+      "district_code": "PAK228",
+      "district_name": "Sibi"
+    },
+    {
+      "district_code": "PAK229",
+      "district_name": "Sohbatpur"
+    },
+    {
+      "district_code": "PAK230",
+      "district_name": "Washuk"
+    },
+    {
+      "district_code": "PAK231",
+      "district_name": "Zhob"
+    },
+    {
+      "district_code": "PAK232",
+      "district_name": "Ziarat"
+    },
+    {
+      "district_code": "PAK233",
+      "district_name": "Shaheed Sikandarabad"
+    },
+    {
+      "district_code": "PAK234",
+      "district_name": "Duki"
+    },
+    {
+      "district_code": "PAK235",
+      "district_name": "Chaman"
+    },
+    {
+      "district_code": "PAK301",
+      "district_name": "Astore"
+    },
+    {
+      "district_code": "PAK302",
+      "district_name": "Diamir"
+    },
+    {
+      "district_code": "PAK303",
+      "district_name": "Ghanche"
+    },
+    {
+      "district_code": "PAK304",
+      "district_name": "Ghizer"
+    },
+    {
+      "district_code": "PAK305",
+      "district_name": "Gilgit"
+    },
+    {
+      "district_code": "PAK306",
+      "district_name": "Hunza"
+    },
+    {
+      "district_code": "PAK307",
+      "district_name": "Skardu"
+    },
+    {
+      "district_code": "PAK308",
+      "district_name": "Nagar"
+    },
+    {
+      "district_code": "PAK309",
+      "district_name": "Kharmang"
+    },
+    {
+      "district_code": "PAK310",
+      "district_name": "Shigar"
+    },
+    {
+      "district_code": "PAK311",
+      "district_name": "Darel"
+    },
+    {
+      "district_code": "PAK312",
+      "district_name": "Tangir"
+    },
+    {
+      "district_code": "PAK313",
+      "district_name": "Gupis-Yasin"
+    },
+    {
+      "district_code": "PAK314",
+      "district_name": "Rondu"
+    },
+    {
+      "district_code": "PAK401",
+      "district_name": "Islamabad"
+    },
+    {
+      "district_code": "PAK501",
+      "district_name": "Abbottabad"
+    },
+    {
+      "district_code": "PAK502",
+      "district_name": "Bajaur"
+    },
+    {
+      "district_code": "PAK503",
+      "district_name": "Bannu"
+    },
+    {
+      "district_code": "PAK504",
+      "district_name": "Batagram"
+    },
+    {
+      "district_code": "PAK505",
+      "district_name": "Buner"
+    },
+    {
+      "district_code": "PAK506",
+      "district_name": "Charsadda"
+    },
+    {
+      "district_code": "PAK507",
+      "district_name": "Chitral Lower"
+    },
+    {
+      "district_code": "PAK508",
+      "district_name": "Chitral Upper"
+    },
+    {
+      "district_code": "PAK509",
+      "district_name": "D. I. Khan"
+    },
+    {
+      "district_code": "PAK510",
+      "district_name": "Hangu"
+    },
+    {
+      "district_code": "PAK511",
+      "district_name": "Haripur"
+    },
+    {
+      "district_code": "PAK512",
+      "district_name": "Karak"
+    },
+    {
+      "district_code": "PAK513",
+      "district_name": "Khyber"
+    },
+    {
+      "district_code": "PAK514",
+      "district_name": "Kohat"
+    },
+    {
+      "district_code": "PAK515",
+      "district_name": "Kohistan Lower"
+    },
+    {
+      "district_code": "PAK516",
+      "district_name": "Kohistan Upper"
+    },
+    {
+      "district_code": "PAK517",
+      "district_name": "Kolai Palas Kohistan"
+    },
+    {
+      "district_code": "PAK518",
+      "district_name": "Kurram"
+    },
+    {
+      "district_code": "PAK519",
+      "district_name": "Lakki Marwat"
+    },
+    {
+      "district_code": "PAK520",
+      "district_name": "Lower Dir"
+    },
+    {
+      "district_code": "PAK521",
+      "district_name": "Malakand"
+    },
+    {
+      "district_code": "PAK522",
+      "district_name": "Mansehra"
+    },
+    {
+      "district_code": "PAK523",
+      "district_name": "Mardan"
+    },
+    {
+      "district_code": "PAK524",
+      "district_name": "Mohmand"
+    },
+    {
+      "district_code": "PAK525",
+      "district_name": "North Waziristan"
+    },
+    {
+      "district_code": "PAK526",
+      "district_name": "Nowshera"
+    },
+    {
+      "district_code": "PAK527",
+      "district_name": "Orakzai"
+    },
+    {
+      "district_code": "PAK528",
+      "district_name": "Peshawar"
+    },
+    {
+      "district_code": "PAK529",
+      "district_name": "Shangla"
+    },
+    {
+      "district_code": "PAK530",
+      "district_name": "South Waziristan"
+    },
+    {
+      "district_code": "PAK531",
+      "district_name": "Swabi"
+    },
+    {
+      "district_code": "PAK532",
+      "district_name": "Swat"
+    },
+    {
+      "district_code": "PAK533",
+      "district_name": "Tank"
+    },
+    {
+      "district_code": "PAK534",
+      "district_name": "Tor Ghar"
+    },
+    {
+      "district_code": "PAK535",
+      "district_name": "Upper Dir"
+    },
+    {
+      "district_code": "PAK601",
+      "district_name": "Attock"
+    },
+    {
+      "district_code": "PAK602",
+      "district_name": "Bahawalnagar"
+    },
+    {
+      "district_code": "PAK603",
+      "district_name": "Bahawalpur"
+    },
+    {
+      "district_code": "PAK604",
+      "district_name": "Bhakkar"
+    },
+    {
+      "district_code": "PAK605",
+      "district_name": "Chakwal"
+    },
+    {
+      "district_code": "PAK606",
+      "district_name": "Chiniot"
+    },
+    {
+      "district_code": "PAK607",
+      "district_name": "Dera Ghazi Khan"
+    },
+    {
+      "district_code": "PAK608",
+      "district_name": "Faisalabad"
+    },
+    {
+      "district_code": "PAK609",
+      "district_name": "Gujranwala"
+    },
+    {
+      "district_code": "PAK610",
+      "district_name": "Gujrat"
+    },
+    {
+      "district_code": "PAK611",
+      "district_name": "Hafizabad"
+    },
+    {
+      "district_code": "PAK612",
+      "district_name": "Jhang"
+    },
+    {
+      "district_code": "PAK613",
+      "district_name": "Jhelum"
+    },
+    {
+      "district_code": "PAK614",
+      "district_name": "Kasur"
+    },
+    {
+      "district_code": "PAK615",
+      "district_name": "Khanewal"
+    },
+    {
+      "district_code": "PAK616",
+      "district_name": "Khushab"
+    },
+    {
+      "district_code": "PAK617",
+      "district_name": "Lahore"
+    },
+    {
+      "district_code": "PAK618",
+      "district_name": "Leiah"
+    },
+    {
+      "district_code": "PAK619",
+      "district_name": "Lodhran"
+    },
+    {
+      "district_code": "PAK620",
+      "district_name": "Mandi Bahauddin"
+    },
+    {
+      "district_code": "PAK621",
+      "district_name": "Mianwali"
+    },
+    {
+      "district_code": "PAK622",
+      "district_name": "Multan"
+    },
+    {
+      "district_code": "PAK623",
+      "district_name": "Muzaffargarh"
+    },
+    {
+      "district_code": "PAK624",
+      "district_name": "Nankana Sahib"
+    },
+    {
+      "district_code": "PAK625",
+      "district_name": "Narowal"
+    },
+    {
+      "district_code": "PAK626",
+      "district_name": "Okara"
+    },
+    {
+      "district_code": "PAK627",
+      "district_name": "Pakpattan"
+    },
+    {
+      "district_code": "PAK628",
+      "district_name": "Rahim Yar Khan"
+    },
+    {
+      "district_code": "PAK629",
+      "district_name": "Rajanpur"
+    },
+    {
+      "district_code": "PAK630",
+      "district_name": "Rawalpindi"
+    },
+    {
+      "district_code": "PAK631",
+      "district_name": "Sahiwal"
+    },
+    {
+      "district_code": "PAK632",
+      "district_name": "Sargodha"
+    },
+    {
+      "district_code": "PAK633",
+      "district_name": "Sheikhupura"
+    },
+    {
+      "district_code": "PAK634",
+      "district_name": "Sialkot"
+    },
+    {
+      "district_code": "PAK635",
+      "district_name": "Toba Tek Singh"
+    },
+    {
+      "district_code": "PAK636",
+      "district_name": "Vehari"
+    },
+    {
+      "district_code": "PAK701",
+      "district_name": "Badin"
+    },
+    {
+      "district_code": "PAK702",
+      "district_name": "Central Karachi"
+    },
+    {
+      "district_code": "PAK703",
+      "district_name": "Dadu"
+    },
+    {
+      "district_code": "PAK704",
+      "district_name": "East Karachi"
+    },
+    {
+      "district_code": "PAK705",
+      "district_name": "Ghotki"
+    },
+    {
+      "district_code": "PAK706",
+      "district_name": "Hyderabad"
+    },
+    {
+      "district_code": "PAK707",
+      "district_name": "Jacobabad"
+    },
+    {
+      "district_code": "PAK708",
+      "district_name": "Jamshoro"
+    },
+    {
+      "district_code": "PAK709",
+      "district_name": "Kambar Shahdad Kot"
+    },
+    {
+      "district_code": "PAK710",
+      "district_name": "Kashmore"
+    },
+    {
+      "district_code": "PAK711",
+      "district_name": "Khairpur"
+    },
+    {
+      "district_code": "PAK712",
+      "district_name": "Korangi Karachi"
+    },
+    {
+      "district_code": "PAK713",
+      "district_name": "Larkana"
+    },
+    {
+      "district_code": "PAK714",
+      "district_name": "Malir Karachi"
+    },
+    {
+      "district_code": "PAK715",
+      "district_name": "Matiari"
+    },
+    {
+      "district_code": "PAK716",
+      "district_name": "Mirpur Khas"
+    },
+    {
+      "district_code": "PAK717",
+      "district_name": "Naushahro Feroze"
+    },
+    {
+      "district_code": "PAK718",
+      "district_name": "Sanghar"
+    },
+    {
+      "district_code": "PAK719",
+      "district_name": "Shaheed Benazir Abad"
+    },
+    {
+      "district_code": "PAK720",
+      "district_name": "Shikarpur"
+    },
+    {
+      "district_code": "PAK721",
+      "district_name": "South Karachi"
+    },
+    {
+      "district_code": "PAK722",
+      "district_name": "Sujawal"
+    },
+    {
+      "district_code": "PAK723",
+      "district_name": "Sukkur"
+    },
+    {
+      "district_code": "PAK724",
+      "district_name": "Tando Allahyar"
+    },
+    {
+      "district_code": "PAK725",
+      "district_name": "Tando Muhammad Khan"
+    },
+    {
+      "district_code": "PAK726",
+      "district_name": "Tharparkar"
+    },
+    {
+      "district_code": "PAK727",
+      "district_name": "Thatta"
+    },
+    {
+      "district_code": "PAK728",
+      "district_name": "Umer Kot"
+    },
+    {
+      "district_code": "PAK729",
+      "district_name": "West Karachi"
+    }
+  ],
   "indic": {
     "rainfall": "Rainfall",
-    "temperature": "Temperature"
+    "normal_rainfall": "Normal Rainfall",
+    "el_nino": "El Nino Events",
+    "temperature": "Temperature",
+    "crop_production": "Crop Production"
   },
   "period": {
     "annual": "Annual",
-    "daily": "Daily",
-    "monthly": "Monthly",
-    "seasonal": "Seasonal"
-  }
+    "decadal": "Decadal",
+    "monthly": "Monthly"
+  },
+  "start": "format: dd-mm-yyyy",
+  "end": "format: dd-mm-yyyy"
 }

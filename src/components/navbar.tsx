@@ -31,17 +31,6 @@ export default function NavBar() {
             >
               Home
             </NavLink>
-            <NavLink
-              className={cn(
-                location.pathname.startsWith("/dashboard")
-                  ? "text-foreground"
-                  : "text-foreground/50",
-                "transition-colors hover:text-foreground/80"
-              )}
-              to={"/dashboard"}
-            >
-              Dashboard
-            </NavLink>
           </nav>
         </div>
         <div className="flex space-x-2">

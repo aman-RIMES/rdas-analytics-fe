@@ -57,6 +57,14 @@ export function Sidebar() {
               <Icons.report className="w-5 h-5 mr-2 text-gray-800 dark:text-white" />
               Agriculture Correlation Coefficient
             </Button>
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+              onClick={() => navigate("/predictive-tools/")}
+            >
+              <Icons.report className="w-5 h-5 mr-2 text-gray-800 dark:text-white" />
+              Agriculture Predictive Tools
+            </Button>
           </div>
         </div>
         <div className="pl-3 py-2 max-w-80">

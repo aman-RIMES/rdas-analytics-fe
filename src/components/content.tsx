@@ -11,16 +11,18 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { chartOptions, mapOptions, menus } from "@/constants";
+import { menus } from "@/constants";
 import { useParams, useSearchParams } from "react-router-dom";
 import NotFoundPage from "./404-page";
 import Highcharts from "highcharts/highmaps";
 import HighchartsReact from "highcharts-react-official";
 import Filter from "./filter";
+import { useState } from "react";
 
 //TODO: Replace all unknown/any types with their corresponding types/interfaces
 const Content = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [chartData, setChartData] = useState("");
 
   const { topic } = useParams();
   const subject: any = menus.find(
@@ -37,9 +39,10 @@ const Content = () => {
       <div className="flex flex-col items-center justify-center gap-3 mb-7">
         <h1 className="text-3xl">{subject.category}</h1>
         <h1 className="text-2xl">
-          {parseInt(topic as string) % 2 === 0
+          {/* {parseInt(topic as string) % 2 === 0
             ? "Correlation Coefficient"
-            : "Dynamic Graphs"}
+            : "Dynamic Graphs"} */}
+          {subject.title}
         </h1>
       </div>
       <div
@@ -144,17 +147,17 @@ const Content = () => {
       </div>
 
       <div className="mt-10 border rounded-lg">
-        <Filter />
-        <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+        <Filter setChartData={setChartData} />
+        <HighchartsReact highcharts={Highcharts} options={chartData} />
       </div>
 
-      <div className="mt-10 mb-20 border rounded-lg">
+      {/* <div className="mt-10 mb-20 border rounded-lg">
         <HighchartsReact
           highcharts={Highcharts}
           options={mapOptions}
           constructorType={"mapChart"}
         />
-      </div>
+      </div> */}
     </>
   );
 };
