@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Highcharts from "highcharts/highmaps";
 import HighchartsReact from "highcharts-react-official";
 import PredictiveToolsFilter from "./predictive-tools-filter";
@@ -5,7 +6,7 @@ import { useState } from "react";
 
 const PredictiveTools = () => {
   const [correlationPlot, setCorrelationPlot] = useState({});
-  const [regressionModel, setRegressionModel] = useState({});
+  const [regressionModel, setRegressionModel] = useState<any>({});
   const [isCorrelationVisible, setIsCorrelationVisible] = useState(false);
   const [isRegressionVisible, setIsRegressionVisible] = useState(false);
 
@@ -32,12 +33,11 @@ const PredictiveTools = () => {
               options={correlationPlot}
             />
           )}
-        </div>
-        <div>
+
           {isRegressionVisible && (
             <HighchartsReact
               highcharts={Highcharts}
-              options={regressionModel}
+              options={regressionModel?.chart}
             />
           )}
         </div>
