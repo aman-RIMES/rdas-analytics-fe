@@ -60,11 +60,11 @@ const PredictiveToolsFilter = ({
   const generateRegressionModel = async () => {
     try {
       const response = await axios.post(
-        "http://203.156.108.67:1580/regression_analysis",
+        "http://203.156.108.67:1580/prediction_model",
         {
           // source: sourceValue,
           // indic: indicatorValue,
-          indic: "el_nino,rainfall",
+          indic: "crop_production,rainfall,el_nino,normal_rainfall",
           period: "annual",
           //   country: countryValue,
           //   district: [districtValue],
