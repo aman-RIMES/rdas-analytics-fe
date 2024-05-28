@@ -9,6 +9,7 @@ import { Button } from "./ui/button";
 import axios from "axios";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highmaps";
+import Leaflet from "./leaflet";
 
 const Filter = () => {
   const [districtValue, setDistrictValue] = useState("");
@@ -156,9 +157,18 @@ const Filter = () => {
               highcharts={Highcharts}
               options={timeSeriesChartData}
             />
+
+            <div>
+              <p className="text-xl font-semibold flex justify-center my-8">
+                India districts
+              </p>
+              <Leaflet />
+            </div>
           </div>
           <div className="flex justify-center mt-10">
-            <h1>View Correlation between two variables</h1>
+            <h1 className="text-xl font-semibold">
+              View Correlation between two variables
+            </h1>
           </div>
           <div className="grid gap-4 mt-5 md:grid-cols-3 justify-center">
             <Combobox

@@ -21,10 +21,6 @@ function App() {
         },
       ],
     },
-    {
-      path: "/dashboard",
-      element: <Home />,
-    },
   ]);
 
   return (
