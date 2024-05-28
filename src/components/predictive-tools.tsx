@@ -5,9 +5,7 @@ import PredictiveToolsFilter from "./predictive-tools-filter";
 import { useState } from "react";
 
 const PredictiveTools = () => {
-  const [correlationPlot, setCorrelationPlot] = useState({});
   const [regressionModel, setRegressionModel] = useState<any>({});
-  const [isCorrelationVisible, setIsCorrelationVisible] = useState(false);
   const [isRegressionVisible, setIsRegressionVisible] = useState(false);
 
   return (
@@ -21,19 +19,10 @@ const PredictiveTools = () => {
 
       <div className="mt-10 border rounded-lg">
         <PredictiveToolsFilter
-          setIsCorrelationVisible={setIsCorrelationVisible}
           setIsRegressionVisible={setIsRegressionVisible}
-          setCorrelationPlot={setCorrelationPlot}
           setRegressionModel={setRegressionModel}
         />
-        <div className="mb-10">
-          {isCorrelationVisible && (
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={correlationPlot}
-            />
-          )}
-
+        <div className="mb-10 px-5 flex flex-col gap-7">
           {isRegressionVisible && (
             <HighchartsReact
               highcharts={Highcharts}

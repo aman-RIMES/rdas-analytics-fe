@@ -12,13 +12,10 @@ import axios from "axios";
 import { FancyMultiSelect } from "./ui/multiselect";
 
 const PredictiveToolsFilter = ({
-  setIsCorrelationVisible,
   setIsRegressionVisible,
-  setCorrelationPlot,
   setRegressionModel,
 }: any) => {
   const [primaryIndicator, setPrimaryIndicator] = useState("");
-  const [primaryIndicatorSource, setPrimaryIndicatorSource] = useState("");
   const [indicators, setIndicators] = useState([]);
   const [indicatorsSource, setIndicatorsSource] = useState("");
   const [districtValue, setDistrictValue] = useState("");
@@ -36,27 +33,6 @@ const PredictiveToolsFilter = ({
     setDistrictList(d);
   }, [countryValue]);
 
-  const generateCorrelationPlot = async () => {
-    try {
-      const response = await axios.post(
-        "http://203.156.108.67:1580/correlation_plot",
-        {
-          // source: sourceValue,
-          // indic: indicatorValue,
-          indic: "rainfall,crop_production,el_nino,normal_rainfall",
-          period: "annual",
-          // country: countryValue,
-          // district: [districtValue],
-          // start_date: startDate?.toISOString().slice(0, 10),
-          // end_date: endDate?.toISOString().slice(0, 10),
-        }
-      );
-      setCorrelationPlot(response.data);
-      setIsCorrelationVisible(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const generateRegressionModel = async () => {
     try {
       const response = await axios.post(
@@ -81,44 +57,46 @@ const PredictiveToolsFilter = ({
   return (
     <div className="p-10">
       <div className="grid gap-4 mb-6 md:grid-cols-2 justify-center">
-        <div className="flex flex-col gap-5 justify-center border rounded-lg p-5">
-          <Combobox
-            label={"Primary Indicator"}
+        <DatePicker
+          date={startDate}
+          setDate={setStartDate}
+          label={"Start Date"}
+        />
+        <DatePicker date={endDate} setDate={setEndDate} label={"End Date"} />
+        <Combobox
+          label={"Dependent Variable"}
+          array={transformObject(metadata.indic)}
+          state={{
+            value: primaryIndicator,
+            setValue: setPrimaryIndicator,
+          }}
+        />
+        <div>
+          <Label className="mb-2.5">Independent Variables</Label>
+          <FancyMultiSelect
+            setIndicators={setIndicators}
             array={transformObject(metadata.indic)}
-            state={{
-              value: primaryIndicator,
-              setValue: setPrimaryIndicator,
-            }}
-          />
-          <Combobox
-            label={"Primary Indicator Source"}
-            array={transformSourceObject(metadata.source)}
-            state={{
-              value: primaryIndicatorSource,
-              setValue: setPrimaryIndicatorSource,
-            }}
           />
         </div>
-        <div className="flex flex-col gap-5 justify-center border rounded-lg p-5">
-          <div>
-            <Label className="mb-2.5">Indicators</Label>
-            <FancyMultiSelect
-              setIndicators={setIndicators}
-              array={transformObject(metadata.indic)}
-            />
-          </div>
-          <Combobox
-            label={"Indicators Source"}
-            array={transformSourceObject(metadata.source)}
-            state={{
-              value: indicatorsSource,
-              setValue: setIndicatorsSource,
-            }}
-          />
-        </div>
+        <Combobox
+          label={"Source"}
+          array={transformSourceObject(metadata.source)}
+          state={{
+            value: indicatorsSource,
+            setValue: setIndicatorsSource,
+          }}
+        />
+        <Combobox
+          label={"Period"}
+          array={transformObject(metadata.period)}
+          state={{
+            value: periodValue,
+            setValue: setPeriodValue,
+          }}
+        />
       </div>
 
-      <div className="grid gap-4 mb-6 md:grid-cols-3 justify-center">
+      <div className="grid gap-4 mb-6 md:grid-cols-2 justify-center">
         <Combobox
           label={"Country"}
           array={transformObject(metadata.country)}
@@ -135,29 +113,12 @@ const PredictiveToolsFilter = ({
             setValue: setDistrictValue,
           }}
         />
-        <Combobox
-          label={"Period"}
-          array={transformObject(metadata.period)}
-          state={{
-            value: periodValue,
-            setValue: setPeriodValue,
-          }}
-        />
       </div>
-      <div className="grid gap-4 mb-6 md:grid-cols-2 justify-center">
-        <DatePicker
-          date={startDate}
-          setDate={setStartDate}
-          label={"Start Date"}
-        />
-        <DatePicker date={endDate} setDate={setEndDate} label={"End Date"} />
-      </div>
-      <div className="grid gap-4 mb-6 md:grid-cols-2 justify-center mt-10">
-        <Button className="w-full" onClick={generateCorrelationPlot}>
-          Generate Correlation Plot
-        </Button>
+
+      <div className="grid gap-4 md:grid-cols-3 justify-center mt-10">
+        <div></div>
         <Button className="w-full" onClick={generateRegressionModel}>
-          Generate Regression model
+          Generate Predictive model
         </Button>
       </div>
     </div>

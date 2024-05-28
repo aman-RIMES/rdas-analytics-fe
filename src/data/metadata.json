@@ -26,10 +26,7 @@
     }
   },
   "country": {
-    "NPL": "Nepal",
-    "PAK": "Pakistan",
-    "IND": "India",
-    "BGD": "Bangladesh"
+    "IND": "India"
   },
   "district": [
     {
@@ -989,9 +986,7 @@
     "crop_production": "Crop Production"
   },
   "period": {
-    "annual": "Annual",
-    "decadal": "Decadal",
-    "monthly": "Monthly"
+    "annual": "Annual"
   },
   "start": "format: dd-mm-yyyy",
   "end": "format: dd-mm-yyyy"

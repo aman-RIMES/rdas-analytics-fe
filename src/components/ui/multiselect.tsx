@@ -92,7 +92,7 @@ export function FancyMultiSelect({ setIndicators, array }: any) {
             onValueChange={setInputValue}
             onBlur={() => setOpen(false)}
             onFocus={() => setOpen(true)}
-            placeholder="Select indicators..."
+            placeholder="Select variables..."
             className="ml-2 flex-1 bg-transparent outline-none placeholder:text-muted-foreground"
           />
         </div>

@@ -6,10 +6,11 @@ import metadata from "@/data/metadata.json";
 import { transformObject, transformSourceObject } from "@/lib/utils";
 import DatePicker from "./datepicker";
 import { Button } from "./ui/button";
-import { Label } from "@radix-ui/react-dropdown-menu";
 import axios from "axios";
+import HighchartsReact from "highcharts-react-official";
+import Highcharts from "highcharts/highmaps";
 
-const Filter = ({ setChartData }: any) => {
+const Filter = () => {
   const [districtValue, setDistrictValue] = useState("");
   const [districtList, setDistrictList] = useState([{}]);
   const [countryValue, setCountryValue] = useState("");
@@ -19,6 +20,18 @@ const Filter = ({ setChartData }: any) => {
   const [startDate, setStartDate] = React.useState<Date>();
   const [endDate, setEndDate] = React.useState<Date>();
 
+  const [correlationVariable1, setCorrelationVariable1] = useState<any>(false);
+  const [correlationVariable2, setCorrelationVariable2] = useState<any>(false);
+
+  const [isTimeSeriesVisible, setIsTimeSeriesVisible] = useState<any>(false);
+  const [isCorrelationDataVisible, setIsCorrelationDataVisible] =
+    useState<any>(false);
+  const [timeSeriesChartData, setTimeSeriesChartData] = useState<any>({});
+  const [correlationChartData, setCorrelationChartData] = useState<any>({});
+  const [regressionModelChartData, setRegressionModelChartData] = useState<any>(
+    {}
+  );
+
   useEffect(() => {
     const d = district
       .filter((e) => e.district_code.substring(0, 3) === countryValue)
@@ -27,7 +40,7 @@ const Filter = ({ setChartData }: any) => {
     setDistrictList(d);
   }, [countryValue]);
 
-  const filterData = async () => {
+  const generateTimeSeries = async () => {
     try {
       const response = await axios.post(
         "http://203.156.108.67:1580/dynamic_charts",
@@ -42,18 +55,52 @@ const Filter = ({ setChartData }: any) => {
           end_date: endDate?.toISOString().slice(0, 10),
         }
       );
-
-      console.log(response);
-      setChartData(response.data);
+      setTimeSeriesChartData(response.data);
+      setIsTimeSeriesVisible(true);
     } catch (error) {
       console.log(error);
-      // alert(error);
     }
   };
+  const generateCorrelationPlot = async () => {
+    try {
+      const correlationData = await axios.post(
+        "http://203.156.108.67:1580/correlation_plot",
+        {
+          source: sourceValue,
+          // indic: indicatorValue,
+          indic: "rainfall,crop_production,el_nino,normal_rainfall",
+          period: "annual",
+          country: countryValue,
+          // district: [districtValue],
+          start_date: startDate?.toISOString().slice(0, 10),
+          end_date: endDate?.toISOString().slice(0, 10),
+        }
+      );
+      const regressionModelData = await axios.post(
+        "http://203.156.108.67:1580/regression_analysis",
+        {
+          source: sourceValue,
+          // indic: indicatorValue,
+          indic: "el_nino,rainfall",
+          period: "annual",
+          country: countryValue,
+          // district: [districtValue],
+          start_date: startDate?.toISOString().slice(0, 10),
+          end_date: endDate?.toISOString().slice(0, 10),
+        }
+      );
+      setRegressionModelChartData(regressionModelData.data);
+      setCorrelationChartData(correlationData.data);
+      setIsCorrelationDataVisible(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="p-10">
       {/* <div className="flex flex-row gap-5 m-5 justify-center"> */}
-      <div className="grid gap-4 mb-6 md:grid-cols-4 justify-center">
+      <div className="grid gap-4 mb-6 md:grid-cols-3 justify-center">
         <Combobox
           label={"Country"}
           array={transformObject(metadata.country)}
@@ -80,6 +127,8 @@ const Filter = ({ setChartData }: any) => {
             setValue: setPeriodValue,
           }}
         />
+      </div>
+      <div className="grid gap-4 mb-6 md:grid-cols-3 justify-center">
         <Combobox
           label={"Source"}
           array={transformSourceObject(metadata.source)}
@@ -88,21 +137,67 @@ const Filter = ({ setChartData }: any) => {
             setValue: setSourceValue,
           }}
         />
-      </div>
-      <div className="grid gap-4 mb-6 md:grid-cols-3 justify-center">
         <DatePicker
           date={startDate}
           setDate={setStartDate}
           label={"Start Date"}
         />
         <DatePicker date={endDate} setDate={setEndDate} label={"End Date"} />
-        <div className="flex flex-col justify-start gap-2">
-          <div>
-            <Label>{"Analyze"}</Label>
-          </div>
-          <Button onClick={filterData}>Generate Chart</Button>
-        </div>
       </div>
+      <div className="grid gap-4 mt-10 md:grid-cols-3 justify-center">
+        <div></div>
+        <Button onClick={generateTimeSeries}>Start Analysis</Button>
+      </div>
+
+      {isTimeSeriesVisible && (
+        <div className="mb-10">
+          <div className="mt-10">
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={timeSeriesChartData}
+            />
+          </div>
+          <div className="flex justify-center mt-10">
+            <h1>View Correlation between two variables</h1>
+          </div>
+          <div className="grid gap-4 mt-5 md:grid-cols-3 justify-center">
+            <Combobox
+              label={"First Variable"}
+              array={transformObject(metadata.indic)}
+              state={{
+                value: correlationVariable1,
+                setValue: setCorrelationVariable1,
+              }}
+            />
+            <Combobox
+              label={"Second Variable"}
+              array={transformObject(metadata.indic)}
+              state={{
+                value: correlationVariable2,
+                setValue: setCorrelationVariable2,
+              }}
+            />
+            <Button className="mt-8" onClick={generateCorrelationPlot}>
+              Analyze Correlation
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {isCorrelationDataVisible && (
+        <div className="mt-10">
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={correlationChartData}
+          />
+          <div className="mt-10">
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={regressionModelChartData}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

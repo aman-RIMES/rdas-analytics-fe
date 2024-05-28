@@ -21,7 +21,7 @@ export function Sidebar() {
             >
               <div className="flex items-center">
                 <Icons.climate_behaviors />
-                Climate Dynamic Graphs
+                Climate Analytics
               </div>
             </Button>
             <Button
@@ -31,7 +31,7 @@ export function Sidebar() {
             >
               <div className="flex items-center">
                 <Icons.report className="w-5 h-5 mr-2 text-gray-800 dark:text-white" />
-                Climate Correlation Coefficient
+                Climate Prediction Tools
               </div>
             </Button>
           </div>
@@ -47,16 +47,8 @@ export function Sidebar() {
               onClick={() => navigate("/analyze/3")}
             >
               <Icons.climate_and_crops className="w-5 h-5 mr-2" />
-              Agriculture Dynamic Graphs
+              Agriculture Analytics
             </Button>
-            {/* <Button
-              variant="ghost"
-              className="w-full justify-start"
-              onClick={() => navigate("/analyze/4")}
-            >
-              <Icons.report className="w-5 h-5 mr-2 text-gray-800 dark:text-white" />
-              Agriculture Correlation Coefficient
-            </Button> */}
             <Button
               variant="ghost"
               className="w-full justify-start"
@@ -78,7 +70,7 @@ export function Sidebar() {
               onClick={() => navigate("/analyze/5")}
             >
               <Icons.accidents className="w-5 h-5 mr-2" />
-              Transport dynamic graphs
+              Transport Analytics
             </Button>
             <Button
               variant="ghost"
@@ -86,7 +78,7 @@ export function Sidebar() {
               onClick={() => navigate("/analyze/6")}
             >
               <Icons.report className="w-5 h-5 mr-2 text-gray-800 dark:text-white" />
-              Transport Correlation Coefficient
+              Transport Predictive Tools
             </Button>
           </div>
         </div>

@@ -5,7 +5,7 @@ export const menus = [
   {
     id: 1,
     category: "Climate, Agriculture and Adaptation Measures",
-    title: "Dynamic Graphs",
+    title: "Analytics",
     datasets: [
       {
         id: 1,
@@ -27,7 +27,7 @@ export const menus = [
   {
     id: 2,
     category: "Climate, Agriculture and Adaptation Measures",
-    title: "Correlation Coefficient",
+    title: "Predictive Tools",
     datasets: [
       {
         id: 1,
@@ -49,7 +49,7 @@ export const menus = [
   {
     id: 3,
     category: "El Nino, Climate and Agriculture production",
-    title: "Dynamic Graphs",
+    title: "Analytics",
     datasets: [
       {
         id: 1,
@@ -80,7 +80,7 @@ export const menus = [
   {
     id: 4,
     category: "El Nino, Climate and Agriculture production",
-    title: "Correlation Coefficient",
+    title: "Predictive Tools",
     datasets: [
       {
         id: 1,
@@ -108,7 +108,7 @@ export const menus = [
   {
     id: 5,
     category: "Climate Variability and Transport Vehicular Accidents",
-    title: "Dynamic Graphs",
+    title: "Analytics",
     datasets: [
       {
         id: 1,
@@ -125,7 +125,7 @@ export const menus = [
   {
     id: 6,
     category: "Climate Variability and Transport Vehicular Accidents",
-    title: "Correlation Coefficient",
+    title: "Predictive Tools",
     datasets: [
       {
         id: 1,
