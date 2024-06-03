@@ -28,6 +28,12 @@
   "country": {
     "IND": "India"
   },
+  "crop": {
+    "rice": "Rice",
+    "maize": "Maize",
+    "sugarcane": "Sugarcane",
+    "cotton": "Cotton"
+  },
   "district": [
     {
       "district_code": "NPL001",

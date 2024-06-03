@@ -17,3 +17,9 @@ export const transformSourceObject = (object: any) =>
     value: key,
     label: key,
   }));
+
+export const transformProvinceArray = (array: Array<object>) =>
+  array.map((e: any) => ({ value: e.province_id, label: e.province }));
+
+export const transformDistrictArray = (array: Array<object>) =>
+  array.map((e: any) => ({ value: e.district_id, label: e.district }));

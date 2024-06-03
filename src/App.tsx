@@ -4,6 +4,7 @@ import NotFoundPage from "./components/404-page";
 import { ThemeProvider } from "./components/theme-provider";
 import Content from "./components/content";
 import PredictiveTools from "./components/predictive-tools";
+import GDDPredictiveTools from "./components/gdd-tools";
 function App() {
   const router = createBrowserRouter([
     {
@@ -18,6 +19,10 @@ function App() {
         {
           path: "/predictive-tools/",
           element: <PredictiveTools />,
+        },
+        {
+          path: "/gdd-predictive-tools/",
+          element: <GDDPredictiveTools />,
         },
       ],
     },

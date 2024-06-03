@@ -72,7 +72,7 @@ const PredictiveToolsFilter = ({
           }}
         />
         <div>
-          <Label className="mb-2.5">Independent Variables</Label>
+          <Label className="mb-2.5 font-semibold">Independent Variables</Label>
           <FancyMultiSelect
             setIndicators={setIndicators}
             array={transformObject(metadata.indic)}
