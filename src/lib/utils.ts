@@ -23,3 +23,9 @@ export const transformProvinceArray = (array: Array<object>) =>
 
 export const transformDistrictArray = (array: Array<object>) =>
   array.map((e: any) => ({ value: e.district_id, label: e.district }));
+
+export const transfromTehsilArray = (array: Array<object>) =>
+  array.map((e: any) => ({ value: e.tehsil_id, label: e.tehsil }));
+
+export const getAverage = (array: any) =>
+  array.reduce((a: any, b: any) => a + b) / array.length;

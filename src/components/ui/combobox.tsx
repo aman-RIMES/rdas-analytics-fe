@@ -44,7 +44,7 @@ function Combobox({ array, state, label }: any) {
               <CommandList>
                 {array.map((framework: any) => (
                   <CommandItem
-                    key={framework.value}
+                    key={Math.random()}
                     value={framework.value}
                     onSelect={(currentValue) => {
                       state.setValue(

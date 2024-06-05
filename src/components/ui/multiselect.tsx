@@ -15,7 +15,7 @@ import { Command as CommandPrimitive } from "cmdk";
 
 type Indicator = Record<"value" | "label", string>;
 
-export function FancyMultiSelect({ setIndicators, array }: any) {
+export function FancyMultiSelect({ setState, array }: any) {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
   const [selected, setSelected] = React.useState<Indicator[]>([]);
@@ -23,7 +23,7 @@ export function FancyMultiSelect({ setIndicators, array }: any) {
 
   const handleUnselect = React.useCallback((framework: Indicator) => {
     setSelected((prev) => prev.filter((s) => s.value !== framework.value));
-    setIndicators((prev: any) =>
+    setState((prev: any) =>
       prev.filter((s: any) => s.value !== framework.value)
     );
   }, []);
@@ -113,7 +113,7 @@ export function FancyMultiSelect({ setIndicators, array }: any) {
                       onSelect={() => {
                         setInputValue("");
                         setSelected((prev) => [...prev, element]);
-                        setIndicators((prev: any) => [...prev, element]);
+                        setState((prev: any) => [...prev, element]);
                       }}
                       className={"cursor-pointer"}
                     >
