@@ -2,14 +2,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import Combobox from "./ui/combobox";
-import district from "@/data/district.json";
 import metadata from "@/data/metadata.json";
 import {
-  getAverage,
   transformDistrictArray,
   transformObject,
   transformProvinceArray,
-  transformSourceObject,
   transfromTehsilArray,
 } from "@/lib/utils";
 import DatePicker from "./datepicker";
@@ -18,21 +15,15 @@ import { Label } from "@radix-ui/react-dropdown-menu";
 import axios from "axios";
 import { FancyMultiSelect } from "./ui/multiselect";
 import { years } from "@/constants";
-import { divIcon } from "leaflet";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "./ui/table";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 const GDDToolsFilter = () => {
-  const [primaryIndicator, setPrimaryIndicator] = useState("");
+  const [isError, setIsError] = useState(false);
+  const [isNewAnalysis, setIsNewAnalysis] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [cropValue, setCropValue] = useState("");
   const [tehsils, setTehsils] = useState([{}]);
   const [tehsilValue, setTehsilValue] = useState("");
   const [districtValue, setDistrictValue] = useState("");
@@ -93,15 +84,30 @@ const GDDToolsFilter = () => {
 
   const generateGDD = async () => {
     try {
+      setResultVisibile(false);
+      setIsError(false);
+      setIsLoading(true);
       const response: any = await axios.get(
-        // `http://203.156.108.67:1580/gdd?start_date=2022-10-01&end_date=2023-02-01&tehsil_id=PK10101&district_id=PK101&crop=Rice&years=2022,2021,2017`
-        `http://203.156.108.67:1580/gdd?start_date=2022-10-01&end_date=2023-02-01&tehsil_id=PK10101&district_id=PK101&crop=Rice&years=2012,2021,2003`
+        `http://203.156.108.67:1580/gdd?start_date=${startDate
+          ?.toISOString()
+          .slice(0, 10)}&end_date=${endDate
+          ?.toISOString()
+          .slice(
+            0,
+            10
+          )}&tehsil_id=${tehsilValue}&district_id=${districtValue}&crop=${cropValue}&years=${yearsValue.join(
+          ","
+        )}`
       );
       setGddData(response.data);
+      setIsLoading(false);
       setResultVisibile(true);
-      console.log(response.data);
+      setIsNewAnalysis(false);
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
+      setIsError(true);
+      setIsNewAnalysis(false);
     }
   };
 
@@ -147,13 +153,17 @@ const GDDToolsFilter = () => {
           label={"Crop"}
           array={transformObject(metadata.crop)}
           state={{
-            value: primaryIndicator,
-            setValue: setPrimaryIndicator,
+            value: cropValue,
+            setValue: setCropValue,
           }}
         />
         <div>
           <Label className="mb-2.5 font-semibold">Years</Label>
-          <FancyMultiSelect setState={setYearsValue} array={years} />
+          <FancyMultiSelect
+            placeholder={"Select Years"}
+            setState={setYearsValue}
+            array={years}
+          />
         </div>
         <DatePicker
           date={startDate}
@@ -165,43 +175,22 @@ const GDDToolsFilter = () => {
 
       <div className="grid gap-4 md:grid-cols-3 justify-center mt-10">
         <div></div>
-        <Button onClick={generateGDD} className="w-full">
-          Start Analysis
+        <Button onClick={generateGDD} className="w-full text-lg">
+          {isNewAnalysis ? "Start Analysis" : "Re-Analyze"}
         </Button>
       </div>
 
+      {isError && (
+        <div className="my-20 flex justify-center">
+          <p className="text-2xl">Error analyzing data !</p>
+        </div>
+      )}
+      {isLoading && (
+        <div className="my-20 flex justify-center">
+          <p className="text-2xl">Loading ....</p>
+        </div>
+      )}
       {resultVisibile && (
-        // <div className="mt-10">
-        //   <Table>
-        //     <TableHeader>
-        //       <TableRow>
-        //         <TableHead className="w-[100px]">Year</TableHead>
-        //         <TableHead>Average Max-Temp</TableHead>
-        //         <TableHead>Average Min-Temp</TableHead>
-        //         <TableHead>GDD Total</TableHead>
-        //         <TableHead>Average GDD</TableHead>
-        //         <TableHead>NDVI</TableHead>
-        //       </TableRow>
-        //     </TableHeader>
-        //     <TableBody>
-        //       {gddData.map((element: any) => (
-        //         <TableRow key={Math.random()}>
-        //           <TableCell className="font-medium">{element.Year}</TableCell>
-        //           <TableCell>
-        //             {getAverage(element.Max_temp).toFixed(2)}
-        //           </TableCell>
-        //           <TableCell>
-        //             {getAverage(element.Min_temp).toFixed(2)}
-        //           </TableCell>
-        //           <TableCell>{element.Gdd_total}</TableCell>
-        //           <TableCell>{getAverage(element.GDD).toFixed(2)}</TableCell>
-        //           <TableCell>{element.NDVI}</TableCell>
-        //         </TableRow>
-        //       ))}
-        //     </TableBody>
-        //   </Table>
-        // </div>
-
         <>
           <div className="mb-10 mt-10 px-5 flex flex-col gap-7">
             <HighchartsReact
@@ -209,29 +198,70 @@ const GDDToolsFilter = () => {
               options={gddData.gdd_chart}
             />
           </div>
-          <div>
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={gddData.temp_charts[0]}
-            />
+
+          <div className="mt-20">
+            <Tabs defaultValue={gddData.temp_charts[0].title.text}>
+              <div className="flex justify-center">
+                <TabsList className="py-7 border">
+                  {gddData.temp_charts.map((chartOption: any) => (
+                    <TabsTrigger
+                      className="text-lg  data-[state=active]:border"
+                      key={Math.random()}
+                      value={
+                        chartOption.title.text ==
+                        gddData.temp_charts[0].title.text
+                          ? `${chartOption.title.text}`
+                          : `The year ${chartOption.title.text
+                              .split(" ")
+                              .splice(-1)}`
+                      }
+                    >
+                      {chartOption.title.text ==
+                      gddData.temp_charts[0].title.text
+                        ? `Between ${startDate
+                            ?.toISOString()
+                            .slice(0, 10)} - ${endDate
+                            ?.toISOString()
+                            .slice(0, 10)}`
+                        : `The year ${chartOption.title.text
+                            .split(" ")
+                            .splice(-1)}`}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </div>
+              <div className="mt-10">
+                {gddData.temp_charts.map((chartOption: any) => (
+                  <TabsContent
+                    key={Math.random()}
+                    value={
+                      chartOption.title.text ==
+                      gddData.temp_charts[0].title.text
+                        ? `${chartOption.title.text}`
+                        : `The year ${chartOption.title.text
+                            .split(" ")
+                            .splice(-1)}`
+                    }
+                  >
+                    <HighchartsReact
+                      highcharts={Highcharts}
+                      options={chartOption}
+                    />
+                  </TabsContent>
+                ))}
+              </div>
+            </Tabs>
           </div>
+
           <div>
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={gddData.temp_charts[1]}
-            />
-          </div>
-          <div>
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={gddData.temp_charts[2]}
-            />
-          </div>
-          <div>
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={gddData.temp_charts[3]}
-            />
+            {/* {gddData.temp_charts.map((chartOption: any) => (
+              <div key={Math.random()}>
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  options={chartOption}
+                />
+              </div>
+            ))} */}
           </div>
         </>
       )}

@@ -15,7 +15,11 @@ import { Command as CommandPrimitive } from "cmdk";
 
 type Indicator = Record<"value" | "label", string>;
 
-export function FancyMultiSelect({ setState, array }: any) {
+export function FancyMultiSelect({
+  setState,
+  array,
+  placeholder = "Select variables",
+}: any) {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
   const [selected, setSelected] = React.useState<Indicator[]>([]);
@@ -23,9 +27,7 @@ export function FancyMultiSelect({ setState, array }: any) {
 
   const handleUnselect = React.useCallback((framework: Indicator) => {
     setSelected((prev) => prev.filter((s) => s.value !== framework.value));
-    setState((prev: any) =>
-      prev.filter((s: any) => s.value !== framework.value)
-    );
+    setState((prev: any) => prev.filter((s: any) => s !== framework.value));
   }, []);
 
   const handleKeyDown = React.useCallback(
@@ -92,8 +94,8 @@ export function FancyMultiSelect({ setState, array }: any) {
             onValueChange={setInputValue}
             onBlur={() => setOpen(false)}
             onFocus={() => setOpen(true)}
-            placeholder="Select variables..."
-            className="ml-2 flex-1 bg-transparent outline-none placeholder:text-muted-foreground"
+            placeholder={placeholder}
+            className="ml-2 flex-1 bg-transparent outline-none placeholder:font-medium  placeholder:text-black placeholder:text-muted-foreground"
           />
         </div>
       </div>
@@ -113,7 +115,7 @@ export function FancyMultiSelect({ setState, array }: any) {
                       onSelect={() => {
                         setInputValue("");
                         setSelected((prev) => [...prev, element]);
-                        setState((prev: any) => [...prev, element]);
+                        setState((prev: any) => [...prev, element.value]);
                       }}
                       className={"cursor-pointer"}
                     >

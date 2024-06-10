@@ -29,10 +29,10 @@
     "IND": "India"
   },
   "crop": {
-    "rice": "Rice",
-    "maize": "Maize",
-    "sugarcane": "Sugarcane",
-    "cotton": "Cotton"
+    "Rice": "Rice",
+    "Wheat": "Wheat",
+    "Sugarcane": "Sugarcane",
+    "Cotton": "Cotton"
   },
   "district": [
     {
