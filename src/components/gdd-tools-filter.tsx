@@ -28,6 +28,8 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
+import HighchartsReact from "highcharts-react-official";
+import Highcharts from "highcharts";
 
 const GDDToolsFilter = () => {
   const [primaryIndicator, setPrimaryIndicator] = useState("");
@@ -41,7 +43,7 @@ const GDDToolsFilter = () => {
   const [startDate, setStartDate] = React.useState<Date>();
   const [endDate, setEndDate] = React.useState<Date>();
   const [yearsValue, setYearsValue] = useState([]);
-  const [gddData, setGddData] = useState([]);
+  const [gddData, setGddData] = useState<any>([]);
   const [resultVisibile, setResultVisibile] = useState(false);
 
   // function setProv(e) {
@@ -92,7 +94,8 @@ const GDDToolsFilter = () => {
   const generateGDD = async () => {
     try {
       const response: any = await axios.get(
-        `http://203.156.108.67:1580/gdd?start_date=2022-10-01&end_date=2023-02-01&tehsil_id=PK10101&district_id=PK101&crop=Rice&years=2022,2021,2016`
+        // `http://203.156.108.67:1580/gdd?start_date=2022-10-01&end_date=2023-02-01&tehsil_id=PK10101&district_id=PK101&crop=Rice&years=2022,2021,2017`
+        `http://203.156.108.67:1580/gdd?start_date=2022-10-01&end_date=2023-02-01&tehsil_id=PK10101&district_id=PK101&crop=Rice&years=2012,2021,2003`
       );
       setGddData(response.data);
       setResultVisibile(true);
@@ -168,36 +171,69 @@ const GDDToolsFilter = () => {
       </div>
 
       {resultVisibile && (
-        <div className="mt-10">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[100px]">Year</TableHead>
-                <TableHead>Average Max-Temp</TableHead>
-                <TableHead>Average Min-Temp</TableHead>
-                <TableHead>GDD Total</TableHead>
-                <TableHead>Average GDD</TableHead>
-                <TableHead>NDVI</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {gddData.map((element: any) => (
-                <TableRow key={Math.random()}>
-                  <TableCell className="font-medium">{element.Year}</TableCell>
-                  <TableCell>
-                    {getAverage(element.Max_temp).toFixed(2)}
-                  </TableCell>
-                  <TableCell>
-                    {getAverage(element.Min_temp).toFixed(2)}
-                  </TableCell>
-                  <TableCell>{element.Gdd_total}</TableCell>
-                  <TableCell>{getAverage(element.GDD).toFixed(2)}</TableCell>
-                  <TableCell>{element.NDVI}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+        // <div className="mt-10">
+        //   <Table>
+        //     <TableHeader>
+        //       <TableRow>
+        //         <TableHead className="w-[100px]">Year</TableHead>
+        //         <TableHead>Average Max-Temp</TableHead>
+        //         <TableHead>Average Min-Temp</TableHead>
+        //         <TableHead>GDD Total</TableHead>
+        //         <TableHead>Average GDD</TableHead>
+        //         <TableHead>NDVI</TableHead>
+        //       </TableRow>
+        //     </TableHeader>
+        //     <TableBody>
+        //       {gddData.map((element: any) => (
+        //         <TableRow key={Math.random()}>
+        //           <TableCell className="font-medium">{element.Year}</TableCell>
+        //           <TableCell>
+        //             {getAverage(element.Max_temp).toFixed(2)}
+        //           </TableCell>
+        //           <TableCell>
+        //             {getAverage(element.Min_temp).toFixed(2)}
+        //           </TableCell>
+        //           <TableCell>{element.Gdd_total}</TableCell>
+        //           <TableCell>{getAverage(element.GDD).toFixed(2)}</TableCell>
+        //           <TableCell>{element.NDVI}</TableCell>
+        //         </TableRow>
+        //       ))}
+        //     </TableBody>
+        //   </Table>
+        // </div>
+
+        <>
+          <div className="mb-10 mt-10 px-5 flex flex-col gap-7">
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={gddData.gdd_chart}
+            />
+          </div>
+          <div>
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={gddData.temp_charts[0]}
+            />
+          </div>
+          <div>
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={gddData.temp_charts[1]}
+            />
+          </div>
+          <div>
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={gddData.temp_charts[2]}
+            />
+          </div>
+          <div>
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={gddData.temp_charts[3]}
+            />
+          </div>
+        </>
       )}
     </div>
   );

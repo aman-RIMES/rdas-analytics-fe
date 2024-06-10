@@ -13,14 +13,6 @@ const GDDPredictiveTools = () => {
 
       <div className="mt-10 border rounded-lg">
         <GDDToolsFilter />
-        <div className="mb-10 px-5 flex flex-col gap-7">
-          {/* {isRegressionVisible && (
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={regressionModel?.chart}
-            />
-          )} */}
-        </div>
       </div>
     </>
   );
