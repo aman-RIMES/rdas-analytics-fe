@@ -157,6 +157,13 @@ const GDDToolsFilter = () => {
             setValue: setCropValue,
           }}
         />
+
+        <DatePicker
+          date={startDate}
+          setDate={setStartDate}
+          label={"Start Date"}
+        />
+        <DatePicker date={endDate} setDate={setEndDate} label={"End Date"} />
         <div>
           <Label className="mb-2.5 font-semibold">Years</Label>
           <FancyMultiSelect
@@ -165,12 +172,6 @@ const GDDToolsFilter = () => {
             array={years}
           />
         </div>
-        <DatePicker
-          date={startDate}
-          setDate={setStartDate}
-          label={"Start Date"}
-        />
-        <DatePicker date={endDate} setDate={setEndDate} label={"End Date"} />
       </div>
 
       <div className="grid gap-4 md:grid-cols-3 justify-center mt-10">
@@ -216,16 +217,7 @@ const GDDToolsFilter = () => {
                               .splice(-1)}`
                       }
                     >
-                      {chartOption.title.text ==
-                      gddData.temp_charts[0].title.text
-                        ? `Between ${startDate
-                            ?.toISOString()
-                            .slice(0, 10)} - ${endDate
-                            ?.toISOString()
-                            .slice(0, 10)}`
-                        : `The year ${chartOption.title.text
-                            .split(" ")
-                            .splice(-1)}`}
+                      {chartOption.title.text.split(" ").splice(-1)}
                     </TabsTrigger>
                   ))}
                 </TabsList>
@@ -251,17 +243,6 @@ const GDDToolsFilter = () => {
                 ))}
               </div>
             </Tabs>
-          </div>
-
-          <div>
-            {/* {gddData.temp_charts.map((chartOption: any) => (
-              <div key={Math.random()}>
-                <HighchartsReact
-                  highcharts={Highcharts}
-                  options={chartOption}
-                />
-              </div>
-            ))} */}
           </div>
         </>
       )}
