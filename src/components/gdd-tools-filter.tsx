@@ -7,6 +7,7 @@ import {
   transformDistrictArray,
   transformObject,
   transformProvinceArray,
+  transfromCropArray,
   transfromTehsilArray,
 } from "@/lib/utils";
 import DatePicker from "./datepicker";
@@ -23,7 +24,8 @@ const GDDToolsFilter = () => {
   const [isError, setIsError] = useState(false);
   const [isNewAnalysis, setIsNewAnalysis] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [cropValue, setCropValue] = useState("");
+  const [crops, setCrops] = useState([{}]);
+  const [cropValue, setCropValue] = useState();
   const [tehsils, setTehsils] = useState([{}]);
   const [tehsilValue, setTehsilValue] = useState("");
   const [districtValue, setDistrictValue] = useState("");
@@ -42,6 +44,19 @@ const GDDToolsFilter = () => {
 
   //   setProvinceValue(e);
   // }
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const cropsList: any = await axios.get(
+          "http://203.156.108.67:1480/crops"
+        );
+        setCrops(cropsList.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -151,7 +166,7 @@ const GDDToolsFilter = () => {
       <div className="grid gap-4 mb-6 md:grid-cols-4 justify-center">
         <Combobox
           label={"Crop"}
-          array={transformObject(metadata.crop)}
+          array={transfromCropArray(crops.slice(0, 10))}
           state={{
             value: cropValue,
             setValue: setCropValue,
