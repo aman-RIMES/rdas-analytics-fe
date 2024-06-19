@@ -19,6 +19,7 @@ import { years } from "@/constants";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { DatePickerWithRange } from "./date-range-picker";
 
 const GDDToolsFilter = () => {
   const [isError, setIsError] = useState(false);
@@ -33,6 +34,7 @@ const GDDToolsFilter = () => {
   const [countryValue, setCountryValue] = useState("");
   const [provinces, setProvinces] = useState([{}]);
   const [provinceValue, setProvinceValue] = useState("");
+  const [dateRange, setDateRange] = React.useState<Date>();
   const [startDate, setStartDate] = React.useState<Date>();
   const [endDate, setEndDate] = React.useState<Date>();
   const [yearsValue, setYearsValue] = useState([]);
@@ -173,6 +175,12 @@ const GDDToolsFilter = () => {
           }}
         />
 
+        <DatePickerWithRange
+          date={dateRange}
+          setDate={setDateRange}
+          min={17}
+          label={"Start and End date"}
+        />
         <DatePicker
           date={startDate}
           setDate={setStartDate}
