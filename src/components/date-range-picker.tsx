@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
 
-import * as React from "react";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 
@@ -15,7 +13,7 @@ import {
 import { CalendarComplete } from "./ui/calendar-complete";
 import { Label } from "./ui/label";
 
-export function DatePickerWithRange({ date, setDate, label, min }: any) {
+export function DatePickerWithRange({ date, setDate, label, min, max }: any) {
   return (
     <div className={cn("grid gap-2")}>
       <div className="flex flex-col justify-start gap-2">
@@ -53,16 +51,19 @@ export function DatePickerWithRange({ date, setDate, label, min }: any) {
               fromYear={2007}
               toYear={2023}
               min={min}
+              max={max}
               defaultMonth={date?.from}
               selected={date}
               onSelect={setDate}
               numberOfMonths={2}
-              //   footer={
+              // footer={
+              //   <>
               //     <p className="flex justify-center mt-10">
               //       {" "}
-              //       Choose between 120-150 days
+              //       Choose between {min}-{max} days
               //     </p>
-              //   }
+              //   </>
+              // }
             />
           </PopoverContent>
         </Popover>

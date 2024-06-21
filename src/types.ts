@@ -32,3 +32,18 @@ export interface SubMenu {
   title: string;
   datasets: Dataset[];
 }
+
+export interface Crop {
+  crop_id: number;
+  crop_name: string;
+  min_gdd: number;
+  max_gdd: number;
+  min_period_days: number;
+  max_period_days: number;
+  base_temp: number;
+}
+
+export interface DateRange {
+  from: Date;
+  to: Date;
+}

@@ -4,13 +4,13 @@ import React, { useEffect, useState } from "react";
 import Combobox from "./ui/combobox";
 import metadata from "@/data/metadata.json";
 import {
+  formatDate,
   transformDistrictArray,
   transformObject,
   transformProvinceArray,
   transfromCropArray,
   transfromTehsilArray,
 } from "@/lib/utils";
-import DatePicker from "./datepicker";
 import { Button } from "./ui/button";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import axios from "axios";
@@ -20,12 +20,13 @@ import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { DatePickerWithRange } from "./date-range-picker";
+import { Crop, DateRange } from "@/types";
 
 const GDDToolsFilter = () => {
   const [isError, setIsError] = useState(false);
   const [isNewAnalysis, setIsNewAnalysis] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [crops, setCrops] = useState([{}]);
+  const [crops, setCrops] = useState<Crop[]>([]);
   const [cropValue, setCropValue] = useState();
   const [tehsils, setTehsils] = useState([{}]);
   const [tehsilValue, setTehsilValue] = useState("");
@@ -34,9 +35,7 @@ const GDDToolsFilter = () => {
   const [countryValue, setCountryValue] = useState("");
   const [provinces, setProvinces] = useState([{}]);
   const [provinceValue, setProvinceValue] = useState("");
-  const [dateRange, setDateRange] = React.useState<Date>();
-  const [startDate, setStartDate] = React.useState<Date>();
-  const [endDate, setEndDate] = React.useState<Date>();
+  const [dateRange, setDateRange] = useState<DateRange>();
   const [yearsValue, setYearsValue] = useState([]);
   const [gddData, setGddData] = useState<any>([]);
   const [resultVisibile, setResultVisibile] = useState(false);
@@ -50,9 +49,7 @@ const GDDToolsFilter = () => {
   useEffect(() => {
     (async () => {
       try {
-        const cropsList: any = await axios.get(
-          "http://203.156.108.67:1480/crops"
-        );
+        const cropsList = await axios.get("http://203.156.108.67:1480/crops");
         setCrops(cropsList.data);
       } catch (error) {
         console.log(error);
@@ -105,14 +102,11 @@ const GDDToolsFilter = () => {
       setIsError(false);
       setIsLoading(true);
       const response: any = await axios.get(
-        `http://203.156.108.67:1580/gdd?start_date=${startDate
-          ?.toISOString()
-          .slice(0, 10)}&end_date=${endDate
-          ?.toISOString()
-          .slice(
-            0,
-            10
-          )}&tehsil_id=${tehsilValue}&district_id=${districtValue}&crop=${cropValue}&years=${yearsValue.join(
+        `http://203.156.108.67:1580/gdd?start_date=${formatDate(
+          dateRange?.from
+        )}&end_date=${formatDate(
+          dateRange?.to
+        )}&tehsil_id=${tehsilValue}&district_id=${districtValue}&crop=${cropValue}&years=${yearsValue.join(
           ","
         )}`
       );
@@ -178,15 +172,10 @@ const GDDToolsFilter = () => {
         <DatePickerWithRange
           date={dateRange}
           setDate={setDateRange}
-          min={17}
+          min={crops.find((e) => e?.crop_id == cropValue)?.min_period_days}
+          max={crops.find((e) => e?.crop_id == cropValue)?.max_period_days}
           label={"Start and End date"}
         />
-        <DatePicker
-          date={startDate}
-          setDate={setStartDate}
-          label={"Start Date"}
-        />
-        <DatePicker date={endDate} setDate={setEndDate} label={"End Date"} />
         <div>
           <Label className="mb-2.5 font-semibold">Years</Label>
           <FancyMultiSelect

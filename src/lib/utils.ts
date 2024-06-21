@@ -6,6 +6,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function formatDate(date: any) {
+  return date
+    ? new Date(date?.getTime() - date?.getTimezoneOffset() * 60000)
+        .toISOString()
+        .slice(0, 10)
+    : "";
+}
+
 export const transformObject = (object: any) =>
   Array.from(Object.entries(object), ([key, value]) => ({
     value: key,
