@@ -21,6 +21,7 @@ import Highcharts from "highcharts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { DatePickerWithRange } from "./date-range-picker";
 import { Crop, DateRange } from "@/types";
+import gddResponse from "@/data/gdd.json";
 
 const GDDToolsFilter = () => {
   const [isError, setIsError] = useState(false);
@@ -193,6 +194,10 @@ const GDDToolsFilter = () => {
         </Button>
       </div>
 
+      {/* {gddResponse.ndvi_images.map((e) => (
+        <img src={`data:image/png;base64,${e.image.split(",")[1]}`} />
+      ))} */}
+
       {isError && (
         <div className="my-20 flex justify-center">
           <p className="text-2xl">Error analyzing data !</p>
@@ -250,6 +255,35 @@ const GDDToolsFilter = () => {
                     <HighchartsReact
                       highcharts={Highcharts}
                       options={chartOption}
+                    />
+                  </TabsContent>
+                ))}
+              </div>
+            </Tabs>
+          </div>
+
+          <div className="mt-20">
+            <Tabs defaultValue={gddData.ndvi_images[0].year}>
+              <div className="flex justify-center">
+                <TabsList className="py-7 border">
+                  {gddData.ndvi_images.map((element: any) => (
+                    <TabsTrigger
+                      className="text-lg  data-[state=active]:border"
+                      key={Math.random()}
+                      value={element.year}
+                    >
+                      {element.year}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </div>
+              <div className="mt-10">
+                {gddData.ndvi_images.map((element: any) => (
+                  <TabsContent key={Math.random()} value={element.year}>
+                    <img
+                      src={`data:image/png;base64,${
+                        element.image.split(",")[1]
+                      }`}
                     />
                   </TabsContent>
                 ))}
