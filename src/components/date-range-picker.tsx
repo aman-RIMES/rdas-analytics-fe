@@ -13,7 +13,14 @@ import {
 import { CalendarComplete } from "./ui/calendar-complete";
 import { Label } from "./ui/label";
 
-export function DatePickerWithRange({ date, setDate, label, min, max }: any) {
+export function DatePickerWithRange({
+  date,
+  setDate,
+  label,
+  min,
+  max,
+  disabledStatus,
+}: any) {
   return (
     <div className={cn("grid gap-2")}>
       <div className="flex flex-col justify-start gap-2">
@@ -21,6 +28,7 @@ export function DatePickerWithRange({ date, setDate, label, min, max }: any) {
         <Popover>
           <PopoverTrigger asChild>
             <Button
+              disabled={disabledStatus}
               id="date"
               variant={"outline"}
               className={cn(

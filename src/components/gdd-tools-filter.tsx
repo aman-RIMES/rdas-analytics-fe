@@ -15,12 +15,13 @@ import { Button } from "./ui/button";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import axios from "axios";
 import { FancyMultiSelect } from "./ui/multiselect";
-import { years } from "@/constants";
+import { yearsList } from "@/constants";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { DatePickerWithRange } from "./date-range-picker";
 import { Crop, DateRange } from "@/types";
+import { setYear } from "date-fns";
 
 const GDDToolsFilter = () => {
   const [isError, setIsError] = useState(false);
@@ -39,12 +40,18 @@ const GDDToolsFilter = () => {
   const [yearsValue, setYearsValue] = useState([]);
   const [gddData, setGddData] = useState<any>([]);
   const [resultVisibile, setResultVisibile] = useState(false);
+  const [years, setYears] = useState(yearsList);
 
   // function setProv(e) {
   //   console.log("#$##$%%% " + e);
 
   //   setProvinceValue(e);
   // }
+
+  useEffect(() => {
+    const chosenYear = formatDate(dateRange?.from).slice(0, 4);
+    setYears(yearsList.filter((e) => e.label !== chosenYear));
+  }, [dateRange]);
 
   useEffect(() => {
     (async () => {
@@ -173,6 +180,7 @@ const GDDToolsFilter = () => {
         />
 
         <DatePickerWithRange
+          disabledStatus={cropValue == null}
           date={dateRange}
           setDate={setDateRange}
           min={crops.find((e) => e?.crop_id == cropValue)?.min_period_days}
@@ -223,14 +231,7 @@ const GDDToolsFilter = () => {
                     <TabsTrigger
                       className="text-lg  data-[state=active]:border"
                       key={Math.random()}
-                      value={
-                        chartOption.title.text ==
-                        gddData.temp_charts[0].title.text
-                          ? `${chartOption.title.text}`
-                          : `The year ${chartOption.title.text
-                              .split(" ")
-                              .splice(-1)}`
-                      }
+                      value={chartOption.title.text}
                     >
                       {chartOption.title.text.split(" ").splice(-1)}
                     </TabsTrigger>
@@ -241,14 +242,7 @@ const GDDToolsFilter = () => {
                 {gddData.temp_charts.map((chartOption: any) => (
                   <TabsContent
                     key={Math.random()}
-                    value={
-                      chartOption.title.text ==
-                      gddData.temp_charts[0].title.text
-                        ? `${chartOption.title.text}`
-                        : `The year ${chartOption.title.text
-                            .split(" ")
-                            .splice(-1)}`
-                    }
+                    value={chartOption.title.text}
                   >
                     <HighchartsReact
                       highcharts={Highcharts}
