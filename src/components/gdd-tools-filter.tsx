@@ -21,7 +21,6 @@ import Highcharts from "highcharts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { DatePickerWithRange } from "./date-range-picker";
 import { Crop, DateRange } from "@/types";
-import gddResponse from "@/data/gdd.json";
 
 const GDDToolsFilter = () => {
   const [isError, setIsError] = useState(false);
@@ -102,14 +101,17 @@ const GDDToolsFilter = () => {
       setResultVisibile(false);
       setIsError(false);
       setIsLoading(true);
+      // const response: any = await axios.get(
+      //   `http://203.156.108.67:1580/gdd?start_date=${formatDate(
+      //     dateRange?.from
+      //   )}&end_date=${formatDate(
+      //     dateRange?.to
+      //   )}&tehsil_id=${tehsilValue}&district_id=${districtValue}&crop=${cropValue}&years=${yearsValue.join(
+      //     ","
+      //   )}`
+      // );
       const response: any = await axios.get(
-        `http://203.156.108.67:1580/gdd?start_date=${formatDate(
-          dateRange?.from
-        )}&end_date=${formatDate(
-          dateRange?.to
-        )}&tehsil_id=${tehsilValue}&district_id=${districtValue}&crop=${cropValue}&years=${yearsValue.join(
-          ","
-        )}`
+        `http://203.156.108.67:1580/gdd?start_date=2022-10-01&end_date=2023-02-01&tehsil_id=PK10101&district_id=PK101&crop=2&years=2019,2021,2020`
       );
       setGddData(response.data);
       setIsLoading(false);
@@ -194,10 +196,6 @@ const GDDToolsFilter = () => {
         </Button>
       </div>
 
-      {/* {gddResponse.ndvi_images.map((e) => (
-        <img src={`data:image/png;base64,${e.image.split(",")[1]}`} />
-      ))} */}
-
       {isError && (
         <div className="my-20 flex justify-center">
           <p className="text-2xl">Error analyzing data !</p>
@@ -280,11 +278,19 @@ const GDDToolsFilter = () => {
               <div className="mt-10">
                 {gddData.ndvi_images.map((element: any) => (
                   <TabsContent key={Math.random()} value={element.year}>
-                    <img
-                      src={`data:image/png;base64,${
-                        element.image.split(",")[1]
-                      }`}
-                    />
+                    <div className="flex flex-col items-center justify-center mt-5">
+                      <p className="text-xl font-semibold">
+                        NDVI Image for the year {element.year}
+                      </p>
+                      <div className="my-10">
+                        <img
+                          className="rounded-md object-cover"
+                          src={`data:image/png;base64,${
+                            element.image.split(",")[1]
+                          }`}
+                        />
+                      </div>
+                    </div>
                   </TabsContent>
                 ))}
               </div>
