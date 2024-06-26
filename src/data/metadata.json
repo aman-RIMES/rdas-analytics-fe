@@ -988,8 +988,7 @@
     "rainfall": "Rainfall",
     "normal_rainfall": "Normal Rainfall",
     "el_nino": "El Nino Events",
-    "temperature": "Temperature",
-    "crop_production": "Crop Production"
+    "temperature": "Temperature"
   },
   "period": {
     "annual": "Annual"

@@ -28,6 +28,7 @@ const Filter = () => {
   const [isCorrelationDataVisible, setIsCorrelationDataVisible] =
     useState<any>(false);
   const [timeSeriesChartData, setTimeSeriesChartData] = useState<any>({});
+  const [geoJsonData, setGeoJsonData] = useState<any>({});
   const [correlationChartData, setCorrelationChartData] = useState<any>({});
   const [regressionModelChartData, setRegressionModelChartData] = useState<any>(
     {}
@@ -46,16 +47,37 @@ const Filter = () => {
       const response = await axios.post(
         "http://203.156.108.67:1580/dynamic_charts",
         {
+          // source: sourceValue,
+          // // indic: indicatorValue,
+          // indic: "rainfall,el_nino,normal_rainfall",
+          // period: "annual",
+          // country: countryValue,
+          // // district: [districtValue],
+          // start_date: startDate?.toISOString().slice(0, 10),
+          // end_date: endDate?.toISOString().slice(0, 10),
+
           source: sourceValue,
-          // indic: indicatorValue,
-          indic: "rainfall,crop_production,el_nino,normal_rainfall",
+          indic: "rainfall",
           period: "annual",
-          country: countryValue,
-          // district: [districtValue],
-          start_date: startDate?.toISOString().slice(0, 10),
-          end_date: endDate?.toISOString().slice(0, 10),
+          district: districtValue,
+          start: "2015-10-12",
+          end: "2021-10-12",
         }
       );
+
+      // const geoJson = await axios.post(
+      //   "http://203.156.108.67:1580/dynamic_map",
+      //   {
+      //     source: "ERA5",
+      //     indic: "rainfall_deviation",
+      //     period: "annual",
+      //     district: "NPL_33",
+      //     start: "2015-10-12",
+      //     end: "2021-10-12",
+      //   }
+      // );
+
+      // await setGeoJsonData(geoJson.data);
       setTimeSeriesChartData(response.data);
       setIsTimeSeriesVisible(true);
     } catch (error) {
@@ -67,27 +89,41 @@ const Filter = () => {
       const correlationData = await axios.post(
         "http://203.156.108.67:1580/correlation_plot",
         {
-          source: sourceValue,
-          // indic: indicatorValue,
-          indic: "rainfall,crop_production,el_nino,normal_rainfall",
-          period: "annual",
-          country: countryValue,
+          // source: sourceValue,
+          // // indic: indicatorValue,
+          // indic: "rainfall,el_nino,normal_rainfall",
+          // period: "annual",
+          // country: countryValue,
           // district: [districtValue],
-          start_date: startDate?.toISOString().slice(0, 10),
-          end_date: endDate?.toISOString().slice(0, 10),
+          // start_date: startDate?.toISOString().slice(0, 10),
+          // end_date: endDate?.toISOString().slice(0, 10),
+
+          source: "ERA5",
+          indic: "rainfall,el_nino,normal_rainfall",
+          period: "annual",
+          district: "NPL_33",
+          start: "2015-10-12",
+          end: "2021-10-12",
         }
       );
       const regressionModelData = await axios.post(
         "http://203.156.108.67:1580/regression_analysis",
         {
-          source: sourceValue,
-          // indic: indicatorValue,
-          indic: "el_nino,rainfall",
+          // source: sourceValue,
+          // // indic: indicatorValue,
+          // indic: "el_nino,rainfall",
+          // period: "annual",
+          // country: countryValue,
+          // // district: [districtValue],
+          // start_date: startDate?.toISOString().slice(0, 10),
+          // end_date: endDate?.toISOString().slice(0, 10),
+
+          source: "ERA5",
+          indic: "rainfall,el_nino,normal_rainfall",
           period: "annual",
-          country: countryValue,
-          // district: [districtValue],
-          start_date: startDate?.toISOString().slice(0, 10),
-          end_date: endDate?.toISOString().slice(0, 10),
+          district: "NPL_33",
+          start: "2015-10-12",
+          end: "2021-10-12",
         }
       );
       setRegressionModelChartData(regressionModelData.data);
@@ -162,7 +198,7 @@ const Filter = () => {
               <p className="text-xl font-semibold flex justify-center my-8">
                 India districts
               </p>
-              <Leaflet />
+              <Leaflet data={geoJsonData} />
             </div>
           </div>
           <div className="flex justify-center mt-10">
