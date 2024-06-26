@@ -1,5 +1,5 @@
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
-import india from "../data/india-districts.json";
+// import india from "../data/india-districts.json";
 import "leaflet/dist/leaflet.css";
 
 const Leaflet = () => {
@@ -20,7 +20,7 @@ const Leaflet = () => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <GeoJSON style={countryStyle} data={india.features} />
+          {/* <GeoJSON style={countryStyle} data={india.features} /> */}
         </MapContainer>
       </div>
     </div>
