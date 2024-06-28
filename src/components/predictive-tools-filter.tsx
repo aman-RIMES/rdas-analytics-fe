@@ -167,7 +167,7 @@ const PredictiveToolsFilter = ({
       <div className="grid gap-4 md:grid-cols-3 justify-center mt-10">
         <div></div>
         <Button className="w-full mt-10" onClick={generateDescriptionAnalysis}>
-          Start Prediction
+          Start Descriptive Analysis
         </Button>
       </div>
 
@@ -358,7 +358,7 @@ const PredictiveToolsFilter = ({
           <div className="grid gap-4 md:grid-cols-4 items-center justify-center mt-40">
             <div className="text-lg font-medium">
               <Combobox
-                label={"Regression model"}
+                label={"Predictive model"}
                 array={[
                   { value: "linear", label: "Linear" },
                   { value: "logistic", label: "Logistic" },
@@ -371,13 +371,13 @@ const PredictiveToolsFilter = ({
             </div>
             <div>
               <label className="text-lg font-medium" htmlFor="rainfall">
-                Rainfall Coefficient
+                Rainfall Value
               </label>
               <Input className="mt-2" id="rainfall" type="number" />
             </div>
             <div>
               <label className="text-lg font-medium" htmlFor="rainfall">
-                Normal Rainfall Coefficient
+                Normal Rainfall Value
               </label>
               <Input className="mt-2" id="rainfall" type="number" />
             </div>
@@ -400,7 +400,7 @@ const PredictiveToolsFilter = ({
       {showPredictiveValue && (
         <>
           <div className="flex flex-col items-center justify-center mt-20 mb-20">
-            <p className="text-lg">Linear Regression Value</p>
+            <p className="text-lg">Predicited Value</p>
             <p className="text-8xl font-semibold mt-5">0.04906</p>
           </div>
         </>

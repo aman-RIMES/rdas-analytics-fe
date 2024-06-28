@@ -43,6 +43,7 @@ const Filter = () => {
   }, [countryValue]);
 
   const generateTimeSeries = async () => {
+    setIsTimeSeriesVisible(false);
     try {
       const response = await axios.post(
         "http://203.156.108.67:1580/dynamic_charts",
@@ -56,28 +57,28 @@ const Filter = () => {
           // start_date: startDate?.toISOString().slice(0, 10),
           // end_date: endDate?.toISOString().slice(0, 10),
 
-          source: sourceValue,
+          source: "ERA5",
           indic: "rainfall",
           period: "annual",
-          district: districtValue,
+          district: "NPL_04",
           start: "2015-10-12",
           end: "2021-10-12",
         }
       );
 
-      // const geoJson = await axios.post(
-      //   "http://203.156.108.67:1580/dynamic_map",
-      //   {
-      //     source: "ERA5",
-      //     indic: "rainfall_deviation",
-      //     period: "annual",
-      //     district: "NPL_33",
-      //     start: "2015-10-12",
-      //     end: "2021-10-12",
-      //   }
-      // );
+      const geoJson = await axios.post(
+        "http://203.156.108.67:1580/dynamic_map",
+        {
+          source: "ERA5",
+          indic: "rainfall_deviation",
+          period: "annual",
+          district: "NPL_04,NPL_33",
+          start: "2015-10-12",
+          end: "2021-10-12",
+        }
+      );
 
-      // await setGeoJsonData(geoJson.data);
+      await setGeoJsonData(geoJson.data);
       setTimeSeriesChartData(response.data);
       setIsTimeSeriesVisible(true);
     } catch (error) {
