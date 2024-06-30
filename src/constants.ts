@@ -238,3 +238,10 @@ export const yearsList = [
     label: "2023",
   },
 ];
+
+export const countries = [
+  { value: "NPL", label: "Nepal" },
+  { value: "IND", label: "India" },
+  { value: "PAK", label: "Pakistan" },
+  { value: "BGD", label: "Bangladesh" },
+];

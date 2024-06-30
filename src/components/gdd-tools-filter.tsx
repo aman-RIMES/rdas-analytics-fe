@@ -8,8 +8,8 @@ import {
   transformDistrictArray,
   transformObject,
   transformProvinceArray,
-  transfromCropArray,
-  transfromTehsilArray,
+  transformCropArray,
+  transformTehsilArray,
 } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { Label } from "@radix-ui/react-dropdown-menu";
@@ -112,7 +112,7 @@ const GDDToolsFilter = () => {
       //   `http://203.156.108.67:1580/gdd?start_date=${formatDate(
       //     dateRange?.from
       //   )}&end_date=${formatDate(
-      //     dateRange?.to
+      //     dateRange?.to"2015-10-12"
       //   )}&tehsil_id=${tehsilValue}&district_id=${districtValue}&crop=${cropValue}&years=${yearsValue.join(
       //     ","
       //   )}`
@@ -161,7 +161,7 @@ const GDDToolsFilter = () => {
         />
         <Combobox
           label={"Tehsil"}
-          array={transfromTehsilArray(tehsils)}
+          array={transformTehsilArray(tehsils)}
           state={{
             value: tehsilValue,
             setValue: setTehsilValue,
@@ -172,7 +172,7 @@ const GDDToolsFilter = () => {
       <div className="grid gap-4 mb-6 md:grid-cols-4 justify-center">
         <Combobox
           label={"Crop"}
-          array={transfromCropArray(crops.slice(0, 10))}
+          array={transformCropArray(crops.slice(0, 10))}
           state={{
             value: cropValue,
             setValue: setCropValue,

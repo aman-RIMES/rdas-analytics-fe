@@ -1,0 +1,3770 @@
+{
+  "source": {
+    "MSWEP": {
+      "name": "Multi-Source Weighted-Ensemble Precipitation (MSWEP)",
+      "url": "https://www.gloh2o.org/mswep/"
+    },
+    "ERA5": {
+      "name": "ECMWF Reanalysis v5 (ERA5)",
+      "url": "https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels?tab=overview"
+    },
+    "APHRODITE": {
+      "name": "Asian Precipitation - Highly-Resolved Observational Data Integration Towards Evaluation (APHRODITE)",
+      "url": "https://climatedataguide.ucar.edu/climate-data/aphrodite-asian-precipitation-highly-resolved-observational-data-integration-towards"
+    },
+    "CRU": {
+      "name": "Climatic Research Unit (CRU)",
+      "url": "https://www.uea.ac.uk/groups-and-centres/climatic-research-unit"
+    },
+    "CHIRPS": {
+      "name": "Climate Hazards Group InfraRed Precipitation with Station (CHIRPS)",
+      "url": "https://www.chc.ucsb.edu/data/chirps"
+    },
+    "GPCC": {
+      "name": "Global Precipitation Climatology Centre (GPCC)",
+      "url": "https://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/global-precipitation-climatology-centre-gpcc"
+    }
+  },
+  "district": [
+    {
+      "country": "NPL",
+      "district_name": "TAPLEJUNG",
+      "district_code": "NPL_01",
+      "level": 2,
+      "pdd": "101"
+    },
+    {
+      "country": "NPL",
+      "district_name": "PANCHTHAR",
+      "district_code": "NPL_02",
+      "level": 2,
+      "pdd": "102"
+    },
+    {
+      "country": "NPL",
+      "district_name": "ILAM",
+      "district_code": "NPL_03",
+      "level": 2,
+      "pdd": "103"
+    },
+    {
+      "country": "NPL",
+      "district_name": "JHAPA",
+      "district_code": "NPL_04",
+      "level": 2,
+      "pdd": "104"
+    },
+    {
+      "country": "NPL",
+      "district_name": "MORANG",
+      "district_code": "NPL_05",
+      "level": 2,
+      "pdd": "105"
+    },
+    {
+      "country": "NPL",
+      "district_name": "SUNSARI",
+      "district_code": "NPL_06",
+      "level": 2,
+      "pdd": "106"
+    },
+    {
+      "country": "NPL",
+      "district_name": "DHANKUTA",
+      "district_code": "NPL_07",
+      "level": 2,
+      "pdd": "107"
+    },
+    {
+      "country": "NPL",
+      "district_name": "TERHATHUM",
+      "district_code": "NPL_08",
+      "level": 2,
+      "pdd": "108"
+    },
+    {
+      "country": "NPL",
+      "district_name": "SANKHUWASABHA",
+      "district_code": "NPL_09",
+      "level": 2,
+      "pdd": "109"
+    },
+    {
+      "country": "NPL",
+      "district_name": "BHOJPUR",
+      "district_code": "NPL_10",
+      "level": 2,
+      "pdd": "110"
+    },
+    {
+      "country": "NPL",
+      "district_name": "SOLUKHUMBU",
+      "district_code": "NPL_11",
+      "level": 2,
+      "pdd": "111"
+    },
+    {
+      "country": "NPL",
+      "district_name": "OKHALDHUNGA",
+      "district_code": "NPL_12",
+      "level": 2,
+      "pdd": "112"
+    },
+    {
+      "country": "NPL",
+      "district_name": "KHOTANG",
+      "district_code": "NPL_13",
+      "level": 2,
+      "pdd": "113"
+    },
+    {
+      "country": "NPL",
+      "district_name": "UDAYAPUR",
+      "district_code": "NPL_14",
+      "level": 2,
+      "pdd": "114"
+    },
+    {
+      "country": "NPL",
+      "district_name": "SAPTARI",
+      "district_code": "NPL_15",
+      "level": 2,
+      "pdd": "215"
+    },
+    {
+      "country": "NPL",
+      "district_name": "SIRAHA",
+      "district_code": "NPL_16",
+      "level": 2,
+      "pdd": "216"
+    },
+    {
+      "country": "NPL",
+      "district_name": "DHANUSHA",
+      "district_code": "NPL_17",
+      "level": 2,
+      "pdd": "217"
+    },
+    {
+      "country": "NPL",
+      "district_name": "MAHOTTARI",
+      "district_code": "NPL_18",
+      "level": 2,
+      "pdd": "218"
+    },
+    {
+      "country": "NPL",
+      "district_name": "SARLAHI",
+      "district_code": "NPL_19",
+      "level": 2,
+      "pdd": "219"
+    },
+    {
+      "country": "NPL",
+      "district_name": "SINDHULI",
+      "district_code": "NPL_20",
+      "level": 2,
+      "pdd": "320"
+    },
+    {
+      "country": "NPL",
+      "district_name": "RAMECHHAP",
+      "district_code": "NPL_21",
+      "level": 2,
+      "pdd": "321"
+    },
+    {
+      "country": "NPL",
+      "district_name": "DOLAKHA",
+      "district_code": "NPL_22",
+      "level": 2,
+      "pdd": "322"
+    },
+    {
+      "country": "NPL",
+      "district_name": "SINDHUPALCHOK",
+      "district_code": "NPL_23",
+      "level": 2,
+      "pdd": "323"
+    },
+    {
+      "country": "NPL",
+      "district_name": "KABHREPALANCHOK",
+      "district_code": "NPL_24",
+      "level": 2,
+      "pdd": "324"
+    },
+    {
+      "country": "NPL",
+      "district_name": "LALITPUR",
+      "district_code": "NPL_25",
+      "level": 2,
+      "pdd": "325"
+    },
+    {
+      "country": "NPL",
+      "district_name": "BHAKTAPUR",
+      "district_code": "NPL_26",
+      "level": 2,
+      "pdd": "326"
+    },
+    {
+      "country": "NPL",
+      "district_name": "KATHMANDU",
+      "district_code": "NPL_27",
+      "level": 2,
+      "pdd": "327"
+    },
+    {
+      "country": "NPL",
+      "district_name": "NUWAKOT",
+      "district_code": "NPL_28",
+      "level": 2,
+      "pdd": "328"
+    },
+    {
+      "country": "NPL",
+      "district_name": "RASUWA",
+      "district_code": "NPL_29",
+      "level": 2,
+      "pdd": "329"
+    },
+    {
+      "country": "NPL",
+      "district_name": "DHADING",
+      "district_code": "NPL_30",
+      "level": 2,
+      "pdd": "330"
+    },
+    {
+      "country": "NPL",
+      "district_name": "MAKAWANPUR",
+      "district_code": "NPL_31",
+      "level": 2,
+      "pdd": "331"
+    },
+    {
+      "country": "NPL",
+      "district_name": "RAUTAHAT",
+      "district_code": "NPL_32",
+      "level": 2,
+      "pdd": "232"
+    },
+    {
+      "country": "NPL",
+      "district_name": "BARA",
+      "district_code": "NPL_33",
+      "level": 2,
+      "pdd": "233"
+    },
+    {
+      "country": "NPL",
+      "district_name": "PARSA",
+      "district_code": "NPL_34",
+      "level": 2,
+      "pdd": "234"
+    },
+    {
+      "country": "NPL",
+      "district_name": "CHITAWAN",
+      "district_code": "NPL_35",
+      "level": 2,
+      "pdd": "335"
+    },
+    {
+      "country": "NPL",
+      "district_name": "GORKHA",
+      "district_code": "NPL_36",
+      "level": 2,
+      "pdd": "436"
+    },
+    {
+      "country": "NPL",
+      "district_name": "LAMJUNG",
+      "district_code": "NPL_37",
+      "level": 2,
+      "pdd": "437"
+    },
+    {
+      "country": "NPL",
+      "district_name": "TANAHU",
+      "district_code": "NPL_38",
+      "level": 2,
+      "pdd": "438"
+    },
+    {
+      "country": "NPL",
+      "district_name": "SYANGJA",
+      "district_code": "NPL_39",
+      "level": 2,
+      "pdd": "439"
+    },
+    {
+      "country": "NPL",
+      "district_name": "KASKI",
+      "district_code": "NPL_40",
+      "level": 2,
+      "pdd": "440"
+    },
+    {
+      "country": "NPL",
+      "district_name": "MANANG",
+      "district_code": "NPL_41",
+      "level": 2,
+      "pdd": "441"
+    },
+    {
+      "country": "NPL",
+      "district_name": "MUSTANG",
+      "district_code": "NPL_42",
+      "level": 2,
+      "pdd": "442"
+    },
+    {
+      "country": "NPL",
+      "district_name": "MYAGDI",
+      "district_code": "NPL_43",
+      "level": 2,
+      "pdd": "443"
+    },
+    {
+      "country": "NPL",
+      "district_name": "PARBAT",
+      "district_code": "NPL_44",
+      "level": 2,
+      "pdd": "444"
+    },
+    {
+      "country": "NPL",
+      "district_name": "BAGLUNG",
+      "district_code": "NPL_45",
+      "level": 2,
+      "pdd": "445"
+    },
+    {
+      "country": "NPL",
+      "district_name": "GULMI",
+      "district_code": "NPL_46",
+      "level": 2,
+      "pdd": "546"
+    },
+    {
+      "country": "NPL",
+      "district_name": "PALPA",
+      "district_code": "NPL_47",
+      "level": 2,
+      "pdd": "547"
+    },
+    {
+      "country": "NPL",
+      "district_name": "NAWALPARASI_W",
+      "district_code": "NPL_48",
+      "level": 2,
+      "pdd": "548"
+    },
+    {
+      "country": "NPL",
+      "district_name": "RUPANDEHI",
+      "district_code": "NPL_49",
+      "level": 2,
+      "pdd": "549"
+    },
+    {
+      "country": "NPL",
+      "district_name": "KAPILBASTU",
+      "district_code": "NPL_50",
+      "level": 2,
+      "pdd": "550"
+    },
+    {
+      "country": "NPL",
+      "district_name": "ARGHAKHANCHI",
+      "district_code": "NPL_51",
+      "level": 2,
+      "pdd": "551"
+    },
+    {
+      "country": "NPL",
+      "district_name": "PYUTHAN",
+      "district_code": "NPL_52",
+      "level": 2,
+      "pdd": "552"
+    },
+    {
+      "country": "NPL",
+      "district_name": "ROLPA",
+      "district_code": "NPL_53",
+      "level": 2,
+      "pdd": "553"
+    },
+    {
+      "country": "NPL",
+      "district_name": "RUKUM_W",
+      "district_code": "NPL_54",
+      "level": 2,
+      "pdd": "654"
+    },
+    {
+      "country": "NPL",
+      "district_name": "SALYAN",
+      "district_code": "NPL_55",
+      "level": 2,
+      "pdd": "655"
+    },
+    {
+      "country": "NPL",
+      "district_name": "DANG",
+      "district_code": "NPL_56",
+      "level": 2,
+      "pdd": "556"
+    },
+    {
+      "country": "NPL",
+      "district_name": "BANKE",
+      "district_code": "NPL_57",
+      "level": 2,
+      "pdd": "557"
+    },
+    {
+      "country": "NPL",
+      "district_name": "BARDIYA",
+      "district_code": "NPL_58",
+      "level": 2,
+      "pdd": "558"
+    },
+    {
+      "country": "NPL",
+      "district_name": "SURKHET",
+      "district_code": "NPL_59",
+      "level": 2,
+      "pdd": "659"
+    },
+    {
+      "country": "NPL",
+      "district_name": "DAILEKH",
+      "district_code": "NPL_60",
+      "level": 2,
+      "pdd": "660"
+    },
+    {
+      "country": "NPL",
+      "district_name": "JAJARKOT",
+      "district_code": "NPL_61",
+      "level": 2,
+      "pdd": "661"
+    },
+    {
+      "country": "NPL",
+      "district_name": "DOLPA",
+      "district_code": "NPL_62",
+      "level": 2,
+      "pdd": "662"
+    },
+    {
+      "country": "NPL",
+      "district_name": "JUMLA",
+      "district_code": "NPL_63",
+      "level": 2,
+      "pdd": "663"
+    },
+    {
+      "country": "NPL",
+      "district_name": "KALIKOT",
+      "district_code": "NPL_64",
+      "level": 2,
+      "pdd": "664"
+    },
+    {
+      "country": "NPL",
+      "district_name": "MUGU",
+      "district_code": "NPL_65",
+      "level": 2,
+      "pdd": "665"
+    },
+    {
+      "country": "NPL",
+      "district_name": "HUMLA",
+      "district_code": "NPL_66",
+      "level": 2,
+      "pdd": "666"
+    },
+    {
+      "country": "NPL",
+      "district_name": "BAJURA",
+      "district_code": "NPL_67",
+      "level": 2,
+      "pdd": "767"
+    },
+    {
+      "country": "NPL",
+      "district_name": "BAJHANG",
+      "district_code": "NPL_68",
+      "level": 2,
+      "pdd": "768"
+    },
+    {
+      "country": "NPL",
+      "district_name": "ACHHAM",
+      "district_code": "NPL_69",
+      "level": 2,
+      "pdd": "769"
+    },
+    {
+      "country": "NPL",
+      "district_name": "DOTI",
+      "district_code": "NPL_70",
+      "level": 2,
+      "pdd": "770"
+    },
+    {
+      "country": "NPL",
+      "district_name": "KAILALI",
+      "district_code": "NPL_71",
+      "level": 2,
+      "pdd": "771"
+    },
+    {
+      "country": "NPL",
+      "district_name": "KANCHANPUR",
+      "district_code": "NPL_72",
+      "level": 2,
+      "pdd": "772"
+    },
+    {
+      "country": "NPL",
+      "district_name": "DADELDHURA",
+      "district_code": "NPL_73",
+      "level": 2,
+      "pdd": "773"
+    },
+    {
+      "country": "NPL",
+      "district_name": "BAITADI",
+      "district_code": "NPL_74",
+      "level": 2,
+      "pdd": "774"
+    },
+    {
+      "country": "NPL",
+      "district_name": "DARCHULA",
+      "district_code": "NPL_75",
+      "level": 2,
+      "pdd": "775"
+    },
+    {
+      "country": "NPL",
+      "district_name": "NAWALPARASI_E",
+      "district_code": "NPL_76",
+      "level": 2,
+      "pdd": "476"
+    },
+    {
+      "country": "NPL",
+      "district_name": "RUKUM_E",
+      "district_code": "NPL_77",
+      "level": 2,
+      "pdd": "577"
+    },
+    {
+      "country": "PAK",
+      "district_name": "BAGH",
+      "district_code": "PK101",
+      "level": 2,
+      "pdd": "PK101"
+    },
+    {
+      "country": "PAK",
+      "district_name": "BHIMBER",
+      "district_code": "PK102",
+      "level": 2,
+      "pdd": "PK102"
+    },
+    {
+      "country": "PAK",
+      "district_name": "HATTIAN BALA",
+      "district_code": "PK103",
+      "level": 2,
+      "pdd": "PK103"
+    },
+    {
+      "country": "PAK",
+      "district_name": "HAVELI",
+      "district_code": "PK104",
+      "level": 2,
+      "pdd": "PK104"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KOTLI",
+      "district_code": "PK105",
+      "level": 2,
+      "pdd": "PK105"
+    },
+    {
+      "country": "PAK",
+      "district_name": "MIRPUR",
+      "district_code": "PK106",
+      "level": 2,
+      "pdd": "PK106"
+    },
+    {
+      "country": "PAK",
+      "district_name": "MUZAFFARABAD",
+      "district_code": "PK107",
+      "level": 2,
+      "pdd": "PK107"
+    },
+    {
+      "country": "PAK",
+      "district_name": "SOHBATPUR",
+      "district_code": "PK232",
+      "level": 2,
+      "pdd": "PK232"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KILLA ABDULLAH",
+      "district_code": "PK214",
+      "level": 2,
+      "pdd": "PK214"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KILLA SAIFULLAH",
+      "district_code": "PK215",
+      "level": 2,
+      "pdd": "PK215"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KOHLU",
+      "district_code": "PK216",
+      "level": 2,
+      "pdd": "PK216"
+    },
+    {
+      "country": "PAK",
+      "district_name": "MASTUNG",
+      "district_code": "PK219",
+      "level": 2,
+      "pdd": "PK219"
+    },
+    {
+      "country": "PAK",
+      "district_name": "MUSA KHEL",
+      "district_code": "PK220",
+      "level": 2,
+      "pdd": "PK220"
+    },
+    {
+      "country": "PAK",
+      "district_name": "PANJGUR",
+      "district_code": "PK223",
+      "level": 2,
+      "pdd": "PK223"
+    },
+    {
+      "country": "PAK",
+      "district_name": "PISHIN",
+      "district_code": "PK224",
+      "level": 2,
+      "pdd": "PK224"
+    },
+    {
+      "country": "PAK",
+      "district_name": "SHEERANI",
+      "district_code": "PK226",
+      "level": 2,
+      "pdd": "PK226"
+    },
+    {
+      "country": "PAK",
+      "district_name": "LEHRI",
+      "district_code": "PK231",
+      "level": 2,
+      "pdd": "PK231"
+    },
+    {
+      "country": "PAK",
+      "district_name": "SIBI",
+      "district_code": "PK227",
+      "level": 2,
+      "pdd": "PK227"
+    },
+    {
+      "country": "PAK",
+      "district_name": "WASHUK",
+      "district_code": "PK228",
+      "level": 2,
+      "pdd": "PK228"
+    },
+    {
+      "country": "PAK",
+      "district_name": "ZHOB",
+      "district_code": "PK229",
+      "level": 2,
+      "pdd": "PK229"
+    },
+    {
+      "country": "PAK",
+      "district_name": "FR BANNU",
+      "district_code": "PK602",
+      "level": 2,
+      "pdd": "PK602"
+    },
+    {
+      "country": "PAK",
+      "district_name": "FR D.I.KHAN",
+      "district_code": "PK603",
+      "level": 2,
+      "pdd": "PK603"
+    },
+    {
+      "country": "PAK",
+      "district_name": "FR KOHAT",
+      "district_code": "PK604",
+      "level": 2,
+      "pdd": "PK604"
+    },
+    {
+      "country": "PAK",
+      "district_name": "FR PESHAWAR",
+      "district_code": "PK606",
+      "level": 2,
+      "pdd": "PK606"
+    },
+    {
+      "country": "PAK",
+      "district_name": "FR TANK",
+      "district_code": "PK607",
+      "level": 2,
+      "pdd": "PK607"
+    },
+    {
+      "country": "PAK",
+      "district_name": "ISLAMABAD",
+      "district_code": "PK401",
+      "level": 2,
+      "pdd": "PK401"
+    },
+    {
+      "country": "PAK",
+      "district_name": "ASTORE",
+      "district_code": "PK501",
+      "level": 2,
+      "pdd": "PK501"
+    },
+    {
+      "country": "PAK",
+      "district_name": "GILGIT",
+      "district_code": "PK505",
+      "level": 2,
+      "pdd": "PK505"
+    },
+    {
+      "country": "PAK",
+      "district_name": "SKARDU",
+      "district_code": "PK507",
+      "level": 2,
+      "pdd": "PK507"
+    },
+    {
+      "country": "PAK",
+      "district_name": "ABBOTTABAD",
+      "district_code": "PK613",
+      "level": 2,
+      "pdd": "PK613"
+    },
+    {
+      "country": "PAK",
+      "district_name": "BANNU",
+      "district_code": "PK614",
+      "level": 2,
+      "pdd": "PK614"
+    },
+    {
+      "country": "PAK",
+      "district_name": "BATAGRAM",
+      "district_code": "PK615",
+      "level": 2,
+      "pdd": "PK615"
+    },
+    {
+      "country": "PAK",
+      "district_name": "CHARSADDA",
+      "district_code": "PK617",
+      "level": 2,
+      "pdd": "PK617"
+    },
+    {
+      "country": "PAK",
+      "district_name": "CHITRAL",
+      "district_code": "PK618",
+      "level": 2,
+      "pdd": "PK618"
+    },
+    {
+      "country": "PAK",
+      "district_name": "HANGU",
+      "district_code": "PK620",
+      "level": 2,
+      "pdd": "PK620"
+    },
+    {
+      "country": "PAK",
+      "district_name": "HARIPUR",
+      "district_code": "PK621",
+      "level": 2,
+      "pdd": "PK621"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KARAK",
+      "district_code": "PK622",
+      "level": 2,
+      "pdd": "PK622"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KOHAT",
+      "district_code": "PK623",
+      "level": 2,
+      "pdd": "PK623"
+    },
+    {
+      "country": "PAK",
+      "district_name": "LAKKI MARWAT",
+      "district_code": "PK625",
+      "level": 2,
+      "pdd": "PK625"
+    },
+    {
+      "country": "PAK",
+      "district_name": "MANSEHRA",
+      "district_code": "PK628",
+      "level": 2,
+      "pdd": "PK628"
+    },
+    {
+      "country": "PAK",
+      "district_name": "MARDAN",
+      "district_code": "PK629",
+      "level": 2,
+      "pdd": "PK629"
+    },
+    {
+      "country": "PAK",
+      "district_name": "NOWSHERA",
+      "district_code": "PK630",
+      "level": 2,
+      "pdd": "PK630"
+    },
+    {
+      "country": "PAK",
+      "district_name": "SWABI",
+      "district_code": "PK632",
+      "level": 2,
+      "pdd": "PK632"
+    },
+    {
+      "country": "PAK",
+      "district_name": "TANK",
+      "district_code": "PK634",
+      "level": 2,
+      "pdd": "PK634"
+    },
+    {
+      "country": "PAK",
+      "district_name": "ATTOCK",
+      "district_code": "PK801",
+      "level": 2,
+      "pdd": "PK801"
+    },
+    {
+      "country": "PAK",
+      "district_name": "BAHAWALNAGAR",
+      "district_code": "PK802",
+      "level": 2,
+      "pdd": "PK802"
+    },
+    {
+      "country": "PAK",
+      "district_name": "BAHAWALPUR",
+      "district_code": "PK803",
+      "level": 2,
+      "pdd": "PK803"
+    },
+    {
+      "country": "PAK",
+      "district_name": "BHAKKAR",
+      "district_code": "PK804",
+      "level": 2,
+      "pdd": "PK804"
+    },
+    {
+      "country": "PAK",
+      "district_name": "CHAKWAL",
+      "district_code": "PK805",
+      "level": 2,
+      "pdd": "PK805"
+    },
+    {
+      "country": "PAK",
+      "district_name": "CHINIOT",
+      "district_code": "PK806",
+      "level": 2,
+      "pdd": "PK806"
+    },
+    {
+      "country": "PAK",
+      "district_name": "GUJRANWALA",
+      "district_code": "PK809",
+      "level": 2,
+      "pdd": "PK809"
+    },
+    {
+      "country": "PAK",
+      "district_name": "GUJRAT",
+      "district_code": "PK810",
+      "level": 2,
+      "pdd": "PK810"
+    },
+    {
+      "country": "PAK",
+      "district_name": "HAFIZABAD",
+      "district_code": "PK811",
+      "level": 2,
+      "pdd": "PK811"
+    },
+    {
+      "country": "PAK",
+      "district_name": "JHANG",
+      "district_code": "PK812",
+      "level": 2,
+      "pdd": "PK812"
+    },
+    {
+      "country": "PAK",
+      "district_name": "JHELUM",
+      "district_code": "PK813",
+      "level": 2,
+      "pdd": "PK813"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KASUR",
+      "district_code": "PK814",
+      "level": 2,
+      "pdd": "PK814"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KHANEWAL",
+      "district_code": "PK836",
+      "level": 2,
+      "pdd": "PK836"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KHUSHAB",
+      "district_code": "PK815",
+      "level": 2,
+      "pdd": "PK815"
+    },
+    {
+      "country": "PAK",
+      "district_name": "LAYYAH",
+      "district_code": "PK817",
+      "level": 2,
+      "pdd": "PK817"
+    },
+    {
+      "country": "PAK",
+      "district_name": "LODHRAN",
+      "district_code": "PK818",
+      "level": 2,
+      "pdd": "PK818"
+    },
+    {
+      "country": "PAK",
+      "district_name": "MANDI BAHAUDDIN",
+      "district_code": "PK819",
+      "level": 2,
+      "pdd": "PK819"
+    },
+    {
+      "country": "PAK",
+      "district_name": "MIANWALI",
+      "district_code": "PK820",
+      "level": 2,
+      "pdd": "PK820"
+    },
+    {
+      "country": "PAK",
+      "district_name": "NAROWAL",
+      "district_code": "PK824",
+      "level": 2,
+      "pdd": "PK824"
+    },
+    {
+      "country": "PAK",
+      "district_name": "OKARA",
+      "district_code": "PK825",
+      "level": 2,
+      "pdd": "PK825"
+    },
+    {
+      "country": "PAK",
+      "district_name": "RAJANPUR",
+      "district_code": "PK828",
+      "level": 2,
+      "pdd": "PK828"
+    },
+    {
+      "country": "PAK",
+      "district_name": "RAWALPINDI",
+      "district_code": "PK829",
+      "level": 2,
+      "pdd": "PK829"
+    },
+    {
+      "country": "PAK",
+      "district_name": "SAHIWAL",
+      "district_code": "PK830",
+      "level": 2,
+      "pdd": "PK830"
+    },
+    {
+      "country": "PAK",
+      "district_name": "SARGODHA",
+      "district_code": "PK831",
+      "level": 2,
+      "pdd": "PK831"
+    },
+    {
+      "country": "PAK",
+      "district_name": "SHEIKHUPURA",
+      "district_code": "PK832",
+      "level": 2,
+      "pdd": "PK832"
+    },
+    {
+      "country": "PAK",
+      "district_name": "SIALKOT",
+      "district_code": "PK833",
+      "level": 2,
+      "pdd": "PK833"
+    },
+    {
+      "country": "PAK",
+      "district_name": "VEHARI",
+      "district_code": "PK835",
+      "level": 2,
+      "pdd": "PK835"
+    },
+    {
+      "country": "PAK",
+      "district_name": "DADU",
+      "district_code": "PK702",
+      "level": 2,
+      "pdd": "PK702"
+    },
+    {
+      "country": "PAK",
+      "district_name": "GHOTKI",
+      "district_code": "PK703",
+      "level": 2,
+      "pdd": "PK703"
+    },
+    {
+      "country": "PAK",
+      "district_name": "HYDERABAD",
+      "district_code": "PK704",
+      "level": 2,
+      "pdd": "PK704"
+    },
+    {
+      "country": "PAK",
+      "district_name": "JACOBABAD",
+      "district_code": "PK705",
+      "level": 2,
+      "pdd": "PK705"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KASHMORE",
+      "district_code": "PK707",
+      "level": 2,
+      "pdd": "PK707"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KHAIRPUR",
+      "district_code": "PK708",
+      "level": 2,
+      "pdd": "PK708"
+    },
+    {
+      "country": "PAK",
+      "district_name": "LARKANA",
+      "district_code": "PK709",
+      "level": 2,
+      "pdd": "PK709"
+    },
+    {
+      "country": "PAK",
+      "district_name": "MATIARI",
+      "district_code": "PK710",
+      "level": 2,
+      "pdd": "PK710"
+    },
+    {
+      "country": "PAK",
+      "district_name": "MIRPURKHAS",
+      "district_code": "PK711",
+      "level": 2,
+      "pdd": "PK711"
+    },
+    {
+      "country": "PAK",
+      "district_name": "SANGHAR",
+      "district_code": "PK713",
+      "level": 2,
+      "pdd": "PK713"
+    },
+    {
+      "country": "PAK",
+      "district_name": "NASIRABAD",
+      "district_code": "PK221",
+      "level": 2,
+      "pdd": "PK221"
+    },
+    {
+      "country": "PAK",
+      "district_name": "SHAHDAD KOT",
+      "district_code": "PK714",
+      "level": 2,
+      "pdd": "PK714"
+    },
+    {
+      "country": "PAK",
+      "district_name": "SUKKUR",
+      "district_code": "PK717",
+      "level": 2,
+      "pdd": "PK717"
+    },
+    {
+      "country": "PAK",
+      "district_name": "THATTA",
+      "district_code": "PK735",
+      "level": 2,
+      "pdd": "PK735"
+    },
+    {
+      "country": "PAK",
+      "district_name": "MALIR CANTONMENT",
+      "district_code": "PK725",
+      "level": 2,
+      "pdd": "PK725"
+    },
+    {
+      "country": "PAK",
+      "district_name": "MALIR",
+      "district_code": "PK732",
+      "level": 2,
+      "pdd": "PK732"
+    },
+    {
+      "country": "PAK",
+      "district_name": "FAISAL CANTONMENT",
+      "district_code": "PK730",
+      "level": 2,
+      "pdd": "PK730"
+    },
+    {
+      "country": "PAK",
+      "district_name": "CLIFTON CANTONMENT",
+      "district_code": "PK728",
+      "level": 2,
+      "pdd": "PK728"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KORANGI CREEK CANTONMENT",
+      "district_code": "PK726",
+      "level": 2,
+      "pdd": "PK726"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KARACHI CANTONMENT",
+      "district_code": "PK729",
+      "level": 2,
+      "pdd": "PK729"
+    },
+    {
+      "country": "PAK",
+      "district_name": "MANORA CANTONMENT",
+      "district_code": "PK727",
+      "level": 2,
+      "pdd": "PK727"
+    },
+    {
+      "country": "PAK",
+      "district_name": "NEELUM",
+      "district_code": "PK108",
+      "level": 2,
+      "pdd": "PK108"
+    },
+    {
+      "country": "PAK",
+      "district_name": "POONCH",
+      "district_code": "PK109",
+      "level": 2,
+      "pdd": "PK109"
+    },
+    {
+      "country": "PAK",
+      "district_name": "SUDHNOTI",
+      "district_code": "PK110",
+      "level": 2,
+      "pdd": "PK110"
+    },
+    {
+      "country": "PAK",
+      "district_name": "AWARAN",
+      "district_code": "PK201",
+      "level": 2,
+      "pdd": "PK201"
+    },
+    {
+      "country": "PAK",
+      "district_name": "BARKHAN",
+      "district_code": "PK202",
+      "level": 2,
+      "pdd": "PK202"
+    },
+    {
+      "country": "PAK",
+      "district_name": "CHAGAI",
+      "district_code": "PK203",
+      "level": 2,
+      "pdd": "PK203"
+    },
+    {
+      "country": "PAK",
+      "district_name": "DERA BUGTI",
+      "district_code": "PK204",
+      "level": 2,
+      "pdd": "PK204"
+    },
+    {
+      "country": "PAK",
+      "district_name": "GWADAR",
+      "district_code": "PK205",
+      "level": 2,
+      "pdd": "PK205"
+    },
+    {
+      "country": "PAK",
+      "district_name": "HARNAI",
+      "district_code": "PK206",
+      "level": 2,
+      "pdd": "PK206"
+    },
+    {
+      "country": "PAK",
+      "district_name": "JAFFARABAD",
+      "district_code": "PK207",
+      "level": 2,
+      "pdd": "PK207"
+    },
+    {
+      "country": "PAK",
+      "district_name": "JHAL MAGSI",
+      "district_code": "PK208",
+      "level": 2,
+      "pdd": "PK208"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KACHHI",
+      "district_code": "PK209",
+      "level": 2,
+      "pdd": "PK209"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KALAT",
+      "district_code": "PK210",
+      "level": 2,
+      "pdd": "PK210"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KECH",
+      "district_code": "PK211",
+      "level": 2,
+      "pdd": "PK211"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KHARAN",
+      "district_code": "PK212",
+      "level": 2,
+      "pdd": "PK212"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KHUZDAR",
+      "district_code": "PK213",
+      "level": 2,
+      "pdd": "PK213"
+    },
+    {
+      "country": "PAK",
+      "district_name": "LASBELA",
+      "district_code": "PK217",
+      "level": 2,
+      "pdd": "PK217"
+    },
+    {
+      "country": "PAK",
+      "district_name": "LORALAI",
+      "district_code": "PK218",
+      "level": 2,
+      "pdd": "PK218"
+    },
+    {
+      "country": "PAK",
+      "district_name": "NUSHKI",
+      "district_code": "PK222",
+      "level": 2,
+      "pdd": "PK222"
+    },
+    {
+      "country": "PAK",
+      "district_name": "QUETTA",
+      "district_code": "PK225",
+      "level": 2,
+      "pdd": "PK225"
+    },
+    {
+      "country": "PAK",
+      "district_name": "ZIARAT",
+      "district_code": "PK230",
+      "level": 2,
+      "pdd": "PK230"
+    },
+    {
+      "country": "PAK",
+      "district_name": "BAJAUR AGENCY",
+      "district_code": "PK601",
+      "level": 2,
+      "pdd": "PK601"
+    },
+    {
+      "country": "PAK",
+      "district_name": "FR LAKKI MARWAT",
+      "district_code": "PK605",
+      "level": 2,
+      "pdd": "PK605"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KURRAM AGENCY",
+      "district_code": "PK608",
+      "level": 2,
+      "pdd": "PK608"
+    },
+    {
+      "country": "PAK",
+      "district_name": "MOHMAND AGENCY",
+      "district_code": "PK609",
+      "level": 2,
+      "pdd": "PK609"
+    },
+    {
+      "country": "PAK",
+      "district_name": "N. WAZIRASTAN",
+      "district_code": "PK610",
+      "level": 2,
+      "pdd": "PK610"
+    },
+    {
+      "country": "PAK",
+      "district_name": "ORAKZAI AGENCY",
+      "district_code": "PK611",
+      "level": 2,
+      "pdd": "PK611"
+    },
+    {
+      "country": "PAK",
+      "district_name": "S. WAZIRASTAN",
+      "district_code": "PK612",
+      "level": 2,
+      "pdd": "PK612"
+    },
+    {
+      "country": "PAK",
+      "district_name": "DIAMIR",
+      "district_code": "PK502",
+      "level": 2,
+      "pdd": "PK502"
+    },
+    {
+      "country": "PAK",
+      "district_name": "GHANCHE",
+      "district_code": "PK503",
+      "level": 2,
+      "pdd": "PK503"
+    },
+    {
+      "country": "PAK",
+      "district_name": "GHIZER",
+      "district_code": "PK504",
+      "level": 2,
+      "pdd": "PK504"
+    },
+    {
+      "country": "PAK",
+      "district_name": "HUNZA NAGAR",
+      "district_code": "PK506",
+      "level": 2,
+      "pdd": "PK506"
+    },
+    {
+      "country": "PAK",
+      "district_name": "BUNER",
+      "district_code": "PK616",
+      "level": 2,
+      "pdd": "PK616"
+    },
+    {
+      "country": "PAK",
+      "district_name": "D I KHAN",
+      "district_code": "PK619",
+      "level": 2,
+      "pdd": "PK619"
+    },
+    {
+      "country": "PAK",
+      "district_name": "UPPER KOHISTAN",
+      "district_code": "PK624",
+      "level": 2,
+      "pdd": "PK624"
+    },
+    {
+      "country": "PAK",
+      "district_name": "LOWER DIR",
+      "district_code": "PK626",
+      "level": 2,
+      "pdd": "PK626"
+    },
+    {
+      "country": "PAK",
+      "district_name": "MALAKAND PROTECTED AREA",
+      "district_code": "PK627",
+      "level": 2,
+      "pdd": "PK627"
+    },
+    {
+      "country": "PAK",
+      "district_name": "SHANGLA",
+      "district_code": "PK631",
+      "level": 2,
+      "pdd": "PK631"
+    },
+    {
+      "country": "PAK",
+      "district_name": "SWAT",
+      "district_code": "PK633",
+      "level": 2,
+      "pdd": "PK633"
+    },
+    {
+      "country": "PAK",
+      "district_name": "TORDHER",
+      "district_code": "PK635",
+      "level": 2,
+      "pdd": "PK635"
+    },
+    {
+      "country": "PAK",
+      "district_name": "UPPER DIR",
+      "district_code": "PK636",
+      "level": 2,
+      "pdd": "PK636"
+    },
+    {
+      "country": "PAK",
+      "district_name": "D G KHAN",
+      "district_code": "PK807",
+      "level": 2,
+      "pdd": "PK807"
+    },
+    {
+      "country": "PAK",
+      "district_name": "FAISALABAD",
+      "district_code": "PK808",
+      "level": 2,
+      "pdd": "PK808"
+    },
+    {
+      "country": "PAK",
+      "district_name": "LAHORE",
+      "district_code": "PK816",
+      "level": 2,
+      "pdd": "PK816"
+    },
+    {
+      "country": "PAK",
+      "district_name": "MULTAN",
+      "district_code": "PK821",
+      "level": 2,
+      "pdd": "PK821"
+    },
+    {
+      "country": "PAK",
+      "district_name": "MUZAFARGARH",
+      "district_code": "PK822",
+      "level": 2,
+      "pdd": "PK822"
+    },
+    {
+      "country": "PAK",
+      "district_name": "NANKANA SAHIB",
+      "district_code": "PK823",
+      "level": 2,
+      "pdd": "PK823"
+    },
+    {
+      "country": "PAK",
+      "district_name": "PAKPATTAN",
+      "district_code": "PK826",
+      "level": 2,
+      "pdd": "PK826"
+    },
+    {
+      "country": "PAK",
+      "district_name": "R Y KHAN",
+      "district_code": "PK827",
+      "level": 2,
+      "pdd": "PK827"
+    },
+    {
+      "country": "PAK",
+      "district_name": "T. T SINGH",
+      "district_code": "PK834",
+      "level": 2,
+      "pdd": "PK834"
+    },
+    {
+      "country": "PAK",
+      "district_name": "BADIN",
+      "district_code": "PK701",
+      "level": 2,
+      "pdd": "PK701"
+    },
+    {
+      "country": "PAK",
+      "district_name": "JAMSHORO",
+      "district_code": "PK706",
+      "level": 2,
+      "pdd": "PK706"
+    },
+    {
+      "country": "PAK",
+      "district_name": "NAUSHAHRO FEROZ",
+      "district_code": "PK712",
+      "level": 2,
+      "pdd": "PK712"
+    },
+    {
+      "country": "PAK",
+      "district_name": "S. BENAZIRABAD",
+      "district_code": "PK715",
+      "level": 2,
+      "pdd": "PK715"
+    },
+    {
+      "country": "PAK",
+      "district_name": "SHIKARPHUR",
+      "district_code": "PK716",
+      "level": 2,
+      "pdd": "PK716"
+    },
+    {
+      "country": "PAK",
+      "district_name": "T. AYAR",
+      "district_code": "PK718",
+      "level": 2,
+      "pdd": "PK718"
+    },
+    {
+      "country": "PAK",
+      "district_name": "T. M KHAN",
+      "district_code": "PK719",
+      "level": 2,
+      "pdd": "PK719"
+    },
+    {
+      "country": "PAK",
+      "district_name": "THARPARKAR",
+      "district_code": "PK720",
+      "level": 2,
+      "pdd": "PK720"
+    },
+    {
+      "country": "PAK",
+      "district_name": "SUJJAWAL",
+      "district_code": "PK721",
+      "level": 2,
+      "pdd": "PK721"
+    },
+    {
+      "country": "PAK",
+      "district_name": "UMERKOT",
+      "district_code": "PK722",
+      "level": 2,
+      "pdd": "PK722"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KARACHI CENTRAL",
+      "district_code": "PK723",
+      "level": 2,
+      "pdd": "PK723"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KARACHI WEST",
+      "district_code": "PK724",
+      "level": 2,
+      "pdd": "PK724"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KARACHI SOUTH",
+      "district_code": "PK731",
+      "level": 2,
+      "pdd": "PK731"
+    },
+    {
+      "country": "PAK",
+      "district_name": "PESHAWAR",
+      "district_code": "PK637",
+      "level": 2,
+      "pdd": "PK637"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KHYBER AGENCY",
+      "district_code": "PK638",
+      "level": 2,
+      "pdd": "PK638"
+    },
+    {
+      "country": "PAK",
+      "district_name": "LOWER KOHISTAN",
+      "district_code": "PK639",
+      "level": 2,
+      "pdd": "PK639"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KORANGI",
+      "district_code": "PK733",
+      "level": 2,
+      "pdd": "PK733"
+    },
+    {
+      "country": "PAK",
+      "district_name": "KARACHI EAST",
+      "district_code": "PK734",
+      "level": 2,
+      "pdd": "PK734"
+    },
+    {
+      "country": "IND",
+      "district_name": "Nicobar Islands",
+      "district_code": "IND.1.1_1",
+      "level": 2,
+      "pdd": "IND.1.1_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "North and Middle Andaman",
+      "district_code": "IND.1.2_1",
+      "level": 2,
+      "pdd": "IND.1.2_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "South Andaman",
+      "district_code": "IND.1.3_1",
+      "level": 2,
+      "pdd": "IND.1.3_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "East Godavari",
+      "district_code": "IND.2.3_1",
+      "level": 2,
+      "pdd": "IND.2.3_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Krishna",
+      "district_code": "IND.2.5_1",
+      "level": 2,
+      "pdd": "IND.2.5_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Prakasam",
+      "district_code": "IND.2.8_1",
+      "level": 2,
+      "pdd": "IND.2.8_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Visakhapatnam",
+      "district_code": "IND.2.10_1",
+      "level": 2,
+      "pdd": "IND.2.10_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "West Godavari",
+      "district_code": "IND.2.12_1",
+      "level": 2,
+      "pdd": "IND.2.12_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Y.S.R.",
+      "district_code": "IND.2.13_1",
+      "level": 2,
+      "pdd": "IND.2.13_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Anjaw",
+      "district_code": "Z07.3.1_1",
+      "level": 2,
+      "pdd": "Z07.3.1_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Changlang",
+      "district_code": "IND.3.2_1",
+      "level": 2,
+      "pdd": "IND.3.2_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Dibang Valley",
+      "district_code": "Z07.3.3_1",
+      "level": 2,
+      "pdd": "Z07.3.3_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "East Kameng",
+      "district_code": "Z07.3.4_1",
+      "level": 2,
+      "pdd": "Z07.3.4_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "East Siang",
+      "district_code": "Z07.3.5_1",
+      "level": 2,
+      "pdd": "Z07.3.5_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kurung Kumey",
+      "district_code": "Z07.3.6_1",
+      "level": 2,
+      "pdd": "Z07.3.6_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Lohit",
+      "district_code": "Z07.3.7_1",
+      "level": 2,
+      "pdd": "Z07.3.7_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Longding",
+      "district_code": "IND.3.8_1",
+      "level": 2,
+      "pdd": "IND.3.8_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Lower Dibang Valley",
+      "district_code": "Z07.3.9_1",
+      "level": 2,
+      "pdd": "Z07.3.9_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Lower Subansiri",
+      "district_code": "Z07.3.10_1",
+      "level": 2,
+      "pdd": "Z07.3.10_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Namsai",
+      "district_code": "IND.3.11_1",
+      "level": 2,
+      "pdd": "IND.3.11_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Papum Pare",
+      "district_code": "Z07.3.12_1",
+      "level": 2,
+      "pdd": "Z07.3.12_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Upper Siang",
+      "district_code": "Z07.3.15_1",
+      "level": 2,
+      "pdd": "Z07.3.15_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Upper Subansiri",
+      "district_code": "Z07.3.16_1",
+      "level": 2,
+      "pdd": "Z07.3.16_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "West Kameng",
+      "district_code": "Z07.3.17_1",
+      "level": 2,
+      "pdd": "Z07.3.17_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "West Siang",
+      "district_code": "Z07.3.18_1",
+      "level": 2,
+      "pdd": "Z07.3.18_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Baksa",
+      "district_code": "IND.4.1_1",
+      "level": 2,
+      "pdd": "IND.4.1_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Barpeta",
+      "district_code": "IND.4.2_1",
+      "level": 2,
+      "pdd": "IND.4.2_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Bongaigaon",
+      "district_code": "IND.4.3_1",
+      "level": 2,
+      "pdd": "IND.4.3_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Cachar",
+      "district_code": "IND.4.4_1",
+      "level": 2,
+      "pdd": "IND.4.4_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Chirang",
+      "district_code": "IND.4.5_1",
+      "level": 2,
+      "pdd": "IND.4.5_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Darrang",
+      "district_code": "IND.4.6_1",
+      "level": 2,
+      "pdd": "IND.4.6_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Dhubri",
+      "district_code": "IND.4.8_1",
+      "level": 2,
+      "pdd": "IND.4.8_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Dima Hasao",
+      "district_code": "IND.4.10_1",
+      "level": 2,
+      "pdd": "IND.4.10_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kamrup",
+      "district_code": "IND.4.16_1",
+      "level": 2,
+      "pdd": "IND.4.16_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kamrup Metropolitan",
+      "district_code": "IND.4.15_1",
+      "level": 2,
+      "pdd": "IND.4.15_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Karbi Anglong",
+      "district_code": "IND.4.17_1",
+      "level": 2,
+      "pdd": "IND.4.17_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Morigaon",
+      "district_code": "IND.4.21_1",
+      "level": 2,
+      "pdd": "IND.4.21_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Sivasagar",
+      "district_code": "IND.4.24_1",
+      "level": 2,
+      "pdd": "IND.4.24_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Sonitpur",
+      "district_code": "IND.4.25_1",
+      "level": 2,
+      "pdd": "IND.4.25_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Udalguri",
+      "district_code": "IND.4.27_1",
+      "level": 2,
+      "pdd": "IND.4.27_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Arwal",
+      "district_code": "IND.5.2_1",
+      "level": 2,
+      "pdd": "IND.5.2_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Bhojpur",
+      "district_code": "IND.5.7_1",
+      "level": 2,
+      "pdd": "IND.5.7_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Jehanabad",
+      "district_code": "IND.5.13_1",
+      "level": 2,
+      "pdd": "IND.5.13_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kaimur",
+      "district_code": "IND.5.14_1",
+      "level": 2,
+      "pdd": "IND.5.14_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Nalanda",
+      "district_code": "IND.5.23_1",
+      "level": 2,
+      "pdd": "IND.5.23_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Pashchim Champaran",
+      "district_code": "IND.5.25_1",
+      "level": 2,
+      "pdd": "IND.5.25_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Patna",
+      "district_code": "IND.5.26_1",
+      "level": 2,
+      "pdd": "IND.5.26_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Purba Champaran",
+      "district_code": "IND.5.27_1",
+      "level": 2,
+      "pdd": "IND.5.27_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Rohtas",
+      "district_code": "IND.5.29_1",
+      "level": 2,
+      "pdd": "IND.5.29_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Saran",
+      "district_code": "IND.5.32_1",
+      "level": 2,
+      "pdd": "IND.5.32_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Vaishali",
+      "district_code": "IND.5.38_1",
+      "level": 2,
+      "pdd": "IND.5.38_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Bastar",
+      "district_code": "IND.7.4_1",
+      "level": 2,
+      "pdd": "IND.7.4_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Dantewada",
+      "district_code": "IND.7.8_1",
+      "level": 2,
+      "pdd": "IND.7.8_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Gariaband",
+      "district_code": "IND.7.11_1",
+      "level": 2,
+      "pdd": "IND.7.11_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Janjgir-Champa",
+      "district_code": "IND.7.12_1",
+      "level": 2,
+      "pdd": "IND.7.12_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Jashpur",
+      "district_code": "IND.7.13_1",
+      "level": 2,
+      "pdd": "IND.7.13_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kabeerdham",
+      "district_code": "IND.7.14_1",
+      "level": 2,
+      "pdd": "IND.7.14_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Koriya",
+      "district_code": "IND.7.17_1",
+      "level": 2,
+      "pdd": "IND.7.17_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Narayanpur",
+      "district_code": "IND.7.20_1",
+      "level": 2,
+      "pdd": "IND.7.20_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Rajnandgaon",
+      "district_code": "IND.7.23_1",
+      "level": 2,
+      "pdd": "IND.7.23_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Sukma",
+      "district_code": "IND.7.24_1",
+      "level": 2,
+      "pdd": "IND.7.24_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Surguja",
+      "district_code": "IND.7.26_1",
+      "level": 2,
+      "pdd": "IND.7.26_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Uttar Bastar Kanker",
+      "district_code": "IND.7.27_1",
+      "level": 2,
+      "pdd": "IND.7.27_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "North Goa",
+      "district_code": "IND.10.1_1",
+      "level": 2,
+      "pdd": "IND.10.1_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "South Goa",
+      "district_code": "IND.10.2_1",
+      "level": 2,
+      "pdd": "IND.10.2_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Aravalli",
+      "district_code": "IND.11.4_1",
+      "level": 2,
+      "pdd": "IND.11.4_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Banas Kantha",
+      "district_code": "IND.11.5_1",
+      "level": 2,
+      "pdd": "IND.11.5_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Devbhumi Dwarka",
+      "district_code": "IND.11.11_1",
+      "level": 2,
+      "pdd": "IND.11.11_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Gir Somnath",
+      "district_code": "IND.11.13_1",
+      "level": 2,
+      "pdd": "IND.11.13_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kachchh",
+      "district_code": "IND.11.16_1",
+      "level": 2,
+      "pdd": "IND.11.16_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kheda",
+      "district_code": "IND.11.17_1",
+      "level": 2,
+      "pdd": "IND.11.17_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Mahisagar",
+      "district_code": "IND.11.19_1",
+      "level": 2,
+      "pdd": "IND.11.19_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Narmada",
+      "district_code": "IND.11.21_1",
+      "level": 2,
+      "pdd": "IND.11.21_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Panch Mahals",
+      "district_code": "IND.11.23_1",
+      "level": 2,
+      "pdd": "IND.11.23_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Sabar Kantha",
+      "district_code": "IND.11.27_1",
+      "level": 2,
+      "pdd": "IND.11.27_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Surat",
+      "district_code": "IND.11.28_1",
+      "level": 2,
+      "pdd": "IND.11.28_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Surendranagar",
+      "district_code": "IND.11.29_1",
+      "level": 2,
+      "pdd": "IND.11.29_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Tapi",
+      "district_code": "IND.11.30_1",
+      "level": 2,
+      "pdd": "IND.11.30_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "The Dangs",
+      "district_code": "IND.11.31_1",
+      "level": 2,
+      "pdd": "IND.11.31_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kurukshetra",
+      "district_code": "IND.12.11_1",
+      "level": 2,
+      "pdd": "IND.12.11_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Mewat",
+      "district_code": "IND.12.13_1",
+      "level": 2,
+      "pdd": "IND.12.13_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Panchkula",
+      "district_code": "IND.12.15_1",
+      "level": 2,
+      "pdd": "IND.12.15_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Yamunanagar",
+      "district_code": "IND.12.21_1",
+      "level": 2,
+      "pdd": "IND.12.21_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kinnaur",
+      "district_code": "Z09.13.5_1",
+      "level": 2,
+      "pdd": "Z09.13.5_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Lahul & Spiti",
+      "district_code": "Z04.13.7_1",
+      "level": 2,
+      "pdd": "Z04.13.7_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Anantnag",
+      "district_code": "Z01.14.1_1",
+      "level": 2,
+      "pdd": "Z01.14.1_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Badgam",
+      "district_code": "Z01.14.2_1",
+      "level": 2,
+      "pdd": "Z01.14.2_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Bandipore",
+      "district_code": "Z01.14.3_1",
+      "level": 2,
+      "pdd": "Z01.14.3_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Baramulla",
+      "district_code": "Z01.14.4_1",
+      "level": 2,
+      "pdd": "Z01.14.4_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Doda",
+      "district_code": "Z01.14.5_1",
+      "level": 2,
+      "pdd": "Z01.14.5_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Ganderbal",
+      "district_code": "Z01.14.6_1",
+      "level": 2,
+      "pdd": "Z01.14.6_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Jammu",
+      "district_code": "Z01.14.7_1",
+      "level": 2,
+      "pdd": "Z01.14.7_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kargil",
+      "district_code": "Z01.14.8_1",
+      "level": 2,
+      "pdd": "Z01.14.8_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kathua",
+      "district_code": "Z01.14.9_1",
+      "level": 2,
+      "pdd": "Z01.14.9_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kishtwar",
+      "district_code": "Z01.14.10_1",
+      "level": 2,
+      "pdd": "Z01.14.10_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kulgam",
+      "district_code": "Z01.14.11_1",
+      "level": 2,
+      "pdd": "Z01.14.11_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kupwara",
+      "district_code": "Z01.14.12_1",
+      "level": 2,
+      "pdd": "Z01.14.12_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Leh (Ladakh)",
+      "district_code": "Z01.14.13_1",
+      "level": 2,
+      "pdd": "Z01.14.13_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Poonch",
+      "district_code": "Z01.14.14_1",
+      "level": 2,
+      "pdd": "Z01.14.14_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Pulwama",
+      "district_code": "Z01.14.15_1",
+      "level": 2,
+      "pdd": "Z01.14.15_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Rajouri",
+      "district_code": "Z01.14.16_1",
+      "level": 2,
+      "pdd": "Z01.14.16_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Ramban",
+      "district_code": "Z01.14.17_1",
+      "level": 2,
+      "pdd": "Z01.14.17_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Reasi",
+      "district_code": "Z01.14.18_1",
+      "level": 2,
+      "pdd": "Z01.14.18_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Samba",
+      "district_code": "Z01.14.19_1",
+      "level": 2,
+      "pdd": "Z01.14.19_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Shupiyan",
+      "district_code": "Z01.14.20_1",
+      "level": 2,
+      "pdd": "Z01.14.20_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Srinagar",
+      "district_code": "Z01.14.21_1",
+      "level": 2,
+      "pdd": "Z01.14.21_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Udhampur",
+      "district_code": "Z01.14.22_1",
+      "level": 2,
+      "pdd": "Z01.14.22_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Bokaro",
+      "district_code": "IND.15.1_1",
+      "level": 2,
+      "pdd": "IND.15.1_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Deoghar",
+      "district_code": "IND.15.3_1",
+      "level": 2,
+      "pdd": "IND.15.3_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Hazaribagh",
+      "district_code": "IND.15.10_1",
+      "level": 2,
+      "pdd": "IND.15.10_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Pakur",
+      "district_code": "IND.15.16_1",
+      "level": 2,
+      "pdd": "IND.15.16_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Palamu",
+      "district_code": "IND.15.17_1",
+      "level": 2,
+      "pdd": "IND.15.17_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Pashchimi Singhbhum",
+      "district_code": "IND.15.18_1",
+      "level": 2,
+      "pdd": "IND.15.18_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Purbi Singhbhum",
+      "district_code": "IND.15.19_1",
+      "level": 2,
+      "pdd": "IND.15.19_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Saraikela-kharsawan",
+      "district_code": "IND.15.23_1",
+      "level": 2,
+      "pdd": "IND.15.23_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Bangalore Rural",
+      "district_code": "IND.16.2_1",
+      "level": 2,
+      "pdd": "IND.16.2_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Chikballapura",
+      "district_code": "IND.16.9_1",
+      "level": 2,
+      "pdd": "IND.16.9_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Dakshina Kannada",
+      "district_code": "IND.16.12_1",
+      "level": 2,
+      "pdd": "IND.16.12_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Davanagere",
+      "district_code": "IND.16.13_1",
+      "level": 2,
+      "pdd": "IND.16.13_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kodagu",
+      "district_code": "IND.16.19_1",
+      "level": 2,
+      "pdd": "IND.16.19_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Ramanagara",
+      "district_code": "IND.16.25_1",
+      "level": 2,
+      "pdd": "IND.16.25_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Uttara Kannada",
+      "district_code": "IND.16.29_1",
+      "level": 2,
+      "pdd": "IND.16.29_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Alappuzha",
+      "district_code": "IND.17.1_1",
+      "level": 2,
+      "pdd": "IND.17.1_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Idukki",
+      "district_code": "IND.17.3_1",
+      "level": 2,
+      "pdd": "IND.17.3_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kannur",
+      "district_code": "IND.17.4_1",
+      "level": 2,
+      "pdd": "IND.17.4_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kollam",
+      "district_code": "IND.17.6_1",
+      "level": 2,
+      "pdd": "IND.17.6_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Palakkad",
+      "district_code": "IND.17.10_1",
+      "level": 2,
+      "pdd": "IND.17.10_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Pathanamthitta",
+      "district_code": "IND.17.11_1",
+      "level": 2,
+      "pdd": "IND.17.11_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Thiruvananthapuram",
+      "district_code": "IND.17.12_1",
+      "level": 2,
+      "pdd": "IND.17.12_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Thrissur",
+      "district_code": "IND.17.13_1",
+      "level": 2,
+      "pdd": "IND.17.13_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Wayanad",
+      "district_code": "IND.17.14_1",
+      "level": 2,
+      "pdd": "IND.17.14_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Agar Malwa",
+      "district_code": "IND.19.1_1",
+      "level": 2,
+      "pdd": "IND.19.1_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "East Nimar",
+      "district_code": "IND.19.18_1",
+      "level": 2,
+      "pdd": "IND.19.18_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Katni",
+      "district_code": "IND.19.26_1",
+      "level": 2,
+      "pdd": "IND.19.26_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Neemuch",
+      "district_code": "IND.19.31_1",
+      "level": 2,
+      "pdd": "IND.19.31_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Umaria",
+      "district_code": "IND.19.49_1",
+      "level": 2,
+      "pdd": "IND.19.49_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "West Nimar",
+      "district_code": "IND.19.51_1",
+      "level": 2,
+      "pdd": "IND.19.51_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Buldana",
+      "district_code": "IND.20.7_1",
+      "level": 2,
+      "pdd": "IND.20.7_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Gondiya",
+      "district_code": "IND.20.11_1",
+      "level": 2,
+      "pdd": "IND.20.11_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Mumbai City",
+      "district_code": "IND.20.17_1",
+      "level": 2,
+      "pdd": "IND.20.17_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Mumbai Suburban",
+      "district_code": "IND.20.18_1",
+      "level": 2,
+      "pdd": "IND.20.18_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Pune",
+      "district_code": "IND.20.26_1",
+      "level": 2,
+      "pdd": "IND.20.26_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Sindhudurg",
+      "district_code": "IND.20.31_1",
+      "level": 2,
+      "pdd": "IND.20.31_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Imphal East",
+      "district_code": "IND.21.4_1",
+      "level": 2,
+      "pdd": "IND.21.4_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Imphal West",
+      "district_code": "IND.21.5_1",
+      "level": 2,
+      "pdd": "IND.21.5_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Senapati",
+      "district_code": "IND.21.6_1",
+      "level": 2,
+      "pdd": "IND.21.6_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "East Garo Hills",
+      "district_code": "IND.22.1_1",
+      "level": 2,
+      "pdd": "IND.22.1_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "East Khasi Hills",
+      "district_code": "IND.22.2_1",
+      "level": 2,
+      "pdd": "IND.22.2_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Jaintia Hills",
+      "district_code": "IND.22.3_1",
+      "level": 2,
+      "pdd": "IND.22.3_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "North Garo Hills",
+      "district_code": "IND.22.4_1",
+      "level": 2,
+      "pdd": "IND.22.4_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Ri Bhoi",
+      "district_code": "IND.22.5_1",
+      "level": 2,
+      "pdd": "IND.22.5_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "South West Garo Hills",
+      "district_code": "IND.22.7_1",
+      "level": 2,
+      "pdd": "IND.22.7_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "South West Khasi Hills",
+      "district_code": "IND.22.8_1",
+      "level": 2,
+      "pdd": "IND.22.8_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "West Garo Hills",
+      "district_code": "IND.22.9_1",
+      "level": 2,
+      "pdd": "IND.22.9_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "West Khasi Hills",
+      "district_code": "IND.22.10_1",
+      "level": 2,
+      "pdd": "IND.22.10_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Lawangtlai",
+      "district_code": "IND.23.4_1",
+      "level": 2,
+      "pdd": "IND.23.4_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Serchhip",
+      "district_code": "IND.23.8_1",
+      "level": 2,
+      "pdd": "IND.23.8_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Dimapur",
+      "district_code": "IND.24.1_1",
+      "level": 2,
+      "pdd": "IND.24.1_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kiphire",
+      "district_code": "IND.24.2_1",
+      "level": 2,
+      "pdd": "IND.24.2_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kohima",
+      "district_code": "IND.24.3_1",
+      "level": 2,
+      "pdd": "IND.24.3_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Longleng",
+      "district_code": "IND.24.4_1",
+      "level": 2,
+      "pdd": "IND.24.4_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Peren",
+      "district_code": "IND.24.7_1",
+      "level": 2,
+      "pdd": "IND.24.7_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "West",
+      "district_code": "IND.25.1_1",
+      "level": 2,
+      "pdd": "IND.25.1_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Debagarh",
+      "district_code": "IND.26.8_1",
+      "level": 2,
+      "pdd": "IND.26.8_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Gajapati",
+      "district_code": "IND.26.10_1",
+      "level": 2,
+      "pdd": "IND.26.10_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Ganjam",
+      "district_code": "IND.26.11_1",
+      "level": 2,
+      "pdd": "IND.26.11_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Jagatsinghapur",
+      "district_code": "IND.26.12_1",
+      "level": 2,
+      "pdd": "IND.26.12_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kalahandi",
+      "district_code": "IND.26.15_1",
+      "level": 2,
+      "pdd": "IND.26.15_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kandhamal",
+      "district_code": "IND.26.16_1",
+      "level": 2,
+      "pdd": "IND.26.16_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kendrapara",
+      "district_code": "IND.26.17_1",
+      "level": 2,
+      "pdd": "IND.26.17_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Malkangiri",
+      "district_code": "IND.26.21_1",
+      "level": 2,
+      "pdd": "IND.26.21_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Mayurbhanj",
+      "district_code": "IND.26.22_1",
+      "level": 2,
+      "pdd": "IND.26.22_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Nuapada",
+      "district_code": "IND.26.25_1",
+      "level": 2,
+      "pdd": "IND.26.25_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Rayagada",
+      "district_code": "IND.26.27_1",
+      "level": 2,
+      "pdd": "IND.26.27_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Subarnapur",
+      "district_code": "IND.26.29_1",
+      "level": 2,
+      "pdd": "IND.26.29_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Amritsar",
+      "district_code": "IND.28.1_1",
+      "level": 2,
+      "pdd": "IND.28.1_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Fatehgarh Sahib",
+      "district_code": "IND.28.5_1",
+      "level": 2,
+      "pdd": "IND.28.5_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Sahibzada Ajit Singh Nagar",
+      "district_code": "IND.28.19_1",
+      "level": 2,
+      "pdd": "IND.28.19_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Shahid Bhagat Singh Nagar",
+      "district_code": "IND.28.21_1",
+      "level": 2,
+      "pdd": "IND.28.21_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Chittaurgarh",
+      "district_code": "IND.29.10_1",
+      "level": 2,
+      "pdd": "IND.29.10_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Hanumangarh",
+      "district_code": "IND.29.16_1",
+      "level": 2,
+      "pdd": "IND.29.16_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Jhalawar",
+      "district_code": "IND.29.20_1",
+      "level": 2,
+      "pdd": "IND.29.20_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "East Sikkim",
+      "district_code": "IND.30.1_1",
+      "level": 2,
+      "pdd": "IND.30.1_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "North Sikkim",
+      "district_code": "IND.30.2_1",
+      "level": 2,
+      "pdd": "IND.30.2_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "South Sikkim",
+      "district_code": "IND.30.3_1",
+      "level": 2,
+      "pdd": "IND.30.3_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "West Sikkim",
+      "district_code": "IND.30.4_1",
+      "level": 2,
+      "pdd": "IND.30.4_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Chennai",
+      "district_code": "IND.31.2_1",
+      "level": 2,
+      "pdd": "IND.31.2_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kancheepuram",
+      "district_code": "IND.31.8_1",
+      "level": 2,
+      "pdd": "IND.31.8_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kanniyakumari",
+      "district_code": "IND.31.9_1",
+      "level": 2,
+      "pdd": "IND.31.9_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "The Nilgiris",
+      "district_code": "IND.31.21_1",
+      "level": 2,
+      "pdd": "IND.31.21_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Theni",
+      "district_code": "IND.31.22_1",
+      "level": 2,
+      "pdd": "IND.31.22_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Thiruvallur",
+      "district_code": "IND.31.23_1",
+      "level": 2,
+      "pdd": "IND.31.23_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Thoothukkudi",
+      "district_code": "IND.31.25_1",
+      "level": 2,
+      "pdd": "IND.31.25_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Tiruchirappalli",
+      "district_code": "IND.31.26_1",
+      "level": 2,
+      "pdd": "IND.31.26_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Ranga Reddy",
+      "district_code": "IND.32.9_1",
+      "level": 2,
+      "pdd": "IND.32.9_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Warangal",
+      "district_code": "IND.32.10_1",
+      "level": 2,
+      "pdd": "IND.32.10_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Dhalai",
+      "district_code": "IND.33.1_1",
+      "level": 2,
+      "pdd": "IND.33.1_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Gomati",
+      "district_code": "IND.33.2_1",
+      "level": 2,
+      "pdd": "IND.33.2_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "North Tripura",
+      "district_code": "IND.33.4_1",
+      "level": 2,
+      "pdd": "IND.33.4_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Sipahijala",
+      "district_code": "IND.33.5_1",
+      "level": 2,
+      "pdd": "IND.33.5_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "South Tripura",
+      "district_code": "IND.33.6_1",
+      "level": 2,
+      "pdd": "IND.33.6_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Unokoti",
+      "district_code": "IND.33.7_1",
+      "level": 2,
+      "pdd": "IND.33.7_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "West Tripura",
+      "district_code": "IND.33.8_1",
+      "level": 2,
+      "pdd": "IND.33.8_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Ambedkar Nagar",
+      "district_code": "IND.34.4_1",
+      "level": 2,
+      "pdd": "IND.34.4_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Barabanki",
+      "district_code": "IND.34.14_1",
+      "level": 2,
+      "pdd": "IND.34.14_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Chitrakoot",
+      "district_code": "IND.34.21_1",
+      "level": 2,
+      "pdd": "IND.34.21_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Farrukhabad",
+      "district_code": "IND.34.26_1",
+      "level": 2,
+      "pdd": "IND.34.26_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Gautam Buddha Nagar",
+      "district_code": "IND.34.29_1",
+      "level": 2,
+      "pdd": "IND.34.29_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kanpur Dehat",
+      "district_code": "IND.34.42_1",
+      "level": 2,
+      "pdd": "IND.34.42_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kanpur Nagar",
+      "district_code": "IND.34.43_1",
+      "level": 2,
+      "pdd": "IND.34.43_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kaushambi",
+      "district_code": "IND.34.45_1",
+      "level": 2,
+      "pdd": "IND.34.45_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kushinagar",
+      "district_code": "IND.34.46_1",
+      "level": 2,
+      "pdd": "IND.34.46_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Lakhimpur Kheri",
+      "district_code": "IND.34.47_1",
+      "level": 2,
+      "pdd": "IND.34.47_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Sant Kabir Nagar",
+      "district_code": "IND.34.65_1",
+      "level": 2,
+      "pdd": "IND.34.65_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Sant Ravi Das Nagar",
+      "district_code": "IND.34.66_1",
+      "level": 2,
+      "pdd": "IND.34.66_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Shamli",
+      "district_code": "IND.34.68_1",
+      "level": 2,
+      "pdd": "IND.34.68_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Shravasti",
+      "district_code": "IND.34.69_1",
+      "level": 2,
+      "pdd": "IND.34.69_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Siddharth Nagar",
+      "district_code": "IND.34.70_1",
+      "level": 2,
+      "pdd": "IND.34.70_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Sonbhadra",
+      "district_code": "IND.34.72_1",
+      "level": 2,
+      "pdd": "IND.34.72_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Dehradun",
+      "district_code": "IND.35.5_1",
+      "level": 2,
+      "pdd": "IND.35.5_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Garhwal",
+      "district_code": "IND.35.6_1",
+      "level": 2,
+      "pdd": "IND.35.6_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Hardwar",
+      "district_code": "IND.35.7_1",
+      "level": 2,
+      "pdd": "IND.35.7_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Nainital",
+      "district_code": "IND.35.8_1",
+      "level": 2,
+      "pdd": "IND.35.8_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Rudraprayag",
+      "district_code": "IND.35.10_1",
+      "level": 2,
+      "pdd": "IND.35.10_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Tehri Garhwal",
+      "district_code": "IND.35.11_1",
+      "level": 2,
+      "pdd": "IND.35.11_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Udham Singh Nagar",
+      "district_code": "IND.35.12_1",
+      "level": 2,
+      "pdd": "IND.35.12_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Uttarkashi",
+      "district_code": "Z09.35.13_1",
+      "level": 2,
+      "pdd": "Z09.35.13_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Alipurduar",
+      "district_code": "IND.36.1_1",
+      "level": 2,
+      "pdd": "IND.36.1_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Birbhum",
+      "district_code": "IND.36.4_1",
+      "level": 2,
+      "pdd": "IND.36.4_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Dakshin Dinajpur",
+      "district_code": "IND.36.5_1",
+      "level": 2,
+      "pdd": "IND.36.5_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Hugli",
+      "district_code": "IND.36.8_1",
+      "level": 2,
+      "pdd": "IND.36.8_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Koch Bihar",
+      "district_code": "IND.36.10_1",
+      "level": 2,
+      "pdd": "IND.36.10_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Kolkata",
+      "district_code": "IND.36.11_1",
+      "level": 2,
+      "pdd": "IND.36.11_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Nadia",
+      "district_code": "IND.36.14_1",
+      "level": 2,
+      "pdd": "IND.36.14_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "North 24 Parganas",
+      "district_code": "IND.36.15_1",
+      "level": 2,
+      "pdd": "IND.36.15_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Pashchim Medinipur",
+      "district_code": "IND.36.16_1",
+      "level": 2,
+      "pdd": "IND.36.16_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Purba Medinipur",
+      "district_code": "IND.36.17_1",
+      "level": 2,
+      "pdd": "IND.36.17_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "South 24 Parganas",
+      "district_code": "IND.36.19_1",
+      "level": 2,
+      "pdd": "IND.36.19_1"
+    },
+    {
+      "country": "IND",
+      "district_name": "Uttar Dinajpur",
+      "district_code": "IND.36.20_1",
+      "level": 2,
+      "pdd": "IND.36.20_1"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Bagerhat",
+      "district_code": "4001",
+      "level": 2,
+      "pdd": "4001"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Bandarban",
+      "district_code": "2003",
+      "level": 2,
+      "pdd": "2003"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Barguna",
+      "district_code": "1004",
+      "level": 2,
+      "pdd": "1004"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Bhola",
+      "district_code": "1009",
+      "level": 2,
+      "pdd": "1009"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Bogra",
+      "district_code": "5010",
+      "level": 2,
+      "pdd": "5010"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Brahamanbaria",
+      "district_code": "2012",
+      "level": 2,
+      "pdd": "2012"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Chandpur",
+      "district_code": "2013",
+      "level": 2,
+      "pdd": "2013"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Chuadanga",
+      "district_code": "4018",
+      "level": 2,
+      "pdd": "4018"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Comilla",
+      "district_code": "2019",
+      "level": 2,
+      "pdd": "2019"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Cox's Bazar",
+      "district_code": "2022",
+      "level": 2,
+      "pdd": "2022"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Dinajpur",
+      "district_code": "5527",
+      "level": 2,
+      "pdd": "5527"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Faridpur",
+      "district_code": "3029",
+      "level": 2,
+      "pdd": "3029"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Feni",
+      "district_code": "2030",
+      "level": 2,
+      "pdd": "2030"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Gaibandha",
+      "district_code": "5532",
+      "level": 2,
+      "pdd": "5532"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Gazipur",
+      "district_code": "3033",
+      "level": 2,
+      "pdd": "3033"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Gopalganj",
+      "district_code": "3035",
+      "level": 2,
+      "pdd": "3035"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Habiganj",
+      "district_code": "6036",
+      "level": 2,
+      "pdd": "6036"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Jamalpur",
+      "district_code": "4539",
+      "level": 2,
+      "pdd": "4539"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Jessore",
+      "district_code": "4041",
+      "level": 2,
+      "pdd": "4041"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Jhalokati",
+      "district_code": "1042",
+      "level": 2,
+      "pdd": "1042"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Jhenaidah",
+      "district_code": "4044",
+      "level": 2,
+      "pdd": "4044"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Joypurhat",
+      "district_code": "5038",
+      "level": 2,
+      "pdd": "5038"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Khagrachhari",
+      "district_code": "2046",
+      "level": 2,
+      "pdd": "2046"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Kishoreganj",
+      "district_code": "3048",
+      "level": 2,
+      "pdd": "3048"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Kurigram",
+      "district_code": "5549",
+      "level": 2,
+      "pdd": "5549"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Kushtia",
+      "district_code": "4050",
+      "level": 2,
+      "pdd": "4050"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Lakshmipur",
+      "district_code": "2051",
+      "level": 2,
+      "pdd": "2051"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Lalmonirhat",
+      "district_code": "5552",
+      "level": 2,
+      "pdd": "5552"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Madaripur",
+      "district_code": "3054",
+      "level": 2,
+      "pdd": "3054"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Magura",
+      "district_code": "4055",
+      "level": 2,
+      "pdd": "4055"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Manikganj",
+      "district_code": "3056",
+      "level": 2,
+      "pdd": "3056"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Maulvibazar",
+      "district_code": "6058",
+      "level": 2,
+      "pdd": "6058"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Meherpur",
+      "district_code": "4057",
+      "level": 2,
+      "pdd": "4057"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Munshiganj",
+      "district_code": "3059",
+      "level": 2,
+      "pdd": "3059"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Naogaon",
+      "district_code": "5064",
+      "level": 2,
+      "pdd": "5064"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Narail",
+      "district_code": "4065",
+      "level": 2,
+      "pdd": "4065"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Narayanganj",
+      "district_code": "3067",
+      "level": 2,
+      "pdd": "3067"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Narsingdi",
+      "district_code": "3068",
+      "level": 2,
+      "pdd": "3068"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Natore",
+      "district_code": "5069",
+      "level": 2,
+      "pdd": "5069"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Chapainawabganj",
+      "district_code": "5070",
+      "level": 2,
+      "pdd": "5070"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Netrakona",
+      "district_code": "4572",
+      "level": 2,
+      "pdd": "4572"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Nilphamari",
+      "district_code": "5573",
+      "level": 2,
+      "pdd": "5573"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Noakhali",
+      "district_code": "2075",
+      "level": 2,
+      "pdd": "2075"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Pabna",
+      "district_code": "5076",
+      "level": 2,
+      "pdd": "5076"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Panchagarh",
+      "district_code": "5577",
+      "level": 2,
+      "pdd": "5577"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Patuakhali",
+      "district_code": "1078",
+      "level": 2,
+      "pdd": "1078"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Pirojpur",
+      "district_code": "1079",
+      "level": 2,
+      "pdd": "1079"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Rajbari",
+      "district_code": "3082",
+      "level": 2,
+      "pdd": "3082"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Rangamati",
+      "district_code": "2084",
+      "level": 2,
+      "pdd": "2084"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Satkhira",
+      "district_code": "4087",
+      "level": 2,
+      "pdd": "4087"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Shariatpur",
+      "district_code": "3086",
+      "level": 2,
+      "pdd": "3086"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Sherpur",
+      "district_code": "4589",
+      "level": 2,
+      "pdd": "4589"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Sirajganj",
+      "district_code": "5088",
+      "level": 2,
+      "pdd": "5088"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Sunamganj",
+      "district_code": "6090",
+      "level": 2,
+      "pdd": "6090"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Tangail",
+      "district_code": "3093",
+      "level": 2,
+      "pdd": "3093"
+    },
+    {
+      "country": "BGD",
+      "district_name": "Thakurgaon",
+      "district_code": "5594",
+      "level": 2,
+      "pdd": "5594"
+    }
+  ],
+  "indic": {
+    "rainfall": "Rainfall",
+    "normal_rainfall": "Normal Rainfall",
+    "el_nino": "El Nino Events",
+    "rainfall_deviation": "Deviation from Normal Rainfall"
+  },
+  "period": {
+    "annual": "Annual",
+    "monthly": "Monthly"
+  },
+  "start": "format: dd-mm-yyyy",
+  "end": "format: dd-mm-yyyy",
+  "model": {
+    "linear": "Linear Regression",
+    "logistic": "Logistic Regression"
+  }
+}

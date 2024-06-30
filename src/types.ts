@@ -47,3 +47,17 @@ export interface DateRange {
   from: Date;
   to: Date;
 }
+
+export interface Params {
+  source: object;
+  district: object;
+  indic: object;
+  period: object;
+  model: object;
+}
+
+export interface District {
+  country: string;
+  district_name: string;
+  district_code: string;
+}
