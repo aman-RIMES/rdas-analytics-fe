@@ -35,6 +35,8 @@ import { DateRange, District } from "@/types";
 import { countries } from "@/constants";
 import bodyParams from "../data/body_params.json";
 
+//TODO: Change the way tables are formed, transform the reponse and render using better loops
+
 const PredictiveToolsFilter = () => {
   const [params, setParams] = useState<any>(bodyParams);
   const [independentVariablesList, setIndependentVariablesList] = useState<any>(
@@ -261,97 +263,76 @@ const PredictiveToolsFilter = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="w-[100px] text-black font-medium">
-                      Values
+                    <TableHead className=" text-black text-md font-medium">
+                      Variable
                     </TableHead>
-                    <TableHead className="text-black text-lg font-medium">
-                      2015
-                    </TableHead>
-                    <TableHead className="text-black text-lg font-medium">
-                      2016
-                    </TableHead>
-                    <TableHead className="text-black text-lg font-medium">
-                      2017
-                    </TableHead>
+                    {descriptiveAnalysisData.head.columns.map((e: string) => (
+                      <TableHead className=" text-black text-md font-medium">
+                        {e}
+                      </TableHead>
+                    ))}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  <TableRow>
-                    <TableCell className="font-medium text-black text-lg">
-                      Rainfall
-                    </TableCell>
-                    <TableCell className="text-black text-lg ">
-                      1054.41
-                    </TableCell>
-                    <TableCell className="text-black text-lg ">
-                      1408.55
-                    </TableCell>
-                    <TableCell className="text-black text-lg ">
-                      1547.23
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium text-black text-lg">
-                      El Nino
-                    </TableCell>
-                    <TableCell className="text-black text-lg ">2.6</TableCell>
-                    <TableCell className="text-black text-lg ">2.6</TableCell>
-                    <TableCell className="text-black text-lg ">0.3</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium text-black text-lg">
-                      Normal Rainfall
-                    </TableCell>
-                    <TableCell className="text-black text-lg ">
-                      1544.62
-                    </TableCell>
-                    <TableCell className="text-black text-lg ">
-                      1544.62
-                    </TableCell>
-                    <TableCell className="text-black text-lg ">
-                      1544.62
-                    </TableCell>
-                  </TableRow>
+                  {Object.keys(descriptiveAnalysisData?.head?.values).map(
+                    (value: string) => (
+                      <TableRow>
+                        <TableCell className="font-medium text-black">
+                          {formatTitle(value)}
+                        </TableCell>
+
+                        {descriptiveAnalysisData?.head?.values[value].map(
+                          (e: number) => (
+                            <TableCell className=" text-black">
+                              {e.toFixed(2)}
+                            </TableCell>
+                          )
+                        )}
+                      </TableRow>
+                    )
+                  )}
                 </TableBody>
               </Table>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2 justify-center mt-10">
-              <div>
-                <p className="text-xl mt-7 flex justify-center font-medium">
-                  Missing Values
-                </p>
-                <div className="grid gap-4 md:grid-cols-2 justify-center mt-5">
-                  <p className="flex text-lg  justify-end">Rainfall:</p>
-                  <p className="flex text-lg  justify-start">0</p>
-                </div>
-                <div className="grid gap-4 md:grid-cols-2 justify-center mt-5">
-                  <p className="flex text-lg  justify-end">El Nino:</p>
-                  <p className="flex text-lg  justify-start">0</p>
-                </div>
-                <div className="grid gap-4 md:grid-cols-2 justify-center mt-5">
-                  <p className="flex text-lg  justify-end">Normal Rainfall:</p>
-                  <p className="flex text-lg  justify-start">0</p>
-                </div>
-              </div>
-              <div>
-                <p className="text-xl mt-7 flex justify-center font-medium">
-                  Data Types
-                </p>
-                <div className="grid gap-4 md:grid-cols-2 justify-center mt-5">
-                  <p className="flex text-lg justify-end">Rainfall:</p>
-                  <p className="flex text-lg justify-start">float64</p>
-                </div>
-                <div className="grid gap-4 md:grid-cols-2 justify-center mt-5">
-                  <p className="flex text-lg justify-end">El Nino:</p>
-                  <p className="flex text-lg justify-start">float64</p>
-                </div>
-                <div className="grid gap-4 md:grid-cols-2 justify-center mt-5">
-                  <p className="flex text-lg justify-end">Normal Rainfall:</p>
-                  <p className="flex text-lg justify-start">float64</p>
-                </div>
-              </div>
-            </div>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className=" text-black text-md font-medium">
+                    Value
+                  </TableHead>
+                  {descriptiveAnalysisData.missing_values.variables.map(
+                    (e: string) => (
+                      <TableHead className=" text-black text-md font-medium">
+                        {formatTitle(e)}
+                      </TableHead>
+                    )
+                  )}
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell className=" text-black text-md font-medium">
+                    Missing Values
+                  </TableCell>
+                  {descriptiveAnalysisData.missing_values.values.map(
+                    (value: number) => (
+                      <TableCell>{value}</TableCell>
+                    )
+                  )}
+                </TableRow>
+                <TableRow>
+                  <TableCell className=" text-black text-md font-medium">
+                    Data types
+                  </TableCell>
+                  {descriptiveAnalysisData.data_types.values.map(
+                    (value: number) => (
+                      <TableCell>{value}</TableCell>
+                    )
+                  )}
+                </TableRow>
+              </TableBody>
+            </Table>
           </div>
 
           <div className="flex flex-col items-center justify-center mt-10">
@@ -359,73 +340,36 @@ const PredictiveToolsFilter = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-[100px] text-lg text-black font-medium">
-                    Values
+                  <TableHead className=" text-black text-md font-medium">
+                    Variable
                   </TableHead>
-                  <TableHead className="text-black text-lg font-medium">
-                    count
-                  </TableHead>
-                  <TableHead className="text-black text-lg font-medium">
-                    mean
-                  </TableHead>
-                  <TableHead className="text-black text-lg font-medium">
-                    std
-                  </TableHead>
-                  <TableHead className="text-black text-lg font-medium">
-                    min
-                  </TableHead>
-                  <TableHead className="text-black text-lg font-medium">
-                    25%
-                  </TableHead>
-                  <TableHead className="text-black text-lg font-medium">
-                    50%
-                  </TableHead>
-                  <TableHead className="text-black text-lg font-medium">
-                    75%
-                  </TableHead>
-                  <TableHead className="text-black text-lg font-medium">
-                    max
-                  </TableHead>
+                  {descriptiveAnalysisData?.statistics?.columns.map(
+                    (e: string) => (
+                      <TableHead className=" text-black text-md font-medium">
+                        {formatTitle(e)}
+                      </TableHead>
+                    )
+                  )}
                 </TableRow>
               </TableHeader>
               <TableBody>
-                <TableRow>
-                  <TableCell className="text-black text-lg font-medium">
-                    Rainfall
-                  </TableCell>
-                  <TableCell className="text-lg">9.0,</TableCell>
-                  <TableCell className="text-lg">1544.62</TableCell>
-                  <TableCell className="text-lg">304.11</TableCell>
-                  <TableCell className="text-lg">1054.41</TableCell>
-                  <TableCell className="text-lg">1408.55</TableCell>
-                  <TableCell className="text-lg">1547.27</TableCell>
-                  <TableCell className="text-lg">1704.35</TableCell>
-                  <TableCell className="text-lg">2067.24</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="text-lg font-medium">El Nino</TableCell>
-                  <TableCell className="text-lg">9.0</TableCell>
-                  <TableCell className="text-lg">0.86</TableCell>
-                  <TableCell className="text-lg">1.07</TableCell>
-                  <TableCell className="text-lg">-0.4</TableCell>
-                  <TableCell className="text-lg">0.3</TableCell>
-                  <TableCell className="text-lg">0.7</TableCell>
-                  <TableCell className="text-lg">0.9</TableCell>
-                  <TableCell className="text-lg">2.</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="text-lg font-medium">
-                    Normal Rainfall
-                  </TableCell>
-                  <TableCell className="text-lg">9.0</TableCell>
-                  <TableCell className="text-lg">1544.62</TableCell>
-                  <TableCell className="text-lg">0.0</TableCell>
-                  <TableCell className="text-lg">1544.62</TableCell>
-                  <TableCell className="text-lg">1544.62</TableCell>
-                  <TableCell className="text-lg">1544.62</TableCell>
-                  <TableCell className="text-lg">1544.62</TableCell>
-                  <TableCell className="text-lg">1544.62</TableCell>
-                </TableRow>
+                {Object.keys(descriptiveAnalysisData?.statistics?.values).map(
+                  (value) => (
+                    <TableRow>
+                      <TableCell className="text-black text-md font-medium">
+                        {formatTitle(value)}
+                      </TableCell>
+
+                      {descriptiveAnalysisData?.statistics?.values[value].map(
+                        (e: number) => (
+                          <TableCell className="text-md">
+                            {e.toFixed(2)}
+                          </TableCell>
+                        )
+                      )}
+                    </TableRow>
+                  )
+                )}
               </TableBody>
             </Table>
           </div>
@@ -437,7 +381,7 @@ const PredictiveToolsFilter = () => {
             />
           </div>
 
-          <div className=" gap-4 flex flex-col justify-center items-center mt-10">
+          <div className=" gap-4 flex flex-col justify-center items-center mt-20">
             <div className="text-lg font-medium w-80">
               <Combobox
                 label={"Predictive model"}
@@ -452,7 +396,6 @@ const PredictiveToolsFilter = () => {
               />
             </div>
             <div className="flex flex-col w-80">
-              {/* <label className="text-lg font-medium">Submit</label> */}
               <Button
                 className="text-lg mt-2"
                 onClick={generateRegressionModel}
@@ -492,7 +435,7 @@ const PredictiveToolsFilter = () => {
 
         {isLogisticModelVisible && (
           <>
-            <div className="flex flex-row justify-center items-center gap-32 mt-10">
+            <div className="flex flex-row justify-center items-center gap-44 mt-20">
               <div className="flex flex-col items-center justify-center mt-10 mb-10">
                 <p className="text-lg">Accuracy</p>
                 <p className="text-5xl font-semibold mt-5">
@@ -501,50 +444,64 @@ const PredictiveToolsFilter = () => {
               </div>
 
               <div className="flex flex-col justify-center items-center">
-                <p className="text-md mb-5 ml-5">Confusion Matrix</p>
-                <Table className="w-52">
+                <p className="text-md font-medium">Confusion Matrix</p>
+                <Table className="mt-5">
                   <TableBody>
                     <TableRow>
-                      {regressionModel?.confusion_matrix[0].map(
-                        (element: any) => (
-                          <TableCell className="text-black text-lg ">
-                            {element}
-                          </TableCell>
+                      {regressionModel?.confusion_matrix.map(
+                        (element: any, index: number) => (
+                          <TableRow>
+                            {element.map((cell: number) => (
+                              <TableCell className="text-black text-md px-5">
+                                {cell}
+                              </TableCell>
+                            ))}
+                          </TableRow>
                         )
                       )}
                     </TableRow>
-                    <TableRow>
-                      {regressionModel?.confusion_matrix[1].map(
-                        (element: any) => (
-                          <TableCell className="text-black text-lg ">
-                            {element}
-                          </TableCell>
-                        )
-                      )}
-                    </TableRow>
-                    <TableRow>
-                      {regressionModel?.confusion_matrix[2].map(
-                        (element: any) => (
-                          <TableCell className="text-black text-lg ">
-                            {element}
-                          </TableCell>
-                        )
-                      )}
-                    </TableRow>
-                    {/* <TableRow>
-                      <TableCell className="text-black text-lg ">
-                        1054.41
-                      </TableCell>
-                      <TableCell className="text-black text-lg ">
-                        1408.55
-                      </TableCell>
-                      <TableCell className="text-black text-lg ">
-                        1547.23
-                      </TableCell>
-                    </TableRow> */}
                   </TableBody>
                 </Table>
               </div>
+            </div>
+
+            <div className="mt-10">
+              <p className="flex justify-center text-md font-medium">
+                Classification Report
+              </p>
+              <Table className="mt-10">
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="text-md text-black font-medium">
+                      Value
+                    </TableHead>
+                    {Object.keys(
+                      regressionModel.classification_report["macro avg"]
+                    ).map((element: any) => (
+                      <TableHead className="text-md text-black font-medium">
+                        {formatTitle(element)}
+                      </TableHead>
+                    ))}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {Object.keys(regressionModel.classification_report)
+                    .filter((e) => e !== "accuracy")
+                    .map((e) => (
+                      <TableRow>
+                        <TableCell className="text-black text-md font-medium">
+                          {e}
+                        </TableCell>
+
+                        {Object.values(
+                          regressionModel.classification_report[e]
+                        ).map((element: any) => (
+                          <TableCell className="text-md">{element}</TableCell>
+                        ))}
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
             </div>
           </>
         )}
