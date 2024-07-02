@@ -108,17 +108,14 @@ const GDDToolsFilter = () => {
       setResultVisibile(false);
       setIsError(false);
       setIsLoading(true);
-      // const response: any = await axios.get(
-      //   `http://203.156.108.67:1580/gdd?start_date=${formatDate(
-      //     dateRange?.from
-      //   )}&end_date=${formatDate(
-      //     dateRange?.to"2015-10-12"
-      //   )}&tehsil_id=${tehsilValue}&district_id=${districtValue}&crop=${cropValue}&years=${yearsValue.join(
-      //     ","
-      //   )}`
-      // );
       const response: any = await axios.get(
-        `http://203.156.108.67:1580/gdd?start_date=2022-10-01&end_date=2023-02-01&tehsil_id=PK10101&district_id=PK101&crop=2&years=2019,2021,2020`
+        `http://203.156.108.67:1580/gdd?start_date=${formatDate(
+          dateRange?.from
+        )}&end_date=${formatDate(
+          dateRange?.to
+        )}&tehsil_id=${tehsilValue}&district_id=${districtValue}&crop=${cropValue}&years=${yearsValue.join(
+          ","
+        )}`
       );
       setGddData(response.data);
       setIsLoading(false);
