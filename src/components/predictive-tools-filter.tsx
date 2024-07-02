@@ -1,16 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Combobox from "./ui/combobox";
-import district from "@/data/district.json";
 import {
-  calculatePredictiveValue,
+  calculateLinearPredictiveValue,
   formatDate,
   formatTitle,
-  transformDistrictArray,
   transformDistrictParams,
   transformObject,
-  transformProvinceArray,
   transformSourceObject,
 } from "@/lib/utils";
 import DatePicker from "./datepicker";
@@ -21,7 +18,6 @@ import { FancyMultiSelect } from "./ui/multiselect";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -35,8 +31,6 @@ import { DateRange, District } from "@/types";
 import { countries } from "@/constants";
 import bodyParams from "../data/body_params.json";
 
-//TODO: Change the way tables are formed, transform the reponse and render using better loops
-
 const PredictiveToolsFilter = () => {
   const [params, setParams] = useState<any>(bodyParams);
   const [independentVariablesList, setIndependentVariablesList] = useState<any>(
@@ -47,6 +41,14 @@ const PredictiveToolsFilter = () => {
   const [predictedValue, setPredictedValue] = useState("");
   const [showPredictedValue, setShowPredictedValue] = useState(false);
   const [showPredictValueMenu, setShowPredictValueMenu] = useState(false);
+  const [isLoadingDescriptiveAnalysis, setIsLoadingDescriptiveAnalysis] =
+    useState(false);
+  const [isLoadingPredictiveModel, setIsLoadingPredictiveModel] =
+    useState(false);
+  const [showDescriptiveAnalysisError, setShowDescriptiveAnalysisError] =
+    useState(false);
+  const [showPredictiveModelError, setShowPredictiveModelError] =
+    useState(false);
 
   const [dependentVariable, setDependentVariable] = useState("");
   const [independentVariables, setIndependentVariables] = useState<any>([]);
@@ -63,8 +65,8 @@ const PredictiveToolsFilter = () => {
 
   const [descriptiveAnalysisData, setDescriptiveAnalysisData] = useState<any>();
   const [regressionModel, setRegressionModel] = useState<any>({});
-  const [isLinearModelVisible, setIsLinearModelVisible] = useState(false);
-  const [isLogisticModelVisible, setIsLogisticModelVisible] = useState(false);
+  const [showLinearModel, setShowLinearModel] = useState(false);
+  const [showLogisticModel, setShowLogisiticModel] = useState(false);
 
   useEffect(() => {
     const newVariables = transformObject(params?.indic).filter(
@@ -76,11 +78,11 @@ const PredictiveToolsFilter = () => {
   useEffect(() => {
     (async () => {
       try {
-        // const response: any = await axios.get(
-        //   "http://203.156.108.67:1580/body_params"
-        // );
-        // setParams(response.data);
-        // console.log(response.data);
+        const response: any = await axios.get(
+          "http://203.156.108.67:1580/body_params"
+        );
+        setParams(response.data);
+        console.log(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -101,41 +103,46 @@ const PredictiveToolsFilter = () => {
     setInputFieldValues(values);
   };
 
-  const predictValue = () => {
-    const value = calculatePredictiveValue(
+  const predictLinearValue = () => {
+    const value = calculateLinearPredictiveValue(
       inputFieldValues,
       regressionModel.coefficients,
       regressionModel.intercept
     );
-    setPredictedValue(value);
+    setPredictedValue(value.toString());
     setShowPredictedValue(true);
+  };
+
+  const predictLogisticValue = () => {
+    console.log("Logistic Value");
   };
 
   const generateRegressionModel = async () => {
     setInputFieldValues([]);
     setShowPredictValueMenu(false);
-    setIsLinearModelVisible(false);
-    setIsLogisticModelVisible(false);
-    setShowPredictedValue(false);
+    setShowLinearModel(false);
+    setShowLogisiticModel(false);
+    setShowPredictiveModelError(false);
+    setIsLoadingPredictiveModel(true);
     try {
       const response = await axios.post(
         "http://203.156.108.67:1580/prediction_model",
         {
-          // source: source,
-          // indic: independentVariables.join(","),
-          // period: periodValue,
-          // district: districtValue,
-          // start: formatDate(dateRange?.from),
-          // end: formatDate(dateRange?.to),
-          // indic_0: dependentVariable,
+          source: source,
+          indic: independentVariables.join(","),
+          period: periodValue,
+          district: districtValue,
+          start: formatDate(dateRange?.from),
+          end: formatDate(dateRange?.to),
+          indic_0: dependentVariable,
           model: modelType,
-          source: "ERA5",
-          indic: "normal_rainfall,el_nino",
-          period: "annual",
-          district: "NPL_33",
-          start: "2015-11-24",
-          end: "2021-10-19",
-          indic_0: "rainfall",
+          // source: "ERA5",
+          // indic: "normal_rainfall,el_nino",
+          // period: "annual",
+          // district: "NPL_33",
+          // start: "2015-11-24",
+          // end: "2021-10-19",
+          // indic_0: "rainfall",
           // model: "linear",
         }
       );
@@ -145,40 +152,53 @@ const PredictiveToolsFilter = () => {
         inputFieldValues.push({ value: "" });
         setInputFieldValues((prev: any) => [...prev, { value: "" }]);
       });
-      setShowPredictValueMenu(true);
+      setIsLoadingPredictiveModel(false);
       modelType === "linear"
-        ? setIsLinearModelVisible(true)
-        : setIsLogisticModelVisible(true);
+        ? setShowLinearModel(true)
+        : setShowLogisiticModel(true);
+      setShowPredictValueMenu(true);
     } catch (error) {
       console.log(error);
+      setShowPredictiveModelError(true);
+      setIsLoadingPredictiveModel(false);
     }
   };
 
   const generateDescriptionAnalysis = async () => {
+    setShowDescription(false);
+    setShowPredictValueMenu(false);
+    setShowLinearModel(false);
+    setShowLogisiticModel(false);
+    setShowPredictiveModelError(false);
+    setShowDescriptiveAnalysisError(false);
+    setIsLoadingDescriptiveAnalysis(true);
     try {
       const response = await axios.post(
         "http://203.156.108.67:1580/description_analysis",
         {
-          // source: source,
-          // indic: independentVariables.join(","),
-          // period: periodValue,
-          // district: districtValue,
-          // start: formatDate(dateRange?.from),
-          // end: formatDate(dateRange?.to),
-          // indic_0: dependentVariable,
-          source: "ERA5",
-          indic: "rainfall,normal_rainfall",
-          period: "annual",
-          district: "NPL_33",
-          start: "2015-10-12",
-          end: "2021-10-12",
-          indic_0: "el_nino",
+          source: source,
+          indic: independentVariables.join(","),
+          period: periodValue,
+          district: districtValue,
+          start: formatDate(dateRange?.from),
+          end: formatDate(dateRange?.to),
+          indic_0: dependentVariable,
+          // source: "ERA5",
+          // indic: "rainfall,normal_rainfall",
+          // period: "annual",
+          // district: "NPL_33",
+          // start: "2015-10-12",
+          // end: "2021-10-12",
+          // indic_0: "el_nino",
         }
       );
       await setDescriptiveAnalysisData(response.data);
+      setIsLoadingDescriptiveAnalysis(false);
       setShowDescription(true);
     } catch (error) {
       console.log(error);
+      setShowDescriptiveAnalysisError(true);
+      setIsLoadingDescriptiveAnalysis(false);
     }
   };
 
@@ -194,12 +214,7 @@ const PredictiveToolsFilter = () => {
           }}
         />
         <div>
-          <Label
-            className="mb-2.Dependent Variable
-5 font-semibold"
-          >
-            Independent Variables
-          </Label>
+          <Label className="mb-2 font-semibold">Independent Variables</Label>
           <FancyMultiSelect
             setState={setIndependentVariables}
             array={independentVariablesList}
@@ -248,12 +263,24 @@ const PredictiveToolsFilter = () => {
           }}
         />
       </div>
-      <div className="grid gap-4 md:grid-cols-3 justify-center mt-10">
+      <div className="grid gap-4 md:grid-cols-3 justify-center mt-10 ">
         <div></div>
-        <Button className="w-full mt-10" onClick={generateDescriptionAnalysis}>
+        <Button className="mt-10" onClick={generateDescriptionAnalysis}>
           Start Descriptive Analysis
         </Button>
       </div>
+
+      {isLoadingDescriptiveAnalysis && (
+        <div className="my-20 flex justify-center">
+          <p className="text-xl">Loading Descriptive Analysis ....</p>
+        </div>
+      )}
+      {showDescriptiveAnalysisError && (
+        <div className="my-20 flex flex-col items-center justify-center gap-3">
+          <p className="text-xl">Failed to load descriptive analysis !</p>
+          <p className="text-xl">Please check your input.</p>
+        </div>
+      )}
 
       {showDescription && (
         <>
@@ -267,7 +294,10 @@ const PredictiveToolsFilter = () => {
                       Variable
                     </TableHead>
                     {descriptiveAnalysisData.head.columns.map((e: string) => (
-                      <TableHead className=" text-black text-md font-medium">
+                      <TableHead
+                        key={e}
+                        className=" text-black text-md font-medium"
+                      >
                         {e}
                       </TableHead>
                     ))}
@@ -405,13 +435,28 @@ const PredictiveToolsFilter = () => {
               </Button>
             </div>
           </div>
+
+          {isLoadingPredictiveModel && (
+            <div className="my-20 flex justify-center">
+              <p className="text-xl">
+                Generating {modelType === "linear" ? "Linear" : "Logistic"}{" "}
+                Model ....
+              </p>
+            </div>
+          )}
+          {showPredictiveModelError && (
+            <div className="my-20 flex flex-col items-center justify-center">
+              <p className="text-xl">Failed to generate model !</p>
+              <p className="text-xl">Please check your input.</p>
+            </div>
+          )}
         </>
       )}
 
       <div className="mb-10 px-5">
-        {isLinearModelVisible && (
+        {showLinearModel && (
           <>
-            <div className="flex flex-row justify-center gap-20">
+            <div className="flex flex-row justify-center gap-32 mt-5">
               <div className="flex flex-col items-center justify-center mt-10 mb-10">
                 <p className="text-lg">MSE</p>
                 <p className="text-5xl font-semibold mt-5">
@@ -426,29 +471,31 @@ const PredictiveToolsFilter = () => {
               </div>
             </div>
 
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={regressionModel?.chart}
-            />
+            <div className="mt-5">
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={regressionModel?.chart}
+              />
+            </div>
           </>
         )}
 
-        {isLogisticModelVisible && (
-          <>
-            <div className="flex flex-row justify-center items-center gap-44 mt-20">
-              <div className="flex flex-col items-center justify-center mt-10 mb-10">
-                <p className="text-lg">Accuracy</p>
-                <p className="text-5xl font-semibold mt-5">
-                  {regressionModel?.accuracy?.toFixed(2)}
-                </p>
-              </div>
+        <div className="mt-5">
+          {showLogisticModel && (
+            <>
+              <div className="flex flex-row justify-center items-center gap-44 mt-20">
+                <div className="flex flex-col items-center justify-center mt-10 mb-10">
+                  <p className="text-lg">Accuracy</p>
+                  <p className="text-5xl font-semibold mt-5">
+                    {regressionModel?.accuracy?.toFixed(2)}
+                  </p>
+                </div>
 
-              <div className="flex flex-col justify-center items-center">
-                <p className="text-md font-medium">Confusion Matrix</p>
-                <Table className="mt-5">
-                  <TableBody>
-                    <TableRow>
-                      {regressionModel?.confusion_matrix.map(
+                <div className="flex flex-col justify-center items-center">
+                  <p className="text-lg">Confusion Matrix</p>
+                  <Table className="mt-5">
+                    <TableBody>
+                      {regressionModel?.confusion_matrix?.map(
                         (element: any, index: number) => (
                           <TableRow>
                             {element.map((cell: number) => (
@@ -459,55 +506,55 @@ const PredictiveToolsFilter = () => {
                           </TableRow>
                         )
                       )}
+                    </TableBody>
+                  </Table>
+                </div>
+              </div>
+
+              <div className="mt-10">
+                <p className="flex justify-center text-md font-medium">
+                  Classification Report
+                </p>
+                <Table className="mt-10">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-md text-black font-medium">
+                        Value
+                      </TableHead>
+                      {Object.keys(
+                        regressionModel.classification_report["macro avg"]
+                      ).map((element: any) => (
+                        <TableHead className="text-md text-black font-medium">
+                          {formatTitle(element)}
+                        </TableHead>
+                      ))}
                     </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {Object.keys(regressionModel.classification_report)
+                      .filter((e) => e !== "accuracy")
+                      .map((e) => (
+                        <TableRow>
+                          <TableCell className="text-black text-md font-medium">
+                            {e}
+                          </TableCell>
+
+                          {Object.values(
+                            regressionModel.classification_report[e]
+                          ).map((element: any) => (
+                            <TableCell className="text-md">{element}</TableCell>
+                          ))}
+                        </TableRow>
+                      ))}
                   </TableBody>
                 </Table>
               </div>
-            </div>
-
-            <div className="mt-10">
-              <p className="flex justify-center text-md font-medium">
-                Classification Report
-              </p>
-              <Table className="mt-10">
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="text-md text-black font-medium">
-                      Value
-                    </TableHead>
-                    {Object.keys(
-                      regressionModel.classification_report["macro avg"]
-                    ).map((element: any) => (
-                      <TableHead className="text-md text-black font-medium">
-                        {formatTitle(element)}
-                      </TableHead>
-                    ))}
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {Object.keys(regressionModel.classification_report)
-                    .filter((e) => e !== "accuracy")
-                    .map((e) => (
-                      <TableRow>
-                        <TableCell className="text-black text-md font-medium">
-                          {e}
-                        </TableCell>
-
-                        {Object.values(
-                          regressionModel.classification_report[e]
-                        ).map((element: any) => (
-                          <TableCell className="text-md">{element}</TableCell>
-                        ))}
-                      </TableRow>
-                    ))}
-                </TableBody>
-              </Table>
-            </div>
-          </>
-        )}
+            </>
+          )}
+        </div>
       </div>
 
-      {showPredictValueMenu && (
+      {showPredictValueMenu && modelType === "linear" && (
         <div className="flex flex-col justify-center items-center gap-5">
           <div className="flex flex-row mt-10 gap-5">
             {persistentVariables.map((element: any, index: any) => (
@@ -524,15 +571,22 @@ const PredictiveToolsFilter = () => {
               </div>
             ))}
           </div>
-          <div className="flex flex-col">
-            <Button className="text-lg mt-2 w-60gf" onClick={predictValue}>
+          <div className="flex flex-col w-80">
+            <Button
+              className="text-lg mt-2"
+              onClick={
+                modelType === "linear"
+                  ? predictLinearValue
+                  : predictLogisticValue
+              }
+            >
               Predict Value
             </Button>
           </div>
         </div>
       )}
 
-      {showPredictedValue && (
+      {showPredictedValue && showPredictValueMenu && (
         <>
           <div className="flex flex-col items-center justify-center mt-20 mb-20">
             <p className="text-lg">Predicited Value</p>

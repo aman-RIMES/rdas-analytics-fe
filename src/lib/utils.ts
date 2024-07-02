@@ -49,29 +49,19 @@ export const transformDistrictParams = (array: Array<object>) => {
   }));
 };
 
-// export const reformatArrayToObjects = (array1: any, array2: any) => {
-//   let result = [];
-//   for (element of array1) {
-//     result.push({ element:array2[i] });
-//   }
-//   return result;
-// };
-
 export const formatTitle = (title: string) => {
   title = title.replace(/_/g, " ");
   return title.charAt(0).toUpperCase() + title.slice(1);
 };
 
-export const calculatePredictiveValue = (
-  fields: [],
-  coeff: [],
-  intercept: string
+export const calculateLinearPredictiveValue = (
+  fields: string[],
+  coeff: number[],
+  intercept: number
 ) => {
-  console.log(fields);
-
   let sum = 0;
   fields.map((e: any, index: any) => {
-    sum += e.value * coeff[index];
+    sum += parseInt(e.value) * coeff[index];
   });
   return sum + intercept;
 };
