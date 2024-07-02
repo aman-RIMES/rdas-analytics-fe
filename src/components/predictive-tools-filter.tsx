@@ -120,6 +120,7 @@ const PredictiveToolsFilter = () => {
   const generateRegressionModel = async () => {
     setInputFieldValues([]);
     setShowPredictValueMenu(false);
+    setShowPredictedValue(false);
     setShowLinearModel(false);
     setShowLogisiticModel(false);
     setShowPredictiveModelError(false);
@@ -586,7 +587,7 @@ const PredictiveToolsFilter = () => {
         </div>
       )}
 
-      {showPredictedValue && showPredictValueMenu && (
+      {showPredictedValue && (
         <>
           <div className="flex flex-col items-center justify-center mt-20 mb-20">
             <p className="text-lg">Predicited Value</p>
