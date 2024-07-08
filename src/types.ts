@@ -1,3 +1,5 @@
+import { LatLngExpression } from "leaflet";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface AnalysisTopics {
   id: number;
@@ -60,4 +62,11 @@ export interface District {
   country: string;
   district_name: string;
   district_code: string;
+}
+
+export interface Country {
+  value: string;
+  label: string;
+  coordinates: LatLngExpression;
+  zoom: number;
 }
