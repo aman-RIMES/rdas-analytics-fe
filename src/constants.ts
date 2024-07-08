@@ -1,4 +1,5 @@
 import { Icons } from "./components/ui/icons";
+import { Country } from "./types";
 
 export const menus = [
   {
@@ -68,12 +69,12 @@ export const menus = [
         indicator: "rainfall",
         icon: Icons.extremes,
       },
-      {
-        id: 4,
-        title: "Crop Production",
-        indicator: "crop_production",
-        icon: Icons.plant,
-      },
+      // {
+      //   id: 4,
+      //   title: "Crop Production",
+      //   indicator: "crop_production",
+      //   icon: Icons.plant,
+      // },
     ],
   },
   {
@@ -240,8 +241,18 @@ export const yearsList = [
 ];
 
 export const countries = [
-  { value: "NPL", label: "Nepal" },
-  { value: "IND", label: "India" },
-  { value: "PAK", label: "Pakistan" },
-  { value: "BGD", label: "Bangladesh" },
+  { value: "NPL", label: "Nepal", coordinates: [28.3949, 84.124], zoom: 6 },
+  { value: "IND", label: "India", coordinates: [20.5937, 78.9629], zoom: 4 },
+  {
+    value: "PAK",
+    label: "Pakistan",
+    coordinates: [31.358464447208497, 70.60622074202406],
+    zoom: 4.4,
+  },
+  {
+    value: "BGD",
+    label: "Bangladesh",
+    coordinates: [24.051401544067932, 89.94872317279236],
+    zoom: 6,
+  },
 ];
