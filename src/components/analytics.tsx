@@ -14,7 +14,7 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { menus } from "@/constants";
 import { useParams, useSearchParams } from "react-router-dom";
 import NotFoundPage from "./404-page";
-import Filter from "./filter";
+import Filter from "./analytics-filter";
 
 //TODO: Replace all unknown/any types with their corresponding types/interfaces
 const Content = () => {

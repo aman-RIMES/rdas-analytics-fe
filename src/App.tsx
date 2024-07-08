@@ -2,7 +2,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/home";
 import NotFoundPage from "./components/404-page";
 import { ThemeProvider } from "./components/theme-provider";
-import Content from "./components/content";
+import Content from "./components/analytics";
 import PredictiveTools from "./components/predictive-tools";
 import GDDPredictiveTools from "./components/gdd-tools";
 function App() {

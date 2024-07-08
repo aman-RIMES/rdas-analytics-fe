@@ -197,7 +197,7 @@ const Filter = () => {
 
             <div>
               <p className="text-xl font-semibold flex justify-center my-8">
-                India districts
+                Deviation from Normal Rainfall
               </p>
               <Leaflet data={geoJsonData} />
             </div>
