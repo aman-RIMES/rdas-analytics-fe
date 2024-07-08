@@ -47,7 +47,7 @@ export function Sidebar() {
               onClick={() => navigate("/analyze/3")}
             >
               <Icons.climate_and_crops className="w-5 h-5 mr-2" />
-              Agriculture Analytics
+              El Nino Analytics
             </Button>
             <Button
               variant="ghost"
@@ -55,7 +55,7 @@ export function Sidebar() {
               onClick={() => navigate("/predictive-tools/")}
             >
               <Icons.report className="w-5 h-5 mr-2 text-gray-800 dark:text-white" />
-              Agriculture Predictive Tools
+              El Nino Predictive Tools
             </Button>
             <Button
               variant="ghost"

@@ -1,32 +1,51 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Combobox from "./ui/combobox";
-import district from "@/data/district.json";
-import metadata from "@/data/metadata.json";
-import { transformObject, transformSourceObject } from "@/lib/utils";
+import {
+  formatDate,
+  transformDistrictParams,
+  transformObject,
+  transformSourceObject,
+} from "@/lib/utils";
 import DatePicker from "./datepicker";
 import { Button } from "./ui/button";
 import axios from "axios";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highmaps";
 import Leaflet from "./leaflet";
+import { countries } from "@/constants";
+import bodyParams from "../data/body_params.json";
+import { DateRange, District } from "@/types";
+import { DatePickerWithRange } from "./date-range-picker";
 
 const Filter = () => {
+  const [params, setParams] = useState<any>(bodyParams);
+
   const [districtValue, setDistrictValue] = useState("");
   const [districtList, setDistrictList] = useState([{}]);
   const [countryValue, setCountryValue] = useState("");
   const [periodOpen, setPeriodOpen] = useState(false);
   const [periodValue, setPeriodValue] = useState("");
   const [sourceValue, setSourceValue] = useState("");
-  const [startDate, setStartDate] = React.useState<Date>();
-  const [endDate, setEndDate] = React.useState<Date>();
+  const [dateRange, setDateRange] = useState<DateRange>();
 
-  const [correlationVariable1, setCorrelationVariable1] = useState<any>(false);
-  const [correlationVariable2, setCorrelationVariable2] = useState<any>(false);
+  const [correlationVariable1, setCorrelationVariable1] = useState<any>("");
+  const [correlationVariable2, setCorrelationVariable2] = useState<any>("");
+
+  const [isLoadingAnalysis, setIsLoadingAnalysis] = useState<any>(false);
+  const [isAnalysisError, setIsAnalysisError] = useState<any>(false);
+  const [isloadingDynamicMap, setIsLoadingDynamicMap] = useState<any>(false);
+  const [isDynamicMapError, setIsDynamicMapError] = useState<any>(false);
+  const [isLoadingCorrelationData, setIsLoadingCorrelationData] =
+    useState<any>(false);
+  const [isCorrelationDataError, setIsCorrelationDataError] =
+    useState<any>(false);
 
   const [isTimeSeriesVisible, setIsTimeSeriesVisible] = useState<any>(false);
+  const [isDynamicMapVisible, setIsDynamicMapVisible] = useState<any>(false);
   const [isCorrelationDataVisible, setIsCorrelationDataVisible] =
     useState<any>(false);
+
   const [timeSeriesChartData, setTimeSeriesChartData] = useState<any>({});
   const [geoJsonData, setGeoJsonData] = useState<any>({});
   const [correlationChartData, setCorrelationChartData] = useState<any>({});
@@ -35,113 +54,153 @@ const Filter = () => {
   );
 
   useEffect(() => {
-    const d = district
-      .filter((e) => e.district_code.substring(0, 3) === countryValue)
-      .slice(0, 15)
-      .map((e) => ({ value: e.district_code, label: e.district_name }));
-    setDistrictList(d);
+    (async () => {
+      try {
+        const response: any = await axios.get(
+          "http://203.156.108.67:1580/body_params"
+        );
+        setParams(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    const districtsData = params.district.filter(
+      (e: District) => e.country === countryValue
+    );
+    setDistrictList(districtsData);
   }, [countryValue]);
 
-  const generateTimeSeries = async () => {
-    setIsTimeSeriesVisible(false);
+  const resetAllLoadingStates = () => {
+    setIsTimeSeriesVisible(true);
+    setIsDynamicMapVisible(false);
+    setIsCorrelationDataVisible(false);
+    setIsLoadingAnalysis(true);
+    setIsLoadingCorrelationData(false);
+    setIsLoadingDynamicMap(false);
+    setIsAnalysisError(false);
+    setIsDynamicMapError(false);
+    setIsCorrelationDataError(false);
+  };
+
+  const generateDynamicChart = async () => {
+    resetAllLoadingStates();
     try {
       const response = await axios.post(
         "http://203.156.108.67:1580/dynamic_charts",
         {
-          // source: sourceValue,
-          // // indic: indicatorValue,
+          source: sourceValue,
+          indic: "rainfall,el_nino,normal_rainfall",
+          period: periodValue,
+          district: districtValue,
+          start: formatDate(dateRange?.from),
+          end: formatDate(dateRange?.to),
+
+          // source: "ERA5",
           // indic: "rainfall,el_nino,normal_rainfall",
           // period: "annual",
-          // country: countryValue,
-          // // district: [districtValue],
-          // start_date: startDate?.toISOString().slice(0, 10),
-          // end_date: endDate?.toISOString().slice(0, 10),
-
-          source: "ERA5",
-          indic: "rainfall",
-          period: "annual",
-          district: "NPL_04",
-          start: "2015-10-12",
-          end: "2021-10-12",
+          // district: "NPL_04",
+          // start: "2015-10-12",
+          // end: "2021-10-12",
         }
       );
 
+      setTimeSeriesChartData(response.data);
+      setIsLoadingAnalysis(false);
+    } catch (error) {
+      setIsLoadingAnalysis(false);
+      setIsAnalysisError(true);
+      return;
+    }
+
+    try {
+      setIsLoadingDynamicMap(true);
       const geoJson = await axios.post(
         "http://203.156.108.67:1580/dynamic_map",
         {
-          source: "ERA5",
+          source: sourceValue,
           indic: "rainfall_deviation",
-          period: "annual",
-          district: "NPL_04,NPL_33",
-          start: "2015-10-12",
-          end: "2021-10-12",
+          period: periodValue,
+          district: districtValue,
+          start: formatDate(dateRange?.from),
+          end: formatDate(dateRange?.to),
+
+          // source: "ERA5",
+          // indic: "rainfall_deviation",
+          // period: "annual",
+          // district: "NPL_33",
+          // start: "2015-10-12",
+          // end: "2021-10-12",
         }
       );
-
-      await setGeoJsonData(geoJson.data);
-      setTimeSeriesChartData(response.data);
-      setIsTimeSeriesVisible(true);
+      setGeoJsonData(geoJson.data);
+      setIsLoadingDynamicMap(false);
+      setIsDynamicMapVisible(true);
     } catch (error) {
-      console.log(error);
+      setIsLoadingDynamicMap(false);
+      setIsDynamicMapError(true);
     }
   };
+
   const generateCorrelationPlot = async () => {
+    setIsCorrelationDataError(false);
+    setIsCorrelationDataVisible(false);
+    setIsLoadingCorrelationData(true);
     try {
       const correlationData = await axios.post(
         "http://203.156.108.67:1580/correlation_plot",
         {
-          // source: sourceValue,
-          // // indic: indicatorValue,
+          source: sourceValue,
+          indic: `${correlationVariable1},${correlationVariable2}`,
+          period: periodValue,
+          district: districtValue,
+          start: formatDate(dateRange?.from),
+          end: formatDate(dateRange?.to),
+
+          // source: "ERA5",
           // indic: "rainfall,el_nino,normal_rainfall",
           // period: "annual",
-          // country: countryValue,
-          // district: [districtValue],
-          // start_date: startDate?.toISOString().slice(0, 10),
-          // end_date: endDate?.toISOString().slice(0, 10),
-
-          source: "ERA5",
-          indic: "rainfall,el_nino,normal_rainfall",
-          period: "annual",
-          district: "NPL_33",
-          start: "2015-10-12",
-          end: "2021-10-12",
+          // district: "NPL_33",
+          // start: "2015-10-12",
+          // end: "2021-10-12",
         }
       );
       const regressionModelData = await axios.post(
         "http://203.156.108.67:1580/regression_analysis",
         {
-          // source: sourceValue,
-          // // indic: indicatorValue,
-          // indic: "el_nino,rainfall",
-          // period: "annual",
-          // country: countryValue,
-          // // district: [districtValue],
-          // start_date: startDate?.toISOString().slice(0, 10),
-          // end_date: endDate?.toISOString().slice(0, 10),
+          source: sourceValue,
+          indic: `${correlationVariable1},${correlationVariable2}`,
+          period: periodValue,
+          district: districtValue,
+          start: formatDate(dateRange?.from),
+          end: formatDate(dateRange?.to),
 
-          source: "ERA5",
-          indic: "rainfall,el_nino,normal_rainfall",
-          period: "annual",
-          district: "NPL_33",
-          start: "2015-10-12",
-          end: "2021-10-12",
+          // source: "ERA5",
+          // indic: "rainfall,el_nino,normal_rainfall",
+          // period: "annual",
+          // district: "NPL_33",
+          // start: "2015-10-12",
+          // end: "2021-10-12",
         }
       );
       setRegressionModelChartData(regressionModelData.data);
       setCorrelationChartData(correlationData.data);
+      setIsLoadingCorrelationData(false);
       setIsCorrelationDataVisible(true);
     } catch (error) {
-      console.log(error);
+      setIsLoadingCorrelationData(false);
+      setIsCorrelationDataError(true);
     }
   };
 
   return (
     <div className="p-10">
-      {/* <div className="flex flex-row gap-5 m-5 justify-center"> */}
       <div className="grid gap-4 mb-6 md:grid-cols-3 justify-center">
         <Combobox
           label={"Country"}
-          array={transformObject(metadata.country)}
+          array={countries}
           state={{
             value: countryValue,
             setValue: setCountryValue,
@@ -149,7 +208,7 @@ const Filter = () => {
         />
         <Combobox
           label={"District"}
-          array={districtList}
+          array={transformDistrictParams(districtList).slice(0, 15)}
           state={{
             value: districtValue,
             setValue: setDistrictValue,
@@ -157,7 +216,7 @@ const Filter = () => {
         />
         <Combobox
           label={"Period"}
-          array={transformObject(metadata.period)}
+          array={transformObject(params?.period)}
           state={{
             open: periodOpen,
             setOpen: setPeriodOpen,
@@ -169,65 +228,120 @@ const Filter = () => {
       <div className="grid gap-4 mb-6 md:grid-cols-3 justify-center">
         <Combobox
           label={"Source"}
-          array={transformSourceObject(metadata.source)}
+          array={transformSourceObject(params?.source)}
           state={{
             value: sourceValue,
             setValue: setSourceValue,
           }}
         />
-        <DatePicker
-          date={startDate}
-          setDate={setStartDate}
-          label={"Start Date"}
+        <DatePickerWithRange
+          date={dateRange}
+          setDate={setDateRange}
+          min={0}
+          max={0}
+          label={"Start and End date"}
         />
-        <DatePicker date={endDate} setDate={setEndDate} label={"End Date"} />
       </div>
       <div className="grid gap-4 mt-10 md:grid-cols-3 justify-center">
         <div></div>
-        <Button onClick={generateTimeSeries}>Start Analysis</Button>
+        <Button onClick={generateDynamicChart}>Start Analysis</Button>
       </div>
 
       {isTimeSeriesVisible && (
         <div className="mb-10">
           <div className="mt-10">
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={timeSeriesChartData}
-            />
+            {isLoadingAnalysis && (
+              <div className="my-20 flex justify-center">
+                <p className="text-xl">Analyzing Data ...</p>
+              </div>
+            )}
+
+            {!isLoadingAnalysis && !isAnalysisError && (
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={timeSeriesChartData}
+              />
+            )}
+
+            {isAnalysisError && (
+              <div className="my-20 flex flex-col items-center justify-center">
+                <p className="text-xl">Failed to Analyze Data !</p>
+                <p className="text-xl mt-2">Please check your input.</p>
+              </div>
+            )}
 
             <div>
-              <p className="text-xl font-semibold flex justify-center my-8">
-                Deviation from Normal Rainfall
-              </p>
-              <Leaflet data={geoJsonData} />
+              {isloadingDynamicMap && (
+                <div className="my-20 flex justify-center border p-24 rounded-lg">
+                  <p className="text-xl">Loading Dynamic Map ...</p>
+                </div>
+              )}
+              {isDynamicMapError && (
+                <div className="my-20 flex flex-col items-center justify-center">
+                  <p className="text-xl">Failed to generate Dynamic Map !</p>
+                  <p className="text-xl mt-2">Please check your input.</p>
+                </div>
+              )}
+
+              {isDynamicMapVisible && !isDynamicMapError && (
+                <div>
+                  <p className="text-xl font-semibold flex justify-center my-8">
+                    Deviation from Normal Rainfall
+                  </p>
+                  <Leaflet country={countryValue} geoJsonData={geoJsonData} />
+                </div>
+              )}
             </div>
           </div>
-          <div className="flex justify-center mt-10">
-            <h1 className="text-xl font-semibold">
-              View Correlation between two variables
-            </h1>
-          </div>
-          <div className="grid gap-4 mt-5 md:grid-cols-3 justify-center">
-            <Combobox
-              label={"First Variable"}
-              array={transformObject(metadata.indic)}
-              state={{
-                value: correlationVariable1,
-                setValue: setCorrelationVariable1,
-              }}
-            />
-            <Combobox
-              label={"Second Variable"}
-              array={transformObject(metadata.indic)}
-              state={{
-                value: correlationVariable2,
-                setValue: setCorrelationVariable2,
-              }}
-            />
-            <Button className="mt-8" onClick={generateCorrelationPlot}>
-              Analyze Correlation
-            </Button>
-          </div>
+          {!isLoadingAnalysis && !isAnalysisError && (
+            <>
+              <div className="flex justify-center mt-10">
+                <h1 className="text-xl font-semibold">
+                  View Correlation between two variables
+                </h1>
+              </div>
+              <div className="grid gap-4 mt-12 md:grid-cols-3 justify-center">
+                <Combobox
+                  label={"First Variable"}
+                  array={transformObject(params.indic)}
+                  state={{
+                    value: correlationVariable1,
+                    setValue: setCorrelationVariable1,
+                  }}
+                />
+                <Combobox
+                  label={"Second Variable"}
+                  array={transformObject(params.indic)}
+                  state={{
+                    value: correlationVariable2,
+                    setValue: setCorrelationVariable2,
+                  }}
+                />
+                <Button
+                  disabled={
+                    correlationVariable1 === "" || correlationVariable2 === ""
+                  }
+                  className="mt-8"
+                  onClick={generateCorrelationPlot}
+                >
+                  Analyze Correlation
+                </Button>
+              </div>
+            </>
+          )}
+        </div>
+      )}
+
+      {isLoadingCorrelationData && (
+        <div className="my-20 flex justify-center">
+          <p className="text-xl">Generating Correlation Data ...</p>
+        </div>
+      )}
+
+      {isCorrelationDataError && (
+        <div className="my-20 flex flex-col items-center justify-center">
+          <p className="text-xl">Failed to generate Correlation Data !</p>
+          <p className="text-xl mt-2">Please check your input.</p>
         </div>
       )}
 

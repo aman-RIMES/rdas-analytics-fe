@@ -50,7 +50,7 @@ export const transformDistrictParams = (array: Array<object>) => {
 };
 
 export const formatTitle = (title: string) => {
-  title = title.replace(/_/g, " ");
+  title = title.toLowerCase().replace(/_/g, " ");
   return title.charAt(0).toUpperCase() + title.slice(1);
 };
 

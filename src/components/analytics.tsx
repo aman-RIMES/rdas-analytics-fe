@@ -44,7 +44,7 @@ const Content = () => {
       <div
         className={cn(
           subject.datasets.length >= 4
-            ? "lg:grid-cols-4"
+            ? "lg:grid-cols-3"
             : `lg:grid-cols-${subject.datasets.length}`,
           "grid gap-4 mb-6 md:grid-cols-2"
         )}

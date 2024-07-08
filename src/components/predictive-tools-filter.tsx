@@ -37,7 +37,10 @@ const PredictiveToolsFilter = () => {
     []
   );
   const [persistentVariables, setPersistenVariables] = useState<any>([]);
-  const [inputFieldValues, setInputFieldValues] = useState<any>([]);
+  const [
+    linearPredictionInputFieldValues,
+    setLinearPredictionInputFieldValues,
+  ] = useState<any>([]);
   const [predictedValue, setPredictedValue] = useState("");
   const [showPredictedValue, setShowPredictedValue] = useState(false);
   const [showPredictValueMenu, setShowPredictValueMenu] = useState(false);
@@ -93,19 +96,18 @@ const PredictiveToolsFilter = () => {
     const districtsData = params.district.filter(
       (e: District) => e.country === countryValue
     );
-    ("rainfall,normal_rainfall");
     setDistrictList(districtsData);
   }, [countryValue]);
 
   const handleChange = (index: number, event: any) => {
-    const values = [...inputFieldValues];
+    const values = [...linearPredictionInputFieldValues];
     values[index].value = event.target.value;
-    setInputFieldValues(values);
+    setLinearPredictionInputFieldValues(values);
   };
 
   const predictLinearValue = () => {
     const value = calculateLinearPredictiveValue(
-      inputFieldValues,
+      linearPredictionInputFieldValues,
       regressionModel.coefficients,
       regressionModel.intercept
     );
@@ -118,7 +120,7 @@ const PredictiveToolsFilter = () => {
   };
 
   const generateRegressionModel = async () => {
-    setInputFieldValues([]);
+    setLinearPredictionInputFieldValues([]);
     setShowPredictValueMenu(false);
     setShowPredictedValue(false);
     setShowLinearModel(false);
@@ -150,8 +152,11 @@ const PredictiveToolsFilter = () => {
       setRegressionModel(response.data);
       setPersistenVariables(independentVariables);
       independentVariables.map((e: any) => {
-        inputFieldValues.push({ value: "" });
-        setInputFieldValues((prev: any) => [...prev, { value: "" }]);
+        linearPredictionInputFieldValues.push({ value: "" });
+        setLinearPredictionInputFieldValues((prev: any) => [
+          ...prev,
+          { value: "" },
+        ]);
       });
       setIsLoadingPredictiveModel(false);
       modelType === "linear"
