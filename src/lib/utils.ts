@@ -49,6 +49,14 @@ export const transformDistrictParams = (array: Array<object>) => {
   }));
 };
 
+export const getAllDistrictsOfCountry = (array: Array<object>) => {
+  let districts: string[] = [];
+  array.map((e: any) => {
+    districts.push(e.district_code);
+  });
+  return districts;
+};
+
 export const formatTitle = (title: string) => {
   title = title.toLowerCase().replace(/_/g, " ");
   return title.charAt(0).toUpperCase() + title.slice(1);

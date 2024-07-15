@@ -26,9 +26,29 @@ const Leaflet = ({ geoJsonData, country }: any) => {
       )} District,                                              
       ${provinceName}`);
 
-    if (district.properties.data_value != null) {
-      layer.options.fillColor = "greenyellow";
-      layer.options.fillOpacity = 1;
+    // if (district.properties.data_value ) {
+    //   layer.options.fillColor = "greenyellow";
+    //   layer.options.fillOpacity = 1;
+    // }
+
+    switch (district.properties.data_value) {
+      case district.properties.data_value < 300:
+        layer.options.fillColor = "greenyellow";
+        layer.options.fillOpacity = 1;
+        break;
+      case district.properties.data_value < 600:
+        layer.options.fillColor = "green";
+        layer.options.fillOpacity = 1;
+        break;
+      case district.properties.data_value < 900:
+        layer.options.fillColor = "brown";
+        layer.options.fillOpacity = 1;
+        break;
+
+      // default:
+      //   layer.options.fillColor = "red";
+      //   layer.options.fillOpacity = 1;
+      //   break;
     }
 
     // layer.on({

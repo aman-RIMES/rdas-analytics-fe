@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Combobox from "./ui/combobox";
 import {
   formatDate,
+  getAllDistrictsOfCountry,
   transformDistrictParams,
   transformObject,
   transformSourceObject,
@@ -123,7 +124,7 @@ const Filter = () => {
           source: sourceValue,
           indic: "rainfall_deviation",
           period: periodValue,
-          district: districtValue,
+          district: getAllDistrictsOfCountry(districtList).join(","),
           start: formatDate(dateRange?.from),
           end: formatDate(dateRange?.to),
 
@@ -136,6 +137,10 @@ const Filter = () => {
         }
       );
       setGeoJsonData(geoJson.data);
+      geoJson.data.features.map((e: any) =>
+        console.log(e.properties.data_value)
+      );
+
       setIsLoadingDynamicMap(false);
       setIsDynamicMapVisible(true);
     } catch (error) {
