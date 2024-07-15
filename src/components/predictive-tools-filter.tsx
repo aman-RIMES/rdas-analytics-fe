@@ -73,7 +73,7 @@ const PredictiveToolsFilter = () => {
 
   useEffect(() => {
     const newVariables = transformObject(params?.indic).filter(
-      (e) => e.value !== dependentVariable
+      (e) => e.value !== dependentVariable && e.value !== "rainfall_deviation"
     );
     setIndependentVariablesList(newVariables);
   }, [dependentVariable]);
@@ -213,7 +213,9 @@ const PredictiveToolsFilter = () => {
       <div className="grid gap-4 mb-6 md:grid-cols-2 justify-center">
         <Combobox
           label={"Dependent Variable"}
-          array={transformObject(params?.indic)}
+          array={transformObject(params?.indic).filter(
+            (e) => e.value !== "rainfall_deviation" && e.value !== "el_nino"
+          )}
           state={{
             value: dependentVariable,
             setValue: setDependentVariable,
