@@ -17,7 +17,7 @@ import NotFoundPage from "./404-page";
 import Filter from "./analytics-filter";
 
 //TODO: Replace all unknown/any types with their corresponding types/interfaces
-const Content = () => {
+const Analytics = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { topic } = useParams();
@@ -157,4 +157,4 @@ const Content = () => {
   );
 };
 
-export default Content;
+export default Analytics;

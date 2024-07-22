@@ -19,7 +19,7 @@ import bodyParams from "../data/body_params.json";
 import { DateRange, District } from "@/types";
 import { DatePickerWithRange } from "./date-range-picker";
 
-const Filter = () => {
+const ElNinoAnalyticsFilter = () => {
   const [params, setParams] = useState<any>(bodyParams);
 
   const [districtValue, setDistrictValue] = useState("");
@@ -369,4 +369,4 @@ const Filter = () => {
   );
 };
 
-export default Filter;
+export default ElNinoAnalyticsFilter;

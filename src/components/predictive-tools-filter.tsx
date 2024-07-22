@@ -10,7 +10,6 @@ import {
   transformObject,
   transformSourceObject,
 } from "@/lib/utils";
-import DatePicker from "./datepicker";
 import { Button } from "./ui/button";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import axios from "axios";
@@ -44,11 +43,7 @@ const PredictiveToolsFilter = () => {
   const [predictedValue, setPredictedValue] = useState("");
   const [showPredictedValue, setShowPredictedValue] = useState(false);
   const [showPredictValueMenu, setShowPredictValueMenu] = useState(false);
-  const [isLoadingDescriptiveAnalysis, setIsLoadingDescriptiveAnalysis] =
-    useState(false);
   const [isLoadingPredictiveModel, setIsLoadingPredictiveModel] =
-    useState(false);
-  const [showDescriptiveAnalysisError, setShowDescriptiveAnalysisError] =
     useState(false);
   const [showPredictiveModelError, setShowPredictiveModelError] =
     useState(false);
@@ -64,9 +59,7 @@ const PredictiveToolsFilter = () => {
   const [dateRange, setDateRange] = useState<DateRange>();
 
   const [modelType, setModelType] = useState("");
-  const [showDescription, setShowDescription] = useState(false);
 
-  const [descriptiveAnalysisData, setDescriptiveAnalysisData] = useState<any>();
   const [regressionModel, setRegressionModel] = useState<any>({});
   const [showLinearModel, setShowLinearModel] = useState(false);
   const [showLogisticModel, setShowLogisiticModel] = useState(false);
@@ -115,9 +108,7 @@ const PredictiveToolsFilter = () => {
     setShowPredictedValue(true);
   };
 
-  const predictLogisticValue = () => {
-    console.log("Logistic Value");
-  };
+  const predictLogisticValue = () => console.log("prediciting logisitic value");
 
   const generateRegressionModel = async () => {
     setLinearPredictionInputFieldValues([]);
@@ -170,51 +161,16 @@ const PredictiveToolsFilter = () => {
     }
   };
 
-  const generateDescriptionAnalysis = async () => {
-    setShowDescription(false);
-    setShowPredictValueMenu(false);
-    setShowLinearModel(false);
-    setShowLogisiticModel(false);
-    setShowPredictiveModelError(false);
-    setShowDescriptiveAnalysisError(false);
-    setIsLoadingDescriptiveAnalysis(true);
-    try {
-      const response = await axios.post(
-        "http://203.156.108.67:1580/description_analysis",
-        {
-          source: source,
-          indic: independentVariables.join(","),
-          period: periodValue,
-          district: districtValue,
-          start: formatDate(dateRange?.from),
-          end: formatDate(dateRange?.to),
-          indic_0: dependentVariable,
-          // source: "ERA5",
-          // indic: "rainfall,normal_rainfall",
-          // period: "annual",
-          // district: "NPL_33",
-          // start: "2015-10-12",
-          // end: "2021-10-12",
-          // indic_0: "el_nino",
-        }
-      );
-      await setDescriptiveAnalysisData(response.data);
-      setIsLoadingDescriptiveAnalysis(false);
-      setShowDescription(true);
-    } catch (error) {
-      console.log(error);
-      setShowDescriptiveAnalysisError(true);
-      setIsLoadingDescriptiveAnalysis(false);
-    }
-  };
-
   return (
     <div className="p-10">
       <div className="grid gap-4 mb-6 md:grid-cols-2 justify-center">
         <Combobox
           label={"Dependent Variable"}
+          // array={transformObject(params?.indic).filter(
+          //   (e) => e.value !== "rainfall_deviation" && e.value !== "el_nino"
+          // )}
           array={transformObject(params?.indic).filter(
-            (e) => e.value !== "rainfall_deviation" && e.value !== "el_nino"
+            (e) => e.value !== "rainfall_deviation"
           )}
           state={{
             value: dependentVariable,
@@ -270,195 +226,43 @@ const PredictiveToolsFilter = () => {
             setValue: setDistrictValue,
           }}
         />
+
+        <Combobox
+          label={"Predictive model"}
+          array={[
+            { value: "linear", label: "Linear" },
+            { value: "logistic", label: "Logistic" },
+          ]}
+          state={{
+            value: modelType,
+            setValue: setModelType,
+          }}
+        />
       </div>
       <div className="grid gap-4 md:grid-cols-3 justify-center mt-10 ">
         <div></div>
-        <Button className="mt-10" onClick={generateDescriptionAnalysis}>
-          Start Descriptive Analysis
+        <Button
+          className="mt-10"
+          disabled={modelType === ""}
+          onClick={generateRegressionModel}
+        >
+          Generate Predictive Model
         </Button>
       </div>
 
-      {isLoadingDescriptiveAnalysis && (
+      {isLoadingPredictiveModel && (
         <div className="my-20 flex justify-center">
-          <p className="text-xl">Loading Descriptive Analysis ....</p>
+          <p className="text-xl">
+            Generating {modelType === "linear" ? "Linear" : "Logistic"} Model
+            ....
+          </p>
         </div>
       )}
-      {showDescriptiveAnalysisError && (
-        <div className="my-20 flex flex-col items-center justify-center gap-3">
-          <p className="text-xl">Failed to load descriptive analysis !</p>
+      {showPredictiveModelError && (
+        <div className="my-20 flex flex-col items-center justify-center">
+          <p className="text-xl">Failed to generate model !</p>
           <p className="text-xl">Please check your input.</p>
         </div>
-      )}
-
-      {showDescription && (
-        <>
-          <div className="grid gap-4 md:grid-cols-2 items-center mt-20">
-            <div className="flex flex-col">
-              <p className="text-xl font-medium mb-5 ml-5">Head</p>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className=" text-black text-md font-medium">
-                      Variable
-                    </TableHead>
-                    {descriptiveAnalysisData.head.columns.map((e: string) => (
-                      <TableHead
-                        key={e}
-                        className=" text-black text-md font-medium"
-                      >
-                        {e}
-                      </TableHead>
-                    ))}
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {Object.keys(descriptiveAnalysisData?.head?.values).map(
-                    (value: string) => (
-                      <TableRow>
-                        <TableCell className="font-medium text-black">
-                          {formatTitle(value)}
-                        </TableCell>
-
-                        {descriptiveAnalysisData?.head?.values[value].map(
-                          (e: number) => (
-                            <TableCell className=" text-black">
-                              {e.toFixed(2)}
-                            </TableCell>
-                          )
-                        )}
-                      </TableRow>
-                    )
-                  )}
-                </TableBody>
-              </Table>
-            </div>
-
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className=" text-black text-md font-medium">
-                    Value
-                  </TableHead>
-                  {descriptiveAnalysisData.missing_values.variables.map(
-                    (e: string) => (
-                      <TableHead className=" text-black text-md font-medium">
-                        {formatTitle(e)}
-                      </TableHead>
-                    )
-                  )}
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <TableRow>
-                  <TableCell className=" text-black text-md font-medium">
-                    Missing Values
-                  </TableCell>
-                  {descriptiveAnalysisData.missing_values.values.map(
-                    (value: number) => (
-                      <TableCell>{value}</TableCell>
-                    )
-                  )}
-                </TableRow>
-                <TableRow>
-                  <TableCell className=" text-black text-md font-medium">
-                    Data types
-                  </TableCell>
-                  {descriptiveAnalysisData.data_types.values.map(
-                    (value: number) => (
-                      <TableCell>{value}</TableCell>
-                    )
-                  )}
-                </TableRow>
-              </TableBody>
-            </Table>
-          </div>
-
-          <div className="flex flex-col items-center justify-center mt-10">
-            <p className="text-xl font-medium mb-10">Statistics</p>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className=" text-black text-md font-medium">
-                    Variable
-                  </TableHead>
-                  {descriptiveAnalysisData?.statistics?.columns.map(
-                    (e: string) => (
-                      <TableHead className=" text-black text-md font-medium">
-                        {formatTitle(e)}
-                      </TableHead>
-                    )
-                  )}
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {Object.keys(descriptiveAnalysisData?.statistics?.values).map(
-                  (value) => (
-                    <TableRow>
-                      <TableCell className="text-black text-md font-medium">
-                        {formatTitle(value)}
-                      </TableCell>
-
-                      {descriptiveAnalysisData?.statistics?.values[value].map(
-                        (e: number) => (
-                          <TableCell className="text-md">
-                            {e.toFixed(2)}
-                          </TableCell>
-                        )
-                      )}
-                    </TableRow>
-                  )
-                )}
-              </TableBody>
-            </Table>
-          </div>
-
-          <div className="mt-20">
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={descriptiveAnalysisData?.correlation_matrix}
-            />
-          </div>
-
-          <div className=" gap-4 flex flex-col justify-center items-center mt-20">
-            <div className="text-lg font-medium w-80">
-              <Combobox
-                label={"Predictive model"}
-                array={[
-                  { value: "linear", label: "Linear" },
-                  { value: "logistic", label: "Logistic" },
-                ]}
-                state={{
-                  value: modelType,
-                  setValue: setModelType,
-                }}
-              />
-            </div>
-            <div className="flex flex-col w-80">
-              <Button
-                className="text-lg mt-2"
-                onClick={generateRegressionModel}
-                disabled={modelType === ""}
-              >
-                Generate Model
-              </Button>
-            </div>
-          </div>
-
-          {isLoadingPredictiveModel && (
-            <div className="my-20 flex justify-center">
-              <p className="text-xl">
-                Generating {modelType === "linear" ? "Linear" : "Logistic"}{" "}
-                Model ....
-              </p>
-            </div>
-          )}
-          {showPredictiveModelError && (
-            <div className="my-20 flex flex-col items-center justify-center">
-              <p className="text-xl">Failed to generate model !</p>
-              <p className="text-xl">Please check your input.</p>
-            </div>
-          )}
-        </>
       )}
 
       <div className="mb-10 px-5">
