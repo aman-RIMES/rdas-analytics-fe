@@ -20,35 +20,25 @@ const Leaflet = ({ geoJsonData, country }: any) => {
   const onEachDistrict = (district: any, layer: any) => {
     const districtName = district.properties.District;
     const provinceName = district.properties.Province;
+    const value = district.properties.data_value;
     layer.bindPopup(`
       ${formatTitle(
         districtName
       )} District,                                              
-      ${provinceName}`);
+      ${provinceName} : ${parseInt(value).toFixed(2)}`);
 
-    // if (district.properties.data_value ) {
-    //   layer.options.fillColor = "greenyellow";
-    //   layer.options.fillOpacity = 1;
-    // }
+    layer.options.fillColor = "green";
 
-    switch (district.properties.data_value) {
-      case district.properties.data_value < 300:
-        layer.options.fillColor = "greenyellow";
-        layer.options.fillOpacity = 1;
-        break;
-      case district.properties.data_value < 600:
-        layer.options.fillColor = "green";
-        layer.options.fillOpacity = 1;
-        break;
-      case district.properties.data_value < 900:
-        layer.options.fillColor = "brown";
-        layer.options.fillOpacity = 1;
-        break;
-
-      // default:
-      //   layer.options.fillColor = "red";
-      //   layer.options.fillOpacity = 1;
-      //   break;
+    if (district.properties.data_value < 250) {
+      layer.options.fillOpacity = 0.2;
+    } else if (district.properties.data_value < 500) {
+      layer.options.fillOpacity = 0.4;
+    } else if (district.properties.data_value < 750) {
+      layer.options.fillOpacity = 0.6;
+    } else if (district.properties.data_value < 1000) {
+      layer.options.fillOpacity = 0.8;
+    } else {
+      layer.options.fillOpacity = 1;
     }
 
     // layer.on({
