@@ -83,9 +83,14 @@ const CommonFilter = () => {
     {}
   );
 
+  const [selected, setSelected] = useState([]);
+
   useEffect(() => {
     const newVariables = transformObject(params?.indic).filter(
-      (e) => e.value !== dependentVariable && e.value !== "rainfall_deviation"
+      (e) =>
+        e.value !== dependentVariable &&
+        e.value !== "rainfall_deviation" &&
+        !independentVariables.includes(e.value)
     );
     setIndependentVariablesList(newVariables);
   }, [dependentVariable]);
@@ -137,10 +142,12 @@ const CommonFilter = () => {
     setIsCorrelationDataVisible(false);
     setIsLoadingAnalysis(true);
     setIsLoadingCorrelationData(false);
+    setDescriptiveAnalysisData({});
     setIsLoadingDynamicMap(false);
     setIsAnalysisError(false);
     setIsDynamicMapError(false);
     setIsCorrelationDataError(false);
+    setShowDescription(false);
   };
 
   const generateDynamicChart = async () => {
@@ -259,6 +266,7 @@ const CommonFilter = () => {
 
   const generateDescriptionAnalysis = async () => {
     setShowDescription(false);
+    setDescriptiveAnalysisData({});
     setShowDescriptiveAnalysisError(false);
     setIsLoadingDescriptiveAnalysis(true);
     try {
@@ -281,7 +289,7 @@ const CommonFilter = () => {
           // indic_0: "el_nino",
         }
       );
-      await setDescriptiveAnalysisData(response.data);
+      setDescriptiveAnalysisData(response.data);
       setIsLoadingDescriptiveAnalysis(false);
       setShowDescription(true);
     } catch (error) {
@@ -297,7 +305,10 @@ const CommonFilter = () => {
         <Combobox
           label={"Dependent Variable"}
           array={transformObject(params?.indic).filter(
-            (e) => e.value !== "rainfall_deviation" && e.value !== "el_nino"
+            (e) =>
+              e.value !== "rainfall_deviation" &&
+              e.value !== "el_nino" &&
+              !independentVariables.includes(e.value)
           )}
           state={{
             value: dependentVariable,
@@ -307,6 +318,8 @@ const CommonFilter = () => {
         <div>
           <Label className="mb-2 font-semibold">Independent Variables</Label>
           <FancyMultiSelect
+            selected={selected}
+            setSelected={setSelected}
             setState={setIndependentVariables}
             array={independentVariablesList}
           />
@@ -507,7 +520,7 @@ const CommonFilter = () => {
                             <TableHead className=" text-black text-md font-medium">
                               Variable
                             </TableHead>
-                            {descriptiveAnalysisData.head.columns.map(
+                            {descriptiveAnalysisData?.head?.columns.map(
                               (e: string) => (
                                 <TableHead
                                   key={e}
@@ -547,7 +560,7 @@ const CommonFilter = () => {
                           <TableHead className=" text-black text-md font-medium">
                             Value
                           </TableHead>
-                          {descriptiveAnalysisData.missing_values.variables.map(
+                          {descriptiveAnalysisData?.missing_values.variables.map(
                             (e: string) => (
                               <TableHead className=" text-black text-md font-medium">
                                 {formatTitle(e)}
@@ -561,7 +574,7 @@ const CommonFilter = () => {
                           <TableCell className=" text-black text-md font-medium">
                             Missing Values
                           </TableCell>
-                          {descriptiveAnalysisData.missing_values.values.map(
+                          {descriptiveAnalysisData?.missing_values.values.map(
                             (value: number) => (
                               <TableCell>{value}</TableCell>
                             )
@@ -571,7 +584,7 @@ const CommonFilter = () => {
                           <TableCell className=" text-black text-md font-medium">
                             Data types
                           </TableCell>
-                          {descriptiveAnalysisData.data_types.values.map(
+                          {descriptiveAnalysisData?.data_types.values.map(
                             (value: number) => (
                               <TableCell>{value}</TableCell>
                             )
@@ -632,7 +645,20 @@ const CommonFilter = () => {
               <div className="flex justify-center mt-16">
                 <Button
                   className="text-sm px-10 border-black"
-                  onClick={() => navigate("/predictive-tools")}
+                  onClick={() =>
+                    navigate("/predictive-tools", {
+                      state: {
+                        source,
+                        independentVariables,
+                        dependentVariable,
+                        periodValue,
+                        districtValue,
+                        dateRange,
+                        countryValue,
+                        selected,
+                      },
+                    })
+                  }
                 >
                   Move to Prediction
                 </Button>

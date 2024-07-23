@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MapContainer, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import geoJson from "@/data/new.json";
 import { countries } from "@/constants";
 import "@/leaflet.css";
 import { formatTitle } from "@/lib/utils";

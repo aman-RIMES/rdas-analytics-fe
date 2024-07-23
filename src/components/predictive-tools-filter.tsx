@@ -29,8 +29,12 @@ import { DatePickerWithRange } from "./date-range-picker";
 import { DateRange, District } from "@/types";
 import { countries } from "@/constants";
 import bodyParams from "../data/body_params.json";
+import { useLocation } from "react-router-dom";
 
 const PredictiveToolsFilter = () => {
+  const location = useLocation();
+  const data = location.state;
+
   const [params, setParams] = useState<any>(bodyParams);
   const [independentVariablesList, setIndependentVariablesList] = useState<any>(
     []
@@ -64,9 +68,27 @@ const PredictiveToolsFilter = () => {
   const [showLinearModel, setShowLinearModel] = useState(false);
   const [showLogisticModel, setShowLogisiticModel] = useState(false);
 
+  const [selected, setSelected] = useState<any>([]);
+
+  useEffect(() => {
+    setCountryValue(data?.countryValue);
+    setSource(data?.source);
+    data?.independentVariables
+      ? setIndependentVariables(data?.independentVariables)
+      : null;
+    data?.selected ? setSelected(data?.selected) : null;
+    setDependentVariable(data?.dependentVariable);
+    setDistrictValue(data?.districtValue);
+    setDateRange(data?.dateRange);
+    setPeriodValue(data?.periodValue);
+  }, []);
+
   useEffect(() => {
     const newVariables = transformObject(params?.indic).filter(
-      (e) => e.value !== dependentVariable && e.value !== "rainfall_deviation"
+      (e) =>
+        e.value !== dependentVariable &&
+        e.value !== "rainfall_deviation" &&
+        !independentVariables.includes(e.value)
     );
     setIndependentVariablesList(newVariables);
   }, [dependentVariable]);
@@ -166,11 +188,11 @@ const PredictiveToolsFilter = () => {
       <div className="grid gap-4 mb-6 md:grid-cols-2 justify-center">
         <Combobox
           label={"Dependent Variable"}
-          // array={transformObject(params?.indic).filter(
-          //   (e) => e.value !== "rainfall_deviation" && e.value !== "el_nino"
-          // )}
           array={transformObject(params?.indic).filter(
-            (e) => e.value !== "rainfall_deviation"
+            (e) =>
+              e.value !== "rainfall_deviation" &&
+              e.value !== "el_nino" &&
+              !independentVariables?.includes(e.value)
           )}
           state={{
             value: dependentVariable,
@@ -180,6 +202,8 @@ const PredictiveToolsFilter = () => {
         <div>
           <Label className="mb-2 font-semibold">Independent Variables</Label>
           <FancyMultiSelect
+            selected={selected}
+            setSelected={setSelected}
             setState={setIndependentVariables}
             array={independentVariablesList}
           />

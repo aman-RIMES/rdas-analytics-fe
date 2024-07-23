@@ -16,17 +16,21 @@ import { Command as CommandPrimitive } from "cmdk";
 type Indicator = Record<"value" | "label", string>;
 
 export function FancyMultiSelect({
+  selected,
+  setSelected = () => {},
   setState,
   array,
   placeholder = "Select variables",
 }: any) {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
-  const [selected, setSelected] = React.useState<Indicator[]>([]);
+  // const [selected, setSelected] = React.useState<Indicator[]>([]);
   const [inputValue, setInputValue] = React.useState("");
 
   const handleUnselect = React.useCallback((framework: Indicator) => {
-    setSelected((prev) => prev.filter((s) => s.value !== framework.value));
+    setSelected((prev: any) =>
+      prev.filter((s: any) => s.value !== framework.value)
+    );
     setState((prev: any) => prev.filter((s: any) => s !== framework.value));
   }, []);
 
@@ -36,7 +40,7 @@ export function FancyMultiSelect({
       if (input) {
         if (e.key === "Delete" || e.key === "Backspace") {
           if (input.value === "") {
-            setSelected((prev) => {
+            setSelected((prev: any) => {
               const newSelected = [...prev];
               newSelected.pop();
               return newSelected;
@@ -53,7 +57,7 @@ export function FancyMultiSelect({
   );
 
   const selectables = array.filter(
-    (element: any) => !selected.includes(element)
+    (element: any) => !selected?.includes(element)
   );
 
   //   console.log(selectables, selected, inputValue);
@@ -65,10 +69,10 @@ export function FancyMultiSelect({
     >
       <div className="group rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
         <div className="flex flex-wrap gap-1">
-          {selected.map((element) => {
+          {selected?.map((element: any) => {
             return (
-              <Badge key={element.value} variant="secondary">
-                {element.label}
+              <Badge key={element?.value} variant="secondary">
+                {element?.label}
                 <button
                   className="ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2"
                   onKeyDown={(e) => {
@@ -114,7 +118,7 @@ export function FancyMultiSelect({
                       }}
                       onSelect={() => {
                         setInputValue("");
-                        setSelected((prev) => [...prev, element]);
+                        setSelected((prev: any) => [...prev, element]);
                         setState((prev: any) => [...prev, element.value]);
                       }}
                       className={"cursor-pointer"}
