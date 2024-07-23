@@ -3755,6 +3755,10 @@
     "rainfall": "Rainfall",
     "normal_rainfall": "Normal Rainfall",
     "el_nino": "El Nino Events",
+    "rice_production": "Crop Production - Rice",
+    "wheat_production": "Crop Production - Wheat",
+    "maize_production": "Crop Production - Maize",
+    "cotton_production": "Crop Production - Cotton",
     "rainfall_deviation": "Deviation from Normal Rainfall"
   },
   "period": {

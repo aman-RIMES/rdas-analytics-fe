@@ -241,7 +241,7 @@ export const yearsList = [
 ];
 
 export const countries = [
-  { value: "NPL", label: "Nepal", coordinates: [28.3949, 84.124], zoom: 6 },
+  { value: "NPL", label: "Nepal", coordinates: [28.3949, 84.124], zoom: 7 },
   { value: "IND", label: "India", coordinates: [20.5937, 78.9629], zoom: 4 },
   {
     value: "PAK",
