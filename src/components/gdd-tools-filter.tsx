@@ -42,6 +42,8 @@ const GDDToolsFilter = () => {
   const [resultVisibile, setResultVisibile] = useState(false);
   const [years, setYears] = useState(yearsList);
 
+  const [selected, setSelected] = useState([]);
+
   // function setProv(e) {
   //   console.log("#$##$%%% " + e);
 
@@ -187,6 +189,8 @@ const GDDToolsFilter = () => {
         <div>
           <Label className="mb-2.5 font-semibold">Years</Label>
           <FancyMultiSelect
+            selected={selected}
+            setSelected={setSelected}
             placeholder={"Select Years"}
             setState={setYearsValue}
             array={years}
