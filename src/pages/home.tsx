@@ -17,7 +17,7 @@ const Home = () => {
         <div className="hidden lg:flex">
           <Sidebar />
         </div>
-        <div className="col-span-5 lg:col-span-4  p-8 px-20">
+        <div className="col-span-5 lg:col-span-4 pt-5 md:p-8 lg:px-20">
           {location.pathname === "/" ? (
             <div className="h-full flex flex-row justify-center items-center gap-4">
               <Icons.logo className="w-20 h-20 text-gray-800 dark:text-white" />

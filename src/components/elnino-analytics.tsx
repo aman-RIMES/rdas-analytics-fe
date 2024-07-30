@@ -16,7 +16,7 @@ const ElNinoAnalytics = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center gap-3 mb-7">
+      <div className="flex flex-col text-center items-center justify-center gap-3 mb-7">
         <h1 className="text-3xl">{subject.category}</h1>
         <h1 className="text-2xl">{subject.title}</h1>
       </div>

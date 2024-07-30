@@ -316,7 +316,7 @@ const CommonFilter = () => {
 
   return (
     <div className="p-10">
-      <div className="grid gap-4 mb-6 md:grid-cols-2 justify-center">
+      <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
         <HoverCard>
           <HoverCardTrigger>
             <Combobox
@@ -340,68 +340,156 @@ const CommonFilter = () => {
             </div>
             <p className="text-sm">
               A single climate variable used to compare against other climate
-              variables
+              variables.
             </p>
           </HoverCardContent>
         </HoverCard>
 
-        <div>
-          <Label className="mb-2 font-semibold">Independent Variables</Label>
-          <FancyMultiSelect
-            selected={selected}
-            setSelected={setSelected}
-            setState={setIndependentVariables}
-            array={independentVariablesList}
-          />
-        </div>
+        <HoverCard>
+          <HoverCardTrigger>
+            <div>
+              <Label className="mb-2 font-semibold">
+                Independent Variables
+              </Label>
+              <FancyMultiSelect
+                selected={selected}
+                setSelected={setSelected}
+                setState={setIndependentVariables}
+                array={independentVariablesList}
+              />
+            </div>
+          </HoverCardTrigger>
+          <HoverCardContent className="flex flex-col">
+            <div className="flex items-center gap-1">
+              <HelpCircle className="h-5 w-5" />
+              <span className="text-md font-semibold">
+                Independent Variables
+              </span>
+            </div>
+            <p className="text-sm">
+              One or more climate variables that will be compared against the
+              Dependent variable.
+            </p>
+          </HoverCardContent>
+        </HoverCard>
 
-        <DatePickerWithRange
-          date={dateRange}
-          setDate={setDateRange}
-          min={0}
-          max={0}
-          label={"Start and End date"}
-        />
-        <Combobox
-          label={"Period"}
-          array={transformObject(params?.period)}
-          state={{
-            value: periodValue,
-            setValue: setPeriodValue,
-          }}
-        />
+        <HoverCard>
+          <HoverCardTrigger>
+            <DatePickerWithRange
+              date={dateRange}
+              setDate={setDateRange}
+              min={0}
+              max={0}
+              label={"Start and End date"}
+            />
+          </HoverCardTrigger>
+          <HoverCardContent className="flex flex-col">
+            <div className="flex items-center gap-1">
+              <HelpCircle className="h-5 w-5" />
+              <span className="text-md font-semibold">Start and End Date</span>
+            </div>
+            <p className="text-sm">
+              The specific date range that you'd like to be analyzed.
+            </p>
+          </HoverCardContent>
+        </HoverCard>
+
+        <HoverCard>
+          <HoverCardTrigger>
+            <Combobox
+              label={"Period"}
+              array={transformObject(params?.period)}
+              state={{
+                value: periodValue,
+                setValue: setPeriodValue,
+              }}
+            />
+          </HoverCardTrigger>
+          <HoverCardContent className="flex flex-col">
+            <div className="flex items-center gap-1">
+              <HelpCircle className="h-5 w-5" />
+              <span className="text-md font-semibold">Period</span>
+            </div>
+            <p className="text-sm">
+              The period between each date that you want to analyze.
+            </p>
+          </HoverCardContent>
+        </HoverCard>
       </div>
-      <div className="grid gap-4 mb-6 md:grid-cols-2 justify-center">
-        <Combobox
-          label={"Source"}
-          array={transformSourceObject(params?.source)}
-          state={{
-            value: source,
-            setValue: setSource,
-          }}
-        />
-        <Combobox
-          label={"Country"}
-          array={countries}
-          state={{
-            value: countryValue,
-            setValue: setCountryValue,
-          }}
-        />
-        <Combobox
-          label={"District"}
-          array={transformDistrictParams(districtList)}
-          state={{
-            value: districtValue,
-            setValue: setDistrictValue,
-          }}
-        />
+      <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
+        <HoverCard>
+          <HoverCardTrigger>
+            <Combobox
+              label={"Source"}
+              array={transformSourceObject(params?.source)}
+              state={{
+                value: source,
+                setValue: setSource,
+              }}
+            />
+          </HoverCardTrigger>
+          <HoverCardContent className="flex flex-col">
+            <div className="flex items-center gap-1">
+              <HelpCircle className="h-5 w-5" />
+              <span className="text-md font-semibold">Source</span>
+            </div>
+            <p className="text-sm">
+              The source of dataset that you want to use for the current
+              analysis.
+            </p>
+          </HoverCardContent>
+        </HoverCard>
+
+        <HoverCard>
+          <HoverCardTrigger>
+            <Combobox
+              label={"Country"}
+              array={countries}
+              state={{
+                value: countryValue,
+                setValue: setCountryValue,
+              }}
+            />
+          </HoverCardTrigger>
+          <HoverCardContent className="flex flex-col">
+            <div className="flex items-center gap-1">
+              <HelpCircle className="h-5 w-5" />
+              <span className="text-md font-semibold">Country</span>
+            </div>
+            <p className="text-sm">
+              The country of chosen location that you'd like to analyze.
+            </p>
+          </HoverCardContent>
+        </HoverCard>
+
+        <HoverCard>
+          <HoverCardTrigger>
+            <Combobox
+              label={"District"}
+              array={transformDistrictParams(districtList)}
+              state={{
+                value: districtValue,
+                setValue: setDistrictValue,
+              }}
+            />
+          </HoverCardTrigger>
+          <HoverCardContent className="flex flex-col">
+            <div className="flex items-center gap-1">
+              <HelpCircle className="h-5 w-5" />
+              <span className="text-md font-semibold">District</span>
+            </div>
+            <p className="text-sm">
+              The specific district of the chosen country to be used for the
+              analysis.
+            </p>
+          </HoverCardContent>
+        </HoverCard>
       </div>
-      <div className="mt-10 w-full">
+      <div className="md:mt-12 w-full">
         <HoverCard>
           <HoverCardTrigger className="w-full flex justify-center">
             <Button
-              className="w-1/3"
+              className="md:w-1/3 w-full"
               disabled={!verifyFilters()}
               onClick={generateDynamicChart}
             >
@@ -440,12 +528,13 @@ const CommonFilter = () => {
 
             {isAnalysisError && (
               <div className="flex justify-center">
-                <Alert className="w-1/2" variant="destructive">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertTitle>API Error !</AlertTitle>
-                  <AlertDescription>
-                    The API responded with an error. Try changing your filters
-                    and start the analysis again.
+                <Alert className="lg:w-3/4" variant="destructive">
+                  <AlertCircle className="h-6 w-6" />
+                  <AlertTitle className="text-lg">API Error !</AlertTitle>
+                  <AlertDescription className="text-md">
+                    The API could not analyze the given filters. This could be
+                    due to missing datasets. Try changing your filters and start
+                    the analysis again.
                   </AlertDescription>
                 </Alert>
               </div>
@@ -463,10 +552,22 @@ const CommonFilter = () => {
                 </div>
               )}
               {isDynamicMapError && (
-                <div className="my-20 flex flex-col items-center justify-center">
-                  <p className="text-xl">Failed to generate Dynamic Map !</p>
-                  <p className="text-xl mt-2">Please check your input.</p>
+                <div className="flex justify-center">
+                  <Alert className="lg:w-3/4" variant="destructive">
+                    <AlertCircle className="h-6 w-6" />
+                    <AlertTitle className="text-lg">API Error !</AlertTitle>
+                    <AlertDescription className="text-md">
+                      The API could not load the Dynamic Map. This could be due
+                      to missing datasets. Try changing your filters and start
+                      the analysis again.
+                    </AlertDescription>
+                  </Alert>
                 </div>
+
+                // <div className="my-20 flex flex-col items-center justify-center">
+                //   <p className="text-xl">Failed to generate Dynamic Map !</p>
+                //   <p className="text-xl mt-2">Please check your input.</p>
+                // </div>
               )}
 
               {isDynamicMapVisible && !isDynamicMapError && (
@@ -522,12 +623,24 @@ const CommonFilter = () => {
               )}
 
               {isCorrelationDataError && (
-                <div className="my-20 flex flex-col items-center justify-center">
-                  <p className="text-xl">
-                    Failed to generate Correlation Data !
-                  </p>
-                  <p className="text-xl mt-2">Please check your input.</p>
+                <div className="flex justify-center">
+                  <Alert className="lg:w-3/4" variant="destructive">
+                    <AlertCircle className="h-6 w-6" />
+                    <AlertTitle className="text-lg">API Error !</AlertTitle>
+                    <AlertDescription className="text-md">
+                      The API could not generate the Correlation Data. This
+                      could be due to missing datasets. Try changing your
+                      filters and start the analysis again.
+                    </AlertDescription>
+                  </Alert>
                 </div>
+
+                // <div className="my-20 flex flex-col items-center justify-center">
+                //   <p className="text-xl">
+                //     Failed to generate Correlation Data !
+                //   </p>
+                //   <p className="text-xl mt-2">Please check your input.</p>
+                // </div>
               )}
 
               {isCorrelationDataVisible && (
@@ -562,12 +675,24 @@ const CommonFilter = () => {
                 </div>
               )}
               {showDescriptiveAnalysisError && (
-                <div className="my-20 flex flex-col items-center justify-center gap-3">
-                  <p className="text-xl">
-                    Failed to load descriptive analysis !
-                  </p>
-                  <p className="text-xl">Please check your input.</p>
+                <div className="flex justify-center">
+                  <Alert className="lg:w-3/4" variant="destructive">
+                    <AlertCircle className="h-6 w-6" />
+                    <AlertTitle className="text-lg">API Error !</AlertTitle>
+                    <AlertDescription className="text-md">
+                      The API could not load the Descriptive Analysis. This
+                      could be due to missing datasets. Try changing your
+                      filters and start the analysis again.
+                    </AlertDescription>
+                  </Alert>
                 </div>
+
+                // <div className="my-20 flex flex-col items-center justify-center gap-3">
+                //   <p className="text-xl">
+                //     Failed to load descriptive analysis !
+                //   </p>
+                //   <p className="text-xl">Please check your input.</p>
+                // </div>
               )}
 
               {showDescription && (
