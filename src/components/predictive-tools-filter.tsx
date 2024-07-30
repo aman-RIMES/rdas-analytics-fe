@@ -244,7 +244,7 @@ const PredictiveToolsFilter = () => {
         />
         <Combobox
           label={"District"}
-          array={transformDistrictParams(districtList).slice(0, 15)}
+          array={transformDistrictParams(districtList)}
           state={{
             value: districtValue,
             setValue: setDistrictValue,
