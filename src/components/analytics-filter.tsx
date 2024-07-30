@@ -8,7 +8,6 @@ import {
   transformObject,
   transformSourceObject,
 } from "@/lib/utils";
-import DatePicker from "./datepicker";
 import { Button } from "./ui/button";
 import axios from "axios";
 import HighchartsReact from "highcharts-react-official";
@@ -213,7 +212,7 @@ const Filter = () => {
         />
         <Combobox
           label={"District"}
-          array={transformDistrictParams(districtList).slice(0, 15)}
+          array={transformDistrictParams(districtList)}
           state={{
             value: districtValue,
             setValue: setDistrictValue,

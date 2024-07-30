@@ -43,14 +43,18 @@ export const getAverage = (array: any) =>
   array.reduce((a: any, b: any) => a + b) / array.length;
 
 export const transformDistrictParams = (array: Array<object>) => {
-  return array.map((e: any) => ({
+  const districts = array.map((e: any) => ({
     value: e.district_code,
     label: e.district_name,
   }));
+
+  return districts.sort((a, b) =>
+    a.label.toLowerCase().localeCompare(b.label.toLowerCase())
+  );
 };
 
 export const getAllDistrictsOfCountry = (array: Array<object>) => {
-  let districts: string[] = [];
+  const districts: string[] = [];
   array.map((e: any) => {
     districts.push(e.district_code);
   });

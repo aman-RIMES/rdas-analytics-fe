@@ -152,7 +152,7 @@ const GDDToolsFilter = () => {
         />
         <Combobox
           label={"District"}
-          array={transformDistrictArray(districts.slice(0, 15))}
+          array={transformDistrictArray(districts)}
           state={{
             value: districtValue,
             setValue: setDistrictValue,
@@ -171,7 +171,7 @@ const GDDToolsFilter = () => {
       <div className="grid gap-4 mb-6 md:grid-cols-4 justify-center">
         <Combobox
           label={"Crop"}
-          array={transformCropArray(crops.slice(0, 10))}
+          array={transformCropArray(crops)}
           state={{
             value: cropValue,
             setValue: setCropValue,

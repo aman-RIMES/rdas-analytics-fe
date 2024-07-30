@@ -9,7 +9,6 @@ import {
   transformObject,
   transformSourceObject,
 } from "@/lib/utils";
-import DatePicker from "./datepicker";
 import { Button } from "./ui/button";
 import axios from "axios";
 import HighchartsReact from "highcharts-react-official";
@@ -30,6 +29,9 @@ import {
   TableRow,
 } from "./ui/table";
 import { useNavigate } from "react-router-dom";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import { AlertCircle, HelpCircle } from "lucide-react";
 
 const CommonFilter = () => {
   const navigate = useNavigate();
@@ -148,6 +150,19 @@ const CommonFilter = () => {
     setIsDynamicMapError(false);
     setIsCorrelationDataError(false);
     setShowDescription(false);
+  };
+
+  const verifyFilters = () => {
+    return (
+      independentVariables.length > 0 &&
+      dependentVariable !== "" &&
+      source !== "" &&
+      periodValue !== "" &&
+      districtValue !== "" &&
+      formatDate(dateRange?.from) !== "" &&
+      formatDate(dateRange?.to) !== "" &&
+      countryValue !== ""
+    );
   };
 
   const generateDynamicChart = async () => {
@@ -302,19 +317,34 @@ const CommonFilter = () => {
   return (
     <div className="p-10">
       <div className="grid gap-4 mb-6 md:grid-cols-2 justify-center">
-        <Combobox
-          label={"Dependent Variable"}
-          array={transformObject(params?.indic).filter(
-            (e) =>
-              e.value !== "rainfall_deviation" &&
-              e.value !== "el_nino" &&
-              !independentVariables.includes(e.value)
-          )}
-          state={{
-            value: dependentVariable,
-            setValue: setDependentVariable,
-          }}
-        />
+        <HoverCard>
+          <HoverCardTrigger>
+            <Combobox
+              label={"Dependent Variable"}
+              array={transformObject(params?.indic).filter(
+                (e) =>
+                  e.value !== "rainfall_deviation" &&
+                  e.value !== "el_nino" &&
+                  !independentVariables.includes(e.value)
+              )}
+              state={{
+                value: dependentVariable,
+                setValue: setDependentVariable,
+              }}
+            />
+          </HoverCardTrigger>
+          <HoverCardContent className="flex flex-col">
+            <div className="flex items-center gap-1">
+              <HelpCircle className="h-5 w-5" />
+              <span className="text-md font-semibold">Dependent Variable</span>
+            </div>
+            <p className="text-sm">
+              A single climate variable used to compare against other climate
+              variables
+            </p>
+          </HoverCardContent>
+        </HoverCard>
+
         <div>
           <Label className="mb-2 font-semibold">Independent Variables</Label>
           <FancyMultiSelect
@@ -360,16 +390,36 @@ const CommonFilter = () => {
         />
         <Combobox
           label={"District"}
-          array={transformDistrictParams(districtList).slice(0, 15)}
+          array={transformDistrictParams(districtList)}
           state={{
             value: districtValue,
             setValue: setDistrictValue,
           }}
         />
       </div>
-      <div className="grid gap-4 mt-10 md:grid-cols-3 justify-center">
-        <div></div>
-        <Button onClick={generateDynamicChart}>Start Analysis</Button>
+      <div className="mt-10 w-full">
+        <HoverCard>
+          <HoverCardTrigger className="w-full flex justify-center">
+            <Button
+              className="w-1/3"
+              disabled={!verifyFilters()}
+              onClick={generateDynamicChart}
+            >
+              Start Analysis
+            </Button>
+          </HoverCardTrigger>
+          {!verifyFilters() && (
+            <HoverCardContent className="flex flex-col">
+              <div className="flex items-center gap-1">
+                <AlertCircle className="h-5 w-5" />
+                <span className="text-md font-semibold">Invalid Input!</span>
+              </div>
+              <p className="text-md">
+                Make sure you've filled every field above.
+              </p>
+            </HoverCardContent>
+          )}
+        </HoverCard>
       </div>
 
       {isTimeSeriesVisible && (
@@ -389,10 +439,21 @@ const CommonFilter = () => {
             )}
 
             {isAnalysisError && (
-              <div className="my-20 flex flex-col items-center justify-center">
-                <p className="text-xl">Failed to Analyze Data !</p>
-                <p className="text-xl mt-2">Please check your input.</p>
+              <div className="flex justify-center">
+                <Alert className="w-1/2" variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle>API Error !</AlertTitle>
+                  <AlertDescription>
+                    The API responded with an error. Try changing your filters
+                    and start the analysis again.
+                  </AlertDescription>
+                </Alert>
               </div>
+
+              // <div className="my-20 flex flex-col items-center justify-center">
+              //   <p className="text-xl">Failed to Analyze Data !</p>
+              //   <p className="text-xl mt-2">Please check your input.</p>
+              // </div>
             )}
 
             <div>
