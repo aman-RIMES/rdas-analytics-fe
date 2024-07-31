@@ -13,7 +13,7 @@ const Home = () => {
     <>
       <NavBar />
       <hr />
-      <div className="px-10 grid grid-cols-5">
+      <div className="sm:px-10 px-4 grid grid-cols-5">
         <div className="hidden lg:flex">
           <Sidebar />
         </div>

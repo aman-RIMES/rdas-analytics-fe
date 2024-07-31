@@ -22,6 +22,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { DatePickerWithRange } from "./date-range-picker";
 import { Crop, DateRange } from "@/types";
 import { setYear } from "date-fns";
+import { HoverCard, HoverCardTrigger, HoverCardContent } from "./ui/hover-card";
+import { AlertCircle } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import HelpHoverCard from "./help-hover-card";
 
 const GDDToolsFilter = () => {
   const [isError, setIsError] = useState(false);
@@ -37,7 +41,7 @@ const GDDToolsFilter = () => {
   const [provinces, setProvinces] = useState([{}]);
   const [provinceValue, setProvinceValue] = useState("");
   const [dateRange, setDateRange] = useState<DateRange>();
-  const [yearsValue, setYearsValue] = useState([]);
+  const [yearsValue, setYearsValue] = useState<any>([]);
   const [gddData, setGddData] = useState<any>([]);
   const [resultVisibile, setResultVisibile] = useState(false);
   const [years, setYears] = useState(yearsList);
@@ -49,6 +53,19 @@ const GDDToolsFilter = () => {
 
   //   setProvinceValue(e);
   // }
+
+  const verifyFilters = () => {
+    return (
+      cropValue !== "" &&
+      tehsilValue !== "" &&
+      districtValue !== "" &&
+      countryValue !== "" &&
+      provinceValue !== "" &&
+      yearsValue.length > 0 &&
+      formatDate(dateRange?.from) !== "" &&
+      formatDate(dateRange?.to) !== ""
+    );
+  };
 
   useEffect(() => {
     const chosenYear = formatDate(dateRange?.from).slice(0, 4);
@@ -132,62 +149,128 @@ const GDDToolsFilter = () => {
   };
 
   return (
-    <div className="p-10">
-      <div className="grid gap-4 mb-6 md:grid-cols-4 justify-center">
-        <Combobox
-          label={"Country"}
-          array={transformObject(metadata.country)}
-          state={{
-            value: countryValue,
-            setValue: setCountryValue,
-          }}
-        />
-        <Combobox
-          label={"Province"}
-          array={transformProvinceArray(provinces)}
-          state={{
-            value: provinceValue,
-            setValue: setProvinceValue,
-          }}
-        />
-        <Combobox
-          label={"District"}
-          array={transformDistrictArray(districts)}
-          state={{
-            value: districtValue,
-            setValue: setDistrictValue,
-          }}
-        />
-        <Combobox
-          label={"Tehsil"}
-          array={transformTehsilArray(tehsils)}
-          state={{
-            value: tehsilValue,
-            setValue: setTehsilValue,
-          }}
-        />
+    <div className="sm:p-10 p-4">
+      <div className="grid gap-4 mb-6 md:grid-cols-2 xl:grid-cols-4 grid-cols-1 justify-center">
+        <div>
+          <div className="flex gap-2 ">
+            <Label className="mb-2 font-semibold"> Country </Label>
+            <HelpHoverCard
+              title={" Country "}
+              content={` The country of chosen location that you'd like to analyze. `}
+            />
+          </div>
+          <Combobox
+            label={"Country"}
+            array={transformObject(metadata.country)}
+            state={{
+              value: countryValue,
+              setValue: setCountryValue,
+            }}
+          />
+        </div>
+
+        <div>
+          <div className="flex gap-2 ">
+            <Label className="mb-2 font-semibold"> Province </Label>
+            <HelpHoverCard
+              title={" Province "}
+              content={`  The Province of the chosen country to be used for the
+              analysis. `}
+            />
+          </div>
+          <Combobox
+            label={"Province"}
+            array={transformProvinceArray(provinces)}
+            state={{
+              value: provinceValue,
+              setValue: setProvinceValue,
+            }}
+          />
+        </div>
+
+        <div>
+          <div className="flex gap-2 ">
+            <Label className="mb-2 font-semibold"> District </Label>
+            <HelpHoverCard
+              title={" District "}
+              content={`  The district of the chosen country to be used for the
+              analysis. `}
+            />
+          </div>
+          <Combobox
+            label={"District"}
+            array={transformDistrictArray(districts)}
+            state={{
+              value: districtValue,
+              setValue: setDistrictValue,
+            }}
+          />
+        </div>
+
+        <div>
+          <div className="flex gap-2 ">
+            <Label className="mb-2 font-semibold"> Tehsil </Label>
+            <HelpHoverCard
+              title={" Tehsil "}
+              content={`  The specific Tehsil of the chosen district to be used for the
+              detailed analysis. `}
+            />
+          </div>
+          <Combobox
+            label={"Tehsil"}
+            array={transformTehsilArray(tehsils)}
+            state={{
+              value: tehsilValue,
+              setValue: setTehsilValue,
+            }}
+          />
+        </div>
       </div>
 
-      <div className="grid gap-4 mb-6 md:grid-cols-4 justify-center">
-        <Combobox
-          label={"Crop"}
-          array={transformCropArray(crops)}
-          state={{
-            value: cropValue,
-            setValue: setCropValue,
-          }}
-        />
-
-        <DatePickerWithRange
-          disabledStatus={cropValue == null}
-          date={dateRange}
-          setDate={setDateRange}
-          min={crops.find((e) => e?.crop_id == cropValue)?.min_period_days}
-          max={crops.find((e) => e?.crop_id == cropValue)?.max_period_days}
-          label={"Start and End date"}
-        />
+      <div className="grid gap-4 mb-6 md:grid-cols-2 xl:grid-cols-4 grid-cols-1 justify-center">
         <div>
-          <Label className="mb-2.5 font-semibold">Years</Label>
+          <div className="flex gap-2 ">
+            <Label className="mb-2 font-semibold"> Crop </Label>
+            <HelpHoverCard
+              title={" Crop "}
+              content={`  The type of crop you want to analyze. `}
+            />
+          </div>
+          <Combobox
+            label={"Crop"}
+            array={transformCropArray(crops)}
+            state={{
+              value: cropValue,
+              setValue: setCropValue,
+            }}
+          />
+        </div>
+
+        <div>
+          <div className="flex gap-2 ">
+            <Label className="font-semibold">Start and End date</Label>
+            <HelpHoverCard
+              title={"Start and End date"}
+              content={`The specific date range that you'd like to be analyzed.`}
+            />
+          </div>
+          <DatePickerWithRange
+            disabledStatus={cropValue == null}
+            date={dateRange}
+            setDate={setDateRange}
+            min={crops.find((e) => e?.crop_id == cropValue)?.min_period_days}
+            max={crops.find((e) => e?.crop_id == cropValue)?.max_period_days}
+          />
+        </div>
+
+        <div>
+          <div className="flex gap-2 ">
+            <Label className="mb-2 font-semibold"> Years </Label>
+            <HelpHoverCard
+              title={" Years "}
+              content={` The list of years you would like to view individual analysis for. `}
+            />
+          </div>
           <FancyMultiSelect
             selected={selected}
             setSelected={setSelected}
@@ -198,16 +281,41 @@ const GDDToolsFilter = () => {
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3 justify-center mt-10">
-        <div></div>
-        <Button onClick={generateGDD} className="w-full text-lg">
-          {isNewAnalysis ? "Start Analysis" : "Re-Analyze"}
-        </Button>
+      <div className="md:mt-12 w-full">
+        <HoverCard>
+          <HoverCardTrigger className="w-full flex justify-center">
+            <Button
+              onClick={generateGDD}
+              className="md:w-1/3 w-full"
+              disabled={!verifyFilters()}
+            >
+              {isNewAnalysis ? "Start Analysis" : "Re-Analyze"}
+            </Button>
+          </HoverCardTrigger>
+          {!verifyFilters() && (
+            <HoverCardContent className="flex flex-col">
+              <div className="flex items-center gap-1">
+                <AlertCircle className="h-5 w-5" />
+                <span className="text-md font-semibold">Invalid Input!</span>
+              </div>
+              <p className="text-md">
+                Make sure you've filled every field above.
+              </p>
+            </HoverCardContent>
+          )}
+        </HoverCard>
       </div>
 
       {isError && (
-        <div className="my-20 flex justify-center">
-          <p className="text-2xl">Error analyzing data !</p>
+        <div className="flex justify-center">
+          <Alert className="lg:w-3/4" variant="destructive">
+            <AlertCircle className="h-5 w-5 mt-1" />
+            <AlertTitle className="text-lg">API Error !</AlertTitle>
+            <AlertDescription className="text-md">
+              Failed to analyze the given filters. This could be due to missing
+              datasets. Try changing your filters and start the analysis again.
+            </AlertDescription>
+          </Alert>
         </div>
       )}
       {isLoading && (

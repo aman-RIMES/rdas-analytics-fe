@@ -21,7 +21,7 @@ import { ScrollArea } from "./scroll-area";
 function Combobox({ array, state, label }: any) {
   return (
     <div className="flex flex-col justify-start gap-2">
-      <Label className="font-semibold">{label}</Label>
+      {/* <Label className="font-semibold">{label}</Label> */}
       <Popover open={state.open} onOpenChange={state.setOpen}>
         <PopoverTrigger asChild>
           <Button
