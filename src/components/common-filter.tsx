@@ -75,6 +75,24 @@ const CommonFilter = () => {
   const [countryValue, setCountryValue] = useState("");
   const [periodValue, setPeriodValue] = useState("");
 
+  const [filterData, setFilterData] = useState({
+    dependentVariable: "",
+    independentVariables: [],
+    source: "",
+    districtValue: "",
+    countryValue: "",
+    periodValue: "",
+    dateRange: {},
+  });
+
+  const handleChange = (name: string, value: string | []) => {
+    setFilterData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  useEffect(() => {
+    console.log(filterData);
+  }, [filterData]);
+
   const [dateRange, setDateRange] = useState<DateRange>();
 
   const [isLoadingDescriptiveAnalysis, setIsLoadingDescriptiveAnalysis] =
@@ -119,26 +137,6 @@ const CommonFilter = () => {
         );
         setParams(response.data);
         console.log(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
-
-  useEffect(() => {
-    const districtsData = params.district.filter(
-      (e: District) => e.country === countryValue
-    );
-    setDistrictList(districtsData);
-  }, [countryValue]);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response: any = await axios.get(
-          "http://203.156.108.67:1580/body_params"
-        );
-        setParams(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -328,6 +326,7 @@ const CommonFilter = () => {
             />
           </div>
           <Combobox
+            name="dependentVariable"
             label={"Dependent Variable"}
             array={transformObject(params?.indic).filter(
               (e) =>
@@ -336,8 +335,8 @@ const CommonFilter = () => {
                 !independentVariables.includes(e.value)
             )}
             state={{
-              value: dependentVariable,
-              setValue: setDependentVariable,
+              value: filterData.dependentVariable,
+              setValue: handleChange,
             }}
           />
         </div>
@@ -385,11 +384,12 @@ const CommonFilter = () => {
           </div>
 
           <Combobox
+            name="periodValue"
             label={"Period"}
             array={transformObject(params?.period)}
             state={{
-              value: periodValue,
-              setValue: setPeriodValue,
+              value: filterData.periodValue,
+              setValue: handleChange,
             }}
           />
         </div>
@@ -406,11 +406,12 @@ const CommonFilter = () => {
             />
           </div>
           <Combobox
+            name="source"
             label={"Source"}
             array={transformSourceObject(params?.source)}
             state={{
-              value: source,
-              setValue: setSource,
+              value: filterData.source,
+              setValue: handleChange,
             }}
           />
         </div>
@@ -424,11 +425,12 @@ const CommonFilter = () => {
             />
           </div>
           <Combobox
+            name="countryValue"
             label={"Country"}
             array={countries}
             state={{
-              value: countryValue,
-              setValue: setCountryValue,
+              value: filterData.countryValue,
+              setValue: handleChange,
             }}
           />
         </div>
@@ -443,11 +445,12 @@ const CommonFilter = () => {
             />
           </div>
           <Combobox
+            name="districtValue"
             label={"District"}
             array={transformDistrictParams(districtList)}
             state={{
-              value: districtValue,
-              setValue: setDistrictValue,
+              value: filterData.districtValue,
+              setValue: handleChange,
             }}
           />
         </div>

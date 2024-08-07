@@ -18,7 +18,7 @@ import { CommandList } from "cmdk";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { ScrollArea } from "./scroll-area";
 
-function Combobox({ array, state, label }: any) {
+function Combobox({ array, state, label, name }: any) {
   return (
     <div className="flex flex-col justify-start gap-2">
       {/* <Label className="font-semibold">{label}</Label> */}
@@ -51,6 +51,7 @@ function Combobox({ array, state, label }: any) {
                       value={framework.value}
                       onSelect={(currentValue) => {
                         state.setValue(
+                          name,
                           currentValue === state.value ? "" : currentValue
                         );
                         state.setOpen(false);
