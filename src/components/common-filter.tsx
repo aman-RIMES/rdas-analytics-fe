@@ -136,7 +136,6 @@ const CommonFilter = () => {
           "http://203.156.108.67:1580/body_params"
         );
         setParams(response.data);
-        console.log(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -145,10 +144,10 @@ const CommonFilter = () => {
 
   useEffect(() => {
     const districtsData = params.district.filter(
-      (e: District) => e.country === countryValue
+      (e: District) => e.country === filterData.countryValue
     );
     setDistrictList(districtsData);
-  }, [countryValue]);
+  }, [filterData.countryValue]);
 
   const resetAllLoadingStates = () => {
     setIsTimeSeriesVisible(true);
@@ -367,8 +366,9 @@ const CommonFilter = () => {
             />
           </div>
           <DatePickerWithRange
-            date={dateRange}
-            setDate={setDateRange}
+            name="dateRange"
+            date={filterData.dateRange}
+            setDate={handleChange}
             min={0}
             max={0}
           />

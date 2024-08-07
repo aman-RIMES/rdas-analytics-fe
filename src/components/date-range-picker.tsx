@@ -12,8 +12,11 @@ import {
 } from "@/components/ui/popover";
 import { CalendarComplete } from "./ui/calendar-complete";
 import { Label } from "./ui/label";
+import { useEffect, useState } from "react";
+import { DateRange } from "react-day-picker";
 
 export function DatePickerWithRange({
+  name,
   date,
   setDate,
   label,
@@ -21,6 +24,11 @@ export function DatePickerWithRange({
   max,
   disabledStatus,
 }: any) {
+  const [pickedDate, setPickedDate] = useState<DateRange>();
+  useEffect(() => {
+    setDate(name, pickedDate);
+  }, [pickedDate]);
+
   return (
     <div className={cn("grid gap-2")}>
       <div className="flex flex-col justify-start gap-2">
@@ -62,7 +70,7 @@ export function DatePickerWithRange({
               max={max}
               defaultMonth={date?.from}
               selected={date}
-              onSelect={setDate}
+              onSelect={setPickedDate}
               numberOfMonths={2}
               // footer={
               //   <>
