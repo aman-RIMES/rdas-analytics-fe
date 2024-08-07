@@ -145,10 +145,10 @@ const CommonFilter = () => {
 
   useEffect(() => {
     const districtsData = params.district.filter(
-      (e: District) => e.country === countryValue
+      (e: District) => e.country === filterData.countryValue
     );
     setDistrictList(districtsData);
-  }, [countryValue]);
+  }, [filterData.countryValue]);
 
   const resetAllLoadingStates = () => {
     setIsTimeSeriesVisible(true);
@@ -351,9 +351,11 @@ const CommonFilter = () => {
             />
           </div>
           <FancyMultiSelect
+            name="independentVariables"
+            prevState={filterData.independentVariables}
             selected={selected}
             setSelected={setSelected}
-            setState={setIndependentVariables}
+            setState={handleChange}
             array={independentVariablesList}
           />
         </div>
@@ -367,8 +369,9 @@ const CommonFilter = () => {
             />
           </div>
           <DatePickerWithRange
+            name="dateRange"
             date={dateRange}
-            setDate={setDateRange}
+            setDate={handleChange}
             min={0}
             max={0}
           />
