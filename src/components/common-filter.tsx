@@ -71,9 +71,10 @@ const CommonFilter = () => {
   const [independentVariables, setIndependentVariables] = useState<any>([]);
   const [source, setSource] = useState("");
   const [districtValue, setDistrictValue] = useState("");
-  const [districtList, setDistrictList] = useState([{}]);
   const [countryValue, setCountryValue] = useState("");
   const [periodValue, setPeriodValue] = useState("");
+
+  const [districtList, setDistrictList] = useState([{}]);
 
   const [filterData, setFilterData] = useState({
     dependentVariable: "",
@@ -119,15 +120,15 @@ const CommonFilter = () => {
     );
   };
 
-  useEffect(() => {
-    const newVariables = transformObject(params?.indic).filter(
-      (e) =>
-        e.value !== dependentVariable &&
-        e.value !== "rainfall_deviation" &&
-        !independentVariables.includes(e.value)
-    );
-    setIndependentVariablesList(newVariables);
-  }, [dependentVariable]);
+  // useEffect(() => {
+  //   const newVariables = transformObject(params?.indic).filter(
+  //     (e) =>
+  //       e.value !== dependentVariable &&
+  //       e.value !== "rainfall_deviation" &&
+  //       !independentVariables.includes(e.value)
+  //   );
+  //   setIndependentVariablesList(newVariables);
+  // }, [dependentVariable]);
 
   useEffect(() => {
     (async () => {
@@ -146,6 +147,7 @@ const CommonFilter = () => {
     const districtsData = params.district.filter(
       (e: District) => e.country === filterData.countryValue
     );
+
     setDistrictList(districtsData);
   }, [filterData.countryValue]);
 
