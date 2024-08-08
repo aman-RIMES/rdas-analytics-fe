@@ -33,6 +33,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { AlertCircle } from "lucide-react";
 import HelpHoverCard from "./help-hover-card";
+import FilterComponent from "./filter.component";
 
 const CommonFilter = () => {
   const navigate = useNavigate();
@@ -92,7 +93,7 @@ const CommonFilter = () => {
     {}
   );
 
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState<[]>([]);
 
   const verifyFilters = () => {
     return (
@@ -107,26 +108,26 @@ const CommonFilter = () => {
     );
   };
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const response: any = await axios.get(
-          "http://203.156.108.67:1580/body_params"
-        );
-        setParams(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const response: any = await axios.get(
+  //         "http://203.156.108.67:1580/body_params"
+  //       );
+  //       setParams(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   })();
+  // }, []);
 
-  useEffect(() => {
-    const districtsData = params.district.filter(
-      (e: District) => e.country === filterData.countryValue
-    );
+  // useEffect(() => {
+  //   const districtsData = params.district.filter(
+  //     (e: District) => e.country === filterData.countryValue
+  //   );
 
-    setDistrictList(districtsData);
-  }, [filterData.countryValue]);
+  //   setDistrictList(districtsData);
+  // }, [filterData.countryValue]);
 
   const resetAllLoadingStates = () => {
     setIsTimeSeriesVisible(true);
@@ -293,153 +294,12 @@ const CommonFilter = () => {
 
   return (
     <div className="sm:p-10 p-4">
-      <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold">Dependent Variable</Label>
-            <HelpHoverCard
-              title={"Dependent Variable"}
-              content={`A single climate variable used to compare against other climate
-              variables.`}
-            />
-          </div>
-          <Combobox
-            name="dependentVariable"
-            label={"Dependent Variable"}
-            array={transformObject(params?.indic).filter(
-              (e) =>
-                e.value !== "rainfall_deviation" &&
-                e.value !== "el_nino" &&
-                !filterData.independentVariables.includes(e.value)
-            )}
-            state={{
-              value: filterData.dependentVariable,
-              setValue: handleChange,
-            }}
-          />
-        </div>
-
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold">Independent Variables</Label>
-            <HelpHoverCard
-              title={"Independent Variables"}
-              content={`One or more climate variables that will be compared against
-                  the Dependent variable.`}
-            />
-          </div>
-          <FancyMultiSelect
-            name="independentVariables"
-            selected={selected}
-            setSelected={setSelected}
-            setState={handleChange}
-            array={transformObject(params?.indic).filter(
-              (e) =>
-                e.value !== filterData.dependentVariable &&
-                e.value !== "rainfall_deviation" &&
-                !filterData.independentVariables.includes(e.value)
-            )}
-          />
-        </div>
-
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="font-semibold">Start and End date</Label>
-            <HelpHoverCard
-              title={"Start and End date"}
-              content={`The specific date range that you'd like to be analyzed.`}
-            />
-          </div>
-          <DatePickerWithRange
-            name="dateRange"
-            date={filterData.dateRange}
-            setDate={handleChange}
-            min={0}
-            max={0}
-          />
-        </div>
-
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> Period </Label>
-            <HelpHoverCard
-              title={" Period "}
-              content={` The period between each date that you want to analyze. `}
-            />
-          </div>
-
-          <Combobox
-            name="periodValue"
-            label={"Period"}
-            array={transformObject(params?.period)}
-            state={{
-              value: filterData.periodValue,
-              setValue: handleChange,
-            }}
-          />
-        </div>
-      </div>
-
-      <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> Source </Label>
-            <HelpHoverCard
-              title={" Source "}
-              content={` The source of dataset that you want to use for the current
-              analysis. `}
-            />
-          </div>
-          <Combobox
-            name="source"
-            label={"Source"}
-            array={transformSourceObject(params?.source)}
-            state={{
-              value: filterData.source,
-              setValue: handleChange,
-            }}
-          />
-        </div>
-
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> Country </Label>
-            <HelpHoverCard
-              title={" Country "}
-              content={` The country of chosen location that you'd like to analyze. `}
-            />
-          </div>
-          <Combobox
-            name="countryValue"
-            label={"Country"}
-            array={countries}
-            state={{
-              value: filterData.countryValue,
-              setValue: handleChange,
-            }}
-          />
-        </div>
-
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> District </Label>
-            <HelpHoverCard
-              title={" District "}
-              content={`  The specific district of the chosen country to be used for the
-              analysis. `}
-            />
-          </div>
-          <Combobox
-            name="districtValue"
-            label={"District"}
-            array={transformDistrictParams(districtList)}
-            state={{
-              value: filterData.districtValue,
-              setValue: handleChange,
-            }}
-          />
-        </div>
-      </div>
+      <FilterComponent
+        filterData={filterData}
+        setFilterData={setFilterData}
+        selected={selected}
+        setSelected={setSelected}
+      />
 
       <div className="md:mt-12 w-full">
         <HoverCard>
@@ -468,67 +328,6 @@ const CommonFilter = () => {
 
       {isTimeSeriesVisible && (
         <div className="mb-10">
-          <div className="mt-10">
-            {isLoadingAnalysis && (
-              <div className="my-20 flex justify-center">
-                <p className="text-xl">Analyzing Data ...</p>
-              </div>
-            )}
-
-            {!isLoadingAnalysis && !isAnalysisError && (
-              <HighchartsReact
-                highcharts={Highcharts}
-                options={timeSeriesChartData}
-              />
-            )}
-
-            {isAnalysisError && (
-              <div className="flex justify-center">
-                <Alert className="lg:w-3/4" variant="destructive">
-                  <AlertCircle className="h-5 w-5 mt-1" />
-                  <AlertTitle className="text-lg">API Error !</AlertTitle>
-                  <AlertDescription className="text-md">
-                    Failed to analyze the given filters. This could be due to
-                    missing datasets. Try changing your filters and start the
-                    analysis again.
-                  </AlertDescription>
-                </Alert>
-              </div>
-            )}
-
-            <div>
-              {isloadingDynamicMap && (
-                <div className="my-20 flex justify-center border p-24 rounded-lg">
-                  <p className="text-xl">Loading Dynamic Map ...</p>
-                </div>
-              )}
-              {isDynamicMapError && (
-                <div className="flex justify-center">
-                  <Alert className="lg:w-3/4" variant="destructive">
-                    <AlertCircle className="h-5 w-5 mt-1" />
-                    <AlertTitle className="text-lg">API Error !</AlertTitle>
-                    <AlertDescription className="text-md">
-                      Failed to load the Dynamic Map. This could be due to
-                      missing datasets. Try changing your filters and start the
-                      analysis again.
-                    </AlertDescription>
-                  </Alert>
-                </div>
-              )}
-
-              {isDynamicMapVisible && !isDynamicMapError && (
-                <div>
-                  <p className="text-xl font-semibold flex justify-center my-8">
-                    Deviation from Normal Rainfall
-                  </p>
-                  <Leaflet
-                    country={filterData.countryValue}
-                    geoJsonData={geoJsonData}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
           {!isLoadingAnalysis && !isAnalysisError && (
             <>
               <div className="flex justify-center mt-10">

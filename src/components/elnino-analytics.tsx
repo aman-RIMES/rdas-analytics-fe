@@ -3,6 +3,7 @@ import { menus } from "@/constants";
 import { useParams, useSearchParams } from "react-router-dom";
 import NotFoundPage from "./404-page";
 import CommonFilter from "./common-filter";
+import ElNinoAnalyticsFilter from "./elnino-analytics-filter";
 
 //TODO: Replace all unknown/any types with their corresponding types/interfaces
 const ElNinoAnalytics = () => {
@@ -20,7 +21,7 @@ const ElNinoAnalytics = () => {
       </div>
 
       <div className="my-10 border rounded-lg">
-        <CommonFilter />
+        <ElNinoAnalyticsFilter />
       </div>
     </>
   );

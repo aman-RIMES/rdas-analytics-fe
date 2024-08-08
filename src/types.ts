@@ -80,3 +80,10 @@ export interface FilterData {
   periodValue: string;
   dateRange: any;
 }
+
+export interface FilterProps {
+  filterData: FilterData;
+  setFilterData: any;
+  selected: [];
+  setSelected: any;
+}
