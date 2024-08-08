@@ -70,3 +70,13 @@ export interface Country {
   coordinates: LatLngExpression;
   zoom: number;
 }
+
+export interface FilterData {
+  dependentVariable: string;
+  independentVariables: string[];
+  source: string;
+  districtValue: string;
+  countryValue: string;
+  periodValue: string;
+  dateRange: any;
+}

@@ -16,7 +16,7 @@ import Highcharts from "highcharts/highmaps";
 import Leaflet from "./leaflet";
 import { countries } from "@/constants";
 import bodyParams from "../data/body_params.json";
-import { DateRange, District } from "@/types";
+import { District, FilterData } from "@/types";
 import { DatePickerWithRange } from "./date-range-picker";
 import { FancyMultiSelect } from "./ui/multiselect";
 import { Label } from "@radix-ui/react-dropdown-menu";
@@ -63,20 +63,9 @@ const CommonFilter = () => {
     {}
   );
 
-  const [independentVariablesList, setIndependentVariablesList] = useState<any>(
-    []
-  );
-
-  const [dependentVariable, setDependentVariable] = useState("");
-  const [independentVariables, setIndependentVariables] = useState<any>([]);
-  const [source, setSource] = useState("");
-  const [districtValue, setDistrictValue] = useState("");
-  const [countryValue, setCountryValue] = useState("");
-  const [periodValue, setPeriodValue] = useState("");
-
   const [districtList, setDistrictList] = useState([{}]);
 
-  const [filterData, setFilterData] = useState<any>({
+  const [filterData, setFilterData] = useState<FilterData>({
     dependentVariable: "",
     independentVariables: [],
     source: "",
@@ -94,8 +83,6 @@ const CommonFilter = () => {
     console.log(filterData);
   }, [filterData]);
 
-  const [dateRange, setDateRange] = useState<DateRange>();
-
   const [isLoadingDescriptiveAnalysis, setIsLoadingDescriptiveAnalysis] =
     useState(false);
   const [showDescriptiveAnalysisError, setShowDescriptiveAnalysisError] =
@@ -109,26 +96,16 @@ const CommonFilter = () => {
 
   const verifyFilters = () => {
     return (
-      independentVariables.length > 0 &&
-      dependentVariable !== "" &&
-      source !== "" &&
-      periodValue !== "" &&
-      districtValue !== "" &&
-      formatDate(dateRange?.from) !== "" &&
-      formatDate(dateRange?.to) !== "" &&
-      countryValue !== ""
+      filterData.independentVariables.length > 0 &&
+      filterData.dependentVariable !== "" &&
+      filterData.source !== "" &&
+      filterData.periodValue !== "" &&
+      filterData.districtValue !== "" &&
+      formatDate(filterData.dateRange?.from) !== "" &&
+      formatDate(filterData.dateRange?.to) !== "" &&
+      filterData.countryValue !== ""
     );
   };
-
-  // useEffect(() => {
-  //   const newVariables = transformObject(params?.indic).filter(
-  //     (e) =>
-  //       e.value !== dependentVariable &&
-  //       e.value !== "rainfall_deviation" &&
-  //       !independentVariables.includes(e.value)
-  //   );
-  //   setIndependentVariablesList(newVariables);
-  // }, [dependentVariable]);
 
   useEffect(() => {
     (async () => {
@@ -171,12 +148,12 @@ const CommonFilter = () => {
       const response = await axios.post(
         "http://203.156.108.67:1580/dynamic_charts",
         {
-          source: source,
-          indic: independentVariables.join(","),
-          period: periodValue,
-          district: districtValue,
-          start: formatDate(dateRange?.from),
-          end: formatDate(dateRange?.to),
+          source: filterData.source,
+          indic: filterData.independentVariables.join(","),
+          period: filterData.periodValue,
+          district: filterData.districtValue,
+          start: formatDate(filterData.dateRange?.from),
+          end: formatDate(filterData.dateRange?.to),
 
           // source: "ERA5",
           // indic: "rainfall,el_nino,normal_rainfall",
@@ -200,12 +177,12 @@ const CommonFilter = () => {
       const geoJson = await axios.post(
         "http://203.156.108.67:1580/dynamic_map",
         {
-          source: source,
+          source: filterData.source,
           indic: "rainfall_deviation",
-          period: periodValue,
+          period: filterData.periodValue,
           district: getAllDistrictsOfCountry(districtList).join(","),
-          start: formatDate(dateRange?.from),
-          end: formatDate(dateRange?.to),
+          start: formatDate(filterData.dateRange?.from),
+          end: formatDate(filterData.dateRange?.to),
 
           // source: "ERA5",
           // indic: "rainfall_deviation",
@@ -236,12 +213,12 @@ const CommonFilter = () => {
       const correlationData = await axios.post(
         "http://203.156.108.67:1580/correlation_plot",
         {
-          source: source,
+          source: filterData.source,
           indic: `${correlationVariable1},${correlationVariable2}`,
-          period: periodValue,
-          district: districtValue,
-          start: formatDate(dateRange?.from),
-          end: formatDate(dateRange?.to),
+          period: filterData.periodValue,
+          district: filterData.districtValue,
+          start: formatDate(filterData.dateRange?.from),
+          end: formatDate(filterData.dateRange?.to),
 
           // source: "ERA5",
           // indic: "rainfall,el_nino,normal_rainfall",
@@ -254,12 +231,12 @@ const CommonFilter = () => {
       const regressionModelData = await axios.post(
         "http://203.156.108.67:1580/regression_analysis",
         {
-          source: source,
+          source: filterData.source,
           indic: `${correlationVariable1},${correlationVariable2}`,
-          period: periodValue,
-          district: districtValue,
-          start: formatDate(dateRange?.from),
-          end: formatDate(dateRange?.to),
+          period: filterData.periodValue,
+          district: filterData.districtValue,
+          start: formatDate(filterData.dateRange?.from),
+          end: formatDate(filterData.dateRange?.to),
 
           // source: "ERA5",
           // indic: "rainfall,el_nino,normal_rainfall",
@@ -288,13 +265,13 @@ const CommonFilter = () => {
       const response = await axios.post(
         "http://203.156.108.67:1580/description_analysis",
         {
-          source: source,
-          indic: independentVariables.join(","),
-          period: periodValue,
-          district: districtValue,
-          start: formatDate(dateRange?.from),
-          end: formatDate(dateRange?.to),
-          indic_0: dependentVariable,
+          source: filterData.source,
+          indic: filterData.independentVariables.join(","),
+          period: filterData.periodValue,
+          district: filterData.districtValue,
+          start: formatDate(filterData.dateRange?.from),
+          end: formatDate(filterData.dateRange?.to),
+          indic_0: filterData.dependentVariable,
           // source: "ERA5",
           // indic: "rainfall,normal_rainfall",
           // period: "annual",
@@ -544,7 +521,10 @@ const CommonFilter = () => {
                   <p className="text-xl font-semibold flex justify-center my-8">
                     Deviation from Normal Rainfall
                   </p>
-                  <Leaflet country={countryValue} geoJsonData={geoJsonData} />
+                  <Leaflet
+                    country={filterData.countryValue}
+                    geoJsonData={geoJsonData}
+                  />
                 </div>
               )}
             </div>
@@ -794,13 +774,7 @@ const CommonFilter = () => {
                   onClick={() =>
                     navigate("/predictive-tools", {
                       state: {
-                        source,
-                        independentVariables,
-                        dependentVariable,
-                        periodValue,
-                        districtValue,
-                        dateRange,
-                        countryValue,
+                        ...filterData,
                         selected,
                       },
                     })
