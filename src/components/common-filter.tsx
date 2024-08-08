@@ -76,7 +76,7 @@ const CommonFilter = () => {
 
   const [districtList, setDistrictList] = useState([{}]);
 
-  const [filterData, setFilterData] = useState({
+  const [filterData, setFilterData] = useState<any>({
     dependentVariable: "",
     independentVariables: [],
     source: "",
@@ -333,7 +333,7 @@ const CommonFilter = () => {
               (e) =>
                 e.value !== "rainfall_deviation" &&
                 e.value !== "el_nino" &&
-                !independentVariables.includes(e.value)
+                !filterData.independentVariables.includes(e.value)
             )}
             state={{
               value: filterData.dependentVariable,
@@ -353,11 +353,15 @@ const CommonFilter = () => {
           </div>
           <FancyMultiSelect
             name="independentVariables"
-            prevState={filterData.independentVariables}
             selected={selected}
             setSelected={setSelected}
             setState={handleChange}
-            array={independentVariablesList}
+            array={transformObject(params?.indic).filter(
+              (e) =>
+                e.value !== filterData.dependentVariable &&
+                e.value !== "rainfall_deviation" &&
+                !filterData.independentVariables.includes(e.value)
+            )}
           />
         </div>
 

@@ -12,13 +12,12 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { Command as CommandPrimitive } from "cmdk";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type Indicator = Record<"value" | "label", string>;
 
 export function FancyMultiSelect({
   name,
-  prevState,
   selected,
   setSelected = () => {},
   setState,
@@ -27,23 +26,21 @@ export function FancyMultiSelect({
 }: any) {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
-  // const [selected, setSelected] = React.useState<Indicator[]>([]);
+  const [selectedAnswers, setSelectedAnswers] = useState<any>([]);
   const [inputValue, setInputValue] = React.useState("");
+
+  useEffect(() => {
+    setState(name, selectedAnswers);
+  }, [selectedAnswers]);
 
   const handleUnselect = (element: Indicator) => {
     setSelected((prev: any) =>
       prev.filter((s: any) => s.value !== element.value)
     );
-    setState(
-      name,
-      prevState.filter((e: any) => e !== element.value)
+    setSelectedAnswers((prev: any) =>
+      prev.filter((e: any) => e !== element.value)
     );
   };
-
-  //TODO: Test and remove
-  useEffect(() => {
-    console.log(prevState);
-  });
 
   const handleKeyDown = React.useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -127,7 +124,10 @@ export function FancyMultiSelect({
                       onSelect={() => {
                         setInputValue("");
                         setSelected((prev: any) => [...prev, element]);
-                        setState(name, [...prevState, element.value]);
+                        setSelectedAnswers((prev: any) => [
+                          ...prev,
+                          element.value,
+                        ]);
                       }}
                       className={"cursor-pointer"}
                     >
