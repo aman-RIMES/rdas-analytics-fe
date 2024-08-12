@@ -5,7 +5,16 @@ import React from "react";
 import Leaflet from "./leaflet";
 import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
 
-const AnalyticsData = () => {
+const AnalyticsData = ({
+  timeSeriesChartData,
+  countryValue,
+  geoJsonData,
+  isLoadingAnalysis,
+  isAnalysisError,
+  isloadingDynamicMap,
+  isDynamicMapError,
+  isDynamicMapVisible,
+}: any) => {
   return (
     <div className="mt-10">
       {isLoadingAnalysis && (
@@ -59,10 +68,7 @@ const AnalyticsData = () => {
             <p className="text-xl font-semibold flex justify-center my-8">
               Deviation from Normal Rainfall
             </p>
-            <Leaflet
-              country={filterData.countryValue}
-              geoJsonData={geoJsonData}
-            />
+            <Leaflet country={countryValue} geoJsonData={geoJsonData} />
           </div>
         )}
       </div>

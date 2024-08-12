@@ -51,11 +51,11 @@ export interface DateRange {
 }
 
 export interface Params {
-  source: object;
-  district: object;
-  indic: object;
-  period: object;
-  model: object;
+  source: any;
+  district: District[];
+  indic: any;
+  period: any;
+  model: any;
 }
 
 export interface District {
