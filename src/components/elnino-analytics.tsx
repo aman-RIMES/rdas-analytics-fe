@@ -19,7 +19,7 @@ const ElNinoAnalytics = () => {
         <h1 className="text-2xl">{subject.title}</h1>
       </div>
 
-      <div className="my-10 border-0 rounded-xl bg-gradient-to-br from-green-300 to-green-600 shadow-2xl">
+      <div className="my-10 border-0 rounded-xl bg-gradient-to-br from-green-200 to-yellow-200 shadow-2xl">
         <CommonFilter />
       </div>
     </>

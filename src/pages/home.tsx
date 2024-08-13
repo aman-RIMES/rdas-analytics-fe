@@ -10,7 +10,8 @@ import { Outlet, useLocation } from "react-router-dom";
 const Home = () => {
   const location = useLocation();
   return (
-    <div className="h-screen w-screen bg-green-50">
+    <div className="h-full w-full bg-green-50">
+      <hr />
       <NavBar />
       {/* <hr /> */}
       <div className="sm:px-10 px-4 grid grid-cols-5">

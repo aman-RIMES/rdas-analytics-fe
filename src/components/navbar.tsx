@@ -60,10 +60,10 @@ export default function NavBar() {
             <nav className="flex items-center space-x-6 text-sm font-medium">
               <NavLink
                 className={cn(
-                  location.pathname === "/"
+                  location.pathname === "/predictive-tools"
                     ? "text-foreground"
                     : "text-foreground/50",
-                  "transition-colors hover:text-foreground/80 text-lg text-white hover:bg-yellow-300 hover:rounded-md hover:px-3"
+                  "transition-colors hover:text-foreground/80 text-lg text-white hover:bg-yellow-300 rounded-md px-3"
                 )}
                 to="https://rdas.rimes.int"
               >
