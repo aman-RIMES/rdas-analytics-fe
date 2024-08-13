@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils";
 import { Icons } from "@/components/ui/icons";
 import { NavLink, useLocation } from "react-router-dom";
 import { buttonVariants } from "./ui/button";
-import ThemeToggle from "./theme-toggle";
 import AvatarMenu from "./avatar-menu";
 import { AlignJustify } from "lucide-react";
 import {
@@ -19,8 +18,8 @@ import { ScrollArea } from "./ui/scroll-area";
 export default function NavBar() {
   const location = useLocation();
   return (
-    <>
-      <div className="px-4 md:px-10 flex justify-between md:justify-between h-14 items-center">
+    <div className="">
+      <div className="px-4 mt-3 md:px-10 flex justify-between md:justify-between h-14 items-center bg-green-900 mx-10 rounded-md">
         <div className="flex items-center gap-3">
           <div className="flex lg:hidden">
             <Sheet>
@@ -51,24 +50,24 @@ export default function NavBar() {
 
           <div className="hidden md:flex">
             <NavLink className="mr-8 flex space-x-2" to={"/"}>
-              <Icons.logo className="w-8 h-8 text-gray-800 dark:text-white" />
-              <span className="hidden font-bold text-2xl sm:inline-block">
+              <Icons.logo className="w-8 h-8 text-white dark:text-white" />
+              <span className="hidden font-bold text-2xl text-white sm:inline-block">
                 RDAS Analytics
               </span>
             </NavLink>
-            {/* <nav className="flex items-center space-x-6 text-sm font-medium">
+            <nav className="flex items-center space-x-6 text-sm font-medium">
               <NavLink
                 className={cn(
                   location.pathname === "/"
                     ? "text-foreground"
                     : "text-foreground/50",
-                  "transition-colors hover:text-foreground/80"
+                  "transition-colors hover:text-foreground/80 text-lg text-white hover:bg-yellow-300 hover:rounded-md hover:px-3"
                 )}
-                to={"/"}
+                to="https://rdas.rimes.int"
               >
                 Home
               </NavLink>
-            </nav> */}
+            </nav>
           </div>
         </div>
         <div className="flex">
@@ -79,18 +78,18 @@ export default function NavBar() {
                   buttonVariants({
                     variant: "ghost",
                   }),
-                  "w-9 px-0"
+                  "w-9 px-0 bg-yellow-300"
                 )}
               >
                 <Icons.notification />
                 <span className="sr-only">Notification</span>
               </div>
             </NavLink>
-            <ThemeToggle />
+            {/* <ThemeToggle /> */}
             <AvatarMenu />
           </nav>
         </div>
       </div>
-    </>
+    </div>
   );
 }

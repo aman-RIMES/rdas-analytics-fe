@@ -1,93 +1,80 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
 import { Icons } from "./ui/icons";
+import MenuButton from "./menu-button";
 
 export function Sidebar() {
-  const navigate = useNavigate();
-
   return (
     <div className={cn("pb-12")}>
-      <div className="space-y-4 my-5">
-        <div className="pl-3 py-2 max-w-80">
-          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight ">
-            Climate, Agriculture and Adaptation Measures
+      <div className="space-y-4 my-5 bg-green-800 rounded-lg p-5 h-screen shadow-md">
+        <div className="pl-3 py-2 max-w-80 text-white">
+          <h2 className="mb-2 px-4 text-xl font-semibold tracking-tight ">
+            Climate & Agriculture
           </h2>
           <div className="space-y-1">
-            <Button
-              variant="ghost"
-              className="w-full justify-between"
-              onClick={() => navigate("/analyze/1")}
-            >
-              <div className="flex items-center">
-                <Icons.climate_behaviors />
-                Climate Analytics
-              </div>
-            </Button>
-            <Button
-              variant="ghost"
-              className="w-full justify-between"
-              onClick={() => navigate("/analyze/2")}
-            >
-              <div className="flex items-center">
-                <Icons.report className="w-5 h-5 mr-2 text-gray-800 dark:text-white" />
-                Climate Prediction Tools
-              </div>
-            </Button>
+            <MenuButton
+              url={"/analyze/1"}
+              icon={
+                <Icons.climate_behaviors className="w-7 h-7 mr-2 bg-yellow-500 text-gray-800 rounded-sm p-1" />
+              }
+              title={"Climate Analytics"}
+            />
+            <MenuButton
+              url={"/analyze/2"}
+              icon={
+                <Icons.report className="w-7 h-7 mr-2 bg-yellow-500 text-gray-800 rounded-sm p-1" />
+              }
+              title={"Climate Predictive Tools"}
+            />
           </div>
         </div>
-        <div className="pl-3 py-2 max-w-80">
-          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-            El Nino, Climate and Agriculture production
+        <div className="pl-3 py-2 max-w-80 text-white">
+          <h2 className="mb-2 px-4 text-xl font-semibold tracking-tight">
+            El Nino
           </h2>
           <div className="space-y-1">
-            <Button
-              variant="ghost"
-              className="w-full justify-start"
-              onClick={() => navigate("/analyze/3")}
-            >
-              <Icons.climate_and_crops className="w-5 h-5 mr-2" />
-              El Nino Analytics
-            </Button>
-            <Button
-              variant="ghost"
-              className="w-full justify-start"
-              onClick={() => navigate("/predictive-tools/")}
-            >
-              <Icons.report className="w-5 h-5 mr-2 text-gray-800 dark:text-white" />
-              El Nino Predictive Tools
-            </Button>
-            <Button
-              variant="ghost"
-              className="w-full justify-start"
-              onClick={() => navigate("/gdd-predictive-tools/")}
-            >
-              <Icons.report className="w-5 h-5 mr-2 text-gray-800 dark:text-white" />
-              GDD Analytical Tool
-            </Button>
+            <MenuButton
+              url={"/analyze/3"}
+              icon={
+                <Icons.climate_and_crops className="w-7 h-7 mr-2 bg-yellow-500 text-gray-800 rounded-sm p-1" />
+              }
+              title={"El Nino Analytics"}
+            />
+            <MenuButton
+              url={"/predictive-tools/"}
+              icon={
+                <Icons.report className="w-7 h-7 mr-2 bg-yellow-500 text-gray-800 rounded-sm p-1" />
+              }
+              title={"El Nino Predictive Tool"}
+            />
+            <MenuButton
+              url={"/gdd-predictive-tools/"}
+              icon={
+                <Icons.report className="w-7 h-7 mr-2 bg-yellow-500 text-gray-800 rounded-sm p-1" />
+              }
+              title={"GDD Analytical Tool"}
+            />
           </div>
         </div>
-        <div className="pl-3 py-2 max-w-80">
-          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-            Climate Variability and Transport Vehicular Accidents
+        <div className="pl-3 py-2 max-w-80 text-white">
+          <h2 className="mb-2 px-4 text-xl font-semibold tracking-tight">
+            Transport
           </h2>
           <div className="space-y-1">
-            <Button
-              variant="ghost"
-              className="w-full justify-start"
-              onClick={() => navigate("/analyze/5")}
-            >
-              <Icons.accidents className="w-5 h-5 mr-2" />
-              Transport Analytics
-            </Button>
-            <Button
-              variant="ghost"
-              className="w-full justify-start"
-              onClick={() => navigate("/analyze/6")}
-            >
-              <Icons.report className="w-5 h-5 mr-2 text-gray-800 dark:text-white" />
-              Transport Predictive Tools
-            </Button>
+            <MenuButton
+              url={"/analyze/5"}
+              icon={
+                <Icons.accidents className="w-7 h-7 mr-2 bg-yellow-500 text-gray-800 rounded-sm p-1" />
+              }
+              title={"Transport Analytics"}
+            />
+            <MenuButton
+              url={"/analyze/6"}
+              icon={
+                <Icons.report className="w-7 h-7 mr-2 bg-yellow-500 text-gray-800 rounded-sm p-1" />
+              }
+              title={"Transport Predictive Tools"}
+            />
           </div>
         </div>
       </div>
