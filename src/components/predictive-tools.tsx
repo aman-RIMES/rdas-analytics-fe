@@ -11,7 +11,7 @@ const PredictiveTools = () => {
         <h1 className="text-2xl">Predictive Tools</h1>
       </div>
 
-      <div className="my-10 border rounded-lg">
+      <div className="my-10 border rounded-lg bg-gradient-to-br from-green-300 to-green-600 shadow-2xl">
         <PredictiveToolsFilter />
       </div>
     </>

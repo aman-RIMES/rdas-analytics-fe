@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { menus } from "@/constants";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import NotFoundPage from "./404-page";
 import CommonFilter from "./common-filter";
 
@@ -19,7 +19,7 @@ const ElNinoAnalytics = () => {
         <h1 className="text-2xl">{subject.title}</h1>
       </div>
 
-      <div className="my-10 border rounded-lg">
+      <div className="my-10 border-0 rounded-xl bg-gradient-to-br from-green-300 to-green-600 shadow-2xl">
         <CommonFilter />
       </div>
     </>
