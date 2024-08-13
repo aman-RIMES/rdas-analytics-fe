@@ -81,6 +81,11 @@ export interface FilterData {
   dateRange: any;
 }
 
+export interface CorrelationFilterData {
+  correlationVariable1: string;
+  correlationVariable2: string;
+}
+
 export interface FilterProps {
   filterData: FilterData;
   setFilterData: any;
