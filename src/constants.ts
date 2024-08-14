@@ -3,6 +3,12 @@ import { Country } from "./types";
 
 export const BODY_PARAMS_URL = "http://203.156.108.67:1580/body_params";
 
+export enum requestStatus {
+  isLoading = "LOADING",
+  isFinished = "FINISHED",
+  isError = "ERROR",
+}
+
 export const menus = [
   {
     id: 1,

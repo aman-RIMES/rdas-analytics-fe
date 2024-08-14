@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { requestStatus } from "@/constants";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -25,6 +26,15 @@ export const transformSourceObject = (object: any) =>
     value: key,
     label: key,
   }));
+
+export const isLoading = (status: requestStatus | undefined) =>
+  status === requestStatus.isLoading;
+
+export const isFinished = (status: requestStatus | undefined) =>
+  status === requestStatus.isFinished;
+
+export const isError = (status: requestStatus | undefined) =>
+  status === requestStatus.isError;
 
 export function transformProvinceArray(array: Array<object>) {
   return array.map((e: any) => ({ value: e.province_id, label: e.province }));

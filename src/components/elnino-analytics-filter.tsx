@@ -37,6 +37,7 @@ import FilterComponent from "./filter.component";
 import ElNinoAnalytics from "./elnino-analytics";
 import AnalyticsData from "./analytics-data.component";
 import AnalyticsCorrelation from "./analytics-correlation";
+import DescriptiveAnalysis from "./analytics-descriptive-analysis";
 
 const ElNinoAnalyticsFilter = () => {
   const navigate = useNavigate();
@@ -87,15 +88,6 @@ const ElNinoAnalyticsFilter = () => {
     console.log(filterData);
   }, [filterData]);
 
-  const [isLoadingDescriptiveAnalysis, setIsLoadingDescriptiveAnalysis] =
-    useState(false);
-  const [showDescriptiveAnalysisError, setShowDescriptiveAnalysisError] =
-    useState(false);
-  const [showDescription, setShowDescription] = useState(false);
-  const [descriptiveAnalysisData, setDescriptiveAnalysisData] = useState<any>(
-    {}
-  );
-
   const [selected, setSelected] = useState<[]>([]);
 
   const verifyFilters = () => {
@@ -138,12 +130,10 @@ const ElNinoAnalyticsFilter = () => {
     setIsCorrelationDataVisible(false);
     setIsLoadingAnalysis(true);
     setIsLoadingCorrelationData(false);
-    setDescriptiveAnalysisData({});
     setIsLoadingDynamicMap(false);
     setIsAnalysisError(false);
     setIsDynamicMapError(false);
     setIsCorrelationDataError(false);
-    setShowDescription(false);
   };
 
   const generateDynamicChart = async () => {
@@ -209,92 +199,6 @@ const ElNinoAnalyticsFilter = () => {
     }
   };
 
-  const generateCorrelationPlot = async () => {
-    setIsCorrelationDataError(false);
-    setIsCorrelationDataVisible(false);
-    setIsLoadingCorrelationData(true);
-    try {
-      const correlationData = await axios.post(
-        "http://203.156.108.67:1580/correlation_plot",
-        {
-          source: filterData.source,
-          indic: `${correlationVariable1},${correlationVariable2}`,
-          period: filterData.periodValue,
-          district: filterData.districtValue,
-          start: formatDate(filterData.dateRange?.from),
-          end: formatDate(filterData.dateRange?.to),
-
-          // source: "ERA5",
-          // indic: "rainfall,el_nino,normal_rainfall",
-          // period: "annual",
-          // district: "NPL_33",
-          // start: "2015-10-12",
-          // end: "2021-10-12",
-        }
-      );
-      const regressionModelData = await axios.post(
-        "http://203.156.108.67:1580/regression_analysis",
-        {
-          source: filterData.source,
-          indic: `${correlationVariable1},${correlationVariable2}`,
-          period: filterData.periodValue,
-          district: filterData.districtValue,
-          start: formatDate(filterData.dateRange?.from),
-          end: formatDate(filterData.dateRange?.to),
-
-          // source: "ERA5",
-          // indic: "rainfall,el_nino,normal_rainfall",
-          // period: "annual",
-          // district: "NPL_33",
-          // start: "2015-10-12",
-          // end: "2021-10-12",
-        }
-      );
-      setRegressionModelChartData(regressionModelData.data);
-      setCorrelationChartData(correlationData.data);
-      setIsLoadingCorrelationData(false);
-      setIsCorrelationDataVisible(true);
-    } catch (error) {
-      setIsLoadingCorrelationData(false);
-      setIsCorrelationDataError(true);
-    }
-  };
-
-  const generateDescriptionAnalysis = async () => {
-    setShowDescription(false);
-    setDescriptiveAnalysisData({});
-    setShowDescriptiveAnalysisError(false);
-    setIsLoadingDescriptiveAnalysis(true);
-    try {
-      const response = await axios.post(
-        "http://203.156.108.67:1580/description_analysis",
-        {
-          source: filterData.source,
-          indic: filterData.independentVariables.join(","),
-          period: filterData.periodValue,
-          district: filterData.districtValue,
-          start: formatDate(filterData.dateRange?.from),
-          end: formatDate(filterData.dateRange?.to),
-          indic_0: filterData.dependentVariable,
-          // source: "ERA5",
-          // indic: "rainfall,normal_rainfall",
-          // period: "annual",
-          // district: "NPL_33",
-          // start: "2015-10-12",
-          // end: "2021-10-12",
-          // indic_0: "el_nino",
-        }
-      );
-      setDescriptiveAnalysisData(response.data);
-      setIsLoadingDescriptiveAnalysis(false);
-      setShowDescription(true);
-    } catch (error) {
-      console.log(error);
-      setShowDescriptiveAnalysisError(true);
-      setIsLoadingDescriptiveAnalysis(false);
-    }
-  };
-
   return (
     <div className="sm:p-10 p-4">
       <FilterComponent
@@ -344,6 +248,28 @@ const ElNinoAnalyticsFilter = () => {
 
           {!isLoadingAnalysis && !isAnalysisError && (
             <AnalyticsCorrelation filterData={filterData} />
+          )}
+
+          {!isLoadingAnalysis && !isAnalysisError && (
+            <DescriptiveAnalysis filterData={filterData} />
+          )}
+
+          {!isLoadingAnalysis && !isAnalysisError && (
+            <div className="flex justify-center mt-16">
+              <Button
+                className="text-sm px-10 border-black"
+                onClick={() =>
+                  navigate("/predictive-tools", {
+                    state: {
+                      ...filterData,
+                      selected,
+                    },
+                  })
+                }
+              >
+                Move to Prediction
+              </Button>
+            </div>
           )}
         </div>
       )}
