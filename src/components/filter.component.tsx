@@ -15,40 +15,18 @@ import { District, FilterData, FilterProps } from "@/types";
 import axios from "axios";
 
 const FilterComponent = ({
+  params,
   filterData,
-  setFilterData,
+  handleChange,
   selected,
   setSelected,
 }: FilterProps) => {
-  const [params, setParams] = useState<any>(bodyParams);
   const [districtList, setDistrictList] = useState([{}]);
-
-  //TODO: Remove
-  useEffect(() => {
-    console.log(filterData);
-  }, [filterData]);
-
-  const handleChange = (name: string, value: string | []) => {
-    setFilterData((prev: any) => ({ ...prev, [name]: value }));
-  };
-
-  //TODO: USE REACT QUERY HERE
-  useEffect(() => {
-    (async () => {
-      try {
-        const response: any = await axios.get(BODY_PARAMS_URL);
-        setParams(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
 
   useEffect(() => {
     const districtsData = params.district.filter(
       (e: District) => e.country === filterData.countryValue
     );
-
     setDistrictList(districtsData);
   }, [filterData.countryValue]);
 

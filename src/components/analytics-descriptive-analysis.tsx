@@ -21,7 +21,6 @@ import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
 import { useState } from "react";
 import { FilterProps } from "@/types";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { requestStatus } from "@/constants";
 
 const DescriptiveAnalysis = ({ filterData }: FilterProps) => {

@@ -1,40 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import Combobox from "./ui/combobox";
-import {
-  formatDate,
-  formatTitle,
-  getAllDistrictsOfCountry,
-  transformDistrictParams,
-  transformObject,
-  transformSourceObject,
-} from "@/lib/utils";
+import { formatDate, getAllDistrictsOfCountry, isFinished } from "@/lib/utils";
 import { Button } from "./ui/button";
 import axios from "axios";
-import HighchartsReact from "highcharts-react-official";
-import Highcharts from "highcharts/highmaps";
-import Leaflet from "./leaflet";
-import { countries } from "@/constants";
+import { BODY_PARAMS_URL, requestStatus } from "@/constants";
 import bodyParams from "../data/body_params.json";
 import { District, FilterData } from "@/types";
-import { DatePickerWithRange } from "./date-range-picker";
-import { FancyMultiSelect } from "./ui/multiselect";
-import { Label } from "@radix-ui/react-dropdown-menu";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "./ui/table";
 import { useNavigate } from "react-router-dom";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { AlertCircle } from "lucide-react";
-import HelpHoverCard from "./help-hover-card";
 import FilterComponent from "./filter.component";
-import ElNinoAnalytics from "./elnino-analytics";
 import AnalyticsData from "./analytics-data.component";
 import AnalyticsCorrelation from "./analytics-correlation";
 import DescriptiveAnalysis from "./analytics-descriptive-analysis";
@@ -43,32 +18,12 @@ const ElNinoAnalyticsFilter = () => {
   const navigate = useNavigate();
 
   const [params, setParams] = useState<any>(bodyParams);
-
-  const [correlationVariable1, setCorrelationVariable1] = useState<any>("");
-  const [correlationVariable2, setCorrelationVariable2] = useState<any>("");
-
-  const [isLoadingAnalysis, setIsLoadingAnalysis] = useState<any>(false);
-  const [isAnalysisError, setIsAnalysisError] = useState<any>(false);
-  const [isloadingDynamicMap, setIsLoadingDynamicMap] = useState<any>(false);
-  const [isDynamicMapError, setIsDynamicMapError] = useState<any>(false);
-  const [isLoadingCorrelationData, setIsLoadingCorrelationData] =
-    useState<any>(false);
-  const [isCorrelationDataError, setIsCorrelationDataError] =
-    useState<any>(false);
-
-  const [isTimeSeriesVisible, setIsTimeSeriesVisible] = useState<any>(false);
-  const [isDynamicMapVisible, setIsDynamicMapVisible] = useState<any>(false);
-  const [isCorrelationDataVisible, setIsCorrelationDataVisible] =
-    useState<any>(false);
-
+  const [dynamicChartStatus, setDynamicChartStatus] = useState<requestStatus>();
+  const [dynamiMapStatus, setDynamiMapStatus] = useState<requestStatus>();
   const [timeSeriesChartData, setTimeSeriesChartData] = useState<any>({});
-  const [geoJsonData, setGeoJsonData] = useState<any>({});
-  const [correlationChartData, setCorrelationChartData] = useState<any>({});
-  const [regressionModelChartData, setRegressionModelChartData] = useState<any>(
-    {}
-  );
-
+  const [dynamiMapData, setDynamicMapData] = useState<any>({});
   const [districtList, setDistrictList] = useState([{}]);
+  const [selected, setSelected] = useState<[]>([]);
 
   const [filterData, setFilterData] = useState<FilterData>({
     dependentVariable: "",
@@ -85,10 +40,22 @@ const ElNinoAnalyticsFilter = () => {
   };
 
   useEffect(() => {
-    console.log(filterData);
-  }, [filterData]);
+    (async () => {
+      try {
+        const response: any = await axios.get(BODY_PARAMS_URL);
+        setParams(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
-  const [selected, setSelected] = useState<[]>([]);
+  useEffect(() => {
+    const districtsData = params.district.filter(
+      (e: District) => e.country === filterData.countryValue
+    );
+    setDistrictList(districtsData);
+  }, [filterData.countryValue]);
 
   const verifyFilters = () => {
     return (
@@ -103,41 +70,11 @@ const ElNinoAnalyticsFilter = () => {
     );
   };
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const response: any = await axios.get(
-  //         "http://203.156.108.67:1580/body_params"
-  //       );
-  //       setParams(response.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   })();
-  // }, []);
-
-  useEffect(() => {
-    const districtsData = params.district.filter(
-      (e: District) => e.country === filterData.countryValue
-    );
-
-    setDistrictList(districtsData);
-  }, [filterData.countryValue]);
-
-  const resetAllLoadingStates = () => {
-    setIsTimeSeriesVisible(true);
-    setIsDynamicMapVisible(false);
-    setIsCorrelationDataVisible(false);
-    setIsLoadingAnalysis(true);
-    setIsLoadingCorrelationData(false);
-    setIsLoadingDynamicMap(false);
-    setIsAnalysisError(false);
-    setIsDynamicMapError(false);
-    setIsCorrelationDataError(false);
-  };
-
   const generateDynamicChart = async () => {
-    resetAllLoadingStates();
+    setDynamicChartStatus(requestStatus.isLoading);
+    setDynamiMapStatus(requestStatus.isLoading);
+    setTimeSeriesChartData({});
+    setDynamicMapData({});
     try {
       const response = await axios.post(
         "http://203.156.108.67:1580/dynamic_charts",
@@ -159,15 +96,14 @@ const ElNinoAnalyticsFilter = () => {
       );
 
       setTimeSeriesChartData(response.data);
-      setIsLoadingAnalysis(false);
+      setDynamicChartStatus(requestStatus.isFinished);
     } catch (error) {
-      setIsLoadingAnalysis(false);
-      setIsAnalysisError(true);
+      setDynamicChartStatus(requestStatus.isError);
       return;
     }
 
     try {
-      setIsLoadingDynamicMap(true);
+      setDynamiMapStatus(requestStatus.isLoading);
       const geoJson = await axios.post(
         "http://203.156.108.67:1580/dynamic_map",
         {
@@ -186,24 +122,19 @@ const ElNinoAnalyticsFilter = () => {
           // end: "2021-10-12",
         }
       );
-      setGeoJsonData(geoJson.data);
-      geoJson.data.features.map((e: any) =>
-        console.log(e.properties.data_value)
-      );
-
-      setIsLoadingDynamicMap(false);
-      setIsDynamicMapVisible(true);
+      setDynamicMapData(geoJson.data);
+      setDynamiMapStatus(requestStatus.isFinished);
     } catch (error) {
-      setIsLoadingDynamicMap(false);
-      setIsDynamicMapError(true);
+      setDynamiMapStatus(requestStatus.isError);
     }
   };
 
   return (
     <div className="sm:p-10 p-4">
       <FilterComponent
+        params={params}
         filterData={filterData}
-        setFilterData={setFilterData}
+        handleChange={handleChange}
         selected={selected}
         setSelected={setSelected}
       />
@@ -233,28 +164,18 @@ const ElNinoAnalyticsFilter = () => {
         </HoverCard>
       </div>
 
-      {isTimeSeriesVisible && (
-        <div className="mb-10">
-          <AnalyticsData
-            timeSeriesChartData={timeSeriesChartData}
-            countryValue={filterData.countryValue}
-            geoJsonData={geoJsonData}
-            isLoadingAnalysis={isLoadingAnalysis}
-            isAnalysisError={isAnalysisError}
-            isloadingDynamicMap={isloadingDynamicMap}
-            isDynamicMapError={isDynamicMapError}
-            isDynamicMapVisible={isDynamicMapVisible}
-          />
-
-          {!isLoadingAnalysis && !isAnalysisError && (
+      <div className="mb-10">
+        <AnalyticsData
+          timeSeriesChartData={timeSeriesChartData}
+          countryValue={filterData.countryValue}
+          dynamicMapData={dynamiMapData}
+          dynamicChartStatus={dynamicChartStatus}
+          dynamiMapStatus={dynamiMapStatus}
+        />
+        {isFinished(dynamicChartStatus) && (
+          <>
             <AnalyticsCorrelation filterData={filterData} />
-          )}
-
-          {!isLoadingAnalysis && !isAnalysisError && (
             <DescriptiveAnalysis filterData={filterData} />
-          )}
-
-          {!isLoadingAnalysis && !isAnalysisError && (
             <div className="flex justify-center mt-16">
               <Button
                 className="text-sm px-10 border-black"
@@ -270,9 +191,9 @@ const ElNinoAnalyticsFilter = () => {
                 Move to Prediction
               </Button>
             </div>
-          )}
-        </div>
-      )}
+          </>
+        )}
+      </div>
     </div>
   );
 };

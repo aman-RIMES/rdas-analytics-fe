@@ -1,36 +1,31 @@
 import React, { useEffect, useState } from "react";
 import Combobox from "./ui/combobox";
-import { transformObject, formatTitle, formatDate } from "@/lib/utils";
+import {
+  transformObject,
+  formatDate,
+  isLoading,
+  isError,
+  isFinished,
+} from "@/lib/utils";
 import { AlertCircle, Table } from "lucide-react";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highmaps";
 import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
-import {
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from "./ui/table";
 import { Button } from "./ui/button";
 import bodyParams from "../data/body_params.json";
 import axios from "axios";
-import { BODY_PARAMS_URL } from "@/constants";
+import { BODY_PARAMS_URL, requestStatus } from "@/constants";
 import { CorrelationFilterData, FilterData } from "@/types";
 
 const AnalyticsCorrelation = ({ filterData }: any) => {
+  //TODO: Make the body params a prop from the parent component
   const [params, setParams] = useState<any>(bodyParams);
   const [correlationFilterData, setCorrelationFilterData] =
     useState<CorrelationFilterData>({
       correlationVariable1: "",
       correlationVariable2: "",
     });
-  const [isLoadingCorrelationData, setIsLoadingCorrelationData] =
-    useState<any>(false);
-  const [isCorrelationDataError, setIsCorrelationDataError] =
-    useState<any>(false);
-  const [isCorrelationDataVisible, setIsCorrelationDataVisible] =
-    useState<any>(false);
+  const [correlationStatus, setCorrelationStatus] = useState<requestStatus>();
   const [correlationChartData, setCorrelationChartData] = useState<any>({});
   const [regressionModelChartData, setRegressionModelChartData] = useState<any>(
     {}
@@ -52,9 +47,9 @@ const AnalyticsCorrelation = ({ filterData }: any) => {
   }, []);
 
   const generateCorrelationPlot = async () => {
-    setIsCorrelationDataError(false);
-    setIsCorrelationDataVisible(false);
-    setIsLoadingCorrelationData(true);
+    setCorrelationStatus(requestStatus.isLoading);
+    setCorrelationChartData({});
+    setRegressionModelChartData({});
     try {
       const correlationData = await axios.post(
         "http://203.156.108.67:1580/correlation_plot",
@@ -94,11 +89,9 @@ const AnalyticsCorrelation = ({ filterData }: any) => {
       );
       setRegressionModelChartData(regressionModelData.data);
       setCorrelationChartData(correlationData.data);
-      setIsLoadingCorrelationData(false);
-      setIsCorrelationDataVisible(true);
+      setCorrelationStatus(requestStatus.isFinished);
     } catch (error) {
-      setIsLoadingCorrelationData(false);
-      setIsCorrelationDataError(true);
+      setCorrelationStatus(requestStatus.isError);
     }
   };
 
@@ -134,20 +127,20 @@ const AnalyticsCorrelation = ({ filterData }: any) => {
             correlationFilterData.correlationVariable1 === "" ||
             correlationFilterData.correlationVariable2 === ""
           }
-          className="mt-8"
+          className="mt-8 md:mt-0"
           onClick={generateCorrelationPlot}
         >
           Analyze Correlation
         </Button>
       </div>
 
-      {isLoadingCorrelationData && (
+      {isLoading(correlationStatus) && (
         <div className="my-20 flex justify-center">
           <p className="text-xl">Generating Correlation Data ...</p>
         </div>
       )}
 
-      {isCorrelationDataError && (
+      {isError(correlationStatus) && (
         <div className="flex justify-center">
           <Alert className="lg:w-3/4" variant="destructive">
             <AlertCircle className="h-5 w-5 mt-1" />
@@ -161,7 +154,7 @@ const AnalyticsCorrelation = ({ filterData }: any) => {
         </div>
       )}
 
-      {isCorrelationDataVisible && (
+      {isFinished(correlationStatus) && (
         <div className="mt-10">
           <HighchartsReact
             highcharts={Highcharts}

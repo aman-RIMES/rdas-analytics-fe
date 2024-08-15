@@ -88,7 +88,8 @@ export interface CorrelationFilterData {
 
 export interface FilterProps {
   filterData: FilterData;
-  setFilterData?: any;
+  handleChange?: any;
   selected?: [];
   setSelected?: any;
+  params?: any;
 }
