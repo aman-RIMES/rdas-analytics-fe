@@ -16,18 +16,19 @@ import {
 } from "@/components/ui/popover";
 import { CommandList } from "cmdk";
 import { Label } from "@radix-ui/react-dropdown-menu";
+import { ScrollArea } from "./scroll-area";
 
 function Combobox({ array, state, label }: any) {
   return (
     <div className="flex flex-col justify-start gap-2">
-      <Label className="font-semibold">{label}</Label>
+      {/* <Label className="font-semibold">{label}</Label> */}
       <Popover open={state.open} onOpenChange={state.setOpen}>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
             role="combobox"
             aria-expanded={state.open}
-            className=" justify-between"
+            className={cn(!state.value && "text-gray-500") + " justify-between"}
           >
             {state.value
               ? array.find((element: any) => element.value === state.value)
@@ -41,30 +42,33 @@ function Combobox({ array, state, label }: any) {
             <CommandInput placeholder="Search ..." />
             <CommandEmpty>{`No ${label} found`}</CommandEmpty>
             <CommandGroup>
-              <CommandList>
-                {array.map((framework: any) => (
-                  <CommandItem
-                    key={Math.random()}
-                    value={framework.value}
-                    onSelect={(currentValue) => {
-                      state.setValue(
-                        currentValue === state.value ? "" : currentValue
-                      );
-                      state.setOpen(false);
-                    }}
-                  >
-                    <Check
-                      className={cn(
-                        "mr-2 h-4 w-4",
-                        state.value === framework.value
-                          ? "opacity-100"
-                          : "opacity-0"
-                      )}
-                    />
-                    {framework.label}
-                  </CommandItem>
-                ))}
-              </CommandList>
+              {/* <ScrollArea className="h-72 w-48 rounded-md border"> */}
+              <ScrollArea className="">
+                <CommandList className="max-h-72">
+                  {array.map((framework: any) => (
+                    <CommandItem
+                      key={Math.random()}
+                      value={framework.value}
+                      onSelect={(currentValue) => {
+                        state.setValue(
+                          currentValue === state.value ? "" : currentValue
+                        );
+                        state.setOpen(false);
+                      }}
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          state.value === framework.value
+                            ? "opacity-100"
+                            : "opacity-0"
+                        )}
+                      />
+                      {framework.label}
+                    </CommandItem>
+                  ))}
+                </CommandList>
+              </ScrollArea>
             </CommandGroup>
           </Command>
         </PopoverContent>

@@ -6,8 +6,6 @@ import CommonFilter from "./common-filter";
 
 //TODO: Replace all unknown/any types with their corresponding types/interfaces
 const ElNinoAnalytics = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-
   const { topic } = useParams();
   const subject: any = menus.find(
     (menu) => menu.id === parseInt(topic as string)
@@ -16,12 +14,12 @@ const ElNinoAnalytics = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center gap-3 mb-7">
+      <div className="flex flex-col text-center items-center justify-center gap-3 mb-7">
         <h1 className="text-3xl">{subject.category}</h1>
-        <h1 className="text-2xl">{subject.title}</h1>
+        {/* <h1 className="text-2xl">{subject.title}</h1> */}
       </div>
 
-      <div className="mt-10 border rounded-lg">
+      <div className="my-10 border rounded-lg">
         <CommonFilter />
       </div>
     </>

@@ -6,6 +6,7 @@ import {
   calculateLinearPredictiveValue,
   formatDate,
   formatTitle,
+  getAllDistrictsOfCountry,
   transformDistrictParams,
   transformObject,
   transformSourceObject,
@@ -27,9 +28,14 @@ import HighchartsReact from "highcharts-react-official";
 import { Input } from "./ui/input";
 import { DatePickerWithRange } from "./date-range-picker";
 import { DateRange, District } from "@/types";
-import { countries } from "@/constants";
+import { ElNinoVariables, countries, elNinoYearsList } from "@/constants";
 import bodyParams from "../data/body_params.json";
 import { useLocation } from "react-router-dom";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
+import { AlertCircle } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import HelpHoverCard from "./help-hover-card";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 const PredictiveToolsFilter = () => {
   const location = useLocation();
@@ -44,6 +50,9 @@ const PredictiveToolsFilter = () => {
     linearPredictionInputFieldValues,
     setLinearPredictionInputFieldValues,
   ] = useState<any>([]);
+
+  const [elNinoCoefficient, setElNinoCoefficient] = useState("");
+
   const [predictedValue, setPredictedValue] = useState("");
   const [showPredictedValue, setShowPredictedValue] = useState(false);
   const [showPredictValueMenu, setShowPredictValueMenu] = useState(false);
@@ -61,6 +70,8 @@ const PredictiveToolsFilter = () => {
   const [periodValue, setPeriodValue] = useState("");
 
   const [dateRange, setDateRange] = useState<DateRange>();
+  const [fromYear, setFromYear] = useState("");
+  const [toYear, setToYear] = useState("");
 
   const [modelType, setModelType] = useState("");
 
@@ -70,7 +81,20 @@ const PredictiveToolsFilter = () => {
 
   const [selected, setSelected] = useState<any>([]);
 
+  const verifyFilters = () => {
+    return (
+      dependentVariable !== "" &&
+      source !== "" &&
+      modelType !== "" &&
+      fromYear! == "" &&
+      toYear! == "" &&
+      countryValue !== ""
+    );
+  };
+
   useEffect(() => {
+    setFromYear(data?.fromYear);
+    setToYear(data?.toYear);
     setCountryValue(data?.countryValue);
     setSource(data?.source);
     data?.independentVariables
@@ -122,15 +146,19 @@ const PredictiveToolsFilter = () => {
 
   const predictLinearValue = () => {
     const value = calculateLinearPredictiveValue(
-      linearPredictionInputFieldValues,
+      [elNinoCoefficient],
       regressionModel.coefficients,
       regressionModel.intercept
     );
-    setPredictedValue(value.toString());
+    console.log(value + "#$");
+
+    setPredictedValue(value.toFixed(4));
     setShowPredictedValue(true);
   };
 
-  const predictLogisticValue = () => console.log("prediciting logisitic value");
+  const predictLogisticValue = () => {
+    console.log("Predicting");
+  };
 
   const generateRegressionModel = async () => {
     setLinearPredictionInputFieldValues([]);
@@ -144,13 +172,13 @@ const PredictiveToolsFilter = () => {
       const response = await axios.post(
         "http://203.156.108.67:1580/prediction_model",
         {
-          source: source,
-          indic: independentVariables.join(","),
-          period: periodValue,
-          district: districtValue,
-          start: formatDate(dateRange?.from),
-          end: formatDate(dateRange?.to),
-          indic_0: dependentVariable,
+          source: "ERA5",
+          indic: dependentVariable,
+          period: "annual",
+          district: getAllDistrictsOfCountry(districtList).join(","),
+          start: `${fromYear}-01-01`,
+          end: `${toYear}-01-01`,
+          indic_0: "el_nino",
           model: modelType,
           // source: "ERA5",
           // indic: "normal_rainfall,el_nino",
@@ -184,94 +212,229 @@ const PredictiveToolsFilter = () => {
   };
 
   return (
-    <div className="p-10">
-      <div className="grid gap-4 mb-6 md:grid-cols-2 justify-center">
-        <Combobox
-          label={"Dependent Variable"}
-          array={transformObject(params?.indic).filter(
-            (e) =>
-              e.value !== "rainfall_deviation" &&
-              e.value !== "el_nino" &&
-              !independentVariables?.includes(e.value)
-          )}
-          state={{
-            value: dependentVariable,
-            setValue: setDependentVariable,
-          }}
-        />
+    <div className="sm:p-10 p-4">
+      <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
         <div>
-          <Label className="mb-2 font-semibold">Independent Variables</Label>
+          <div className="flex gap-2 ">
+            <Label className="mb-2 font-semibold">El Nino Variable</Label>
+            <HelpHoverCard
+              title={"El Nino Variable"}
+              content={`A single climate variable used to compare against other climate
+              variables.`}
+            />
+          </div>
+          <Combobox
+            label={"El Nino Variable"}
+            array={transformObject(ElNinoVariables)}
+            state={{
+              value: dependentVariable,
+              setValue: setDependentVariable,
+            }}
+          />
+        </div>
+
+        {/* <div>
+          <div className="flex gap-2 ">
+            <Label className="mb-2 font-semibold">Independent Variables</Label>
+            <HelpHoverCard
+              title={"Independent Variables"}
+              content={`One or more climate variables that will be compared against
+                  the Dependent variable.`}
+            />
+          </div>
           <FancyMultiSelect
             selected={selected}
             setSelected={setSelected}
             setState={setIndependentVariables}
             array={independentVariablesList}
           />
+        </div> */}
+
+        {/* <div>
+          <div className="flex gap-2 ">
+            <Label className="font-semibold">Start and End date</Label>
+            <HelpHoverCard
+              title={"Start and End date"}
+              content={`The specific date range that you'd like to be analyzed.`}
+            />
+          </div>
+          <DatePickerWithRange
+            date={dateRange}
+            setDate={setDateRange}
+            min={0}
+            max={0}
+          />
+        </div> */}
+
+        <div>
+          <div className="grid gap-4 md:grid-cols-2 grid-cols-1 justify-center">
+            <div>
+              <div className="flex gap-2 ">
+                <Label className="mb-2 font-semibold"> From Year </Label>
+                <HelpHoverCard
+                  title={" From Year "}
+                  content={` The beginning year for your analysis timeframe `}
+                />
+              </div>
+              <Combobox
+                label={"Year"}
+                array={elNinoYearsList().filter(
+                  (e) => parseInt(e.value) + 30 < new Date().getFullYear()
+                )}
+                state={{
+                  value: fromYear,
+                  setValue: setFromYear,
+                }}
+              />
+            </div>
+
+            <div>
+              <div className="flex gap-2 ">
+                <Label className="mb-2 font-semibold"> To Year </Label>
+                <HelpHoverCard
+                  title={" To Year "}
+                  content={` The ending year for your analysis timeframe `}
+                />
+              </div>
+              <Combobox
+                label={"Year"}
+                array={elNinoYearsList().filter(
+                  (e) => parseInt(e.value) - parseInt(fromYear) >= 30
+                )}
+                state={{
+                  value: toYear,
+                  setValue: setToYear,
+                }}
+              />
+            </div>
+          </div>
+          <div className="flex items-center gap-1  mt-1">
+            <InfoCircledIcon className="h-4 w-4" />
+            <p className="text-sm">
+              Please choose a minimum of 30 years timeframe.
+            </p>
+          </div>
         </div>
 
-        <DatePickerWithRange
-          date={dateRange}
-          setDate={setDateRange}
-          min={0}
-          max={0}
-          label={"Start and End date"}
-        />
-        <Combobox
-          label={"Period"}
-          array={transformObject(params?.period)}
-          state={{
-            value: periodValue,
-            setValue: setPeriodValue,
-          }}
-        />
+        {/* <div>
+          <div className="flex gap-2 ">
+            <Label className="mb-2 font-semibold"> Period </Label>
+            <HelpHoverCard
+              title={" Period "}
+              content={` The period between each date that you want to analyze. `}
+            />
+          </div>
+          <Combobox
+            label={"Period"}
+            array={transformObject(params?.period)}
+            state={{
+              value: periodValue,
+              setValue: setPeriodValue,
+            }}
+          />
+        </div> */}
       </div>
-      <div className="grid gap-4 mb-6 md:grid-cols-2 justify-center">
-        <Combobox
-          label={"Source"}
-          array={transformSourceObject(params?.source)}
-          state={{
-            value: source,
-            setValue: setSource,
-          }}
-        />
-        <Combobox
-          label={"Country"}
-          array={countries}
-          state={{
-            value: countryValue,
-            setValue: setCountryValue,
-          }}
-        />
-        <Combobox
-          label={"District"}
-          array={transformDistrictParams(districtList).slice(0, 15)}
-          state={{
-            value: districtValue,
-            setValue: setDistrictValue,
-          }}
-        />
+      <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
+        <div>
+          <div className="flex gap-2 ">
+            <Label className="mb-2 font-semibold"> Source </Label>
+            <HelpHoverCard
+              title={" Source "}
+              content={` The source of dataset that you want to use for the current
+              analysis. `}
+            />
+          </div>
+          <Combobox
+            label={"Source"}
+            array={transformSourceObject(params?.source)}
+            state={{
+              value: source,
+              setValue: setSource,
+            }}
+          />
+        </div>
 
-        <Combobox
-          label={"Predictive model"}
-          array={[
-            { value: "linear", label: "Linear" },
-            { value: "logistic", label: "Logistic" },
-          ]}
-          state={{
-            value: modelType,
-            setValue: setModelType,
-          }}
-        />
+        <div>
+          <div className="flex gap-2 ">
+            <Label className="mb-2 font-semibold"> Country </Label>
+            <HelpHoverCard
+              title={" Country "}
+              content={` The country of chosen location that you'd like to analyze. `}
+            />
+          </div>
+          <Combobox
+            label={"Country"}
+            array={countries}
+            state={{
+              value: countryValue,
+              setValue: setCountryValue,
+            }}
+          />
+        </div>
+
+        {/* <div>
+          <div className="flex gap-2 ">
+            <Label className="mb-2 font-semibold"> District </Label>
+            <HelpHoverCard
+              title={" District "}
+              content={`  The specific district of the chosen country to be used for the
+              analysis. `}
+            />
+          </div>
+          <Combobox
+            label={"District"}
+            array={transformDistrictParams(districtList)}
+            state={{
+              value: districtValue,
+              setValue: setDistrictValue,
+            }}
+          />
+        </div> */}
+
+        <div>
+          <div className="flex gap-2 mt-5">
+            <Label className="mb-2 font-semibold"> Predictive model type</Label>
+            <HelpHoverCard
+              title={" Predictive model type"}
+              content={` The model type you would like to generate for the prediction (Linear or Logistic). `}
+            />
+          </div>
+          <Combobox
+            label={"Predictive model"}
+            array={[
+              { value: "linear", label: "Linear" },
+              { value: "logistic", label: "Logistic" },
+            ]}
+            state={{
+              value: modelType,
+              setValue: setModelType,
+            }}
+          />
+        </div>
       </div>
-      <div className="grid gap-4 md:grid-cols-3 justify-center mt-10 ">
-        <div></div>
-        <Button
-          className="mt-10"
-          disabled={modelType === ""}
-          onClick={generateRegressionModel}
-        >
-          Generate Predictive Model
-        </Button>
+      <div className="md:mt-12 w-full">
+        <HoverCard>
+          <HoverCardTrigger className="w-full flex justify-center">
+            <Button
+              className="md:w-1/3 w-full"
+              // disabled={!verifyFilters()}
+              onClick={generateRegressionModel}
+            >
+              Generate Predictive Model
+            </Button>
+          </HoverCardTrigger>
+          {/* {!verifyFilters() && (
+            <HoverCardContent className="flex flex-col">
+              <div className="flex items-center gap-1">
+                <AlertCircle className="h-5 w-5" />
+                <span className="text-md font-semibold">Invalid Input!</span>
+              </div>
+              <p className="text-md">
+                Make sure you've filled every field above.
+              </p>
+            </HoverCardContent>
+          )} */}
+        </HoverCard>
       </div>
 
       {isLoadingPredictiveModel && (
@@ -283,9 +446,15 @@ const PredictiveToolsFilter = () => {
         </div>
       )}
       {showPredictiveModelError && (
-        <div className="my-20 flex flex-col items-center justify-center">
-          <p className="text-xl">Failed to generate model !</p>
-          <p className="text-xl">Please check your input.</p>
+        <div className="flex justify-center my-10">
+          <Alert className="lg:w-3/4" variant="destructive">
+            <AlertCircle className="h-5 w-5 mt-1" />
+            <AlertTitle className="text-lg">API Error !</AlertTitle>
+            <AlertDescription className="text-md">
+              Failed to generate model. This could be due to missing datasets.
+              Try changing your filters and start the analysis again.
+            </AlertDescription>
+          </Alert>
         </div>
       )}
 
@@ -333,7 +502,7 @@ const PredictiveToolsFilter = () => {
                     <TableBody>
                       {regressionModel?.confusion_matrix?.map(
                         (element: any, index: number) => (
-                          <TableRow>
+                          <TableRow key={index}>
                             {element.map((cell: number) => (
                               <TableCell className="text-black text-md px-5">
                                 {cell}
@@ -393,7 +562,7 @@ const PredictiveToolsFilter = () => {
       {showPredictValueMenu && modelType === "linear" && (
         <div className="flex flex-col justify-center items-center gap-5">
           <div className="flex flex-row mt-10 gap-5">
-            {persistentVariables.map((element: any, index: any) => (
+            {/* {["el_nino"].map((element: any, index: any) => (
               <div key={element}>
                 <label className="text-lg font-medium" htmlFor="rainfall">
                   {formatTitle(element) + " value"}
@@ -405,7 +574,19 @@ const PredictiveToolsFilter = () => {
                   onChange={(event) => handleChange(index, event)}
                 />
               </div>
-            ))}
+            ))} */}
+
+            <div>
+              <label className="text-lg font-medium" htmlFor="rainfall">
+                El Nino Coefficient
+              </label>
+              <Input
+                className="mt-2"
+                id="rainfall"
+                type="number"
+                onChange={(e) => setElNinoCoefficient(e.target.value)}
+              />
+            </div>
           </div>
           <div className="flex flex-col w-80">
             <Button
@@ -425,10 +606,8 @@ const PredictiveToolsFilter = () => {
       {showPredictedValue && (
         <>
           <div className="flex flex-col items-center justify-center mt-20 mb-20">
-            <p className="text-lg">Predicited Value</p>
-            <p className="text-8xl font-semibold mt-5">
-              {parseInt(predictedValue).toFixed(2)}
-            </p>
+            <p className="text-lg">Predicted Value</p>
+            <p className="text-8xl font-semibold mt-5">{predictedValue}</p>
           </div>
         </>
       )}
