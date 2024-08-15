@@ -73,6 +73,7 @@ const CommonFilter = () => {
   );
 
   const [dependentVariable, setDependentVariable] = useState("");
+  const [elNinoVariable, setElNinoVariable] = useState("");
   const [independentVariables, setIndependentVariables] = useState<any>([]);
   const [source, setSource] = useState("");
   const [districtValue, setDistrictValue] = useState("");
@@ -102,6 +103,7 @@ const CommonFilter = () => {
       source !== "" &&
       // periodValue !== "" &&
       // districtValue !== "" &&
+      elNinoVariable !== "" &&
       fromYear !== "" &&
       toYear !== "" &&
       countryValue !== ""
@@ -327,19 +329,42 @@ const CommonFilter = () => {
       <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
         <div>
           <div className="flex gap-2 ">
+            <Label className="mb-2 font-semibold">Climate Variable</Label>
+            <HelpHoverCard
+              title={"Climate Variable"}
+              content={`A single climate variable used to compare against an El Nino
+              variable.`}
+            />
+          </div>
+          <Combobox
+            label={"Climate Variable"}
+            array={transformObject(ElNinoVariables).filter(
+              (e) => e.value !== "el_nino"
+            )}
+            state={{
+              value: dependentVariable,
+              setValue: setDependentVariable,
+            }}
+          />
+        </div>
+
+        <div>
+          <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold">El Nino Variable</Label>
             <HelpHoverCard
               title={"El Nino Variable"}
-              content={`A single climate variable used to compare against other climate
+              content={`A single El Nino variable used to compare against a climate
               variables.`}
             />
           </div>
           <Combobox
             label={"El Nino Variable"}
-            array={transformObject(ElNinoVariables)}
+            array={transformObject(ElNinoVariables).filter(
+              (e) => e.value === "el_nino"
+            )}
             state={{
-              value: dependentVariable,
-              setValue: setDependentVariable,
+              value: elNinoVariable,
+              setValue: setElNinoVariable,
             }}
           />
         </div>
@@ -427,6 +452,25 @@ const CommonFilter = () => {
           </div>
         </div>
 
+        <div>
+          <div className="flex gap-2 ">
+            <Label className="mb-2 font-semibold"> Source </Label>
+            <HelpHoverCard
+              title={" Source "}
+              content={` The source of dataset that you want to use for the current
+              analysis. `}
+            />
+          </div>
+          <Combobox
+            label={"Source"}
+            array={transformSourceObject(params?.source)}
+            state={{
+              value: source,
+              setValue: setSource,
+            }}
+          />
+        </div>
+
         {/* <div>
           <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold"> Period </Label>
@@ -448,25 +492,6 @@ const CommonFilter = () => {
       </div>
 
       <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> Source </Label>
-            <HelpHoverCard
-              title={" Source "}
-              content={` The source of dataset that you want to use for the current
-              analysis. `}
-            />
-          </div>
-          <Combobox
-            label={"Source"}
-            array={transformSourceObject(params?.source)}
-            state={{
-              value: source,
-              setValue: setSource,
-            }}
-          />
-        </div>
-
         <div>
           <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold"> Country </Label>
@@ -845,6 +870,7 @@ const CommonFilter = () => {
                         districtValue,
                         dateRange,
                         fromYear,
+                        elNinoVariable,
                         toYear,
                         countryValue,
                         selected,

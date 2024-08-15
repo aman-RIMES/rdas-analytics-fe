@@ -26,6 +26,7 @@ import { HoverCard, HoverCardTrigger, HoverCardContent } from "./ui/hover-card";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import HelpHoverCard from "./help-hover-card";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 const GDDToolsFilter = () => {
   const [isError, setIsError] = useState(false);
@@ -225,7 +226,7 @@ const GDDToolsFilter = () => {
         </div>
       </div>
 
-      <div className="grid gap-4 mb-6 md:grid-cols-2 xl:grid-cols-4 grid-cols-1 justify-center">
+      <div className="grid gap-4 mb-6 md:grid-cols-2 xl:grid-cols-3 grid-cols-1 justify-center">
         <div>
           <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold"> Crop </Label>
@@ -245,20 +246,40 @@ const GDDToolsFilter = () => {
         </div>
 
         <div>
-          <div className="flex gap-2 ">
-            <Label className="font-semibold">Start and End date</Label>
-            <HelpHoverCard
-              title={"Start and End date"}
-              content={`The specific date range that you'd like to be analyzed.`}
+          <div>
+            <div className="flex gap-2 ">
+              <Label className="font-semibold">Start and End date</Label>
+              <HelpHoverCard
+                title={"Start and End date"}
+                content={`The specific date range that you'd like to be analyzed.`}
+              />
+            </div>
+            <DatePickerWithRange
+              disabledStatus={
+                cropValue === undefined ||
+                cropValue === null ||
+                cropValue === ""
+              }
+              date={dateRange}
+              setDate={setDateRange}
+              min={crops.find((e) => e?.crop_id == cropValue)?.min_period_days}
+              max={crops.find((e) => e?.crop_id == cropValue)?.max_period_days}
             />
           </div>
-          <DatePickerWithRange
-            disabledStatus={cropValue == null}
-            date={dateRange}
-            setDate={setDateRange}
-            min={crops.find((e) => e?.crop_id == cropValue)?.min_period_days}
-            max={crops.find((e) => e?.crop_id == cropValue)?.max_period_days}
-          />
+          {cropValue !== undefined &&
+            cropValue !== null &&
+            cropValue !== "" && (
+              <div className="flex items-center gap-1  mt-2">
+                <InfoCircledIcon className="h-5 w-5" />
+                <p className="text-sm">
+                  Please choose a minimum of{" "}
+                  {crops.find((e) => e?.crop_id == cropValue)?.min_period_days}{" "}
+                  and a maximum of{" "}
+                  {crops.find((e) => e?.crop_id == cropValue)?.max_period_days}{" "}
+                  days .
+                </p>
+              </div>
+            )}
         </div>
 
         <div>
