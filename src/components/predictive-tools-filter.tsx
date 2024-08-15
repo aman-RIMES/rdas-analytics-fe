@@ -62,6 +62,7 @@ const PredictiveToolsFilter = () => {
     useState(false);
 
   const [dependentVariable, setDependentVariable] = useState("");
+  const [elNinoVariable, setElNinoVariable] = useState("");
   const [independentVariables, setIndependentVariables] = useState<any>([]);
   const [source, setSource] = useState("");
   const [districtValue, setDistrictValue] = useState("");
@@ -95,6 +96,7 @@ const PredictiveToolsFilter = () => {
   useEffect(() => {
     setFromYear(data?.fromYear);
     setToYear(data?.toYear);
+    setElNinoVariable(data?.elNinoVariable);
     setCountryValue(data?.countryValue);
     setSource(data?.source);
     data?.independentVariables
@@ -216,19 +218,42 @@ const PredictiveToolsFilter = () => {
       <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
         <div>
           <div className="flex gap-2 ">
+            <Label className="mb-2 font-semibold">Climate Variable</Label>
+            <HelpHoverCard
+              title={"Climate Variable"}
+              content={`A single climate variable used to compare against an El Nino
+              variable.`}
+            />
+          </div>
+          <Combobox
+            label={"Climate Variable"}
+            array={transformObject(ElNinoVariables).filter(
+              (e) => e.value !== "el_nino"
+            )}
+            state={{
+              value: dependentVariable,
+              setValue: setDependentVariable,
+            }}
+          />
+        </div>
+
+        <div>
+          <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold">El Nino Variable</Label>
             <HelpHoverCard
               title={"El Nino Variable"}
-              content={`A single climate variable used to compare against other climate
+              content={`A single El Nino variable used to compare against a climate
               variables.`}
             />
           </div>
           <Combobox
             label={"El Nino Variable"}
-            array={transformObject(ElNinoVariables)}
+            array={transformObject(ElNinoVariables).filter(
+              (e) => e.value === "el_nino"
+            )}
             state={{
-              value: dependentVariable,
-              setValue: setDependentVariable,
+              value: elNinoVariable,
+              setValue: setElNinoVariable,
             }}
           />
         </div>
@@ -316,25 +341,6 @@ const PredictiveToolsFilter = () => {
           </div>
         </div>
 
-        {/* <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> Period </Label>
-            <HelpHoverCard
-              title={" Period "}
-              content={` The period between each date that you want to analyze. `}
-            />
-          </div>
-          <Combobox
-            label={"Period"}
-            array={transformObject(params?.period)}
-            state={{
-              value: periodValue,
-              setValue: setPeriodValue,
-            }}
-          />
-        </div> */}
-      </div>
-      <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
         <div>
           <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold"> Source </Label>
@@ -354,6 +360,25 @@ const PredictiveToolsFilter = () => {
           />
         </div>
 
+        {/* <div>
+          <div className="flex gap-2 ">
+            <Label className="mb-2 font-semibold"> Period </Label>
+            <HelpHoverCard
+              title={" Period "}
+              content={` The period between each date that you want to analyze. `}
+            />
+          </div>
+          <Combobox
+            label={"Period"}
+            array={transformObject(params?.period)}
+            state={{
+              value: periodValue,
+              setValue: setPeriodValue,
+            }}
+          />
+        </div> */}
+      </div>
+      <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
         <div>
           <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold"> Country </Label>
@@ -392,7 +417,7 @@ const PredictiveToolsFilter = () => {
         </div> */}
 
         <div>
-          <div className="flex gap-2 mt-5">
+          <div className="flex gap-2">
             <Label className="mb-2 font-semibold"> Predictive model type</Label>
             <HelpHoverCard
               title={" Predictive model type"}

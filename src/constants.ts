@@ -268,4 +268,5 @@ export const countries = [
 export const ElNinoVariables = {
   rainfall: "Rainfall",
   temperature: "Temperature",
+  el_nino: "El Nino Events",
 };
