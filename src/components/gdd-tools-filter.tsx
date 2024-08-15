@@ -48,25 +48,6 @@ const GDDToolsFilter = () => {
 
   const [selected, setSelected] = useState([]);
 
-  // function setProv(e) {
-  //   console.log("#$##$%%% " + e);
-
-  //   setProvinceValue(e);
-  // }
-
-  const verifyFilters = () => {
-    return (
-      cropValue !== "" &&
-      tehsilValue !== "" &&
-      districtValue !== "" &&
-      countryValue !== "" &&
-      provinceValue !== "" &&
-      yearsValue.length > 0 &&
-      formatDate(dateRange?.from) !== "" &&
-      formatDate(dateRange?.to) !== ""
-    );
-  };
-
   useEffect(() => {
     const chosenYear = formatDate(dateRange?.from).slice(0, 4);
     setYears(yearsList.filter((e) => e.label !== chosenYear));
@@ -98,29 +79,46 @@ const GDDToolsFilter = () => {
 
   useEffect(() => {
     (async () => {
-      try {
-        const districtList: any = await axios.get(
-          `http://203.156.108.67:14800/pakistan/get_districts_by_province/${provinceValue}`
-        );
-        setDistricts(districtList.data);
-      } catch (error) {
-        console.log(error);
+      if (provinceValue !== "") {
+        try {
+          const districtList: any = await axios.get(
+            `http://203.156.108.67:14800/pakistan/get_districts_by_province/${provinceValue}`
+          );
+          setDistricts(districtList.data);
+        } catch (error) {
+          console.log(error);
+        }
       }
     })();
   }, [provinceValue]);
 
   useEffect(() => {
     (async () => {
-      try {
-        const tehsilList: any = await axios.get(
-          `http://203.156.108.67:14800/pakistan/get_tehsil_by_district_id/${districtValue}`
-        );
-        setTehsils(tehsilList.data);
-      } catch (error) {
-        console.log(error);
+      if (districtValue !== "") {
+        try {
+          const tehsilList: any = await axios.get(
+            `http://203.156.108.67:14800/pakistan/get_tehsil_by_district_id/${districtValue}`
+          );
+          setTehsils(tehsilList.data);
+        } catch (error) {
+          console.log(error);
+        }
       }
     })();
   }, [districtValue]);
+
+  const verifyFilters = () => {
+    return (
+      cropValue !== "" &&
+      tehsilValue !== "" &&
+      districtValue !== "" &&
+      countryValue !== "" &&
+      provinceValue !== "" &&
+      yearsValue.length > 0 &&
+      formatDate(dateRange?.from) !== "" &&
+      formatDate(dateRange?.to) !== ""
+    );
+  };
 
   const generateGDD = async () => {
     try {

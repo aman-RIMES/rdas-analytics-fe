@@ -6,6 +6,7 @@ import {
   calculateLinearPredictiveValue,
   formatDate,
   formatTitle,
+  getAllDistrictsOfCountry,
   transformDistrictParams,
   transformObject,
   transformSourceObject,
@@ -27,13 +28,14 @@ import HighchartsReact from "highcharts-react-official";
 import { Input } from "./ui/input";
 import { DatePickerWithRange } from "./date-range-picker";
 import { DateRange, District } from "@/types";
-import { countries } from "@/constants";
+import { ElNinoVariables, countries, elNinoYearsList } from "@/constants";
 import bodyParams from "../data/body_params.json";
 import { useLocation } from "react-router-dom";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import HelpHoverCard from "./help-hover-card";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 const PredictiveToolsFilter = () => {
   const location = useLocation();
@@ -48,6 +50,9 @@ const PredictiveToolsFilter = () => {
     linearPredictionInputFieldValues,
     setLinearPredictionInputFieldValues,
   ] = useState<any>([]);
+
+  const [elNinoCoefficient, setElNinoCoefficient] = useState("");
+
   const [predictedValue, setPredictedValue] = useState("");
   const [showPredictedValue, setShowPredictedValue] = useState(false);
   const [showPredictValueMenu, setShowPredictValueMenu] = useState(false);
@@ -65,6 +70,8 @@ const PredictiveToolsFilter = () => {
   const [periodValue, setPeriodValue] = useState("");
 
   const [dateRange, setDateRange] = useState<DateRange>();
+  const [fromYear, setFromYear] = useState("");
+  const [toYear, setToYear] = useState("");
 
   const [modelType, setModelType] = useState("");
 
@@ -76,19 +83,18 @@ const PredictiveToolsFilter = () => {
 
   const verifyFilters = () => {
     return (
-      independentVariables.length > 0 &&
       dependentVariable !== "" &&
       source !== "" &&
-      periodValue !== "" &&
       modelType !== "" &&
-      districtValue !== "" &&
-      formatDate(dateRange?.from) !== "" &&
-      formatDate(dateRange?.to) !== "" &&
+      fromYear! == "" &&
+      toYear! == "" &&
       countryValue !== ""
     );
   };
 
   useEffect(() => {
+    setFromYear(data?.fromYear);
+    setToYear(data?.toYear);
     setCountryValue(data?.countryValue);
     setSource(data?.source);
     data?.independentVariables
@@ -140,15 +146,19 @@ const PredictiveToolsFilter = () => {
 
   const predictLinearValue = () => {
     const value = calculateLinearPredictiveValue(
-      linearPredictionInputFieldValues,
+      [elNinoCoefficient],
       regressionModel.coefficients,
       regressionModel.intercept
     );
-    setPredictedValue(value.toString());
+    console.log(value + "#$");
+
+    setPredictedValue(value.toFixed(4));
     setShowPredictedValue(true);
   };
 
-  const predictLogisticValue = () => console.log("prediciting logisitic value");
+  const predictLogisticValue = () => {
+    console.log("Predicting");
+  };
 
   const generateRegressionModel = async () => {
     setLinearPredictionInputFieldValues([]);
@@ -162,13 +172,13 @@ const PredictiveToolsFilter = () => {
       const response = await axios.post(
         "http://203.156.108.67:1580/prediction_model",
         {
-          source: source,
-          indic: independentVariables.join(","),
-          period: periodValue,
-          district: districtValue,
-          start: formatDate(dateRange?.from),
-          end: formatDate(dateRange?.to),
-          indic_0: dependentVariable,
+          source: "ERA5",
+          indic: dependentVariable,
+          period: "annual",
+          district: getAllDistrictsOfCountry(districtList).join(","),
+          start: `${fromYear}-01-01`,
+          end: `${toYear}-01-01`,
+          indic_0: "el_nino",
           model: modelType,
           // source: "ERA5",
           // indic: "normal_rainfall,el_nino",
@@ -206,21 +216,16 @@ const PredictiveToolsFilter = () => {
       <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
         <div>
           <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold">Dependent Variable</Label>
+            <Label className="mb-2 font-semibold">El Nino Variable</Label>
             <HelpHoverCard
-              title={"Dependent Variable"}
+              title={"El Nino Variable"}
               content={`A single climate variable used to compare against other climate
               variables.`}
             />
           </div>
           <Combobox
-            label={"Dependent Variable"}
-            array={transformObject(params?.indic).filter(
-              (e) =>
-                e.value !== "rainfall_deviation" &&
-                e.value !== "el_nino" &&
-                !independentVariables?.includes(e.value)
-            )}
+            label={"El Nino Variable"}
+            array={transformObject(ElNinoVariables)}
             state={{
               value: dependentVariable,
               setValue: setDependentVariable,
@@ -228,7 +233,7 @@ const PredictiveToolsFilter = () => {
           />
         </div>
 
-        <div>
+        {/* <div>
           <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold">Independent Variables</Label>
             <HelpHoverCard
@@ -243,9 +248,9 @@ const PredictiveToolsFilter = () => {
             setState={setIndependentVariables}
             array={independentVariablesList}
           />
-        </div>
+        </div> */}
 
-        <div>
+        {/* <div>
           <div className="flex gap-2 ">
             <Label className="font-semibold">Start and End date</Label>
             <HelpHoverCard
@@ -259,9 +264,59 @@ const PredictiveToolsFilter = () => {
             min={0}
             max={0}
           />
-        </div>
+        </div> */}
 
         <div>
+          <div className="grid gap-4 md:grid-cols-2 grid-cols-1 justify-center">
+            <div>
+              <div className="flex gap-2 ">
+                <Label className="mb-2 font-semibold"> From Year </Label>
+                <HelpHoverCard
+                  title={" From Year "}
+                  content={` The beginning year for your analysis timeframe `}
+                />
+              </div>
+              <Combobox
+                label={"Year"}
+                array={elNinoYearsList().filter(
+                  (e) => parseInt(e.value) + 30 < new Date().getFullYear()
+                )}
+                state={{
+                  value: fromYear,
+                  setValue: setFromYear,
+                }}
+              />
+            </div>
+
+            <div>
+              <div className="flex gap-2 ">
+                <Label className="mb-2 font-semibold"> To Year </Label>
+                <HelpHoverCard
+                  title={" To Year "}
+                  content={` The ending year for your analysis timeframe `}
+                />
+              </div>
+              <Combobox
+                label={"Year"}
+                array={elNinoYearsList().filter(
+                  (e) => parseInt(e.value) - parseInt(fromYear) >= 30
+                )}
+                state={{
+                  value: toYear,
+                  setValue: setToYear,
+                }}
+              />
+            </div>
+          </div>
+          <div className="flex items-center gap-1  mt-1">
+            <InfoCircledIcon className="h-4 w-4" />
+            <p className="text-sm">
+              Please choose a minimum of 30 years timeframe.
+            </p>
+          </div>
+        </div>
+
+        {/* <div>
           <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold"> Period </Label>
             <HelpHoverCard
@@ -277,7 +332,7 @@ const PredictiveToolsFilter = () => {
               setValue: setPeriodValue,
             }}
           />
-        </div>
+        </div> */}
       </div>
       <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
         <div>
@@ -317,7 +372,7 @@ const PredictiveToolsFilter = () => {
           />
         </div>
 
-        <div>
+        {/* <div>
           <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold"> District </Label>
             <HelpHoverCard
@@ -334,10 +389,10 @@ const PredictiveToolsFilter = () => {
               setValue: setDistrictValue,
             }}
           />
-        </div>
+        </div> */}
 
         <div>
-          <div className="flex gap-2 ">
+          <div className="flex gap-2 mt-5">
             <Label className="mb-2 font-semibold"> Predictive model type</Label>
             <HelpHoverCard
               title={" Predictive model type"}
@@ -362,13 +417,13 @@ const PredictiveToolsFilter = () => {
           <HoverCardTrigger className="w-full flex justify-center">
             <Button
               className="md:w-1/3 w-full"
-              disabled={!verifyFilters()}
+              // disabled={!verifyFilters()}
               onClick={generateRegressionModel}
             >
               Generate Predictive Model
             </Button>
           </HoverCardTrigger>
-          {!verifyFilters() && (
+          {/* {!verifyFilters() && (
             <HoverCardContent className="flex flex-col">
               <div className="flex items-center gap-1">
                 <AlertCircle className="h-5 w-5" />
@@ -378,7 +433,7 @@ const PredictiveToolsFilter = () => {
                 Make sure you've filled every field above.
               </p>
             </HoverCardContent>
-          )}
+          )} */}
         </HoverCard>
       </div>
 
@@ -507,7 +562,7 @@ const PredictiveToolsFilter = () => {
       {showPredictValueMenu && modelType === "linear" && (
         <div className="flex flex-col justify-center items-center gap-5">
           <div className="flex flex-row mt-10 gap-5">
-            {persistentVariables.map((element: any, index: any) => (
+            {/* {["el_nino"].map((element: any, index: any) => (
               <div key={element}>
                 <label className="text-lg font-medium" htmlFor="rainfall">
                   {formatTitle(element) + " value"}
@@ -519,7 +574,19 @@ const PredictiveToolsFilter = () => {
                   onChange={(event) => handleChange(index, event)}
                 />
               </div>
-            ))}
+            ))} */}
+
+            <div>
+              <label className="text-lg font-medium" htmlFor="rainfall">
+                El Nino Coefficient
+              </label>
+              <Input
+                className="mt-2"
+                id="rainfall"
+                type="number"
+                onChange={(e) => setElNinoCoefficient(e.target.value)}
+              />
+            </div>
           </div>
           <div className="flex flex-col w-80">
             <Button
@@ -540,9 +607,7 @@ const PredictiveToolsFilter = () => {
         <>
           <div className="flex flex-col items-center justify-center mt-20 mb-20">
             <p className="text-lg">Predicted Value</p>
-            <p className="text-8xl font-semibold mt-5">
-              {parseInt(predictedValue).toFixed(2)}
-            </p>
+            <p className="text-8xl font-semibold mt-5">{predictedValue}</p>
           </div>
         </>
       )}

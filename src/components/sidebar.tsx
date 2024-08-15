@@ -63,7 +63,7 @@ export function Sidebar() {
               onClick={() => navigate("/gdd-predictive-tools/")}
             >
               <Icons.report className="w-5 h-5 mr-2 text-gray-800 dark:text-white" />
-              GDD Predictive Tool
+              GDD Analytical Tool
             </Button>
           </div>
         </div>

@@ -5,7 +5,6 @@ import {
   formatDate,
   formatTitle,
   getAllDistrictsOfCountry,
-  transformDistrictParams,
   transformObject,
   transformSourceObject,
 } from "@/lib/utils";
@@ -14,7 +13,12 @@ import axios from "axios";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highmaps";
 import Leaflet from "./leaflet";
-import { countries } from "@/constants";
+import {
+  ElNinoVariables,
+  countries,
+  elNinoYearsList,
+  yearsList,
+} from "@/constants";
 import bodyParams from "../data/body_params.json";
 import { DateRange, District } from "@/types";
 import { DatePickerWithRange } from "./date-range-picker";
@@ -33,6 +37,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { AlertCircle } from "lucide-react";
 import HelpHoverCard from "./help-hover-card";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 const CommonFilter = () => {
   const navigate = useNavigate();
@@ -76,6 +81,8 @@ const CommonFilter = () => {
   const [periodValue, setPeriodValue] = useState("");
 
   const [dateRange, setDateRange] = useState<DateRange>();
+  const [fromYear, setFromYear] = useState("");
+  const [toYear, setToYear] = useState("");
 
   const [isLoadingDescriptiveAnalysis, setIsLoadingDescriptiveAnalysis] =
     useState(false);
@@ -90,13 +97,13 @@ const CommonFilter = () => {
 
   const verifyFilters = () => {
     return (
-      independentVariables.length > 0 &&
+      // independentVariables.length > 0 &&
       dependentVariable !== "" &&
       source !== "" &&
-      periodValue !== "" &&
-      districtValue !== "" &&
-      formatDate(dateRange?.from) !== "" &&
-      formatDate(dateRange?.to) !== "" &&
+      // periodValue !== "" &&
+      // districtValue !== "" &&
+      fromYear !== "" &&
+      toYear !== "" &&
       countryValue !== ""
     );
   };
@@ -172,12 +179,12 @@ const CommonFilter = () => {
       const response = await axios.post(
         "http://203.156.108.67:1580/dynamic_charts",
         {
-          source: source,
-          indic: independentVariables.join(","),
-          period: periodValue,
-          district: districtValue,
-          start: formatDate(dateRange?.from),
-          end: formatDate(dateRange?.to),
+          source: "ERA5",
+          indic: dependentVariable,
+          period: "annual",
+          district: getAllDistrictsOfCountry(districtList).join(","),
+          start: `${fromYear}-01-01`,
+          end: `${toYear}-01-01`,
 
           // source: "ERA5",
           // indic: "rainfall,el_nino,normal_rainfall",
@@ -201,12 +208,12 @@ const CommonFilter = () => {
       const geoJson = await axios.post(
         "http://203.156.108.67:1580/dynamic_map",
         {
-          source: source,
+          source: "ERA5",
           indic: "rainfall_deviation",
-          period: periodValue,
+          period: "annual",
           district: getAllDistrictsOfCountry(districtList).join(","),
-          start: formatDate(dateRange?.from),
-          end: formatDate(dateRange?.to),
+          start: `${fromYear}-01-01`,
+          end: `${toYear}-01-01`,
 
           // source: "ERA5",
           // indic: "rainfall_deviation",
@@ -237,12 +244,12 @@ const CommonFilter = () => {
       const correlationData = await axios.post(
         "http://203.156.108.67:1580/correlation_plot",
         {
-          source: source,
+          source: "ERA5",
           indic: `${correlationVariable1},${correlationVariable2}`,
-          period: periodValue,
-          district: districtValue,
-          start: formatDate(dateRange?.from),
-          end: formatDate(dateRange?.to),
+          period: "annual",
+          district: getAllDistrictsOfCountry(districtList).join(","),
+          start: `${fromYear}-01-01`,
+          end: `${toYear}-01-01`,
 
           // source: "ERA5",
           // indic: "rainfall,el_nino,normal_rainfall",
@@ -255,12 +262,12 @@ const CommonFilter = () => {
       const regressionModelData = await axios.post(
         "http://203.156.108.67:1580/regression_analysis",
         {
-          source: source,
+          source: "ERA5",
           indic: `${correlationVariable1},${correlationVariable2}`,
-          period: periodValue,
-          district: districtValue,
-          start: formatDate(dateRange?.from),
-          end: formatDate(dateRange?.to),
+          period: "annual",
+          district: getAllDistrictsOfCountry(districtList).join(","),
+          start: `${fromYear}-01-01`,
+          end: `${toYear}-01-01`,
 
           // source: "ERA5",
           // indic: "rainfall,el_nino,normal_rainfall",
@@ -289,12 +296,12 @@ const CommonFilter = () => {
       const response = await axios.post(
         "http://203.156.108.67:1580/description_analysis",
         {
-          source: source,
-          indic: independentVariables.join(","),
-          period: periodValue,
-          district: districtValue,
-          start: formatDate(dateRange?.from),
-          end: formatDate(dateRange?.to),
+          source: "ERA5",
+          indic: "el_nino",
+          period: "annual",
+          district: getAllDistrictsOfCountry(districtList).join(","),
+          start: `${fromYear}-01-01`,
+          end: `${toYear}-01-01`,
           indic_0: dependentVariable,
           // source: "ERA5",
           // indic: "rainfall,normal_rainfall",
@@ -320,21 +327,16 @@ const CommonFilter = () => {
       <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
         <div>
           <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold">Dependent Variable</Label>
+            <Label className="mb-2 font-semibold">El Nino Variable</Label>
             <HelpHoverCard
-              title={"Dependent Variable"}
+              title={"El Nino Variable"}
               content={`A single climate variable used to compare against other climate
               variables.`}
             />
           </div>
           <Combobox
-            label={"Dependent Variable"}
-            array={transformObject(params?.indic).filter(
-              (e) =>
-                e.value !== "rainfall_deviation" &&
-                e.value !== "el_nino" &&
-                !independentVariables.includes(e.value)
-            )}
+            label={"El Nino Variable"}
+            array={transformObject(ElNinoVariables)}
             state={{
               value: dependentVariable,
               setValue: setDependentVariable,
@@ -342,7 +344,7 @@ const CommonFilter = () => {
           />
         </div>
 
-        <div>
+        {/* <div>
           <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold">Independent Variables</Label>
             <HelpHoverCard
@@ -357,9 +359,9 @@ const CommonFilter = () => {
             setState={setIndependentVariables}
             array={independentVariablesList}
           />
-        </div>
+        </div> */}
 
-        <div>
+        {/* <div>
           <div className="flex gap-2 ">
             <Label className="font-semibold">Start and End date</Label>
             <HelpHoverCard
@@ -373,9 +375,59 @@ const CommonFilter = () => {
             min={0}
             max={0}
           />
-        </div>
+        </div> */}
 
         <div>
+          <div className="grid gap-4 md:grid-cols-2 grid-cols-1 justify-center">
+            <div>
+              <div className="flex gap-2 ">
+                <Label className="mb-2 font-semibold"> From Year </Label>
+                <HelpHoverCard
+                  title={" From Year "}
+                  content={` The beginning year for your analysis timeframe `}
+                />
+              </div>
+              <Combobox
+                label={"Year"}
+                array={elNinoYearsList().filter(
+                  (e) => parseInt(e.value) + 30 < new Date().getFullYear()
+                )}
+                state={{
+                  value: fromYear,
+                  setValue: setFromYear,
+                }}
+              />
+            </div>
+
+            <div>
+              <div className="flex gap-2 ">
+                <Label className="mb-2 font-semibold"> To Year </Label>
+                <HelpHoverCard
+                  title={" To Year "}
+                  content={` The ending year for your analysis timeframe `}
+                />
+              </div>
+              <Combobox
+                label={"Year"}
+                array={elNinoYearsList().filter(
+                  (e) => parseInt(e.value) - parseInt(fromYear) >= 30
+                )}
+                state={{
+                  value: toYear,
+                  setValue: setToYear,
+                }}
+              />
+            </div>
+          </div>
+          <div className="flex items-center gap-1  mt-1">
+            <InfoCircledIcon className="h-4 w-4" />
+            <p className="text-sm">
+              Please choose a minimum of 30 years timeframe.
+            </p>
+          </div>
+        </div>
+
+        {/* <div>
           <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold"> Period </Label>
             <HelpHoverCard
@@ -392,7 +444,7 @@ const CommonFilter = () => {
               setValue: setPeriodValue,
             }}
           />
-        </div>
+        </div> */}
       </div>
 
       <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
@@ -433,7 +485,7 @@ const CommonFilter = () => {
           />
         </div>
 
-        <div>
+        {/* <div>
           <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold"> District </Label>
             <HelpHoverCard
@@ -450,7 +502,7 @@ const CommonFilter = () => {
               setValue: setDistrictValue,
             }}
           />
-        </div>
+        </div> */}
       </div>
 
       <div className="md:mt-12 w-full">
@@ -549,7 +601,9 @@ const CommonFilter = () => {
               <div className="grid gap-4 mt-8 md:grid-cols-3 grid-cols-1 justify-center">
                 <Combobox
                   label={"First Variable"}
-                  array={transformObject(params.indic)}
+                  array={transformObject(ElNinoVariables).filter(
+                    (e: any) => e.value !== correlationVariable2
+                  )}
                   state={{
                     value: correlationVariable1,
                     setValue: setCorrelationVariable1,
@@ -557,7 +611,9 @@ const CommonFilter = () => {
                 />
                 <Combobox
                   label={"Second Variable"}
-                  array={transformObject(params.indic)}
+                  array={transformObject(ElNinoVariables).filter(
+                    (e: any) => e.value !== correlationVariable1
+                  )}
                   state={{
                     value: correlationVariable2,
                     setValue: setCorrelationVariable2,
@@ -567,7 +623,6 @@ const CommonFilter = () => {
                   disabled={
                     correlationVariable1 === "" || correlationVariable2 === ""
                   }
-                  className="mt-8"
                   onClick={generateCorrelationPlot}
                 >
                   Analyze Correlation
@@ -789,6 +844,8 @@ const CommonFilter = () => {
                         periodValue,
                         districtValue,
                         dateRange,
+                        fromYear,
+                        toYear,
                         countryValue,
                         selected,
                       },

@@ -16,7 +16,7 @@ const ElNinoAnalytics = () => {
     <>
       <div className="flex flex-col text-center items-center justify-center gap-3 mb-7">
         <h1 className="text-3xl">{subject.category}</h1>
-        <h1 className="text-2xl">{subject.title}</h1>
+        {/* <h1 className="text-2xl">{subject.title}</h1> */}
       </div>
 
       <div className="my-10 border rounded-lg">
