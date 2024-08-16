@@ -33,6 +33,7 @@ const ElNinoAnalyticsFilter = () => {
     countryValue: "",
     periodValue: "",
     dateRange: {},
+    districtList: [],
   });
 
   const handleChange = (name: string, value: string | []) => {
@@ -51,7 +52,7 @@ const ElNinoAnalyticsFilter = () => {
   }, []);
 
   useEffect(() => {
-    const districtsData = params.district.filter(
+    const districtsData = params?.district.filter(
       (e: District) => e.country === filterData.countryValue
     );
     setDistrictList(districtsData);

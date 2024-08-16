@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Label } from "./ui/label";
-import { BODY_PARAMS_URL, countries } from "@/constants";
+import { countries } from "@/constants";
 import {
   transformObject,
   transformSourceObject,
@@ -10,9 +10,7 @@ import { DatePickerWithRange } from "./date-range-picker";
 import HelpHoverCard from "./help-hover-card";
 import Combobox from "./ui/combobox";
 import { FancyMultiSelect } from "./ui/multiselect";
-import bodyParams from "../data/body_params.json";
-import { District, FilterData, FilterProps } from "@/types";
-import axios from "axios";
+import { District, FilterProps } from "@/types";
 
 const FilterComponent = ({
   params,
@@ -20,18 +18,16 @@ const FilterComponent = ({
   handleChange,
   selected,
   setSelected,
+  filterType,
 }: FilterProps) => {
-  const [districtList, setDistrictList] = useState([{}]);
-
   useEffect(() => {
-    const districtsData = params.district.filter(
+    const districtsData = params?.district.filter(
       (e: District) => e.country === filterData.countryValue
     );
-    setDistrictList(districtsData);
+    handleChange("districtList", districtsData);
   }, [filterData.countryValue]);
 
   return (
-    // <div className="sm:p-10 p-4">
     <div>
       <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
         <div>
@@ -58,7 +54,6 @@ const FilterComponent = ({
             }}
           />
         </div>
-
         <div>
           <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold">Independent Variables</Label>
@@ -81,7 +76,6 @@ const FilterComponent = ({
             )}
           />
         </div>
-
         <div>
           <div className="flex gap-2 ">
             <Label className="font-semibold">Start and End date</Label>
@@ -98,7 +92,6 @@ const FilterComponent = ({
             max={0}
           />
         </div>
-
         <div>
           <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold"> Period </Label>
@@ -172,13 +165,40 @@ const FilterComponent = ({
           <Combobox
             name="districtValue"
             label={"District"}
-            array={transformDistrictParams(districtList)}
+            array={transformDistrictParams(filterData?.districtList)}
             state={{
               value: filterData.districtValue,
               setValue: handleChange,
             }}
           />
         </div>
+
+        {filterType === "predictive" && (
+          <div>
+            <div className="flex gap-2 ">
+              <Label className="mb-2 font-semibold">
+                {" "}
+                Predictive model type
+              </Label>
+              <HelpHoverCard
+                title={" Predictive model type"}
+                content={` The model type you would like to generate for the prediction (Linear or Logistic). `}
+              />
+            </div>
+            <Combobox
+              name="modelType"
+              label={"Predictive model"}
+              array={[
+                { value: "linear", label: "Linear" },
+                { value: "logistic", label: "Logistic" },
+              ]}
+              state={{
+                value: filterData.modelType,
+                setValue: handleChange,
+              }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

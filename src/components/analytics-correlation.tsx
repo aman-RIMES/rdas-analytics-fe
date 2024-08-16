@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import Combobox from "./ui/combobox";
 import {
   transformObject,
@@ -7,19 +7,16 @@ import {
   isError,
   isFinished,
 } from "@/lib/utils";
-import { AlertCircle, Table } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highmaps";
 import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
 import { Button } from "./ui/button";
-import bodyParams from "../data/body_params.json";
 import axios from "axios";
-import { BODY_PARAMS_URL, requestStatus } from "@/constants";
-import { CorrelationFilterData, FilterData } from "@/types";
+import { requestStatus } from "@/constants";
+import { CorrelationFilterData, FilterData, FilterProps } from "@/types";
 
-const AnalyticsCorrelation = ({ filterData }: any) => {
-  //TODO: Make the body params a prop from the parent component
-  const [params, setParams] = useState<any>(bodyParams);
+const AnalyticsCorrelation = ({ filterData, params }: FilterProps) => {
   const [correlationFilterData, setCorrelationFilterData] =
     useState<CorrelationFilterData>({
       correlationVariable1: "",
@@ -34,17 +31,6 @@ const AnalyticsCorrelation = ({ filterData }: any) => {
   const handleChange = (name: string, value: string | []) => {
     setCorrelationFilterData((prev) => ({ ...prev, [name]: value }));
   };
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response: any = await axios.get(BODY_PARAMS_URL);
-        setParams(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
 
   const generateCorrelationPlot = async () => {
     setCorrelationStatus(requestStatus.isLoading);
@@ -107,7 +93,7 @@ const AnalyticsCorrelation = ({ filterData }: any) => {
         <Combobox
           name={"correlationVariable1"}
           label={"First Variable"}
-          array={transformObject(params.indic)}
+          array={transformObject(params?.indic)}
           state={{
             value: correlationFilterData.correlationVariable1,
             setValue: handleChange,
@@ -116,7 +102,7 @@ const AnalyticsCorrelation = ({ filterData }: any) => {
         <Combobox
           name={"correlationVariable2"}
           label={"Second Variable"}
-          array={transformObject(params.indic)}
+          array={transformObject(params?.indic)}
           state={{
             value: correlationFilterData.correlationVariable2,
             setValue: handleChange,
@@ -141,7 +127,7 @@ const AnalyticsCorrelation = ({ filterData }: any) => {
       )}
 
       {isError(correlationStatus) && (
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-10">
           <Alert className="lg:w-3/4" variant="destructive">
             <AlertCircle className="h-5 w-5 mt-1" />
             <AlertTitle className="text-lg">API Error !</AlertTitle>

@@ -26,7 +26,7 @@ import Highcharts from "highcharts/highmaps";
 import HighchartsReact from "highcharts-react-official";
 import { Input } from "./ui/input";
 import { DatePickerWithRange } from "./date-range-picker";
-import { DateRange, District } from "@/types";
+import { DateRange, District, FilterData } from "@/types";
 import { countries } from "@/constants";
 import bodyParams from "../data/body_params.json";
 import { useLocation } from "react-router-dom";
@@ -34,15 +34,14 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import HelpHoverCard from "./help-hover-card";
+import FilterComponent from "./filter.component";
 
 const PredictiveToolsFilter = () => {
   const location = useLocation();
   const data = location.state;
 
   const [params, setParams] = useState<any>(bodyParams);
-  const [independentVariablesList, setIndependentVariablesList] = useState<any>(
-    []
-  );
+
   const [persistentVariables, setPersistenVariables] = useState<any>([]);
   const [
     linearPredictionInputFieldValues,
@@ -57,10 +56,11 @@ const PredictiveToolsFilter = () => {
     useState(false);
 
   const [dependentVariable, setDependentVariable] = useState("");
-  const [independentVariables, setIndependentVariables] = useState<any>([]);
+  const [independentVariables, setIndependentVariables] = useState<Array<any>>(
+    []
+  );
   const [source, setSource] = useState("");
   const [districtValue, setDistrictValue] = useState("");
-  const [districtList, setDistrictList] = useState([{}]);
   const [countryValue, setCountryValue] = useState("");
   const [periodValue, setPeriodValue] = useState("");
 
@@ -74,9 +74,23 @@ const PredictiveToolsFilter = () => {
 
   const [selected, setSelected] = useState<any>([]);
 
+  const [filterData, setFilterData] = useState<FilterData>({
+    dependentVariable: "",
+    independentVariables: [],
+    source: "",
+    districtValue: "",
+    countryValue: "",
+    periodValue: "",
+    dateRange: {},
+    districtList: [],
+  });
+
+  const handleChange = (name: string, value: string | []) => {
+    setFilterData((prev: any) => ({ ...prev, [name]: value }));
+  };
+
   const verifyFilters = () => {
     return (
-      independentVariables.length > 0 &&
       dependentVariable !== "" &&
       source !== "" &&
       periodValue !== "" &&
@@ -102,16 +116,6 @@ const PredictiveToolsFilter = () => {
   }, []);
 
   useEffect(() => {
-    const newVariables = transformObject(params?.indic).filter(
-      (e) =>
-        e.value !== dependentVariable &&
-        e.value !== "rainfall_deviation" &&
-        !independentVariables.includes(e.value)
-    );
-    setIndependentVariablesList(newVariables);
-  }, [dependentVariable]);
-
-  useEffect(() => {
     (async () => {
       try {
         const response: any = await axios.get(
@@ -125,14 +129,7 @@ const PredictiveToolsFilter = () => {
     })();
   }, []);
 
-  useEffect(() => {
-    const districtsData = params.district.filter(
-      (e: District) => e.country === countryValue
-    );
-    setDistrictList(districtsData);
-  }, [countryValue]);
-
-  const handleChange = (index: number, event: any) => {
+  const handlePredictiveValueChange = (index: number, event: any) => {
     const values = [...linearPredictionInputFieldValues];
     values[index].value = event.target.value;
     setLinearPredictionInputFieldValues(values);
@@ -203,160 +200,15 @@ const PredictiveToolsFilter = () => {
 
   return (
     <div className="sm:p-10 p-4">
-      <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold">Dependent Variable</Label>
-            <HelpHoverCard
-              title={"Dependent Variable"}
-              content={`A single climate variable used to compare against other climate
-              variables.`}
-            />
-          </div>
-          <Combobox
-            label={"Dependent Variable"}
-            array={transformObject(params?.indic).filter(
-              (e) =>
-                e.value !== "rainfall_deviation" &&
-                e.value !== "el_nino" &&
-                !independentVariables?.includes(e.value)
-            )}
-            state={{
-              value: dependentVariable,
-              setValue: setDependentVariable,
-            }}
-          />
-        </div>
+      <FilterComponent
+        params={params}
+        filterData={filterData}
+        handleChange={handleChange}
+        selected={selected}
+        setSelected={setSelected}
+        filterType="predictive"
+      />
 
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold">Independent Variables</Label>
-            <HelpHoverCard
-              title={"Independent Variables"}
-              content={`One or more climate variables that will be compared against
-                  the Dependent variable.`}
-            />
-          </div>
-          <FancyMultiSelect
-            selected={selected}
-            setSelected={setSelected}
-            setState={setIndependentVariables}
-            array={independentVariablesList}
-          />
-        </div>
-
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="font-semibold">Start and End date</Label>
-            <HelpHoverCard
-              title={"Start and End date"}
-              content={`The specific date range that you'd like to be analyzed.`}
-            />
-          </div>
-          <DatePickerWithRange
-            date={dateRange}
-            setDate={setDateRange}
-            min={0}
-            max={0}
-          />
-        </div>
-
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> Period </Label>
-            <HelpHoverCard
-              title={" Period "}
-              content={` The period between each date that you want to analyze. `}
-            />
-          </div>
-          <Combobox
-            label={"Period"}
-            array={transformObject(params?.period)}
-            state={{
-              value: periodValue,
-              setValue: setPeriodValue,
-            }}
-          />
-        </div>
-      </div>
-      <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> Source </Label>
-            <HelpHoverCard
-              title={" Source "}
-              content={` The source of dataset that you want to use for the current
-              analysis. `}
-            />
-          </div>
-          <Combobox
-            label={"Source"}
-            array={transformSourceObject(params?.source)}
-            state={{
-              value: source,
-              setValue: setSource,
-            }}
-          />
-        </div>
-
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> Country </Label>
-            <HelpHoverCard
-              title={" Country "}
-              content={` The country of chosen location that you'd like to analyze. `}
-            />
-          </div>
-          <Combobox
-            label={"Country"}
-            array={countries}
-            state={{
-              value: countryValue,
-              setValue: setCountryValue,
-            }}
-          />
-        </div>
-
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> District </Label>
-            <HelpHoverCard
-              title={" District "}
-              content={`  The specific district of the chosen country to be used for the
-              analysis. `}
-            />
-          </div>
-          <Combobox
-            label={"District"}
-            array={transformDistrictParams(districtList)}
-            state={{
-              value: districtValue,
-              setValue: setDistrictValue,
-            }}
-          />
-        </div>
-
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> Predictive model type</Label>
-            <HelpHoverCard
-              title={" Predictive model type"}
-              content={` The model type you would like to generate for the prediction (Linear or Logistic). `}
-            />
-          </div>
-          <Combobox
-            label={"Predictive model"}
-            array={[
-              { value: "linear", label: "Linear" },
-              { value: "logistic", label: "Logistic" },
-            ]}
-            state={{
-              value: modelType,
-              setValue: setModelType,
-            }}
-          />
-        </div>
-      </div>
       <div className="md:mt-12 w-full">
         <HoverCard>
           <HoverCardTrigger className="w-full flex justify-center">
@@ -516,7 +368,9 @@ const PredictiveToolsFilter = () => {
                   className="mt-2"
                   id="rainfall"
                   type="number"
-                  onChange={(event) => handleChange(index, event)}
+                  onChange={(event) =>
+                    handlePredictiveValueChange(index, event)
+                  }
                 />
               </div>
             ))}

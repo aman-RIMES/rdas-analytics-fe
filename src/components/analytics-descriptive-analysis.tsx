@@ -80,7 +80,7 @@ const DescriptiveAnalysis = ({ filterData }: FilterProps) => {
         </div>
       )}
       {isError(descriptiveAnalysisStatus) && (
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-10">
           <Alert className="lg:w-3/4" variant="destructive">
             <AlertCircle className="h-5 w-5 mt-1" />
             <AlertTitle className="text-lg">API Error !</AlertTitle>

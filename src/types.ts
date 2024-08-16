@@ -79,6 +79,8 @@ export interface FilterData {
   countryValue: string;
   periodValue: string;
   dateRange: any;
+  districtList: District[];
+  modelType?: string;
 }
 
 export interface CorrelationFilterData {
@@ -92,4 +94,5 @@ export interface FilterProps {
   selected?: [];
   setSelected?: any;
   params?: any;
+  filterType?: string;
 }
