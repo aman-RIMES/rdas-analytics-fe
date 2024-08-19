@@ -1,10 +1,10 @@
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highmaps";
 import { AlertCircle } from "lucide-react";
-import React from "react";
-import Leaflet from "./leaflet";
-import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
+import Leaflet from "../leaflet";
+import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
 import { isError, isFinished, isLoading } from "@/lib/utils";
+import { AnalyticsDataProps } from "@/types";
 
 const AnalyticsData = ({
   timeSeriesChartData,
@@ -12,7 +12,7 @@ const AnalyticsData = ({
   dynamicMapData,
   dynamicChartStatus,
   dynamiMapStatus,
-}: any) => {
+}: AnalyticsDataProps) => {
   return (
     <div className="mt-10">
       {isLoading(dynamicChartStatus) && (

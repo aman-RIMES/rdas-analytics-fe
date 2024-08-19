@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Combobox from "./ui/combobox";
+import Combobox from "../ui/combobox";
 import {
   transformObject,
   formatDate,
@@ -10,8 +10,8 @@ import {
 import { AlertCircle } from "lucide-react";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highmaps";
-import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
-import { Button } from "./ui/button";
+import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
+import { Button } from "../ui/button";
 import axios from "axios";
 import { requestStatus } from "@/constants";
 import { CorrelationFilterData, FilterData, FilterProps } from "@/types";
@@ -46,13 +46,6 @@ const AnalyticsCorrelation = ({ filterData, params }: FilterProps) => {
           district: filterData.districtValue,
           start: formatDate(filterData.dateRange?.from),
           end: formatDate(filterData.dateRange?.to),
-
-          // source: "ERA5",
-          // indic: "rainfall,el_nino,normal_rainfall",
-          // period: "annual",
-          // district: "NPL_33",
-          // start: "2015-10-12",
-          // end: "2021-10-12",
         }
       );
       const regressionModelData = await axios.post(
@@ -64,13 +57,6 @@ const AnalyticsCorrelation = ({ filterData, params }: FilterProps) => {
           district: filterData.districtValue,
           start: formatDate(filterData.dateRange?.from),
           end: formatDate(filterData.dateRange?.to),
-
-          // source: "ERA5",
-          // indic: "rainfall,el_nino,normal_rainfall",
-          // period: "annual",
-          // district: "NPL_33",
-          // start: "2015-10-12",
-          // end: "2021-10-12",
         }
       );
       setRegressionModelChartData(regressionModelData.data);

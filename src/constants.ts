@@ -1,12 +1,18 @@
 import { Icons } from "./components/ui/icons";
-import { Country } from "./types";
+import { Country, YearsList } from "./types";
 
 export const BODY_PARAMS_URL = "http://203.156.108.67:1580/body_params";
 
 export enum requestStatus {
+  idle = "",
   isLoading = "LOADING",
   isFinished = "FINISHED",
   isError = "ERROR",
+}
+
+export enum predictiveModelDataType {
+  linear = "LINEAR",
+  logistic = "LOGISTIC",
 }
 
 export const menus = [
@@ -149,7 +155,7 @@ export const menus = [
   },
 ];
 
-export const yearsList = [
+export const yearsList: YearsList[] = [
   {
     value: 2000,
     label: "2000",

@@ -1,5 +1,3 @@
-"use client";
-
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/ui/icons";
 import { NavLink, useLocation } from "react-router-dom";

@@ -1,4 +1,4 @@
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import {
   Table,
   TableBody,
@@ -6,7 +6,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./ui/table";
+} from "../ui/table";
 import {
   formatDate,
   formatTitle,
@@ -17,7 +17,7 @@ import {
 import Highcharts from "highcharts/highmaps";
 import HighchartsReact from "highcharts-react-official";
 import { AlertCircle } from "lucide-react";
-import { Alert, AlertTitle, AlertDescription } from "./ui/alert";
+import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
 import { useState } from "react";
 import { FilterProps } from "@/types";
 import axios from "axios";
@@ -44,13 +44,6 @@ const DescriptiveAnalysis = ({ filterData }: FilterProps) => {
           start: formatDate(filterData.dateRange?.from),
           end: formatDate(filterData.dateRange?.to),
           indic_0: filterData.dependentVariable,
-          // source: "ERA5",
-          // indic: "rainfall,normal_rainfall",
-          // period: "annual",
-          // district: "NPL_33",
-          // start: "2015-10-12",
-          // end: "2021-10-12",
-          // indic_0: "el_nino",
         }
       );
       setDescriptiveAnalysisData(response.data);
@@ -65,7 +58,6 @@ const DescriptiveAnalysis = ({ filterData }: FilterProps) => {
     <>
       <div className="flex justify-center mt-16">
         <Button
-          // "link" | "default" | "destructive" | "outline" | "secondary" | "ghost"
           variant={"outline"}
           className="text-sm px-10 border-black"
           onClick={generateDescriptionAnalysis}

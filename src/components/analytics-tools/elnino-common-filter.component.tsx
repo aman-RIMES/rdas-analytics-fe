@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
-import { Label } from "./ui/label";
+import { useEffect } from "react";
+import { Label } from "../ui/label";
 import { countries } from "@/constants";
 import {
   transformObject,
   transformSourceObject,
   transformDistrictParams,
 } from "@/lib/utils";
-import { DatePickerWithRange } from "./date-range-picker";
-import HelpHoverCard from "./help-hover-card";
-import Combobox from "./ui/combobox";
-import { FancyMultiSelect } from "./ui/multiselect";
+import { DatePickerWithRange } from "../date-range-picker";
+import HelpHoverCard from "../help-hover-card";
+import Combobox from "../ui/combobox";
+import { FancyMultiSelect } from "../ui/multiselect";
 import { District, FilterProps } from "@/types";
 
-const FilterComponent = ({
+const ElNinoCommonFilter = ({
   params,
   filterData,
   handleChange,
@@ -204,4 +204,4 @@ const FilterComponent = ({
   );
 };
 
-export default FilterComponent;
+export default ElNinoCommonFilter;

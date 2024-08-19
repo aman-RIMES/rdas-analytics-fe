@@ -1,21 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BODY_PARAMS_URL, menus, requestStatus } from "@/constants";
 import { useNavigate, useParams } from "react-router-dom";
-import NotFoundPage from "./404-page";
+import NotFoundPage from "../404-page";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FilterData } from "@/types";
 import { formatDate, getAllDistrictsOfCountry, isFinished } from "@/lib/utils";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import AnalyticsCorrelation from "./analytics-correlation";
 import DescriptiveAnalysis from "./analytics-descriptive-analysis";
-import AnalyticsData from "./analytics-data.component";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
+import AnalyticsData from "./analytics-data";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "../ui/hover-card";
 import { AlertCircle } from "lucide-react";
-import FilterComponent from "./filter.component";
-import bodyParams from "../data/body_params.json";
+import bodyParams from "../../data/body_params.json";
+import ElNinoCommonFilter from "./elnino-common-filter.component";
 
-//TODO: Replace all unknown/any types with their corresponding types/interfaces
 const ElNinoAnalytics = () => {
   const { topic } = useParams();
   const subject: any = menus.find(
@@ -26,10 +29,14 @@ const ElNinoAnalytics = () => {
   const navigate = useNavigate();
 
   const [params, setParams] = useState<any>(bodyParams);
-  const [dynamicChartStatus, setDynamicChartStatus] = useState<requestStatus>();
-  const [dynamiMapStatus, setDynamiMapStatus] = useState<requestStatus>();
+  const [dynamicChartStatus, setDynamicChartStatus] = useState<requestStatus>(
+    requestStatus.idle
+  );
+  const [dynamiMapStatus, setDynamiMapStatus] = useState<requestStatus>(
+    requestStatus.idle
+  );
   const [timeSeriesChartData, setTimeSeriesChartData] = useState<any>({});
-  const [dynamiMapData, setDynamicMapData] = useState<any>({});
+  const [dynamicMapData, setDynamicMapData] = useState<any>({});
   const [selected, setSelected] = useState<[]>([]);
 
   const [filterData, setFilterData] = useState<FilterData>({
@@ -50,7 +57,7 @@ const ElNinoAnalytics = () => {
 
   const verifyFilters = () => {
     return (
-      filterData.independentVariables.length > 0 &&
+      filterData.independentVariables?.length > 0 &&
       filterData.dependentVariable !== "" &&
       filterData.source !== "" &&
       filterData.periodValue !== "" &&
@@ -87,13 +94,6 @@ const ElNinoAnalytics = () => {
           district: filterData.districtValue,
           start: formatDate(filterData.dateRange?.from),
           end: formatDate(filterData.dateRange?.to),
-
-          // source: "ERA5",
-          // indic: "rainfall,el_nino,normal_rainfall",
-          // period: "annual",
-          // district: "NPL_04",
-          // start: "2015-10-12",
-          // end: "2021-10-12",
         }
       );
 
@@ -117,13 +117,6 @@ const ElNinoAnalytics = () => {
           ),
           start: formatDate(filterData.dateRange?.from),
           end: formatDate(filterData.dateRange?.to),
-
-          // source: "ERA5",
-          // indic: "rainfall_deviation",
-          // period: "annual",
-          // district: "NPL_33",
-          // start: "2015-10-12",
-          // end: "2021-10-12",
         }
       );
       setDynamicMapData(geoJson.data);
@@ -142,7 +135,7 @@ const ElNinoAnalytics = () => {
 
       <div className="my-10 border rounded-lg">
         <div className="sm:p-10 p-4">
-          <FilterComponent
+          <ElNinoCommonFilter
             params={params}
             filterData={filterData}
             handleChange={handleChange}
@@ -182,7 +175,7 @@ const ElNinoAnalytics = () => {
             <AnalyticsData
               timeSeriesChartData={timeSeriesChartData}
               countryValue={filterData.countryValue}
-              dynamicMapData={dynamiMapData}
+              dynamicMapData={dynamicMapData}
               dynamicChartStatus={dynamicChartStatus}
               dynamiMapStatus={dynamiMapStatus}
             />
