@@ -78,7 +78,7 @@ export default function NavBar() {
                   buttonVariants({
                     variant: "ghost",
                   }),
-                  "w-9 px-0 bg-yellow-300"
+                  "w-9 px-0 bg-yellow-300 hover:bg-yellow-100"
                 )}
               >
                 <Icons.notification />

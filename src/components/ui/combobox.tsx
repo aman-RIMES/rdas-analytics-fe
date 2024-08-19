@@ -15,7 +15,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { CommandList } from "cmdk";
-import { Label } from "@radix-ui/react-dropdown-menu";
 import { ScrollArea } from "./scroll-area";
 
 function Combobox({ array, state, label, name }: any) {
@@ -42,9 +41,8 @@ function Combobox({ array, state, label, name }: any) {
             <CommandInput placeholder="Search ..." />
             <CommandEmpty>{`No ${label} found`}</CommandEmpty>
             <CommandGroup>
-              {/* <ScrollArea className="h-72 w-48 rounded-md border"> */}
               <ScrollArea className="">
-                <CommandList className="max-h-72">
+                <CommandList className="max-h-48">
                   {array.map((framework: any) => (
                     <CommandItem
                       key={Math.random()}

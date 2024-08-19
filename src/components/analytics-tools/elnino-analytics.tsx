@@ -10,14 +10,9 @@ import { Button } from "../ui/button";
 import AnalyticsCorrelation from "./analytics-correlation";
 import DescriptiveAnalysis from "./analytics-descriptive-analysis";
 import AnalyticsData from "./analytics-data";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "../ui/hover-card";
-import { AlertCircle } from "lucide-react";
 import bodyParams from "../../data/body_params.json";
 import ElNinoCommonFilter from "./elnino-common-filter.component";
+import SubmitButton from "../submit-button";
 
 const ElNinoAnalytics = () => {
   const { topic } = useParams();
@@ -126,47 +121,28 @@ const ElNinoAnalytics = () => {
 
   return (
     <>
-      <div className="flex flex-col text-center items-center justify-center gap-3 mb-7">
-        <h1 className="text-3xl">{subject.category}</h1>
-        {/* <h1 className="text-2xl">{subject.title}</h1> */}
+      <div className="flex justify-center">
+        <h1 className="text-4xl font-bold">{subject.category}</h1>
       </div>
 
-      <div className="my-10 border rounded-lg">
-        <div className="sm:p-10 p-4">
-          <ElNinoCommonFilter
-            params={params}
-            filterData={filterData}
-            handleChange={handleChange}
-            selected={selected}
-            setSelected={setSelected}
-            filterType="analytics"
-          />
+      <div className="mb-10 mt-5">
+        <div className="">
+          <div className="sm:p-10 p-4 rounded-lg bg-yellow-50 shadow-lg">
+            <ElNinoCommonFilter
+              params={params}
+              filterData={filterData}
+              handleChange={handleChange}
+              selected={selected}
+              setSelected={setSelected}
+              filterType="analytics"
+            />
 
-          <div className="md:mt-12 w-full">
-            <HoverCard>
-              <HoverCardTrigger className="w-full flex justify-center">
-                <Button
-                  className="md:w-1/3 w-full"
-                  disabled={!verifyFilters()}
-                  onClick={generateDynamicChart}
-                >
-                  Start Analysis
-                </Button>
-              </HoverCardTrigger>
-              {!verifyFilters() && (
-                <HoverCardContent className="flex flex-col">
-                  <div className="flex items-center gap-1">
-                    <AlertCircle className="h-5 w-5" />
-                    <span className="text-md font-semibold">
-                      Invalid Input!
-                    </span>
-                  </div>
-                  <p className="text-md">
-                    Make sure you've filled every field above.
-                  </p>
-                </HoverCardContent>
-              )}
-            </HoverCard>
+            <div className="md:mt-12 w-full">
+              <SubmitButton
+                verifyFilters={verifyFilters()}
+                submitFunction={generateDynamicChart}
+              />
+            </div>
           </div>
 
           <div className="mb-10">

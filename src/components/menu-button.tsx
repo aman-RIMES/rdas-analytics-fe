@@ -15,13 +15,12 @@ export const MenuButton = ({ url, icon, title }: any) => {
   return (
     <Button
       variant="ghost"
-      className={
-        cn(
-          location.pathname === "/predictive-tools/"
-            ? "bg-red-400"
-            : "bg-blue-200"
-        ) + "w-full justify-between hover:bg-yellow-300"
-      }
+      className={cn(
+        location.pathname === url
+          ? "bg-yellow-300 text-gray-800 hover:bg-yellow-300"
+          : "hover:bg-lime-100",
+        "w-full justify-between "
+      )}
       onClick={() => navigate(url)}
     >
       <div className="flex items-center">
