@@ -85,5 +85,6 @@ export const calculateLinearPredictiveValue = (
   fields.map((e: any, index: any) => {
     sum += parseInt(e) * coeff[index];
   });
+
   return sum + intercept;
 };
