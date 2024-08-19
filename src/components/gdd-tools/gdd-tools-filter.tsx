@@ -18,6 +18,7 @@ import { Crop, GDDFilterProps } from "@/types";
 import HelpHoverCard from "../help-hover-card";
 import { yearsList } from "@/constants";
 import { DatePickerWithRange } from "../date-range-picker";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 const GDDToolsFilter = ({ filterData, handleChange }: GDDFilterProps) => {
   const [crops, setCrops] = useState<Crop[]>([]);
@@ -169,7 +170,7 @@ const GDDToolsFilter = ({ filterData, handleChange }: GDDFilterProps) => {
         </div>
       </div>
 
-      <div className="grid gap-4 mb-6 md:grid-cols-2 xl:grid-cols-4 grid-cols-1 justify-center">
+      <div className="grid gap-4 mb-6 md:grid-cols-2 xl:grid-cols-3 grid-cols-1 justify-center">
         <div>
           <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold"> Crop </Label>
@@ -188,29 +189,50 @@ const GDDToolsFilter = ({ filterData, handleChange }: GDDFilterProps) => {
             }}
           />
         </div>
-
         <div>
-          <div className="flex gap-2 ">
-            <Label className="font-semibold">Start and End date</Label>
-            <HelpHoverCard
-              title={"Start and End date"}
-              content={`The specific date range that you'd like to be analyzed.`}
+          <div>
+            <div className="flex gap-2 ">
+              <Label className="font-semibold">Start and End date</Label>
+              <HelpHoverCard
+                title={"Start and End date"}
+                content={`The specific date range that you'd like to be analyzed.`}
+              />
+            </div>
+            <DatePickerWithRange
+              name="dateRange"
+              disabledStatus={filterData.cropValue == ""}
+              date={filterData.dateRange}
+              setDate={handleChange}
+              min={
+                crops.find((e) => e?.crop_id == parseInt(filterData.cropValue))
+                  ?.min_period_days
+              }
+              max={
+                crops.find((e) => e?.crop_id == parseInt(filterData.cropValue))
+                  ?.max_period_days
+              }
             />
           </div>
-          <DatePickerWithRange
-            name="dateRange"
-            disabledStatus={filterData.cropValue == ""}
-            date={filterData.dateRange}
-            setDate={handleChange}
-            min={
-              crops.find((e) => e?.crop_id == parseInt(filterData.cropValue))
-                ?.min_period_days
-            }
-            max={
-              crops.find((e) => e?.crop_id == parseInt(filterData.cropValue))
-                ?.max_period_days
-            }
-          />
+          {filterData.cropValue !== "" && (
+            <div className="flex gap-2  mt-2">
+              <InfoCircledIcon className="h-7 w-7" />
+              <p className="text-sm">
+                Please choose a minimum of{" "}
+                {
+                  crops.find(
+                    (e) => e?.crop_id == parseInt(filterData.cropValue)
+                  )?.min_period_days
+                }{" "}
+                and a maximum of{" "}
+                {
+                  crops.find(
+                    (e) => e?.crop_id == parseInt(filterData.cropValue)
+                  )?.max_period_days
+                }{" "}
+                days .
+              </p>
+            </div>
+          )}
         </div>
 
         <div>

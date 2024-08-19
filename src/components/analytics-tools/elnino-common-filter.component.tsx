@@ -1,23 +1,16 @@
 import { useEffect } from "react";
-import { Label } from "../ui/label";
-import { countries } from "@/constants";
-import {
-  transformObject,
-  transformSourceObject,
-  transformDistrictParams,
-} from "@/lib/utils";
-import { DatePickerWithRange } from "../date-range-picker";
+import { countries, ElNinoVariables, elNinoYearsList } from "@/constants";
+import { transformObject, transformSourceObject } from "@/lib/utils";
 import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
-import { FancyMultiSelect } from "../ui/multiselect";
 import { District, FilterProps } from "@/types";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
+import { Label } from "@radix-ui/react-dropdown-menu";
 
 const ElNinoCommonFilter = ({
   params,
   filterData,
   handleChange,
-  selected,
-  setSelected,
   filterType,
 }: FilterProps) => {
   useEffect(() => {
@@ -32,21 +25,18 @@ const ElNinoCommonFilter = ({
       <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
         <div>
           <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold">Dependent Variable</Label>
+            <Label className="mb-2 font-semibold">Climate Variable</Label>
             <HelpHoverCard
-              title={"Dependent Variable"}
-              content={`A single climate variable used to compare against other climate
-              variables.`}
+              title={"Climate Variable"}
+              content={`A single climate variable used to compare against an El Nino
+              variable.`}
             />
           </div>
           <Combobox
             name="dependentVariable"
-            label={"Dependent Variable"}
-            array={transformObject(params?.indic).filter(
-              (e) =>
-                e.value !== "rainfall_deviation" &&
-                e.value !== "el_nino" &&
-                !filterData.independentVariables.includes(e.value)
+            label={"Climate Variable"}
+            array={transformObject(ElNinoVariables).filter(
+              (e) => e.value !== "el_nino"
             )}
             state={{
               value: filterData.dependentVariable,
@@ -54,66 +44,81 @@ const ElNinoCommonFilter = ({
             }}
           />
         </div>
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold">Independent Variables</Label>
-            <HelpHoverCard
-              title={"Independent Variables"}
-              content={`One or more climate variables that will be compared against
-                  the Dependent variable.`}
-            />
-          </div>
-          <FancyMultiSelect
-            name="independentVariables"
-            selected={selected}
-            setSelected={setSelected}
-            setState={handleChange}
-            array={transformObject(params?.indic).filter(
-              (e) =>
-                e.value !== filterData.dependentVariable &&
-                e.value !== "rainfall_deviation" &&
-                !filterData.independentVariables.includes(e.value)
-            )}
-          />
-        </div>
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="font-semibold">Start and End date</Label>
-            <HelpHoverCard
-              title={"Start and End date"}
-              content={`The specific date range that you'd like to be analyzed.`}
-            />
-          </div>
-          <DatePickerWithRange
-            name="dateRange"
-            date={filterData.dateRange}
-            setDate={handleChange}
-            min={0}
-            max={0}
-          />
-        </div>
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> Period </Label>
-            <HelpHoverCard
-              title={" Period "}
-              content={` The period between each date that you want to analyze. `}
-            />
-          </div>
 
+        <div>
+          <div className="flex gap-2 ">
+            <Label className="mb-2 font-semibold">El Nino Variable</Label>
+            <HelpHoverCard
+              title={"El Nino Variable"}
+              content={`A single El Nino variable used to compare against a climate
+                variables.`}
+            />
+          </div>
           <Combobox
-            name="periodValue"
-            label={"Period"}
-            array={transformObject(params?.period)}
+            name="elNinoVariable"
+            label={"El Nino Variable"}
+            array={transformObject(ElNinoVariables).filter(
+              (e) => e.value === "el_nino"
+            )}
             state={{
-              value: filterData.periodValue,
+              value: filterData.elNinoVariable,
               setValue: handleChange,
             }}
           />
         </div>
-      </div>
 
-      <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
+        <div>
+          <div className="grid gap-4 md:grid-cols-2 grid-cols-1 justify-center">
+            <div>
+              <div className="flex gap-2 ">
+                <Label className="mb-2 font-semibold"> From Year </Label>
+                <HelpHoverCard
+                  title={" From Year "}
+                  content={` The beginning year for your analysis timeframe `}
+                />
+              </div>
+              <Combobox
+                name="fromYear"
+                label={"Year"}
+                array={elNinoYearsList().filter(
+                  (e) => parseInt(e.value) + 30 < new Date().getFullYear()
+                )}
+                state={{
+                  value: filterData.fromYear,
+                  setValue: handleChange,
+                }}
+              />
+            </div>
+
+            <div>
+              <div className="flex gap-2 ">
+                <Label className="mb-2 font-semibold"> To Year </Label>
+                <HelpHoverCard
+                  title={" To Year "}
+                  content={` The ending year for your analysis timeframe `}
+                />
+              </div>
+              <Combobox
+                name="toYear"
+                label={"Year"}
+                array={elNinoYearsList().filter(
+                  (e) => parseInt(e.value) - parseInt(filterData.fromYear) >= 30
+                )}
+                state={{
+                  value: filterData.toYear,
+                  setValue: handleChange,
+                }}
+              />
+            </div>
+          </div>
+          <div className="flex items-center gap-1  mt-1">
+            <InfoCircledIcon className="h-4 w-4" />
+            <p className="text-sm">
+              Please choose a minimum of 30 years timeframe.
+            </p>
+          </div>
+        </div>
+
         <div>
           <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold"> Source </Label>
@@ -133,7 +138,9 @@ const ElNinoCommonFilter = ({
             }}
           />
         </div>
+      </div>
 
+      <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
         <div>
           <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold"> Country </Label>
@@ -153,31 +160,10 @@ const ElNinoCommonFilter = ({
           />
         </div>
 
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> District </Label>
-            <HelpHoverCard
-              title={" District "}
-              content={`  The specific district of the chosen country to be used for the
-              analysis. `}
-            />
-          </div>
-          <Combobox
-            name="districtValue"
-            label={"District"}
-            array={transformDistrictParams(filterData?.districtList)}
-            state={{
-              value: filterData.districtValue,
-              setValue: handleChange,
-            }}
-          />
-        </div>
-
         {filterType === "predictive" && (
           <div>
             <div className="flex gap-2 ">
               <Label className="mb-2 font-semibold">
-                {" "}
                 Predictive model type
               </Label>
               <HelpHoverCard

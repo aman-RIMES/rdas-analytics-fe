@@ -28,7 +28,7 @@ function Combobox({ array, state, label, name }: any) {
             variant="outline"
             role="combobox"
             aria-expanded={state.open}
-            className=" justify-between"
+            className={cn(!state.value && "text-gray-500") + " justify-between"}
           >
             {state.value
               ? array.find((element: any) => element.value === state.value)

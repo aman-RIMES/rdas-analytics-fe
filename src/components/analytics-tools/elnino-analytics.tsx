@@ -5,7 +5,7 @@ import NotFoundPage from "../404-page";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FilterData } from "@/types";
-import { formatDate, getAllDistrictsOfCountry, isFinished } from "@/lib/utils";
+import { getAllDistrictsOfCountry, isFinished } from "@/lib/utils";
 import { Button } from "../ui/button";
 import AnalyticsCorrelation from "./analytics-correlation";
 import DescriptiveAnalysis from "./analytics-descriptive-analysis";
@@ -41,14 +41,12 @@ const ElNinoAnalytics = () => {
 
   const [filterData, setFilterData] = useState<FilterData>({
     dependentVariable: "",
-    independentVariables: [],
+    elNinoVariable: "",
     source: "",
-    districtValue: "",
     countryValue: "",
-    periodValue: "",
-    dateRange: {},
     districtList: [],
-    modelType: "",
+    fromYear: "",
+    toYear: "",
   });
 
   const handleChange = (name: string, value: string | []) => {
@@ -57,13 +55,11 @@ const ElNinoAnalytics = () => {
 
   const verifyFilters = () => {
     return (
-      filterData.independentVariables?.length > 0 &&
       filterData.dependentVariable !== "" &&
+      filterData.elNinoVariable !== "" &&
       filterData.source !== "" &&
-      filterData.periodValue !== "" &&
-      filterData.districtValue !== "" &&
-      formatDate(filterData.dateRange?.from) !== "" &&
-      formatDate(filterData.dateRange?.to) !== "" &&
+      filterData.fromYear !== "" &&
+      filterData.toYear !== "" &&
       filterData.countryValue !== ""
     );
   };
@@ -88,12 +84,14 @@ const ElNinoAnalytics = () => {
       const response = await axios.post(
         "http://203.156.108.67:1580/dynamic_charts",
         {
-          source: filterData.source,
-          indic: filterData.independentVariables.join(","),
-          period: filterData.periodValue,
-          district: filterData.districtValue,
-          start: formatDate(filterData.dateRange?.from),
-          end: formatDate(filterData.dateRange?.to),
+          source: "ERA5",
+          indic: filterData.dependentVariable,
+          period: "annual",
+          district: getAllDistrictsOfCountry(filterData?.districtList).join(
+            ","
+          ),
+          start: `${filterData.fromYear}-01-01`,
+          end: `${filterData.toYear}-01-01`,
         }
       );
 
@@ -109,14 +107,14 @@ const ElNinoAnalytics = () => {
       const geoJson = await axios.post(
         "http://203.156.108.67:1580/dynamic_map",
         {
-          source: filterData.source,
+          source: "ERA5",
           indic: "rainfall_deviation",
-          period: filterData.periodValue,
+          period: "annual",
           district: getAllDistrictsOfCountry(filterData?.districtList).join(
             ","
           ),
-          start: formatDate(filterData.dateRange?.from),
-          end: formatDate(filterData.dateRange?.to),
+          start: `${filterData.fromYear}-01-01`,
+          end: `${filterData.toYear}-01-01`,
         }
       );
       setDynamicMapData(geoJson.data);
@@ -130,7 +128,7 @@ const ElNinoAnalytics = () => {
     <>
       <div className="flex flex-col text-center items-center justify-center gap-3 mb-7">
         <h1 className="text-3xl">{subject.category}</h1>
-        <h1 className="text-2xl">{subject.title}</h1>
+        {/* <h1 className="text-2xl">{subject.title}</h1> */}
       </div>
 
       <div className="my-10 border rounded-lg">

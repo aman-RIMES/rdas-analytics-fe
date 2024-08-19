@@ -10,6 +10,7 @@ import {
 import {
   formatDate,
   formatTitle,
+  getAllDistrictsOfCountry,
   isError,
   isFinished,
   isLoading,
@@ -37,12 +38,14 @@ const DescriptiveAnalysis = ({ filterData }: FilterProps) => {
       const response = await axios.post(
         "http://203.156.108.67:1580/description_analysis",
         {
-          source: filterData.source,
-          indic: filterData.independentVariables.join(","),
-          period: filterData.periodValue,
-          district: filterData.districtValue,
-          start: formatDate(filterData.dateRange?.from),
-          end: formatDate(filterData.dateRange?.to),
+          source: "ERA5",
+          indic: "el_nino",
+          period: "annual",
+          district: getAllDistrictsOfCountry(filterData?.districtList).join(
+            ","
+          ),
+          start: `${filterData.fromYear}-01-01`,
+          end: `${filterData.toYear}-01-01`,
           indic_0: filterData.dependentVariable,
         }
       );

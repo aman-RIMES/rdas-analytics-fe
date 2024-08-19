@@ -74,6 +74,7 @@ export interface Country {
 
 export interface FilterData {
   dependentVariable?: string;
+  elNinoVariable?: string;
   independentVariables?: string[];
   source?: string;
   districtValue?: string;
@@ -86,6 +87,8 @@ export interface FilterData {
   tehsilValue?: string;
   cropValue?: string;
   yearsValue?: YearsList[];
+  fromYear?: string;
+  toYear?: string;
 }
 
 export interface CorrelationFilterData {

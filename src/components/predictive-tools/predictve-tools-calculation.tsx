@@ -1,30 +1,20 @@
-import { calculateLinearPredictiveValue, formatTitle } from "@/lib/utils";
+import { calculateLinearPredictiveValue } from "@/lib/utils";
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 
-const PredictiveCalculation = ({
-  regressionModelData,
-  persistentVariables,
-  linearPredictionInputFieldValues,
-  setLinearPredictionInputFieldValues,
-}: any) => {
+const PredictiveCalculation = ({ regressionModelData }: any) => {
   const [predictedValue, setPredictedValue] = useState("");
   const [showPredictedValue, setShowPredictedValue] = useState(false);
-
-  const handlePredictiveValueChange = (index: number, event: any) => {
-    const values = [...linearPredictionInputFieldValues];
-    values[index].value = event?.target?.value;
-    setLinearPredictionInputFieldValues(values);
-  };
+  const [elNinoCoefficient, setElNinoCoefficient] = useState("");
 
   const predictLinearValue = () => {
     const value = calculateLinearPredictiveValue(
-      linearPredictionInputFieldValues,
+      [elNinoCoefficient],
       regressionModelData.coefficients,
       regressionModelData.intercept
     );
-    setPredictedValue(value.toString());
+    setPredictedValue(value.toFixed(4));
     setShowPredictedValue(true);
   };
 
@@ -32,19 +22,17 @@ const PredictiveCalculation = ({
     <>
       <div className="flex flex-col justify-center items-center gap-5">
         <div className="flex flex-row mt-10 gap-5">
-          {persistentVariables.map((element: any, index: any) => (
-            <div key={element}>
-              <label className="text-lg font-medium" htmlFor="rainfall">
-                {formatTitle(element) + " value"}
-              </label>
-              <Input
-                className="mt-2"
-                id="rainfall"
-                type="number"
-                onChange={(event) => handlePredictiveValueChange(index, event)}
-              />
-            </div>
-          ))}
+          <div>
+            <label className="text-lg font-medium" htmlFor="rainfall">
+              El Nino Coefficient
+            </label>
+            <Input
+              className="mt-2"
+              id="rainfall"
+              type="number"
+              onChange={(e) => setElNinoCoefficient(e.target.value)}
+            />
+          </div>
         </div>
         <div className="flex flex-col w-80">
           <Button className="text-lg mt-2" onClick={predictLinearValue}>

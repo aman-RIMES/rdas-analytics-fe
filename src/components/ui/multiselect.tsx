@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
-
 import * as React from "react";
 import { X } from "lucide-react";
 
@@ -13,6 +11,7 @@ import {
 } from "@/components/ui/command";
 import { Command as CommandPrimitive } from "cmdk";
 import { useEffect, useState } from "react";
+import { ScrollArea } from "./scroll-area";
 
 type Indicator = Record<"value" | "label", string>;
 
@@ -112,30 +111,32 @@ export function FancyMultiSelect({
         <CommandList>
           {open && selectables.length > 0 ? (
             <div className="absolute top-0 z-10 w-full rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
-              <CommandGroup className="h-full overflow-auto">
-                {selectables.map((element: any) => {
-                  return (
-                    <CommandItem
-                      key={element.value}
-                      onMouseDown={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                      }}
-                      onSelect={() => {
-                        setInputValue("");
-                        setSelected((prev: any) => [...prev, element]);
-                        setSelectedAnswers((prev: any) => [
-                          ...prev,
-                          element.value,
-                        ]);
-                      }}
-                      className={"cursor-pointer"}
-                    >
-                      {element.label}
-                    </CommandItem>
-                  );
-                })}
-              </CommandGroup>
+              <ScrollArea className="h-72">
+                <CommandGroup className="h-full overflow-auto">
+                  {selectables.map((element: any) => {
+                    return (
+                      <CommandItem
+                        key={element.value}
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                        }}
+                        onSelect={() => {
+                          setInputValue("");
+                          setSelected((prev: any) => [...prev, element]);
+                          setSelectedAnswers((prev: any) => [
+                            ...prev,
+                            element.value,
+                          ]);
+                        }}
+                        className={"cursor-pointer"}
+                      >
+                        {element.label}
+                      </CommandItem>
+                    );
+                  })}
+                </CommandGroup>
+              </ScrollArea>
             </div>
           ) : null}
         </CommandList>

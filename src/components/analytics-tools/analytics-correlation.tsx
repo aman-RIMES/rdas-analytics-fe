@@ -6,6 +6,7 @@ import {
   isLoading,
   isError,
   isFinished,
+  getAllDistrictsOfCountry,
 } from "@/lib/utils";
 import { AlertCircle } from "lucide-react";
 import HighchartsReact from "highcharts-react-official";
@@ -13,8 +14,8 @@ import Highcharts from "highcharts/highmaps";
 import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
 import { Button } from "../ui/button";
 import axios from "axios";
-import { requestStatus } from "@/constants";
-import { CorrelationFilterData, FilterData, FilterProps } from "@/types";
+import { ElNinoVariables, requestStatus } from "@/constants";
+import { CorrelationFilterData, FilterProps } from "@/types";
 
 const AnalyticsCorrelation = ({ filterData, params }: FilterProps) => {
   const [correlationFilterData, setCorrelationFilterData] =
@@ -40,23 +41,27 @@ const AnalyticsCorrelation = ({ filterData, params }: FilterProps) => {
       const correlationData = await axios.post(
         "http://203.156.108.67:1580/correlation_plot",
         {
-          source: filterData.source,
+          source: "ERA5",
           indic: `${correlationFilterData.correlationVariable1},${correlationFilterData.correlationVariable2}`,
-          period: filterData.periodValue,
-          district: filterData.districtValue,
-          start: formatDate(filterData.dateRange?.from),
-          end: formatDate(filterData.dateRange?.to),
+          period: "annual",
+          district: getAllDistrictsOfCountry(filterData?.districtList).join(
+            ","
+          ),
+          start: `${filterData.fromYear}-01-01`,
+          end: `${filterData.toYear}-01-01`,
         }
       );
       const regressionModelData = await axios.post(
         "http://203.156.108.67:1580/regression_analysis",
         {
-          source: filterData.source,
+          source: "ERA5",
           indic: `${correlationFilterData.correlationVariable1},${correlationFilterData.correlationVariable2}`,
-          period: filterData.periodValue,
-          district: filterData.districtValue,
-          start: formatDate(filterData.dateRange?.from),
-          end: formatDate(filterData.dateRange?.to),
+          period: "annual",
+          district: getAllDistrictsOfCountry(filterData?.districtList).join(
+            ","
+          ),
+          start: `${filterData.fromYear}-01-01`,
+          end: `${filterData.toYear}-01-01`,
         }
       );
       setRegressionModelChartData(regressionModelData.data);
@@ -79,7 +84,9 @@ const AnalyticsCorrelation = ({ filterData, params }: FilterProps) => {
         <Combobox
           name={"correlationVariable1"}
           label={"First Variable"}
-          array={transformObject(params?.indic)}
+          array={transformObject(ElNinoVariables).filter(
+            (e: any) => e.value !== correlationFilterData.correlationVariable2
+          )}
           state={{
             value: correlationFilterData.correlationVariable1,
             setValue: handleChange,
@@ -88,7 +95,9 @@ const AnalyticsCorrelation = ({ filterData, params }: FilterProps) => {
         <Combobox
           name={"correlationVariable2"}
           label={"Second Variable"}
-          array={transformObject(params?.indic)}
+          array={transformObject(ElNinoVariables).filter(
+            (e: any) => e.value !== correlationFilterData.correlationVariable1
+          )}
           state={{
             value: correlationFilterData.correlationVariable2,
             setValue: handleChange,

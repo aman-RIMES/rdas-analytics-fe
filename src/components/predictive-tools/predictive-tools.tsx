@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import { formatDate, isFinished } from "@/lib/utils";
+import { formatDate, getAllDistrictsOfCountry, isFinished } from "@/lib/utils";
 import { Button } from "../ui/button";
 import axios from "axios";
 import { FilterData } from "@/types";
@@ -21,26 +21,19 @@ const PredictiveTools = () => {
   const location = useLocation();
   const data = location.state;
   const [params, setParams] = useState<any>(bodyParams);
-  const [persistentVariables, setPersistenVariables] = useState<any>([]);
-  const [
-    linearPredictionInputFieldValues,
-    setLinearPredictionInputFieldValues,
-  ] = useState<any>([]);
-  const [predictiveDataType, setPredictiveDataType] =
-    useState<predictiveModelDataType>();
+  const [predictiveDataType, setPredictiveDataType] = useState("");
   const [regressionModelStatus, setRegressionModelStatus] =
     useState<requestStatus>(requestStatus.idle);
   const [regressionModelData, setRegressionModelData] = useState<any>({});
   const [selected, setSelected] = useState<any>([]);
   const [filterData, setFilterData] = useState<FilterData>({
     dependentVariable: "",
-    independentVariables: [],
     source: "",
-    districtValue: "",
     countryValue: "",
-    periodValue: "",
-    dateRange: {},
     districtList: [],
+    fromYear: "",
+    toYear: "",
+    modelType: "",
   });
 
   const handleChange = (name: string, value: string | []) => {
@@ -49,29 +42,23 @@ const PredictiveTools = () => {
 
   const verifyFilters = () => {
     return (
-      filterData.independentVariables.length > 0 &&
       filterData.dependentVariable !== "" &&
+      filterData.elNinoVariable !== "" &&
       filterData.source !== "" &&
-      filterData.periodValue !== "" &&
-      filterData.districtValue !== "" &&
       filterData.countryValue !== "" &&
-      formatDate(filterData.dateRange?.from) !== "" &&
-      formatDate(filterData.dateRange?.to) !== "" &&
-      filterData.modelType !== ""
+      filterData.modelType !== "" &&
+      filterData.toYear !== "" &&
+      filterData.fromYear !== ""
     );
   };
 
   useEffect(() => {
+    handleChange("fromYear", data?.fromYear);
+    handleChange("toYear", data?.toYear);
     handleChange("countryValue", data?.countryValue);
     handleChange("source", data?.source);
-    data?.independentVariables
-      ? handleChange("independentVariables", data?.independentVariables)
-      : null;
-    data?.selected ? setSelected(data?.selected) : null;
     handleChange("dependentVariable", data?.dependentVariable);
-    handleChange("districtValue", data?.districtValue);
-    handleChange("dateRange", data?.dateRange);
-    handleChange("periodValue", data?.periodValue);
+    handleChange("elNinoVariable", data?.elNinoVariable);
   }, []);
 
   useEffect(() => {
@@ -89,33 +76,22 @@ const PredictiveTools = () => {
 
   const generateRegressionModel = async () => {
     setRegressionModelStatus(requestStatus.isLoading);
-    setLinearPredictionInputFieldValues([]);
     try {
       const response = await axios.post(
         "http://203.156.108.67:1580/prediction_model",
         {
-          source: filterData.source,
-          indic: filterData.independentVariables.join(","),
-          period: filterData.periodValue,
-          district: filterData.districtValue,
-          start: formatDate(filterData.dateRange?.from),
-          end: formatDate(filterData.dateRange?.to),
-          indic_0: filterData.dependentVariable,
+          source: "ERA5",
+          indic: filterData.dependentVariable,
+          period: "annual",
+          district: getAllDistrictsOfCountry(filterData.districtList).join(","),
+          start: `${filterData.fromYear}-01-01`,
+          end: `${filterData.toYear}-01-01`,
+          indic_0: "el_nino",
           model: filterData.modelType,
         }
       );
       setRegressionModelData(response.data);
-      setPersistenVariables(filterData.independentVariables);
-      filterData.modelType === "linear"
-        ? setPredictiveDataType(predictiveModelDataType.linear)
-        : setPredictiveDataType(predictiveModelDataType.logistic);
-      filterData.independentVariables.map((e: any) => {
-        linearPredictionInputFieldValues.push({ value: "" });
-        setLinearPredictionInputFieldValues((prev: any) => [
-          ...prev,
-          { value: "" },
-        ]);
-      });
+      setPredictiveDataType(filterData.modelType);
       setRegressionModelStatus(requestStatus.isFinished);
     } catch (error) {
       console.log(error);
@@ -177,13 +153,6 @@ const PredictiveTools = () => {
             predictiveDataType === predictiveModelDataType.linear && (
               <PredictiveCalculation
                 regressionModelData={regressionModelData}
-                persistentVariables={persistentVariables}
-                linearPredictionInputFieldValues={
-                  linearPredictionInputFieldValues
-                }
-                setLinearPredictionInputFieldValues={
-                  setLinearPredictionInputFieldValues
-                }
               />
             )}
         </div>

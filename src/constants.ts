@@ -11,8 +11,8 @@ export enum requestStatus {
 }
 
 export enum predictiveModelDataType {
-  linear = "LINEAR",
-  logistic = "LOGISTIC",
+  linear = "linear",
+  logistic = "logistic",
 }
 
 export const menus = [
@@ -62,7 +62,7 @@ export const menus = [
   },
   {
     id: 3,
-    category: "El Nino, Climate and Agriculture production",
+    category: "El Nino Analytics",
     title: "Analytics",
     datasets: [
       {
@@ -93,7 +93,7 @@ export const menus = [
   },
   {
     id: 4,
-    category: "El Nino, Climate and Agriculture production",
+    category: "El Nino Analytics",
     title: "Predictive Tools",
     datasets: [
       {
@@ -154,6 +154,14 @@ export const menus = [
     ],
   },
 ];
+
+export const elNinoYearsList = () => {
+  const list = [];
+  for (let i = 1950; i < new Date().getFullYear(); i++) {
+    list.push({ value: i.toString(), label: i.toString() });
+  }
+  return list;
+};
 
 export const yearsList: YearsList[] = [
   {
@@ -270,3 +278,9 @@ export const countries = [
     zoom: 6,
   },
 ];
+
+export const ElNinoVariables = {
+  rainfall: "Rainfall",
+  temperature: "Temperature",
+  el_nino: "El Nino Events",
+};
