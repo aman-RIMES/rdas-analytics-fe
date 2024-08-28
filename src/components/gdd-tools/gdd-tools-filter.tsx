@@ -19,8 +19,13 @@ import HelpHoverCard from "../help-hover-card";
 import { yearsList } from "@/constants";
 import { DatePickerWithRange } from "../date-range-picker";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
+import DatePicker from "../datepicker";
 
-const GDDToolsFilter = ({ filterData, handleChange }: GDDFilterProps) => {
+const GDDToolsFilter = ({
+  filterData,
+  handleChange,
+  dateRange,
+}: GDDFilterProps) => {
   const [crops, setCrops] = useState<Crop[]>([]);
   const [tehsils, setTehsils] = useState([{}]);
   const [districts, setDistricts] = useState([{}]);
@@ -29,9 +34,9 @@ const GDDToolsFilter = ({ filterData, handleChange }: GDDFilterProps) => {
   const [selected, setSelected] = useState([]);
 
   useEffect(() => {
-    const chosenYear = formatDate(filterData.dateRange?.from).slice(0, 4);
+    const chosenYear = formatDate(dateRange.startDate).slice(0, 4);
     setYears(yearsList.filter((e) => e.label !== chosenYear));
-  }, [filterData.dateRange]);
+  }, [dateRange.startDate]);
 
   useEffect(() => {
     (async () => {
@@ -170,7 +175,7 @@ const GDDToolsFilter = ({ filterData, handleChange }: GDDFilterProps) => {
         </div>
       </div>
 
-      <div className="grid gap-4 mb-6 md:grid-cols-2 xl:grid-cols-3 grid-cols-1 justify-center">
+      <div className="grid gap-4 mb-6 md:grid-cols-2 xl:grid-cols-4 grid-cols-1 justify-center">
         <div>
           <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold"> Crop </Label>
@@ -189,50 +194,39 @@ const GDDToolsFilter = ({ filterData, handleChange }: GDDFilterProps) => {
             }}
           />
         </div>
+        {/* //TODO: Datepicker should show selected date (if any) when popup shows, not current Date
+          //TODO: Set Min and Max days */}
         <div>
           <div>
             <div className="flex gap-2 ">
-              <Label className="font-semibold">Start and End date</Label>
+              <Label className="font-semibold">Start date</Label>
               <HelpHoverCard
-                title={"Start and End date"}
-                content={`The specific date range that you'd like to be analyzed.`}
+                title={"Start date"}
+                content={`The start date of the date range, you'd like to be analyzed.`}
               />
             </div>
-            <DatePickerWithRange
-              name="dateRange"
+            <DatePicker
               disabledStatus={filterData.cropValue == ""}
-              date={filterData.dateRange}
-              setDate={handleChange}
-              min={
-                crops.find((e) => e?.crop_id == parseInt(filterData.cropValue))
-                  ?.min_period_days
-              }
-              max={
-                crops.find((e) => e?.crop_id == parseInt(filterData.cropValue))
-                  ?.max_period_days
-              }
+              date={dateRange.startDate}
+              setDate={dateRange.setStartDate}
             />
           </div>
-          {filterData.cropValue !== "" && (
-            <div className="flex gap-2  mt-2">
-              <InfoCircledIcon className="h-7 w-7" />
-              <p className="text-sm">
-                Please choose a minimum of{" "}
-                {
-                  crops.find(
-                    (e) => e?.crop_id == parseInt(filterData.cropValue)
-                  )?.min_period_days
-                }{" "}
-                and a maximum of{" "}
-                {
-                  crops.find(
-                    (e) => e?.crop_id == parseInt(filterData.cropValue)
-                  )?.max_period_days
-                }{" "}
-                days .
-              </p>
+        </div>
+        <div>
+          <div>
+            <div className="flex gap-2 ">
+              <Label className="font-semibold">End date</Label>
+              <HelpHoverCard
+                title={"End date"}
+                content={`The end date range that you'd like to be analyzed.`}
+              />
             </div>
-          )}
+            <DatePicker
+              disabledStatus={filterData.cropValue == ""}
+              date={dateRange.endDate}
+              setDate={dateRange.setEndDate}
+            />
+          </div>
         </div>
 
         <div>
