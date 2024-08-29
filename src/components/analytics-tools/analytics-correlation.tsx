@@ -73,14 +73,14 @@ const AnalyticsCorrelation = ({ filterData, params }: FilterProps) => {
   };
 
   return (
-    <>
-      <div className="flex justify-center mt-10">
-        <h1 className="text-lg font-semibold">
-          View Correlation between two variables
+    <div className="sm:p-10 p-4 mt-10 rounded-lg bg-gray-50 shadow-lg">
+      <div className="flex justify-center mb-10">
+        <h1 className="text-xl font-semibold">
+          Correlation between two variables
         </h1>
       </div>
 
-      <div className="grid gap-4 mt-8 md:grid-cols-3 grid-cols-1 justify-center">
+      <div className="grid gap-4 my-8 md:grid-cols-3 grid-cols-1 justify-center">
         <Combobox
           name={"correlationVariable1"}
           label={"First Variable"}
@@ -108,7 +108,7 @@ const AnalyticsCorrelation = ({ filterData, params }: FilterProps) => {
             correlationFilterData.correlationVariable1 === "" ||
             correlationFilterData.correlationVariable2 === ""
           }
-          className="mt-8 md:mt-0"
+          className="mt-8 md:mt-0 bg-green-800 text-white hover:text-gray-800 hover:bg-yellow-300"
           onClick={generateCorrelationPlot}
         >
           Analyze Correlation
@@ -149,7 +149,7 @@ const AnalyticsCorrelation = ({ filterData, params }: FilterProps) => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

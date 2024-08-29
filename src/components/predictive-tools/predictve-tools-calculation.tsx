@@ -21,7 +21,10 @@ const PredictiveCalculation = ({ regressionModelData }: any) => {
   return (
     <>
       <div className="flex flex-col justify-center items-center gap-5">
-        <div className="flex flex-row mt-10 gap-5">
+        <div className="flex justify-center">
+          <h1 className="text-xl font-bold">Final Value Prediction</h1>
+        </div>
+        <div className="flex flex-row mt-5 gap-5">
           <div>
             <label className="text-lg font-medium" htmlFor="rainfall">
               El Nino Coefficient
@@ -35,7 +38,10 @@ const PredictiveCalculation = ({ regressionModelData }: any) => {
           </div>
         </div>
         <div className="flex flex-col w-80">
-          <Button className="text-lg mt-2" onClick={predictLinearValue}>
+          <Button
+            className="text-md mt-2 bg-green-800 text-white hover:text-gray-800 hover:bg-yellow-300"
+            onClick={predictLinearValue}
+          >
             Predict Value
           </Button>
         </div>
@@ -44,7 +50,7 @@ const PredictiveCalculation = ({ regressionModelData }: any) => {
       {showPredictedValue && (
         <>
           <div className="flex flex-col items-center justify-center mt-20 mb-20">
-            <p className="text-lg">Predicted Value</p>
+            <p className="text-lg">Final Predicted Value</p>
             <p className="text-8xl font-semibold mt-5">
               {parseInt(predictedValue).toFixed(2)}
             </p>

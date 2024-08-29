@@ -117,6 +117,7 @@ export interface PredictiveDataProps {
   regressionModelData: any;
   regressionModelStatus: requestStatus;
   predictiveDataType: any;
+  modelType: string;
 }
 
 export interface GDDDataProps {

@@ -8,7 +8,6 @@ import {
   TableRow,
 } from "../ui/table";
 import {
-  formatDate,
   formatTitle,
   getAllDistrictsOfCountry,
   isError,
@@ -19,10 +18,12 @@ import Highcharts from "highcharts/highmaps";
 import HighchartsReact from "highcharts-react-official";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FilterProps } from "@/types";
 import axios from "axios";
 import { requestStatus } from "@/constants";
+import { tailChase } from "ldrs";
+tailChase.register("l-tailchase");
 
 const DescriptiveAnalysis = ({ filterData }: FilterProps) => {
   const [descriptiveAnalysisStatus, setDescriptiveAnalysisStatus] =
@@ -30,6 +31,10 @@ const DescriptiveAnalysis = ({ filterData }: FilterProps) => {
   const [descriptiveAnalysisData, setDescriptiveAnalysisData] = useState<any>(
     {}
   );
+
+  useEffect(() => {
+    generateDescriptionAnalysis();
+  }, []);
 
   const generateDescriptionAnalysis = async () => {
     setDescriptiveAnalysisStatus(requestStatus.isLoading);
@@ -58,25 +63,26 @@ const DescriptiveAnalysis = ({ filterData }: FilterProps) => {
   };
 
   return (
-    <>
-      <div className="flex justify-center mt-16">
-        <Button
-          variant={"outline"}
-          className="text-sm px-10 border-black"
-          onClick={generateDescriptionAnalysis}
-        >
-          View Descriptive Analysis
-        </Button>
+    <div className="sm:p-10 p-4 mt-10 rounded-lg bg-gray-50 shadow-lg">
+      <div className="flex justify-center">
+        <h1 className="text-xl font-semibold">Descriptive Analysis</h1>
       </div>
 
       {isLoading(descriptiveAnalysisStatus) && (
-        <div className="my-20 flex justify-center">
-          <p className="text-xl">Loading Descriptive Analysis ....</p>
+        <div className="my-20  flex justify-center bg-transparent">
+          <div className="flex items-center justify-center gap-8 lg:w-2/4 border-lime-700 border rounded-xl p-5">
+            {/* @ts-ignore */}
+            <l-tailchase color="green" size="35"></l-tailchase>
+            <p className="text-2xl text-lime-700 font-medium">
+              Loading Descriptive Analysis
+            </p>
+          </div>
         </div>
       )}
+
       {isError(descriptiveAnalysisStatus) && (
-        <div className="flex justify-center mt-10">
-          <Alert className="lg:w-3/4" variant="destructive">
+        <div className="my-5 flex justify-center">
+          <Alert className="lg:w-2/4" variant="destructive">
             <AlertCircle className="h-5 w-5 mt-1" />
             <AlertTitle className="text-lg">API Error !</AlertTitle>
             <AlertDescription className="text-md">
@@ -90,8 +96,8 @@ const DescriptiveAnalysis = ({ filterData }: FilterProps) => {
 
       {isFinished(descriptiveAnalysisStatus) && (
         <>
-          <div className="flex md:flex-row flex-col justify-center xl:gap-40 items-center mt-20">
-            <div className="flex flex-col items-center justify-center">
+          <div className="flex 2xl:flex-row flex-col justify-center 2xl:gap-20 gap-10 items-center mt-10 w-full">
+            <div className="w-full flex flex-col items-center justify-center sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
               <p className="text-xl font-medium mb-5 ml-3">Head</p>
               <Table>
                 <TableHeader>
@@ -112,7 +118,7 @@ const DescriptiveAnalysis = ({ filterData }: FilterProps) => {
                 <TableBody>
                   {Object.keys(descriptiveAnalysisData?.head?.values).map(
                     (value: string) => (
-                      <TableRow>
+                      <TableRow key={value}>
                         <TableCell className="font-medium text-black">
                           {formatTitle(value)}
                         </TableCell>
@@ -131,7 +137,7 @@ const DescriptiveAnalysis = ({ filterData }: FilterProps) => {
               </Table>
             </div>
 
-            <div className="mt-5 md:mt-0 flex flex-col justify-center items-center">
+            <div className="w-full mt-5 md:mt-0 flex flex-col justify-center items-center sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
               <p className="text-xl font-medium mb-5  ml-3">
                 Data Availability
               </p>
@@ -176,7 +182,7 @@ const DescriptiveAnalysis = ({ filterData }: FilterProps) => {
             </div>
           </div>
 
-          <div className="flex flex-col items-center justify-center mt-10">
+          <div className="flex flex-col items-center justify-center mt-16 sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
             <p className="text-xl font-medium mb-10">Statistics</p>
             <Table>
               <TableHeader>
@@ -215,7 +221,7 @@ const DescriptiveAnalysis = ({ filterData }: FilterProps) => {
             </Table>
           </div>
 
-          <div className="mt-20">
+          <div className="mt-20 mb-10 sm:p-10 p-4 rounded-lg bg-white shadow-lg">
             <HighchartsReact
               highcharts={Highcharts}
               options={descriptiveAnalysisData?.correlation_matrix}
@@ -223,7 +229,7 @@ const DescriptiveAnalysis = ({ filterData }: FilterProps) => {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 };
 

@@ -7,15 +7,11 @@ import { FilterData } from "@/types";
 import { predictiveModelDataType, requestStatus } from "@/constants";
 import bodyParams from "../../data/body_params.json";
 import { useLocation } from "react-router-dom";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "../ui/hover-card";
 import PredictiveToolsData from "./predictive-tools-data";
 import PredictiveCalculation from "./predictve-tools-calculation";
 import { AlertCircle } from "lucide-react";
 import ElNinoCommonFilter from "../analytics-tools/elnino-common-filter.component";
+import SubmitButton from "../submit-button";
 
 const PredictiveTools = () => {
   const location = useLocation();
@@ -101,12 +97,12 @@ const PredictiveTools = () => {
 
   return (
     <>
-      <div className="flex flex-col text-center items-center justify-center gap-3 mb-7">
-        <h1 className="text-3xl">El Nino Predictive Tools</h1>
+      <div className="flex justify-center">
+        <h1 className="text-4xl font-bold">El Nino Predictive Tools</h1>
       </div>
 
-      <div className="my-10 border rounded-lg">
-        <div className="sm:p-10 p-4">
+      <div className="my-10">
+        <div className="sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
           <ElNinoCommonFilter
             params={params}
             filterData={filterData}
@@ -117,44 +113,33 @@ const PredictiveTools = () => {
           />
 
           <div className="md:mt-12 w-full">
-            <HoverCard>
-              <HoverCardTrigger className="w-full flex justify-center">
-                <Button
-                  className="md:w-1/3 w-full"
-                  disabled={!verifyFilters()}
-                  onClick={generateRegressionModel}
-                >
-                  Generate Predictive Model
-                </Button>
-              </HoverCardTrigger>
-              {!verifyFilters() && (
-                <HoverCardContent className="flex flex-col">
-                  <div className="flex items-center gap-1">
-                    <AlertCircle className="h-5 w-5" />
-                    <span className="text-md font-semibold">
-                      Invalid Input!
-                    </span>
-                  </div>
-                  <p className="text-md">
-                    Make sure you've filled every field above.
-                  </p>
-                </HoverCardContent>
-              )}
-            </HoverCard>
+            <SubmitButton
+              verifyFilters={verifyFilters()}
+              submitFunction={generateRegressionModel}
+              loadingStatus={regressionModelStatus}
+              label="Generate Predictive Model"
+            />
           </div>
-
+        </div>
+        <div>
           <PredictiveToolsData
             regressionModelStatus={regressionModelStatus}
             regressionModelData={regressionModelData}
             predictiveDataType={predictiveDataType}
+            modelType={filterData.modelType}
           />
 
-          {isFinished(regressionModelStatus) &&
-            predictiveDataType === predictiveModelDataType.linear && (
-              <PredictiveCalculation
-                regressionModelData={regressionModelData}
-              />
-            )}
+          {isFinished(regressionModelStatus) && (
+            <>
+              {predictiveDataType === predictiveModelDataType.linear && (
+                <div className="mt-10 sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
+                  <PredictiveCalculation
+                    regressionModelData={regressionModelData}
+                  />
+                </div>
+              )}
+            </>
+          )}
         </div>
       </div>
     </>

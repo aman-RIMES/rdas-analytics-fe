@@ -15,12 +15,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { CommandList } from "cmdk";
-import { Label } from "@radix-ui/react-dropdown-menu";
 import { ScrollArea } from "./scroll-area";
 
 function Combobox({ array, state, label, name }: any) {
   return (
-    <div className="flex flex-col justify-start gap-2">
+    <div className="flex flex-col justify-start gap-2 ">
       {/* <Label className="font-semibold">{label}</Label> */}
       <Popover open={state.open} onOpenChange={state.setOpen}>
         <PopoverTrigger asChild>
@@ -28,7 +27,10 @@ function Combobox({ array, state, label, name }: any) {
             variant="outline"
             role="combobox"
             aria-expanded={state.open}
-            className={cn(!state.value && "text-gray-500") + " justify-between"}
+            className={
+              cn(!state.value && "text-gray-500") +
+              " justify-between border-0 shadow-md"
+            }
           >
             {state.value
               ? array.find((element: any) => element.value === state.value)
@@ -42,9 +44,8 @@ function Combobox({ array, state, label, name }: any) {
             <CommandInput placeholder="Search ..." />
             <CommandEmpty>{`No ${label} found`}</CommandEmpty>
             <CommandGroup>
-              {/* <ScrollArea className="h-72 w-48 rounded-md border"> */}
               <ScrollArea className="">
-                <CommandList className="max-h-72">
+                <CommandList className="max-h-48">
                   {array.map((framework: any) => (
                     <CommandItem
                       key={Math.random()}

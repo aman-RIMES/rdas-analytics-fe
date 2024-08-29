@@ -10,9 +10,10 @@ import { Outlet, useLocation } from "react-router-dom";
 const Home = () => {
   const location = useLocation();
   return (
-    <>
-      <NavBar />
+    <div className="h-full w-full bg-green-50">
       <hr />
+      <NavBar />
+      {/* <hr /> */}
       <div className="sm:px-10 px-4 grid grid-cols-5">
         <div className="hidden lg:flex">
           <Sidebar />
@@ -30,7 +31,7 @@ const Home = () => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
