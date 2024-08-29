@@ -53,9 +53,10 @@ const Leaflet = ({ geoJsonData, country }: any) => {
     <div>
       <div className="">
         <MapContainer
+          //@ts-ignore
           center={subjectCountry?.coordinates}
           zoom={subjectCountry?.zoom}
-          scrollWheelZoom={true}
+          scrollWheelZoom={false}
         >
           {/* <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

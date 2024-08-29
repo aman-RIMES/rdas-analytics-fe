@@ -1,18 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AlertCircle } from "lucide-react";
 import GDDToolsFilter from "./gdd-tools-filter";
-import { Button } from "../ui/button";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "../ui/hover-card";
 import GDDToolsData from "./gdd-tools-data";
 import { requestStatus, yearsList } from "@/constants";
 import { useState } from "react";
 import { FilterData } from "@/types";
 import { formatDate } from "@/lib/utils";
 import axios from "axios";
+import SubmitButton from "../submit-button";
 
 const GDDPredictiveTools = () => {
   const [isNewAnalysis, setIsNewAnalysis] = useState(true);
@@ -70,43 +64,24 @@ const GDDPredictiveTools = () => {
   return (
     <>
       <div className="flex flex-col text-center items-center justify-center gap-3 mb-7">
-        <h1 className="text-3xl">GDD Analytical Tool</h1>
-        {/* <h1 className="text-2xl">GDD Predictive Tool</h1> */}
+        <h1 className="text-4xl font-bold">GDD Analytical Tool</h1>
       </div>
 
-      <div className="my-10 border rounded-lg">
-        <div className="sm:p-10 p-4">
+      <div className="my-10">
+        <div className="sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
           <GDDToolsFilter filterData={filterData} handleChange={handleChange} />
 
           <div className="md:mt-12 w-full">
-            <HoverCard>
-              <HoverCardTrigger className="w-full flex justify-center">
-                <Button
-                  onClick={generateGDD}
-                  className="md:w-1/3 w-full"
-                  disabled={!verifyFilters()}
-                >
-                  {isNewAnalysis ? "Start Analysis" : "Re-Analyze"}
-                </Button>
-              </HoverCardTrigger>
-              {!verifyFilters() && (
-                <HoverCardContent className="flex flex-col">
-                  <div className="flex items-center gap-1">
-                    <AlertCircle className="h-5 w-5" />
-                    <span className="text-md font-semibold">
-                      Invalid Input!
-                    </span>
-                  </div>
-                  <p className="text-md">
-                    Make sure you've filled every field above.
-                  </p>
-                </HoverCardContent>
-              )}
-            </HoverCard>
+            <SubmitButton
+              verifyFilters={verifyFilters}
+              submitFunction={generateGDD}
+              loadingStatus={gddStatus}
+              label={isNewAnalysis ? "Start Analysis" : "Re-Analyze"}
+            />
           </div>
-
-          <GDDToolsData gddData={gddData} gddStatus={gddStatus} />
         </div>
+
+        <GDDToolsData gddData={gddData} gddStatus={gddStatus} />
       </div>
     </>
   );

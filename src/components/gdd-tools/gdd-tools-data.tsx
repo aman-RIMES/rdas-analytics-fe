@@ -5,12 +5,14 @@ import Highcharts from "highcharts/highmaps";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { GDDDataProps } from "@/types";
 import { isError, isFinished, isLoading } from "@/lib/utils";
+import { infinity } from "ldrs";
+infinity.register("l-infinity");
 
 const GDDToolsData = ({ gddData, gddStatus }: GDDDataProps) => {
   return (
     <>
       {isError(gddStatus) && (
-        <div className="flex justify-center">
+        <div className="flex justify-center my-20">
           <Alert className="lg:w-3/4" variant="destructive">
             <AlertCircle className="h-5 w-5 mt-1" />
             <AlertTitle className="text-lg">API Error !</AlertTitle>
@@ -23,27 +25,33 @@ const GDDToolsData = ({ gddData, gddStatus }: GDDDataProps) => {
       )}
 
       {isLoading(gddStatus) && (
-        <div className="my-20 flex justify-center">
-          <p className="text-2xl">Loading ....</p>
+        <div className="my-20  flex justify-center bg-transparent">
+          <div className="flex items-center justify-center gap-8 lg:w-2/4 border-lime-700 border rounded-xl p-5">
+            {/* @ts-ignore */}
+            <l-infinity color="green" size="35"></l-infinity>
+            <p className="text-2xl text-lime-700 font-medium">Analyzing Data</p>
+          </div>
         </div>
       )}
 
       {isFinished(gddStatus) && (
         <>
-          <div className="mb-10 mt-10 px-5 flex flex-col gap-7">
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={gddData.gdd_chart}
-            />
+          <div className="mb-10 mt-10 flex flex-col gap-7 sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
+            <div className="p-2 rounded-lg bg-white shadow-lg">
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={gddData.gdd_chart}
+              />
+            </div>
           </div>
 
-          <div className="mt-20">
+          <div className="mt-10 sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
             <Tabs defaultValue={gddData.temp_charts[0].title.text}>
               <div className="flex justify-center">
-                <TabsList className="py-7 border">
+                <TabsList className="py-8 px-10 border bg-green-800">
                   {gddData.temp_charts.map((chartOption: any) => (
                     <TabsTrigger
-                      className="text-lg  data-[state=active]:border"
+                      className="text-lg text-white data-[state=active]:bg-yellow-400"
                       key={Math.random()}
                       value={chartOption.title.text}
                     >
@@ -58,23 +66,25 @@ const GDDToolsData = ({ gddData, gddStatus }: GDDDataProps) => {
                     key={Math.random()}
                     value={chartOption.title.text}
                   >
-                    <HighchartsReact
-                      highcharts={Highcharts}
-                      options={chartOption}
-                    />
+                    <div className="p-2 rounded-lg bg-white shadow-lg">
+                      <HighchartsReact
+                        highcharts={Highcharts}
+                        options={chartOption}
+                      />
+                    </div>
                   </TabsContent>
                 ))}
               </div>
             </Tabs>
           </div>
 
-          <div className="mt-20">
+          <div className="mt-20 sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
             <Tabs defaultValue={gddData.ndvi_images[0].year}>
               <div className="flex justify-center">
-                <TabsList className="py-7 border">
+                <TabsList className="py-8 px-10 border bg-green-800">
                   {gddData.ndvi_images.map((element: any) => (
                     <TabsTrigger
-                      className="text-lg  data-[state=active]:border"
+                      className="text-lg text-white data-[state=active]:bg-yellow-400"
                       key={Math.random()}
                       value={element.year}
                     >

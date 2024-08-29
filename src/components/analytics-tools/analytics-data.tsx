@@ -1,10 +1,13 @@
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highmaps";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, LoaderIcon } from "lucide-react";
 import Leaflet from "../leaflet";
 import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
 import { isError, isFinished, isLoading } from "@/lib/utils";
 import { AnalyticsDataProps } from "@/types";
+import { grid, reuleaux } from "ldrs";
+reuleaux.register("l-reuleaux");
+grid.register("l-loader");
 
 const AnalyticsData = ({
   timeSeriesChartData,
@@ -14,16 +17,20 @@ const AnalyticsData = ({
   dynamiMapStatus,
 }: AnalyticsDataProps) => {
   return (
-    <div className="mt-10">
+    <div className=" mt-10">
       {isLoading(dynamicChartStatus) && (
-        <div className="my-20 flex justify-center">
-          <p className="text-xl">Analyzing Data ...</p>
+        <div className="my-20  flex justify-center bg-transparent">
+          <div className="flex items-center justify-center gap-8 lg:w-2/4 border-lime-700 border rounded-xl p-5">
+            {/* @ts-ignore */}
+            <l-reuleaux color="green" size="35"></l-reuleaux>
+            <p className="text-2xl text-lime-700 font-medium">Analyzing Data</p>
+          </div>
         </div>
       )}
 
       {isError(dynamicChartStatus) && (
-        <div className="flex justify-center">
-          <Alert className="lg:w-3/4" variant="destructive">
+        <div className="flex justify-center my-20">
+          <Alert className="lg:w-2/4" variant="destructive">
             <AlertCircle className="h-5 w-5 mt-1" />
             <AlertTitle className="text-lg">API Error !</AlertTitle>
             <AlertDescription className="text-md">
@@ -35,21 +42,29 @@ const AnalyticsData = ({
       )}
 
       {isFinished(dynamicChartStatus) && (
-        <>
-          <HighchartsReact
-            highcharts={Highcharts}
-            options={timeSeriesChartData}
-          />
+        <div className="sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
+          <div className="rounded-lg bg-white p-1 shadow-md">
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={timeSeriesChartData}
+            />
+          </div>
 
           <div>
             {isLoading(dynamiMapStatus) && (
-              <div className="my-20 flex justify-center border p-24 rounded-lg">
-                <p className="text-xl">Loading Dynamic Map ...</p>
+              <div className="my-20 flex justify-center bg-transparent">
+                <div className="flex items-center justify-center gap-8 lg:w-2/4 border-lime-700 border rounded-xl p-5">
+                  {/* @ts-ignore */}
+                  <l-loader color="green" size="50"></l-loader>
+                  <p className="text-xl text-lime-700 font-medium">
+                    Loading Dynamic Map
+                  </p>
+                </div>
               </div>
             )}
             {isError(dynamiMapStatus) && (
-              <div className="flex justify-center">
-                <Alert className="lg:w-3/4" variant="destructive">
+              <div className="my-20 flex justify-center">
+                <Alert className="lg:w-2/4" variant="destructive">
                   <AlertCircle className="h-5 w-5 mt-1" />
                   <AlertTitle className="text-lg">API Error !</AlertTitle>
                   <AlertDescription className="text-md">
@@ -70,7 +85,7 @@ const AnalyticsData = ({
               </div>
             )}
           </div>
-        </>
+        </div>
       )}
     </div>
   );

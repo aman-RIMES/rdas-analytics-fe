@@ -19,7 +19,7 @@ import { ScrollArea } from "./scroll-area";
 
 function Combobox({ array, state, label, name }: any) {
   return (
-    <div className="flex flex-col justify-start gap-2">
+    <div className="flex flex-col justify-start gap-2 ">
       {/* <Label className="font-semibold">{label}</Label> */}
       <Popover open={state.open} onOpenChange={state.setOpen}>
         <PopoverTrigger asChild>
@@ -27,7 +27,10 @@ function Combobox({ array, state, label, name }: any) {
             variant="outline"
             role="combobox"
             aria-expanded={state.open}
-            className={cn(!state.value && "text-gray-500") + " justify-between"}
+            className={
+              cn(!state.value && "text-gray-500") +
+              " justify-between border-0 shadow-md"
+            }
           >
             {state.value
               ? array.find((element: any) => element.value === state.value)

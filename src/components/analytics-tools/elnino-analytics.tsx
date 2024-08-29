@@ -80,7 +80,7 @@ const ElNinoAnalytics = () => {
         "http://203.156.108.67:1580/dynamic_charts",
         {
           source: "ERA5",
-          indic: filterData.dependentVariable,
+          indic: `${filterData.dependentVariable},el_nino`,
           period: "annual",
           district: getAllDistrictsOfCountry(filterData?.districtList).join(
             ","
@@ -125,9 +125,9 @@ const ElNinoAnalytics = () => {
         <h1 className="text-4xl font-bold">{subject.category}</h1>
       </div>
 
-      <div className="mb-10 mt-5">
+      <div className="my-10">
         <div className="">
-          <div className="sm:p-10 p-4 rounded-lg bg-yellow-50 shadow-lg">
+          <div className="sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
             <ElNinoCommonFilter
               params={params}
               filterData={filterData}
@@ -141,6 +141,7 @@ const ElNinoAnalytics = () => {
               <SubmitButton
                 verifyFilters={verifyFilters()}
                 submitFunction={generateDynamicChart}
+                loadingStatus={dynamicChartStatus}
               />
             </div>
           </div>
@@ -159,7 +160,8 @@ const ElNinoAnalytics = () => {
                 <DescriptiveAnalysis filterData={filterData} />
                 <div className="flex justify-center mt-16">
                   <Button
-                    className="text-sm px-10 border-black"
+                    variant="default"
+                    className="text-xl p-10 bg-green-800 text-white hover:bg-yellow-300 hover:text-gray-800"
                     onClick={() =>
                       navigate("/predictive-tools", {
                         state: {
