@@ -62,8 +62,10 @@ const ClimatePredictiveTools = () => {
     handleChange("districtValue", data?.districtValue);
     handleChange("dependentVariable", data?.dependentVariable);
     handleChange("independentVariables", data?.independentVariables);
-    setSelected(data?.selected);
-    console.log(data);
+    data?.independentVariables
+      ? handleChange("independentVariables", data?.independentVariables)
+      : null;
+    data?.selected ? setSelected(data?.selected) : null;
   }, []);
 
   useEffect(() => {

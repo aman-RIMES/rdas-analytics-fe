@@ -3,7 +3,7 @@ import { analysisType, BODY_PARAMS_URL, requestStatus } from "@/constants";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { FilterData } from "@/types";
+import { District, FilterData } from "@/types";
 import { formatDate, getAllDistrictsOfCountry, isFinished } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import AnalyticsCorrelation from "@/components/analytics-tools/analytics-correlation";
@@ -26,6 +26,7 @@ const ClimateAnalytics = () => {
   const [timeSeriesChartData, setTimeSeriesChartData] = useState<any>({});
   const [dynamicMapData, setDynamicMapData] = useState<any>({});
   const [selected, setSelected] = useState<[]>([]);
+  const [districtList, setDistrictList] = useState([{}]);
 
   const [filterData, setFilterData] = useState<FilterData>({
     dependentVariable: "",
@@ -65,6 +66,13 @@ const ClimateAnalytics = () => {
     })();
   }, []);
 
+  useEffect(() => {
+    const districtsData = params.district.filter(
+      (e: District) => e.country === filterData.countryValue
+    );
+    setDistrictList(districtsData);
+  }, [filterData.countryValue]);
+
   const generateDynamicChart = async () => {
     setDynamicChartStatus(requestStatus.isLoading);
     setDynamiMapStatus(requestStatus.isLoading);
@@ -98,9 +106,7 @@ const ClimateAnalytics = () => {
           source: "ERA5",
           indic: "rainfall_deviation",
           period: "annual",
-          district: getAllDistrictsOfCountry(filterData?.districtList).join(
-            ","
-          ),
+          district: getAllDistrictsOfCountry(districtList).join(","),
           start: formatDate(filterData.dateRange?.from),
           end: formatDate(filterData.dateRange?.to),
         }
