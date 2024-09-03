@@ -62,14 +62,14 @@ export function Sidebar() {
           </h2>
           <div className="space-y-1">
             <MenuButton
-              url={"/analyze/5"}
+              url={"/transport-analytics"}
               icon={
                 <Icons.accidents className="w-7 h-7 mr-2 bg-yellow-500 text-gray-800 rounded-sm p-1" />
               }
               title={"Transport Analytics"}
             />
             <MenuButton
-              url={"/analyze/6"}
+              url={"/transport-predictive-tools"}
               icon={
                 <Icons.report className="w-7 h-7 mr-2 bg-yellow-500 text-gray-800 rounded-sm p-1" />
               }

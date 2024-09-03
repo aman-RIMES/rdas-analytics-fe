@@ -42,7 +42,7 @@ const ClimatePredictiveTools = () => {
 
   const verifyFilters = () => {
     return (
-      filterData.independentVariables.length > 0 &&
+      filterData.independentVariables?.length > 0 &&
       filterData.dependentVariable !== "" &&
       filterData.source !== "" &&
       filterData.countryValue !== "" &&

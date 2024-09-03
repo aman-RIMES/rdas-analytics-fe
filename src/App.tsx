@@ -38,6 +38,14 @@ function App() {
           path: "/gdd-predictive-tools/",
           element: <GDDPredictiveTools />,
         },
+        {
+          path: "/transport-analytics/",
+          element: <ClimateAnalytics />,
+        },
+        {
+          path: "/transport-predictive-tools/",
+          element: <ClimatePredictiveTools />,
+        },
       ],
     },
   ]);
