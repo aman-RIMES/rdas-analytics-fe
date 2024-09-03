@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
-
 import * as React from "react";
 import { X } from "lucide-react";
 
@@ -12,11 +10,13 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { Command as CommandPrimitive } from "cmdk";
+import { useEffect, useState } from "react";
 import { ScrollArea } from "./scroll-area";
 
 type Indicator = Record<"value" | "label", string>;
 
 export function FancyMultiSelect({
+  name,
   selected,
   setSelected = () => {},
   setState,
@@ -25,15 +25,21 @@ export function FancyMultiSelect({
 }: any) {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
-  // const [selected, setSelected] = React.useState<Indicator[]>([]);
+  const [selectedAnswers, setSelectedAnswers] = useState<any>([]);
   const [inputValue, setInputValue] = React.useState("");
 
-  const handleUnselect = React.useCallback((framework: Indicator) => {
+  useEffect(() => {
+    setState(name, selectedAnswers);
+  }, [selectedAnswers]);
+
+  const handleUnselect = (element: Indicator) => {
     setSelected((prev: any) =>
-      prev.filter((s: any) => s.value !== framework.value)
+      prev.filter((s: any) => s.value !== element.value)
     );
-    setState((prev: any) => prev.filter((s: any) => s !== framework.value));
-  }, []);
+    setSelectedAnswers((prev: any) =>
+      prev.filter((e: any) => e !== element.value)
+    );
+  };
 
   const handleKeyDown = React.useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -60,15 +66,12 @@ export function FancyMultiSelect({
   const selectables = array.filter(
     (element: any) => !selected?.includes(element)
   );
-
-  //   console.log(selectables, selected, inputValue);
-
   return (
     <Command
       onKeyDown={handleKeyDown}
-      className="overflow-visible bg-transparent"
+      className="overflow-visible bg-transparent "
     >
-      <div className="group rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
+      <div className="group rounded-md border bg-white border-input px-3 py-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
         <div className="flex flex-wrap gap-1">
           {selected?.map((element: any) => {
             return (
@@ -122,7 +125,10 @@ export function FancyMultiSelect({
                         onSelect={() => {
                           setInputValue("");
                           setSelected((prev: any) => [...prev, element]);
-                          setState((prev: any) => [...prev, element.value]);
+                          setSelectedAnswers((prev: any) => [
+                            ...prev,
+                            element.value,
+                          ]);
                         }}
                         className={"cursor-pointer"}
                       >
