@@ -13,14 +13,14 @@ export function Sidebar() {
           </h2>
           <div className="space-y-1">
             <MenuButton
-              url={"/analyze/1"}
+              url={"/climate-analytics"}
               icon={
                 <Icons.climate_behaviors className="w-7 h-7 mr-2 bg-yellow-500 text-gray-800 rounded-sm p-1" />
               }
               title={"Climate Analytics"}
             />
             <MenuButton
-              url={"/analyze/2"}
+              url={"/climate-predictive-tools"}
               icon={
                 <Icons.report className="w-7 h-7 mr-2 bg-yellow-500 text-gray-800 rounded-sm p-1" />
               }
@@ -34,7 +34,7 @@ export function Sidebar() {
           </h2>
           <div className="space-y-1">
             <MenuButton
-              url={"/analyze/3"}
+              url={"/elnino-analytics"}
               icon={
                 <Icons.climate_and_crops className="w-7 h-7 mr-2 bg-yellow-500 text-gray-800 rounded-sm p-1" />
               }

@@ -4,16 +4,16 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FilterData } from "@/types";
-import { getAllDistrictsOfCountry, isFinished } from "@/lib/utils";
-import { Button } from "../ui/button";
-import AnalyticsCorrelation from "./analytics-correlation";
-import DescriptiveAnalysis from "./analytics-descriptive-analysis";
-import AnalyticsData from "./analytics-data";
-import bodyParams from "../../data/body_params.json";
-import ElNinoCommonFilter from "./elnino-common-filter.component";
-import SubmitButton from "../submit-button";
+import { formatDate, getAllDistrictsOfCountry, isFinished } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import AnalyticsCorrelation from "@/components/analytics-tools/analytics-correlation";
+import DescriptiveAnalysis from "@/components/analytics-tools/analytics-descriptive-analysis";
+import AnalyticsData from "@/components/analytics-tools/analytics-data";
+import bodyParams from "@/data/body_params.json";
+import SubmitButton from "@/components/submit-button";
+import ClimateCommonFilter from "./climate-common-filter";
 
-const ElNinoAnalytics = () => {
+const ClimateAnalytics = () => {
   const navigate = useNavigate();
 
   const [params, setParams] = useState<any>(bodyParams);
@@ -29,12 +29,12 @@ const ElNinoAnalytics = () => {
 
   const [filterData, setFilterData] = useState<FilterData>({
     dependentVariable: "",
-    elNinoVariable: "",
+    independentVariables: [],
     source: "",
+    periodValue: "",
     countryValue: "",
-    districtList: [],
-    fromYear: "",
-    toYear: "",
+    districtValue: "",
+    dateRange: {},
   });
 
   const handleChange = (name: string, value: string | []) => {
@@ -43,11 +43,13 @@ const ElNinoAnalytics = () => {
 
   const verifyFilters = () => {
     return (
+      filterData.independentVariables?.length > 0 &&
       filterData.dependentVariable !== "" &&
-      filterData.elNinoVariable !== "" &&
       filterData.source !== "" &&
-      filterData.fromYear !== "" &&
-      filterData.toYear !== "" &&
+      filterData.periodValue !== "" &&
+      filterData.districtValue !== "" &&
+      formatDate(filterData.dateRange?.from) !== "" &&
+      formatDate(filterData.dateRange?.to) !== "" &&
       filterData.countryValue !== ""
     );
   };
@@ -72,14 +74,12 @@ const ElNinoAnalytics = () => {
       const response = await axios.post(
         "http://203.156.108.67:1580/dynamic_charts",
         {
-          source: "ERA5",
-          indic: `${filterData.dependentVariable},el_nino`,
-          period: "annual",
-          district: getAllDistrictsOfCountry(filterData?.districtList).join(
-            ","
-          ),
-          start: `${filterData.fromYear}-01-01`,
-          end: `${filterData.toYear}-01-01`,
+          source: filterData.source,
+          indic: filterData.independentVariables.join(","),
+          period: filterData.periodValue,
+          district: filterData.districtValue,
+          start: formatDate(filterData.dateRange?.from),
+          end: formatDate(filterData.dateRange?.to),
         }
       );
 
@@ -101,8 +101,8 @@ const ElNinoAnalytics = () => {
           district: getAllDistrictsOfCountry(filterData?.districtList).join(
             ","
           ),
-          start: `${filterData.fromYear}-01-01`,
-          end: `${filterData.toYear}-01-01`,
+          start: formatDate(filterData.dateRange?.from),
+          end: formatDate(filterData.dateRange?.to),
         }
       );
       setDynamicMapData(geoJson.data);
@@ -115,13 +115,13 @@ const ElNinoAnalytics = () => {
   return (
     <>
       <div className="flex justify-center">
-        <h1 className="text-4xl font-bold">El Nino Analytics</h1>
+        <h1 className="text-4xl font-bold">Climate Analytics</h1>
       </div>
 
       <div className="my-10">
         <div className="">
           <div className="sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
-            <ElNinoCommonFilter
+            <ClimateCommonFilter
               params={params}
               filterData={filterData}
               handleChange={handleChange}
@@ -152,18 +152,18 @@ const ElNinoAnalytics = () => {
                 <AnalyticsCorrelation
                   filterData={filterData}
                   params={params}
-                  typeOfAnalysis={analysisType.elnino}
+                  typeOfAnalysis={analysisType.climate}
                 />
                 <DescriptiveAnalysis
                   filterData={filterData}
-                  typeOfAnalysis={analysisType.elnino}
+                  typeOfAnalysis={analysisType.climate}
                 />
                 <div className="flex justify-center mt-16">
                   <Button
                     variant="default"
                     className="text-xl p-10 bg-green-800 text-white hover:bg-yellow-300 hover:text-gray-800"
                     onClick={() =>
-                      navigate("/predictive-tools", {
+                      navigate("/climate-predictive-tools", {
                         state: {
                           ...filterData,
                           selected,
@@ -183,4 +183,4 @@ const ElNinoAnalytics = () => {
   );
 };
 
-export default ElNinoAnalytics;
+export default ClimateAnalytics;

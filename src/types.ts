@@ -1,5 +1,5 @@
 import { LatLngExpression } from "leaflet";
-import { requestStatus } from "./constants";
+import { analysisType, requestStatus } from "./constants";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface AnalysisTopics {
@@ -103,6 +103,7 @@ export interface FilterProps {
   setSelected?: any;
   params?: any;
   filterType?: string;
+  typeOfAnalysis?: analysisType;
 }
 
 export interface AnalyticsDataProps {

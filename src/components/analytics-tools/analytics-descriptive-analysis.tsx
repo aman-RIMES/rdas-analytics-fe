@@ -8,24 +8,23 @@ import {
   TableRow,
 } from "../ui/table";
 import {
+  formatDate,
   formatTitle,
   getAllDistrictsOfCountry,
   isError,
   isFinished,
   isLoading,
 } from "@/lib/utils";
-import Highcharts from "highcharts/highmaps";
-import HighchartsReact from "highcharts-react-official";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
 import { useEffect, useState } from "react";
 import { FilterProps } from "@/types";
 import axios from "axios";
-import { requestStatus } from "@/constants";
+import { analysisType, requestStatus } from "@/constants";
 import { tailChase } from "ldrs";
 tailChase.register("l-tailchase");
 
-const DescriptiveAnalysis = ({ filterData }: FilterProps) => {
+const DescriptiveAnalysis = ({ filterData, typeOfAnalysis }: FilterProps) => {
   const [descriptiveAnalysisStatus, setDescriptiveAnalysisStatus] =
     useState<requestStatus>();
   const [descriptiveAnalysisData, setDescriptiveAnalysisData] = useState<any>(
@@ -42,17 +41,27 @@ const DescriptiveAnalysis = ({ filterData }: FilterProps) => {
     try {
       const response = await axios.post(
         "http://203.156.108.67:1580/description_analysis",
-        {
-          source: "ERA5",
-          indic: "el_nino",
-          period: "annual",
-          district: getAllDistrictsOfCountry(filterData?.districtList).join(
-            ","
-          ),
-          start: `${filterData.fromYear}-01-01`,
-          end: `${filterData.toYear}-01-01`,
-          indic_0: filterData.dependentVariable,
-        }
+        typeOfAnalysis === analysisType.climate
+          ? {
+              source: "ERA5",
+              indic: filterData.independentVariables.join(","),
+              period: filterData.periodValue,
+              district: filterData.districtValue,
+              start: formatDate(filterData.dateRange?.from),
+              end: formatDate(filterData.dateRange?.to),
+              indic_0: filterData.dependentVariable,
+            }
+          : {
+              source: "ERA5",
+              indic: "el_nino",
+              period: "annual",
+              district: getAllDistrictsOfCountry(filterData?.districtList).join(
+                ","
+              ),
+              start: `${filterData.fromYear}-01-01`,
+              end: `${filterData.toYear}-01-01`,
+              indic_0: filterData.dependentVariable,
+            }
       );
       setDescriptiveAnalysisData(response.data);
       setDescriptiveAnalysisStatus(requestStatus.isFinished);
@@ -97,7 +106,7 @@ const DescriptiveAnalysis = ({ filterData }: FilterProps) => {
       {isFinished(descriptiveAnalysisStatus) && (
         <>
           <div className="flex 2xl:flex-row flex-col justify-center 2xl:gap-20 gap-10 items-center mt-10 w-full">
-            <div className="w-full flex flex-col items-center justify-center sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
+            <div className="w-full h-[370px] flex flex-col items-center justify-center sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
               <p className="text-xl font-medium mb-5 ml-3">Head</p>
               <Table>
                 <TableHeader>
@@ -118,7 +127,7 @@ const DescriptiveAnalysis = ({ filterData }: FilterProps) => {
                 <TableBody>
                   {Object.keys(descriptiveAnalysisData?.head?.values).map(
                     (value: string) => (
-                      <TableRow key={value}>
+                      <TableRow key={Math.random()}>
                         <TableCell className="font-medium text-black">
                           {formatTitle(value)}
                         </TableCell>
@@ -137,7 +146,7 @@ const DescriptiveAnalysis = ({ filterData }: FilterProps) => {
               </Table>
             </div>
 
-            <div className="w-full mt-5 md:mt-0 flex flex-col justify-center items-center sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
+            <div className="w-full h-[370px] mt-5 md:mt-0 flex flex-col justify-center items-center sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
               <p className="text-xl font-medium mb-5  ml-3">
                 Data Availability
               </p>
@@ -220,13 +229,13 @@ const DescriptiveAnalysis = ({ filterData }: FilterProps) => {
               </TableBody>
             </Table>
           </div>
-
+          {/* 
           <div className="mt-20 mb-10 sm:p-10 p-4 rounded-lg bg-white shadow-lg">
             <HighchartsReact
               highcharts={Highcharts}
               options={descriptiveAnalysisData?.correlation_matrix}
             />
-          </div>
+          </div> */}
         </>
       )}
     </div>

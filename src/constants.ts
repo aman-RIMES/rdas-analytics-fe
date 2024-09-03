@@ -15,6 +15,11 @@ export enum predictiveModelDataType {
   logistic = "logistic",
 }
 
+export enum analysisType {
+  climate = "climate",
+  elnino = "elnino",
+}
+
 export const menus = [
   {
     id: 1,

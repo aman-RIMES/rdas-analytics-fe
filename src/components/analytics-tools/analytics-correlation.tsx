@@ -14,14 +14,24 @@ import Highcharts from "highcharts/highmaps";
 import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
 import { Button } from "../ui/button";
 import axios from "axios";
-import { ElNinoVariables, requestStatus } from "@/constants";
+import { analysisType, ElNinoVariables, requestStatus } from "@/constants";
 import { CorrelationFilterData, FilterProps } from "@/types";
+import { quantum } from "ldrs";
+quantum.register("l-quantum");
 
-const AnalyticsCorrelation = ({ filterData, params }: FilterProps) => {
+const AnalyticsCorrelation = ({
+  filterData,
+  params,
+  typeOfAnalysis,
+}: FilterProps) => {
   const [correlationFilterData, setCorrelationFilterData] =
     useState<CorrelationFilterData>({
-      correlationVariable1: "",
-      correlationVariable2: "",
+      correlationVariable1:
+        typeOfAnalysis === analysisType.elnino
+          ? filterData.dependentVariable
+          : "",
+      correlationVariable2:
+        typeOfAnalysis === analysisType.elnino ? filterData.elNinoVariable : "",
     });
   const [correlationStatus, setCorrelationStatus] = useState<requestStatus>();
   const [correlationChartData, setCorrelationChartData] = useState<any>({});
@@ -40,29 +50,47 @@ const AnalyticsCorrelation = ({ filterData, params }: FilterProps) => {
     try {
       const correlationData = await axios.post(
         "http://203.156.108.67:1580/correlation_plot",
-        {
-          source: "ERA5",
-          indic: `${correlationFilterData.correlationVariable1},${correlationFilterData.correlationVariable2}`,
-          period: "annual",
-          district: getAllDistrictsOfCountry(filterData?.districtList).join(
-            ","
-          ),
-          start: `${filterData.fromYear}-01-01`,
-          end: `${filterData.toYear}-01-01`,
-        }
+        typeOfAnalysis === analysisType.climate
+          ? {
+              source: "ERA5",
+              indic: `${correlationFilterData.correlationVariable1},${correlationFilterData.correlationVariable2}`,
+              period: filterData.periodValue,
+              district: filterData.districtValue,
+              start: formatDate(filterData.dateRange?.from),
+              end: formatDate(filterData.dateRange?.to),
+            }
+          : {
+              source: "ERA5",
+              indic: `${correlationFilterData.correlationVariable1},${correlationFilterData.correlationVariable2}`,
+              period: "annual",
+              district: getAllDistrictsOfCountry(filterData?.districtList).join(
+                ","
+              ),
+              start: `${filterData.fromYear}-01-01`,
+              end: `${filterData.toYear}-01-01`,
+            }
       );
       const regressionModelData = await axios.post(
         "http://203.156.108.67:1580/regression_analysis",
-        {
-          source: "ERA5",
-          indic: `${correlationFilterData.correlationVariable1},${correlationFilterData.correlationVariable2}`,
-          period: "annual",
-          district: getAllDistrictsOfCountry(filterData?.districtList).join(
-            ","
-          ),
-          start: `${filterData.fromYear}-01-01`,
-          end: `${filterData.toYear}-01-01`,
-        }
+        typeOfAnalysis === analysisType.climate
+          ? {
+              source: "ERA5",
+              indic: `${correlationFilterData.correlationVariable1},${correlationFilterData.correlationVariable2}`,
+              period: filterData.periodValue,
+              district: filterData.districtValue,
+              start: formatDate(filterData.dateRange?.from),
+              end: formatDate(filterData.dateRange?.to),
+            }
+          : {
+              source: "ERA5",
+              indic: `${correlationFilterData.correlationVariable1},${correlationFilterData.correlationVariable2}`,
+              period: "annual",
+              district: getAllDistrictsOfCountry(filterData?.districtList).join(
+                ","
+              ),
+              start: `${filterData.fromYear}-01-01`,
+              end: `${filterData.toYear}-01-01`,
+            }
       );
       setRegressionModelChartData(regressionModelData.data);
       setCorrelationChartData(correlationData.data);
@@ -84,7 +112,11 @@ const AnalyticsCorrelation = ({ filterData, params }: FilterProps) => {
         <Combobox
           name={"correlationVariable1"}
           label={"First Variable"}
-          array={transformObject(ElNinoVariables).filter(
+          array={transformObject(
+            typeOfAnalysis === analysisType.climate
+              ? params.indic
+              : ElNinoVariables
+          ).filter(
             (e: any) => e.value !== correlationFilterData.correlationVariable2
           )}
           state={{
@@ -95,7 +127,11 @@ const AnalyticsCorrelation = ({ filterData, params }: FilterProps) => {
         <Combobox
           name={"correlationVariable2"}
           label={"Second Variable"}
-          array={transformObject(ElNinoVariables).filter(
+          array={transformObject(
+            typeOfAnalysis === analysisType.climate
+              ? params.indic
+              : ElNinoVariables
+          ).filter(
             (e: any) => e.value !== correlationFilterData.correlationVariable1
           )}
           state={{
@@ -116,8 +152,14 @@ const AnalyticsCorrelation = ({ filterData, params }: FilterProps) => {
       </div>
 
       {isLoading(correlationStatus) && (
-        <div className="my-20 flex justify-center">
-          <p className="text-xl">Generating Correlation Data ...</p>
+        <div className="my-20  flex justify-center bg-transparent">
+          <div className="flex items-center justify-center gap-8 lg:w-2/4 border-lime-700 border rounded-xl p-5">
+            {/* @ts-ignore */}
+            <l-quantum color="green" size="35"></l-quantum>
+            <p className="text-2xl text-lime-700 font-medium">
+              Generating Correlation Data
+            </p>
+          </div>
         </div>
       )}
 

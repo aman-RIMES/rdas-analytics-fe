@@ -5,6 +5,8 @@ import { ThemeProvider } from "./components/theme-provider";
 import PredictiveTools from "./components/predictive-tools/predictive-tools";
 import ElNinoAnalytics from "./components/analytics-tools/elnino-analytics";
 import GDDPredictiveTools from "./components/gdd-tools/gdd-tools";
+import ClimateAnalytics from "./components/climate-tools/climate-analytics-tools/climate-analytics";
+import ClimatePredictiveTools from "./components/climate-tools/climate-predictive-tools/climate-predictive-tools";
 function App() {
   const router = createBrowserRouter([
     {
@@ -14,6 +16,18 @@ function App() {
       children: [
         {
           path: "/analyze/:topic",
+          element: <ElNinoAnalytics />,
+        },
+        {
+          path: "/climate-analytics",
+          element: <ClimateAnalytics />,
+        },
+        {
+          path: "/climate-predictive-tools",
+          element: <ClimatePredictiveTools />,
+        },
+        {
+          path: "/elnino-analytics",
           element: <ElNinoAnalytics />,
         },
         {
