@@ -69,8 +69,8 @@ const GDDPredictiveTools = () => {
         <h1 className="text-4xl font-bold">GDD Analytical Tool</h1>
       </div>
 
-      <div className="my-10 border rounded-lg">
-        <div className="sm:p-10 p-4">
+      <div className="my-10">
+        <div className="sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
           <GDDToolsFilter
             filterData={filterData}
             handleChange={handleChange}
@@ -90,9 +90,9 @@ const GDDPredictiveTools = () => {
               label={isNewAnalysis ? "Start Analysis" : "Re-Analyze"}
             />
           </div>
-        </div>
 
-        <GDDToolsData gddData={gddData} gddStatus={gddStatus} />
+          <GDDToolsData gddData={gddData} gddStatus={gddStatus} />
+        </div>
       </div>
     </>
   );

@@ -17,8 +17,6 @@ import { FancyMultiSelect } from "../ui/multiselect";
 import { Crop, GDDFilterProps } from "@/types";
 import HelpHoverCard from "../help-hover-card";
 import { yearsList } from "@/constants";
-import { DatePickerWithRange } from "../date-range-picker";
-import { InfoCircledIcon } from "@radix-ui/react-icons";
 import DatePicker from "../datepicker";
 
 const GDDToolsFilter = ({
