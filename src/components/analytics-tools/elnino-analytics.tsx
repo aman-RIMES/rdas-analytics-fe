@@ -140,6 +140,12 @@ const ElNinoAnalytics = () => {
           </div>
 
           <div className="mb-10">
+            {isFinished(dynamicChartStatus) && (
+              <DescriptiveAnalysis
+                filterData={filterData}
+                typeOfAnalysis={analysisType.elnino}
+              />
+            )}
             <AnalyticsData
               timeSeriesChartData={timeSeriesChartData}
               countryValue={filterData.countryValue}
@@ -154,10 +160,7 @@ const ElNinoAnalytics = () => {
                   params={params}
                   typeOfAnalysis={analysisType.elnino}
                 />
-                <DescriptiveAnalysis
-                  filterData={filterData}
-                  typeOfAnalysis={analysisType.elnino}
-                />
+
                 <div className="flex justify-center mt-16">
                   <Button
                     variant="default"

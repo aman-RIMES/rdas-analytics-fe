@@ -146,6 +146,12 @@ const ClimateAnalytics = () => {
           </div>
 
           <div className="mb-10">
+            {isFinished(dynamicChartStatus) && (
+              <DescriptiveAnalysis
+                filterData={filterData}
+                typeOfAnalysis={analysisType.climate}
+              />
+            )}
             <AnalyticsData
               timeSeriesChartData={timeSeriesChartData}
               countryValue={filterData.countryValue}
@@ -160,10 +166,7 @@ const ClimateAnalytics = () => {
                   params={params}
                   typeOfAnalysis={analysisType.climate}
                 />
-                <DescriptiveAnalysis
-                  filterData={filterData}
-                  typeOfAnalysis={analysisType.climate}
-                />
+
                 <div className="flex justify-center mt-16">
                   <Button
                     variant="default"
