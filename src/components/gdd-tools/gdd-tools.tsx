@@ -12,6 +12,8 @@ const GDDPredictiveTools = () => {
   const [isNewAnalysis, setIsNewAnalysis] = useState(true);
   const [gddStatus, setGddStatus] = useState<requestStatus>(requestStatus.idle);
   const [gddData, setGddData] = useState<any>([]);
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
   const [filterData, setFilterData] = useState<FilterData>({
     districtValue: "",
     countryValue: "",
@@ -34,8 +36,8 @@ const GDDPredictiveTools = () => {
       filterData.countryValue !== "" &&
       filterData.provinceValue !== "" &&
       filterData.yearsValue.length > 0 &&
-      formatDate(filterData.dateRange?.from) !== "" &&
-      formatDate(filterData.dateRange?.to) !== ""
+      startDate !== "" &&
+      endDate !== ""
     );
   };
 
@@ -44,8 +46,8 @@ const GDDPredictiveTools = () => {
       setGddStatus(requestStatus.isLoading);
       const response: any = await axios.get(
         `http://203.156.108.67:1580/gdd?start_date=${formatDate(
-          filterData.dateRange?.from
-        )}&end_date=${formatDate(filterData.dateRange?.to)}&tehsil_id=${
+          startDate
+        )}&end_date=${formatDate(endDate)}&tehsil_id=${
           filterData.tehsilValue
         }&district_id=${filterData.districtValue}&crop=${
           filterData.cropValue
@@ -69,7 +71,16 @@ const GDDPredictiveTools = () => {
 
       <div className="my-10">
         <div className="sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
-          <GDDToolsFilter filterData={filterData} handleChange={handleChange} />
+          <GDDToolsFilter
+            filterData={filterData}
+            handleChange={handleChange}
+            dateRange={{
+              startDate: startDate,
+              endDate: endDate,
+              setStartDate: setStartDate,
+              setEndDate: setEndDate,
+            }}
+          />
 
           <div className="md:mt-12 w-full">
             <SubmitButton
@@ -79,9 +90,9 @@ const GDDPredictiveTools = () => {
               label={isNewAnalysis ? "Start Analysis" : "Re-Analyze"}
             />
           </div>
-        </div>
 
-        <GDDToolsData gddData={gddData} gddStatus={gddStatus} />
+          <GDDToolsData gddData={gddData} gddStatus={gddStatus} />
+        </div>
       </div>
     </>
   );

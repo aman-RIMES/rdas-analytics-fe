@@ -14,7 +14,12 @@ import {
 import { CalendarComplete } from "./ui/calendar-complete";
 import { Label } from "./ui/label";
 
-export function DatePicker({ date, setDate, label }: any) {
+export function DatePicker({
+  date,
+  setDate,
+  label,
+  disabledStatus = false,
+}: any) {
   return (
     <div className="flex flex-col justify-start gap-2">
       <Label className="text-md font-semibold">{label}</Label>
@@ -33,20 +38,34 @@ export function DatePicker({ date, setDate, label }: any) {
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">
           <CalendarComplete
+            fromYear={2007}
+            toYear={2023}
+            // min={min}
+            // max={max}
+            // defaultMonth={date?.from}
+            numberOfMonths={1}
+            disabled={disabledStatus}
             initialFocus
             mode="single"
             captionLayout="dropdown-buttons" //Also: dropdown | buttons
-            // fromYear={1960}
-            // toYear={2023}
             // fromMonth={new Date("2022,10")}
             // toMonth={new Date("2022,12")}
             // fromDate={new Date("2022,10,10")}
             // toDate={new Date("2022,11,11")}
             selected={date}
             onSelect={setDate}
-            showOutsideDays={false}
-            // numberOfMonths={2}
-            className="rounded-md border"
+            // showOutsideDays={false}
+            className=""
+            footer={
+              disabledStatus && (
+                <>
+                  <p className="flex justify-center my-5">
+                    {" "}
+                    Please choose Crop type first
+                  </p>
+                </>
+              )
+            }
           />
         </PopoverContent>
       </Popover>

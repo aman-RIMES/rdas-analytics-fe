@@ -128,4 +128,5 @@ export interface GDDDataProps {
 export interface GDDFilterProps {
   filterData: FilterData;
   handleChange: (name, value) => void;
+  dateRange: any;
 }
