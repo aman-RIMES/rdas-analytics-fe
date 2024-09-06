@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { MapContainer, GeoJSON } from "react-leaflet";
+import { MapContainer, GeoJSON, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { countries } from "@/constants";
 import "@/leaflet.css";
 import { formatTitle } from "@/lib/utils";
+import MapLegend from "./map-legend";
+import { useEffect, useState } from "react";
+import geoJson from "@/data/new.json";
 
-const Leaflet = ({ geoJsonData, country }: any) => {
+const Leaflet = ({ geoJsonData = geoJson, country = "IND" }: any) => {
   const subjectCountry = countries.find((e) => e.value === country);
 
   const countryStyle = {
@@ -15,6 +18,8 @@ const Leaflet = ({ geoJsonData, country }: any) => {
     weight: 0.5,
     // dashArray: 5,
   };
+
+  const [map, setMap] = useState(null);
 
   const onEachDistrict = (district: any, layer: any) => {
     const districtName = district.properties.District;
@@ -28,17 +33,15 @@ const Leaflet = ({ geoJsonData, country }: any) => {
 
     layer.options.fillColor = "green";
 
-    if (district.properties.data_value < 250) {
-      layer.options.fillOpacity = 0.2;
-    } else if (district.properties.data_value < 500) {
-      layer.options.fillOpacity = 0.4;
-    } else if (district.properties.data_value < 750) {
-      layer.options.fillOpacity = 0.6;
-    } else if (district.properties.data_value < 1000) {
-      layer.options.fillOpacity = 0.8;
-    } else {
-      layer.options.fillOpacity = 1;
-    }
+    district.properties.data_value < 250
+      ? (layer.options.fillOpacity = 0.2)
+      : district.properties.data_value < 500
+      ? (layer.options.fillOpacity = 0.4)
+      : district.properties.data_value < 750
+      ? (layer.options.fillOpacity = 0.6)
+      : district.properties.data_value < 1000
+      ? (layer.options.fillOpacity = 0.8)
+      : (layer.options.fillOpacity = 1);
 
     // layer.on({
     //   click: (event) => {
@@ -57,17 +60,20 @@ const Leaflet = ({ geoJsonData, country }: any) => {
           center={subjectCountry?.coordinates}
           zoom={subjectCountry?.zoom}
           scrollWheelZoom={false}
+          whenReady={setMap}
         >
-          {/* <TileLayer
+          <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          /> */}
+          />
 
-          <GeoJSON
+          <MapLegend map={map} />
+
+          {/* <GeoJSON
             style={countryStyle}
             data={geoJsonData.features}
             onEachFeature={onEachDistrict}
-          />
+          /> */}
         </MapContainer>
       </div>
     </div>
