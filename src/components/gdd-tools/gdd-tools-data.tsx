@@ -29,7 +29,9 @@ const GDDToolsData = ({ gddData, gddStatus }: GDDDataProps) => {
           <div className="flex items-center justify-center gap-8 lg:w-2/4 border-lime-700 border rounded-xl p-5">
             {/* @ts-ignore */}
             <l-infinity color="green" size="35"></l-infinity>
-            <p className="text-2xl text-lime-700 font-medium">Analyzing Data</p>
+            <p className="text-2xl text-lime-700 font-medium">
+              Analyzing GDD Data
+            </p>
           </div>
         </div>
       )}

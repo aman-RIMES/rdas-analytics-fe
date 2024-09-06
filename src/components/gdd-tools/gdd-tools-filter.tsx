@@ -18,12 +18,10 @@ import { Crop, GDDFilterProps } from "@/types";
 import HelpHoverCard from "../help-hover-card";
 import { yearsList } from "@/constants";
 import DatePicker from "../datepicker";
+import { DatePickerWithRange } from "../date-range-picker";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 
-const GDDToolsFilter = ({
-  filterData,
-  handleChange,
-  dateRange,
-}: GDDFilterProps) => {
+const GDDToolsFilter = ({ filterData, handleChange }: GDDFilterProps) => {
   const [crops, setCrops] = useState<Crop[]>([]);
   const [tehsils, setTehsils] = useState([{}]);
   const [districts, setDistricts] = useState([{}]);
@@ -31,10 +29,17 @@ const GDDToolsFilter = ({
   const [years, setYears] = useState(yearsList);
   const [selected, setSelected] = useState([]);
 
+  const min = crops.find(
+    (e) => e?.crop_id == parseInt(filterData.cropValue)
+  )?.min_period_days;
+  const max = crops.find(
+    (e) => e?.crop_id == parseInt(filterData.cropValue)
+  )?.max_period_days;
+
   useEffect(() => {
-    const chosenYear = formatDate(dateRange.startDate).slice(0, 4);
+    const chosenYear = formatDate(filterData.dateRange?.from).slice(0, 4);
     setYears(yearsList.filter((e) => e.label !== chosenYear));
-  }, [dateRange.startDate]);
+  }, [filterData.dateRange]);
 
   useEffect(() => {
     (async () => {
@@ -192,8 +197,6 @@ const GDDToolsFilter = ({
             }}
           />
         </div>
-        {/* //TODO: Datepicker should show selected date (if any) when popup shows, not current Date
-          //TODO: Set Min and Max days */}
         <div>
           <div>
             <div className="flex gap-2 ">
@@ -203,28 +206,23 @@ const GDDToolsFilter = ({
                 content={`The start date of the date range, you'd like to be analyzed.`}
               />
             </div>
-            <DatePicker
+            <DatePickerWithRange
+              name="dateRange"
               disabledStatus={filterData.cropValue == ""}
-              date={dateRange.startDate}
-              setDate={dateRange.setStartDate}
+              date={filterData.dateRange}
+              setDate={handleChange}
+              min={min}
+              max={max}
             />
           </div>
-        </div>
-        <div>
-          <div>
-            <div className="flex gap-2 ">
-              <Label className="font-semibold">End date</Label>
-              <HelpHoverCard
-                title={"End date"}
-                content={`The end date range that you'd like to be analyzed.`}
-              />
+          {filterData.cropValue !== "" && (
+            <div className="flex gap-2 mt-2">
+              <InfoCircledIcon className="h-4 w-4" />
+              <p className="text-xs">
+                Please choose a date range between of {min} - {max} days
+              </p>
             </div>
-            <DatePicker
-              disabledStatus={filterData.cropValue == ""}
-              date={dateRange.endDate}
-              setDate={dateRange.setEndDate}
-            />
-          </div>
+          )}
         </div>
 
         <div>

@@ -56,8 +56,8 @@ const AnalyticsCorrelation = ({
               indic: `${correlationFilterData.correlationVariable1},${correlationFilterData.correlationVariable2}`,
               period: filterData.periodValue,
               district: filterData.districtValue,
-              start: formatDate(filterData.dateRange?.from),
-              end: formatDate(filterData.dateRange?.to),
+              start: `${filterData.fromYear}-01-01`,
+              end: `${filterData.toYear}-01-01`,
             }
           : {
               source: "ERA5",
@@ -78,8 +78,8 @@ const AnalyticsCorrelation = ({
               indic: `${correlationFilterData.correlationVariable1},${correlationFilterData.correlationVariable2}`,
               period: filterData.periodValue,
               district: filterData.districtValue,
-              start: formatDate(filterData.dateRange?.from),
-              end: formatDate(filterData.dateRange?.to),
+              start: `${filterData.fromYear}-01-01`,
+              end: `${filterData.toYear}-01-01`,
             }
           : {
               source: "ERA5",

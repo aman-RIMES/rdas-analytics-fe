@@ -47,8 +47,8 @@ const DescriptiveAnalysis = ({ filterData, typeOfAnalysis }: FilterProps) => {
               indic: filterData.independentVariables.join(","),
               period: filterData.periodValue,
               district: filterData.districtValue,
-              start: formatDate(filterData.dateRange?.from),
-              end: formatDate(filterData.dateRange?.to),
+              start: `${filterData.fromYear}-01-01`,
+              end: `${filterData.toYear}-01-01`,
               indic_0: filterData.dependentVariable,
             }
           : {
@@ -148,7 +148,7 @@ const DescriptiveAnalysis = ({ filterData, typeOfAnalysis }: FilterProps) => {
 
             <div className="w-full h-[370px] mt-5 md:mt-0 flex flex-col justify-center items-center sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
               <p className="text-xl font-medium mb-5  ml-3">
-                Data Availability
+                Dataset Availability
               </p>
               <Table>
                 <TableHeader>
@@ -168,7 +168,7 @@ const DescriptiveAnalysis = ({ filterData, typeOfAnalysis }: FilterProps) => {
                 <TableBody>
                   <TableRow>
                     <TableCell className=" text-black text-md font-medium">
-                      Missing Values
+                      Missing Data
                     </TableCell>
                     {descriptiveAnalysisData?.missing_values.values.map(
                       (value: number) => (
@@ -178,11 +178,13 @@ const DescriptiveAnalysis = ({ filterData, typeOfAnalysis }: FilterProps) => {
                   </TableRow>
                   <TableRow>
                     <TableCell className=" text-black text-md font-medium">
-                      Data types
+                      Type of Value
                     </TableCell>
                     {descriptiveAnalysisData?.data_types.values.map(
-                      (value: number) => (
-                        <TableCell>{value}</TableCell>
+                      (value: string) => (
+                        <TableCell>
+                          {value === "float64" ? "Decimal" : value}
+                        </TableCell>
                       )
                     )}
                   </TableRow>

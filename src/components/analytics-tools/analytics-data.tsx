@@ -79,7 +79,7 @@ const AnalyticsData = ({
             {isFinished(dynamiMapStatus) && (
               <div>
                 <p className="text-xl font-semibold flex justify-center my-8">
-                  Deviation from Normal Rainfall
+                  Rainfall Anomaly
                 </p>
                 <Leaflet country={countryValue} geoJsonData={dynamicMapData} />
               </div>
