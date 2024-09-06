@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BODY_PARAMS_URL, countries } from "@/constants";
+import { BODY_PARAMS_URL, countries, elNinoYearsList } from "@/constants";
 import {
   transformObject,
   transformSourceObject,
@@ -13,6 +13,7 @@ import { District, FilterData, FilterProps } from "@/types";
 import axios from "axios";
 import HelpHoverCard from "@/components/help-hover-card";
 import { Label } from "@radix-ui/react-dropdown-menu";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 const ClimateCommonFilter = ({
   params,
@@ -95,7 +96,7 @@ const ClimateCommonFilter = ({
         </div>
       </div>
 
-      <div className="grid gap-4 mb-6 md:grid-cols-3 grid-cols-1 justify-center">
+      <div className="grid gap-4 mb-3 md:grid-cols-3 grid-cols-1 justify-center">
         <div>
           <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold">Dependent Variable</Label>
@@ -126,8 +127,7 @@ const ClimateCommonFilter = ({
             <Label className="mb-2 font-semibold">Independent Variables</Label>
             <HelpHoverCard
               title={"Independent Variables"}
-              content={`One or more climate variables that will be compared against
-                  the Dependent variable.`}
+              content={`A single or multiple variables used to compare against the dependent variable.`}
             />
           </div>
           <FancyMultiSelect
@@ -145,8 +145,8 @@ const ClimateCommonFilter = ({
         </div>
       </div>
 
-      <div className="grid gap-4 mb-6 md:grid-cols-3 grid-cols-1 justify-center">
-        <div>
+      <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
+        {/* <div>
           <div className="flex gap-2 ">
             <Label className="font-semibold">Start and End date</Label>
             <HelpHoverCard
@@ -161,53 +161,107 @@ const ClimateCommonFilter = ({
             min={0}
             max={0}
           />
-        </div>
+        </div> */}
 
         <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> Period </Label>
-            <HelpHoverCard
-              title={" Period "}
-              content={` The period between each date that you want to analyze. `}
-            />
-          </div>
-
-          <Combobox
-            name="periodValue"
-            label={"Period"}
-            array={transformObject(params?.period)}
-            state={{
-              value: filterData.periodValue,
-              setValue: handleChange,
-            }}
-          />
-        </div>
-
-        {filterType === "predictive" && (
-          <div>
-            <div className="flex gap-2 ">
-              <Label className="mb-2 font-semibold">
-                Predictive model type
-              </Label>
-              <HelpHoverCard
-                title={" Predictive model type"}
-                content={` The model type you would like to generate for the prediction (Linear or Logistic). `}
+          <div className="grid gap-4 md:grid-cols-2 grid-cols-1 justify-center">
+            <div>
+              <div className="flex gap-2 ">
+                <Label className="mb-2 font-semibold"> From Year </Label>
+                <HelpHoverCard
+                  title={" From Year "}
+                  content={` The beginning year for your analysis timeframe `}
+                />
+              </div>
+              <Combobox
+                name="fromYear"
+                label={"Year"}
+                array={elNinoYearsList().filter(
+                  (e) => parseInt(e.value) + 5 < new Date().getFullYear()
+                )}
+                state={{
+                  value: filterData.fromYear,
+                  setValue: handleChange,
+                }}
               />
             </div>
+
+            <div>
+              <div className="flex gap-2 ">
+                <Label className="mb-2 font-semibold"> To Year </Label>
+                <HelpHoverCard
+                  title={" To Year "}
+                  content={` The ending year for your analysis timeframe `}
+                />
+              </div>
+              <Combobox
+                name="toYear"
+                label={"Year"}
+                array={elNinoYearsList().filter(
+                  (e) => parseInt(e.value) - parseInt(filterData.fromYear) >= 5
+                )}
+                state={{
+                  value: filterData.toYear,
+                  setValue: handleChange,
+                }}
+              />
+            </div>
+          </div>
+          <div className="flex items-center gap-1  mt-1">
+            <InfoCircledIcon className="h-4 w-4 text-gray-600" />
+            <p className="text-sm text-gray-600">
+              Please choose a minimum of 5 years timeframe.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2 grid-cols-1 justify-center">
+          <div>
+            <div className="flex gap-2 ">
+              <Label className="mb-2 font-semibold"> Period </Label>
+              <HelpHoverCard
+                title={" Period "}
+                content={` The period between each date that you want to analyze. `}
+              />
+            </div>
+
             <Combobox
-              name="modelType"
-              label={"Predictive model"}
-              array={[
-                { value: "linear", label: "Linear" },
-                { value: "logistic", label: "Logistic" },
-              ]}
+              name="periodValue"
+              label={"Period"}
+              array={transformObject(params?.period)}
               state={{
-                value: filterData.modelType,
+                value: filterData.periodValue,
                 setValue: handleChange,
               }}
             />
           </div>
-        )}
+
+          {filterType === "predictive" && (
+            <div>
+              <div className="flex gap-2 ">
+                <Label className="mb-2 font-semibold">
+                  Predictive model type
+                </Label>
+                <HelpHoverCard
+                  title={" Predictive model type"}
+                  content={` The model type you would like to generate for the prediction (Linear or Logistic). `}
+                />
+              </div>
+              <Combobox
+                name="modelType"
+                label={"Predictive model"}
+                array={[
+                  { value: "linear", label: "Linear" },
+                  { value: "logistic", label: "Logistic" },
+                ]}
+                state={{
+                  value: filterData.modelType,
+                  setValue: handleChange,
+                }}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

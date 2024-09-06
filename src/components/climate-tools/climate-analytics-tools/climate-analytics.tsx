@@ -35,7 +35,8 @@ const ClimateAnalytics = () => {
     periodValue: "",
     countryValue: "",
     districtValue: "",
-    dateRange: {},
+    fromYear: "",
+    toYear: "",
   });
 
   const handleChange = (name: string, value: string | []) => {
@@ -49,8 +50,8 @@ const ClimateAnalytics = () => {
       filterData.source !== "" &&
       filterData.periodValue !== "" &&
       filterData.districtValue !== "" &&
-      formatDate(filterData.dateRange?.from) !== "" &&
-      formatDate(filterData.dateRange?.to) !== "" &&
+      filterData.fromYear !== "" &&
+      filterData.toYear !== "" &&
       filterData.countryValue !== ""
     );
   };
@@ -86,8 +87,8 @@ const ClimateAnalytics = () => {
           indic: filterData.independentVariables.join(","),
           period: filterData.periodValue,
           district: filterData.districtValue,
-          start: formatDate(filterData.dateRange?.from),
-          end: formatDate(filterData.dateRange?.to),
+          start: `${filterData.fromYear}-01-01`,
+          end: `${filterData.toYear}-01-01`,
         }
       );
 
@@ -107,8 +108,8 @@ const ClimateAnalytics = () => {
           indic: "rainfall_deviation",
           period: "annual",
           district: getAllDistrictsOfCountry(districtList).join(","),
-          start: formatDate(filterData.dateRange?.from),
-          end: formatDate(filterData.dateRange?.to),
+          start: `${filterData.fromYear}-01-01`,
+          end: `${filterData.toYear}-01-01`,
         }
       );
       setDynamicMapData(geoJson.data);
