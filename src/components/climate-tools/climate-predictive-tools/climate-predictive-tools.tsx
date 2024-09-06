@@ -32,7 +32,8 @@ const ClimatePredictiveTools = () => {
     periodValue: "",
     countryValue: "",
     districtValue: "",
-    dateRange: {},
+    fromYear: "",
+    toYear: "",
     modelType: "",
   });
 
@@ -49,13 +50,14 @@ const ClimatePredictiveTools = () => {
       filterData.modelType !== "" &&
       filterData.periodValue !== "" &&
       filterData.districtValue !== "" &&
-      formatDate(filterData.dateRange?.from) !== "" &&
-      formatDate(filterData.dateRange?.to) !== ""
+      filterData.toYear !== "" &&
+      filterData.fromYear !== ""
     );
   };
 
   useEffect(() => {
-    handleChange("dateRange", data?.dateRange);
+    handleChange("fromYear", data?.fromYear);
+    handleChange("toYear", data?.toYear);
     handleChange("countryValue", data?.countryValue);
     handleChange("source", data?.source);
     handleChange("periodValue", data?.periodValue);
@@ -89,8 +91,8 @@ const ClimatePredictiveTools = () => {
           indic: filterData.independentVariables.join(","),
           period: filterData.periodValue,
           district: filterData.districtValue,
-          start: formatDate(filterData.dateRange?.from),
-          end: formatDate(filterData.dateRange?.to),
+          start: `${filterData.fromYear}-01-01`,
+          end: `${filterData.toYear}-01-01`,
           indic_0: filterData.dependentVariable,
           model: filterData.modelType,
         }

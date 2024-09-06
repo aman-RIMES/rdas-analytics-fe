@@ -50,8 +50,7 @@ const ElNinoCommonFilter = ({
             <Label className="mb-2 font-semibold">El Nino Variable</Label>
             <HelpHoverCard
               title={"El Nino Variable"}
-              content={`A single El Nino variable used to compare against a climate
-                variables.`}
+              content={`A single variable used to compare against the climate variable.`}
             />
           </div>
           <Combobox
