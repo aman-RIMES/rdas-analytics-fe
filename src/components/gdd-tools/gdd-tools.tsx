@@ -36,8 +36,8 @@ const GDDPredictiveTools = () => {
       filterData.countryValue !== "" &&
       filterData.provinceValue !== "" &&
       filterData.yearsValue.length > 0 &&
-      startDate !== "" &&
-      endDate !== ""
+      formatDate(filterData.dateRange?.from) !== "" &&
+      formatDate(filterData.dateRange?.to) !== ""
     );
   };
 
@@ -46,8 +46,8 @@ const GDDPredictiveTools = () => {
       setGddStatus(requestStatus.isLoading);
       const response: any = await axios.get(
         `http://203.156.108.67:1580/gdd?start_date=${formatDate(
-          startDate
-        )}&end_date=${formatDate(endDate)}&tehsil_id=${
+          filterData.dateRange?.from
+        )}&end_date=${formatDate(filterData.dateRange?.to)}&tehsil_id=${
           filterData.tehsilValue
         }&district_id=${filterData.districtValue}&crop=${
           filterData.cropValue
@@ -71,20 +71,11 @@ const GDDPredictiveTools = () => {
 
       <div className="my-10">
         <div className="sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
-          <GDDToolsFilter
-            filterData={filterData}
-            handleChange={handleChange}
-            dateRange={{
-              startDate: startDate,
-              endDate: endDate,
-              setStartDate: setStartDate,
-              setEndDate: setEndDate,
-            }}
-          />
+          <GDDToolsFilter filterData={filterData} handleChange={handleChange} />
 
           <div className="md:mt-12 w-full">
             <SubmitButton
-              verifyFilters={verifyFilters}
+              verifyFilters={verifyFilters()}
               submitFunction={generateGDD}
               loadingStatus={gddStatus}
               label={isNewAnalysis ? "Start Analysis" : "Re-Analyze"}

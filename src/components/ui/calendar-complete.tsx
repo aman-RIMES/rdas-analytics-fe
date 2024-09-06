@@ -84,8 +84,12 @@ function CalendarComplete({
         day_hidden: "invisible",
       }}
       components={{
-        IconLeft: ({ ...props }) => <ChevronLeftIcon className="h-4 w-4" />,
-        IconRight: ({ ...props }) => <ChevronRightIcon className="h-4 w-4" />,
+        IconLeft: ({ ...props }) => (
+          <ChevronLeftIcon className="h-7 w-8 p-1 stroke-black rounded bg-yellow-300 " />
+        ),
+        IconRight: ({ ...props }) => (
+          <ChevronRightIcon className="h-7 w-8 p-1 stroke-black rounded bg-yellow-300 " />
+        ),
         Dropdown: ({ ...props }) => (
           <Select
             {...props}
