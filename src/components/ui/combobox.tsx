@@ -55,7 +55,7 @@ function Combobox({ array, state, label, name }: any) {
                           name,
                           currentValue === state.value ? "" : currentValue
                         );
-                        state.setOpen(false);
+                        // state.setOpen(false);
                       }}
                     >
                       <Check
