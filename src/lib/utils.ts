@@ -76,6 +76,11 @@ export const formatTitle = (title: string) => {
   return title.charAt(0).toUpperCase() + title.slice(1);
 };
 
+export const formatStatisticsLabel = (title: string) => {
+  const label = formatTitle(title);
+  return label;
+};
+
 export const calculateLinearPredictiveValue = (
   fields: string[],
   coeff: number[],

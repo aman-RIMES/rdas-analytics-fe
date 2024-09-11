@@ -26,6 +26,13 @@ export function Sidebar() {
               }
               title={"Climate Predictive Tools"}
             />
+            <MenuButton
+              url={"/gdd-predictive-tools"}
+              icon={
+                <Icons.report className="w-7 h-7 mr-2 bg-yellow-500 text-gray-800 rounded-sm p-1" />
+              }
+              title={"GDD Predictive Tool"}
+            />
           </div>
         </div>
         <div className="pl-3 py-2 max-w-80 text-white">
@@ -47,16 +54,9 @@ export function Sidebar() {
               }
               title={"El Nino Predictive Tools"}
             />
-            <MenuButton
-              url={"/gdd-predictive-tools"}
-              icon={
-                <Icons.report className="w-7 h-7 mr-2 bg-yellow-500 text-gray-800 rounded-sm p-1" />
-              }
-              title={"GDD Predictive Tool"}
-            />
           </div>
         </div>
-        <div className="pl-3 py-2 max-w-80 text-white">
+        {/* <div className="pl-3 py-2 max-w-80 text-white">
           <h2 className="mb-2 px-4 text-xl font-semibold tracking-tight">
             Transport
           </h2>
@@ -76,7 +76,7 @@ export function Sidebar() {
               title={"Transport Predictive Tools"}
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
