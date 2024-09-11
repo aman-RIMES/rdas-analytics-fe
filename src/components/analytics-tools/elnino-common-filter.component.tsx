@@ -1,5 +1,10 @@
 import { useEffect } from "react";
-import { countries, ElNinoVariables, elNinoYearsList } from "@/constants";
+import {
+  countries,
+  ElNinoToolDataIndicators,
+  ElNinoVariables,
+  elNinoYearsList,
+} from "@/constants";
 import { transformObject, transformSourceObject } from "@/lib/utils";
 import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
@@ -35,9 +40,7 @@ const ElNinoCommonFilter = ({
           <Combobox
             name="dependentVariable"
             label={"Climate Variable"}
-            array={transformObject(ElNinoVariables).filter(
-              (e) => e.value !== "el_nino"
-            )}
+            array={transformObject(ElNinoToolDataIndicators)}
             state={{
               value: filterData.dependentVariable,
               setValue: handleChange,
@@ -56,9 +59,7 @@ const ElNinoCommonFilter = ({
           <Combobox
             name="elNinoVariable"
             label={"El Nino Variable"}
-            array={transformObject(ElNinoVariables).filter(
-              (e) => e.value === "el_nino"
-            )}
+            array={transformObject(ElNinoVariables)}
             state={{
               value: filterData.elNinoVariable,
               setValue: handleChange,

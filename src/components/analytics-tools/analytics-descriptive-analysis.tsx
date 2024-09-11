@@ -127,17 +127,17 @@ const DescriptiveAnalysis = ({ filterData, typeOfAnalysis }: FilterProps) => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {Object.keys(descriptiveAnalysisData?.head?.values).map(
+                  {Object.keys(descriptiveAnalysisData?.head?.values)?.map(
                     (value: string) => (
                       <TableRow key={Math.random()}>
                         <TableCell className="font-medium text-black">
                           {formatTitle(value)}
                         </TableCell>
 
-                        {descriptiveAnalysisData?.head?.values[value].map(
+                        {descriptiveAnalysisData?.head?.values[value]?.map(
                           (e: number) => (
                             <TableCell className=" text-black">
-                              {e.toFixed(2)}
+                              {e?.toFixed(2)}
                             </TableCell>
                           )
                         )}

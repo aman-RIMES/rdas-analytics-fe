@@ -284,8 +284,50 @@ export const countries = [
   },
 ];
 
-export const ElNinoVariables = {
-  rainfall: "Rainfall",
-  temperature: "Temperature",
+export const Indicators = {
+  cotton_production: "Crop Production - Cotton",
+  crop_price_monthly: "Crop-wise price monthly, yearly",
+  crop_price_seasonal: "Crop-wise price seasonal, year wise",
+  crop_production_monthly: "Crop production acreage monthly, year wise",
+  crop_production_seasonal: "Crop production acreage seasonal year wise",
+  crop_yield_seasonal: "Crop-wise yield seasonal, year wise",
   el_nino: "El Nino Events",
+  el_nino_moderate: "Moderate El Nino Events",
+  el_nino_strong: "Strong El Nino Events",
+  el_nino_weak: "Weak El Nino Events",
+  maize_production: "Crop Production - Maize",
+  normal_rainfall: "Normal Rainfall",
+  rainfall: "Rainfall",
+  rainfall_cummulative_monthly: "Rainfall cumulative monthly, year wise",
+  rainfall_cummulative_seasonal: "Rainfall cumulative seasonal, Year wise",
+  rainfall_deviation: "Deviation from Normal Rainfall",
+  rainfall_max_monthly: "Rainfall max monthly year wise",
+  rainfall_min_monthly: "Rainfall min monthly, year wise",
+  rice_production: "Crop Production - Rice",
+  temperature: "Temperature",
+  temperature_avg_monthly: "Average/ mean temperature monthly, year wise",
+  temperature_max_monthly: "Temperature max monthly, year wise",
+  temperature_min_monthly: "Temperature min monthly, year wise",
+  wheat_production: "Crop Production",
+};
+
+export const ElNinoToolDataIndicators = {
+  temperature_max_monthly: "Temperature max monthly, year wise",
+  temperature_min_monthly: "Temperature min monthly, year wise",
+  temperature_avg_monthly: "Average / mean temperature monthly, year wise",
+  rainfall_cummulative_monthly: "Rainfall cumulative monthly, year wise",
+  rainfall_cummulative_seasonal: "Rainfall cumulative seasonal, Year wise",
+  rainfall_max_monthly: "Rainfall max monthly year wise",
+  rainfall_min_monthly: "Rainfall min monthly, year wise",
+  crop_production_monthly: "Crop production acreage monthly, year wise",
+  crop_production_seasonal: "Crop production acreage seasonal year wise",
+  crop_yield_seasonal: "Crop-wise yield seasonal, year wise",
+  crop_price_monthly: "Crop-wise price monthly, yearly",
+  crop_price_seasonal: "Crop-wise price seasonal, year wise",
+};
+
+export const ElNinoVariables = {
+  el_nino_moderate: "Moderate El Nino Events",
+  el_nino_strong: "Strong El Nino Events",
+  el_nino_weak: "Weak El Nino Events",
 };
