@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import { countries } from "@/constants";
 import "@/leaflet.css";
 import { formatTitle } from "@/lib/utils";
+import { useEffect } from "react";
 
 const Leaflet = ({ geoJsonData, country }: any) => {
   const subjectCountry = countries.find((e) => e.value === country);
@@ -17,28 +18,24 @@ const Leaflet = ({ geoJsonData, country }: any) => {
   };
 
   const onEachDistrict = (district: any, layer: any) => {
-    const districtName = district.properties.District;
-    const provinceName = district.properties.Province;
-    const value = district.properties.data_value;
+    const districtName = district?.properties?.District;
+    const provinceName = district?.properties?.Province;
+    const value = district?.properties?.data_value;
     layer.bindPopup(`
-      ${formatTitle(
-        districtName
-      )} District,                                              
-      ${provinceName} : ${parseInt(value).toFixed(2)}`);
+      ${
+        districtName ? formatTitle(districtName) : "--"
+      } District,                                              
+      ${provinceName ? provinceName : "--"} : ${parseInt(value)?.toFixed(2)}`);
 
     layer.options.fillColor = "green";
 
-    if (district.properties.data_value < 250) {
-      layer.options.fillOpacity = 0.2;
-    } else if (district.properties.data_value < 500) {
-      layer.options.fillOpacity = 0.4;
-    } else if (district.properties.data_value < 750) {
-      layer.options.fillOpacity = 0.6;
-    } else if (district.properties.data_value < 1000) {
-      layer.options.fillOpacity = 0.8;
-    } else {
-      layer.options.fillOpacity = 1;
-    }
+    district.properties.data_value < 300
+      ? (layer.options.fillOpacity = 0.2)
+      : district.properties.data_value < 600
+      ? (layer.options.fillOpacity = 0.4)
+      : district.properties.data_value < 900
+      ? (layer.options.fillOpacity = 0.6)
+      : (layer.options.fillOpacity = 1);
 
     // layer.on({
     //   click: (event) => {

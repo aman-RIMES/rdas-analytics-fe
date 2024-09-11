@@ -274,13 +274,13 @@ export const countries = [
     value: "PAK",
     label: "Pakistan",
     coordinates: [31.358464447208497, 70.60622074202406],
-    zoom: 4.4,
+    zoom: 6,
   },
   {
     value: "BGD",
     label: "Bangladesh",
     coordinates: [24.051401544067932, 89.94872317279236],
-    zoom: 6,
+    zoom: 7,
   },
 ];
 
