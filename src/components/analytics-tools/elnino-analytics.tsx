@@ -28,10 +28,11 @@ const ElNinoAnalytics = () => {
   const [selected, setSelected] = useState<[]>([]);
 
   const [filterData, setFilterData] = useState<FilterData>({
-    dependentVariable: "",
+    dataVariable: [],
     elNinoVariable: "",
     cropValue: "",
     source: "",
+    elNinoDataSource: "",
     countryValue: "",
     districtList: [],
     fromYear: "",
@@ -44,9 +45,10 @@ const ElNinoAnalytics = () => {
 
   const verifyFilters = () => {
     return (
-      filterData.dependentVariable !== "" &&
+      filterData.dataVariable.length > 0 &&
       filterData.elNinoVariable !== "" &&
       filterData.source !== "" &&
+      filterData.elNinoDataSource !== "" &&
       filterData.fromYear !== "" &&
       filterData.toYear !== "" &&
       filterData.countryValue !== ""
@@ -74,11 +76,14 @@ const ElNinoAnalytics = () => {
         "http://203.156.108.67:1580/dynamic_charts",
         {
           source: "ERA5",
-          indic: `${filterData.dependentVariable},el_nino`,
+          indic: `${filterData.dataVariable.join(",")},${
+            filterData.elNinoVariable
+          }`,
           period: "annual",
           district: getAllDistrictsOfCountry(filterData?.districtList).join(
             ","
           ),
+          crop: filterData.cropValue,
           start: `${filterData.fromYear}-01-01`,
           end: `${filterData.toYear}-01-01`,
         }

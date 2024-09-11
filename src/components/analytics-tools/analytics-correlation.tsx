@@ -14,7 +14,12 @@ import Highcharts from "highcharts/highmaps";
 import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
 import { Button } from "../ui/button";
 import axios from "axios";
-import { analysisType, ElNinoVariables, requestStatus } from "@/constants";
+import {
+  analysisType,
+  ElNinoToolDataIndicators,
+  ElNinoVariables,
+  requestStatus,
+} from "@/constants";
 import { CorrelationFilterData, FilterProps } from "@/types";
 import { quantum } from "ldrs";
 quantum.register("l-quantum");
@@ -28,7 +33,7 @@ const AnalyticsCorrelation = ({
     useState<CorrelationFilterData>({
       correlationVariable1:
         typeOfAnalysis === analysisType.elnino
-          ? filterData.dependentVariable
+          ? Array.from(filterData.dataVariable)[0]
           : "",
       correlationVariable2:
         typeOfAnalysis === analysisType.elnino ? filterData.elNinoVariable : "",
@@ -115,7 +120,7 @@ const AnalyticsCorrelation = ({
           array={transformObject(
             typeOfAnalysis === analysisType.climate
               ? params.indic
-              : ElNinoVariables
+              : ElNinoToolDataIndicators
           ).filter(
             (e: any) => e.value !== correlationFilterData.correlationVariable2
           )}
@@ -179,10 +184,51 @@ const AnalyticsCorrelation = ({
 
       {isFinished(correlationStatus) && (
         <div className="mt-10">
-          <HighchartsReact
-            highcharts={Highcharts}
-            options={correlationChartData}
-          />
+          <div className="flex flex-col">
+            <div>
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={correlationChartData}
+              />
+            </div>
+
+            <div className="flex justify-center items-center">
+              <p className="mt-5 w-4/5">
+                The Correlation matrix shows the strength and direction of the
+                relationship between{" "}
+                <span className="font-bold">
+                  {" "}
+                  {
+                    ElNinoToolDataIndicators[
+                      correlationFilterData.correlationVariable1
+                    ]
+                  }{" "}
+                </span>
+                and{" "}
+                <span className="font-bold">
+                  {ElNinoVariables[correlationFilterData.correlationVariable2]}{" "}
+                </span>
+                variables. In this case, there&#39;s a{" "}
+                <span className="font-bold">Negative</span> correlation between{" "}
+                {ElNinoVariables[correlationFilterData.correlationVariable2]}{" "}
+                and{" "}
+                {
+                  ElNinoToolDataIndicators[
+                    correlationFilterData.correlationVariable1
+                  ]
+                }{" "}
+                , suggesting that as{" "}
+                {ElNinoVariables[correlationFilterData.correlationVariable2]}{" "}
+                <span className="font-bold">intensifies</span>,{" "}
+                {
+                  ElNinoToolDataIndicators[
+                    correlationFilterData.correlationVariable1
+                  ]
+                }{" "}
+                tends to <span className="font-bold">decrease</span>.
+              </p>
+            </div>
+          </div>
           <div className="mt-10">
             <HighchartsReact
               highcharts={Highcharts}

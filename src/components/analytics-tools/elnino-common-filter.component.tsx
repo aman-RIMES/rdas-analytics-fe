@@ -15,11 +15,14 @@ import Combobox from "../ui/combobox";
 import { District, FilterProps } from "@/types";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { Label } from "@radix-ui/react-dropdown-menu";
+import { FancyMultiSelect } from "../ui/multiselect";
 
 const ElNinoCommonFilter = ({
   params,
   filterData,
   handleChange,
+  selected,
+  setSelected,
   filterType,
 }: FilterProps) => {
   useEffect(() => {
@@ -33,8 +36,8 @@ const ElNinoCommonFilter = ({
     <div>
       <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
         <div className="flex flex-col  p-3 shadow-md shadow-gray-300 rounded-lg">
-          <div>
-            <div className="flex gap-2 ">
+          <div className="col-span-2">
+            <div className="flex gap-2">
               <Label className="mb-2 font-semibold">Data</Label>
               <HelpHoverCard
                 title={"Data"}
@@ -42,16 +45,17 @@ const ElNinoCommonFilter = ({
               variable.`}
               />
             </div>
-            <Combobox
-              name="dependentVariable"
-              label={"Climate Variable"}
-              array={transformObject(ElNinoToolDataIndicators)}
-              state={{
-                value: filterData.dependentVariable,
-                setValue: handleChange,
-              }}
+            <FancyMultiSelect
+              name="dataVariable"
+              selected={selected}
+              setSelected={setSelected}
+              setState={handleChange}
+              array={transformObject(ElNinoToolDataIndicators).filter(
+                (e) => !filterData.dataVariable?.includes(e.value)
+              )}
             />
           </div>
+
           <div className="mt-5">
             <div className="flex gap-2 ">
               <Label className="mb-2 font-semibold">Data Source </Label>
@@ -72,7 +76,7 @@ const ElNinoCommonFilter = ({
             />
           </div>
 
-          {containsCropAnalysis(filterData.dependentVariable) && (
+          {containsCropAnalysis(filterData.dataVariable) && (
             <div className="mt-5">
               <div className="flex gap-2 ">
                 <Label className="mb-2 font-semibold">Crop </Label>
@@ -83,7 +87,7 @@ const ElNinoCommonFilter = ({
                 />
               </div>
               <Combobox
-                name="crop"
+                name="cropValue"
                 label={"Crop"}
                 array={transformObject(params?.crop)}
                 state={{
@@ -125,11 +129,11 @@ const ElNinoCommonFilter = ({
               />
             </div>
             <Combobox
-              name="source"
+              name="elNinoDataSource"
               label={"Source"}
               array={transformSourceObject(params?.source)}
               state={{
-                value: filterData.source,
+                value: filterData.elNinoDataSource,
                 setValue: handleChange,
               }}
             />

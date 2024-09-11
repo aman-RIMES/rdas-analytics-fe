@@ -23,8 +23,11 @@ const PredictiveTools = () => {
   const [regressionModelData, setRegressionModelData] = useState<any>({});
   const [selected, setSelected] = useState<any>([]);
   const [filterData, setFilterData] = useState<FilterData>({
-    dependentVariable: "",
+    dataVariable: [],
+    elNinoVariable: "",
+    cropValue: "",
     source: "",
+    elNinoDataSource: "",
     countryValue: "",
     districtList: [],
     fromYear: "",
@@ -38,9 +41,10 @@ const PredictiveTools = () => {
 
   const verifyFilters = () => {
     return (
-      filterData.dependentVariable !== "" &&
+      filterData.dataVariable.length > 0 &&
       filterData.elNinoVariable !== "" &&
       filterData.source !== "" &&
+      filterData.elNinoDataSource !== "" &&
       filterData.countryValue !== "" &&
       filterData.modelType !== "" &&
       filterData.toYear !== "" &&
@@ -53,7 +57,11 @@ const PredictiveTools = () => {
     handleChange("toYear", data?.toYear);
     handleChange("countryValue", data?.countryValue);
     handleChange("source", data?.source);
-    handleChange("dependentVariable", data?.dependentVariable);
+    handleChange("elNinoDataSource", data?.elNinoDataSource);
+    data?.dataVariable
+      ? handleChange("dataVariable", data?.dataVariable)
+      : null;
+    data?.selected ? setSelected(data?.selected) : null;
     handleChange("elNinoVariable", data?.elNinoVariable);
   }, []);
 
@@ -77,12 +85,12 @@ const PredictiveTools = () => {
         "http://203.156.108.67:1580/prediction_model",
         {
           source: "ERA5",
-          indic: filterData.dependentVariable,
+          indic: filterData.dataVariable.join(","),
           period: "annual",
           district: getAllDistrictsOfCountry(filterData.districtList).join(","),
           start: `${filterData.fromYear}-01-01`,
           end: `${filterData.toYear}-01-01`,
-          indic_0: "el_nino",
+          indic_0: filterData.elNinoVariable,
           model: filterData.modelType,
         }
       );

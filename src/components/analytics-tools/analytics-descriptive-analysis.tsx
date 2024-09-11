@@ -53,14 +53,18 @@ const DescriptiveAnalysis = ({ filterData, typeOfAnalysis }: FilterProps) => {
             }
           : {
               source: "ERA5",
-              indic: "el_nino",
+              // indic: filterData.elNinoVariable,
+              indic: `${filterData.dataVariable.join(",")},${
+                filterData.elNinoVariable
+              }`,
               period: "annual",
               district: getAllDistrictsOfCountry(filterData?.districtList).join(
                 ","
               ),
+              crop: filterData.cropValue,
               start: `${filterData.fromYear}-01-01`,
               end: `${filterData.toYear}-01-01`,
-              indic_0: filterData.dependentVariable,
+              // indic_0: filterData.dataVariable.join(","),
             }
       );
       setDescriptiveAnalysisData(response.data);
@@ -136,8 +140,11 @@ const DescriptiveAnalysis = ({ filterData, typeOfAnalysis }: FilterProps) => {
 
                         {descriptiveAnalysisData?.head?.values[value]?.map(
                           (e: number) => (
-                            <TableCell className=" text-black">
-                              {e?.toFixed(2)}
+                            <TableCell
+                              key={Math.random()}
+                              className=" text-black"
+                            >
+                              {e}
                             </TableCell>
                           )
                         )}
@@ -211,18 +218,16 @@ const DescriptiveAnalysis = ({ filterData, typeOfAnalysis }: FilterProps) => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {Object.keys(descriptiveAnalysisData?.statistics?.values).map(
+                {Object.keys(descriptiveAnalysisData?.statistics?.values)?.map(
                   (value) => (
                     <TableRow>
                       <TableCell className="text-black text-md font-medium">
                         {formatTitle(value)}
                       </TableCell>
 
-                      {descriptiveAnalysisData?.statistics?.values[value].map(
+                      {descriptiveAnalysisData?.statistics?.values[value]?.map(
                         (e: number) => (
-                          <TableCell className="text-md">
-                            {e.toFixed(2)}
-                          </TableCell>
+                          <TableCell className="text-md">{e}</TableCell>
                         )
                       )}
                     </TableRow>

@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
-import { BODY_PARAMS_URL, countries, elNinoYearsList } from "@/constants";
+import { countries, elNinoYearsList } from "@/constants";
 import {
   transformObject,
   transformSourceObject,
   transformDistrictParams,
 } from "@/lib/utils";
-import { DatePickerWithRange } from "@/components/date-range-picker";
 import Combobox from "@/components/ui/combobox";
 import { FancyMultiSelect } from "@/components/ui/multiselect";
-import bodyParams from "@/data/body_params.json";
 import { District, FilterData, FilterProps } from "@/types";
-import axios from "axios";
 import HelpHoverCard from "@/components/help-hover-card";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
@@ -146,23 +143,6 @@ const ClimateCommonFilter = ({
       </div>
 
       <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
-        {/* <div>
-          <div className="flex gap-2 ">
-            <Label className="font-semibold">Start and End date</Label>
-            <HelpHoverCard
-              title={"Start and End date"}
-              content={`The specific date range that you'd like to be analyzed.`}
-            />
-          </div>
-          <DatePickerWithRange
-            name="dateRange"
-            date={filterData.dateRange}
-            setDate={handleChange}
-            min={0}
-            max={0}
-          />
-        </div> */}
-
         <div>
           <div className="grid gap-4 md:grid-cols-2 grid-cols-1 justify-center">
             <div>
