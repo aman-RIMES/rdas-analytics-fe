@@ -93,3 +93,15 @@ export const calculateLinearPredictiveValue = (
 
   return sum + intercept;
 };
+
+export const containsCropAnalysis = (dependentVariables) => {
+  const cropVariables = [
+    "crop_production_monthly",
+    "crop_production_seasonal",
+    "crop_yield_seasonal",
+    "crop_price_monthly",
+    "crop_price_seasonal",
+  ];
+
+  return cropVariables.some((element) => dependentVariables.includes(element));
+};

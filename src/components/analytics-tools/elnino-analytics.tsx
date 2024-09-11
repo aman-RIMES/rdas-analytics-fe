@@ -30,6 +30,7 @@ const ElNinoAnalytics = () => {
   const [filterData, setFilterData] = useState<FilterData>({
     dependentVariable: "",
     elNinoVariable: "",
+    cropValue: "",
     source: "",
     countryValue: "",
     districtList: [],

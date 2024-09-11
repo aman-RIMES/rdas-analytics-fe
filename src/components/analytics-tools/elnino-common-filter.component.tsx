@@ -5,7 +5,11 @@ import {
   ElNinoVariables,
   elNinoYearsList,
 } from "@/constants";
-import { transformObject, transformSourceObject } from "@/lib/utils";
+import {
+  containsCropAnalysis,
+  transformObject,
+  transformSourceObject,
+} from "@/lib/utils";
 import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
 import { District, FilterProps } from "@/types";
@@ -28,43 +32,108 @@ const ElNinoCommonFilter = ({
   return (
     <div>
       <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold">Data</Label>
-            <HelpHoverCard
-              title={"Data"}
-              content={`Data used to compare against an El Nino
+        <div className="flex flex-col  p-3 shadow-md shadow-gray-300 rounded-lg">
+          <div>
+            <div className="flex gap-2 ">
+              <Label className="mb-2 font-semibold">Data</Label>
+              <HelpHoverCard
+                title={"Data"}
+                content={`Data used to compare against an El Nino
               variable.`}
+              />
+            </div>
+            <Combobox
+              name="dependentVariable"
+              label={"Climate Variable"}
+              array={transformObject(ElNinoToolDataIndicators)}
+              state={{
+                value: filterData.dependentVariable,
+                setValue: handleChange,
+              }}
             />
           </div>
-          <Combobox
-            name="dependentVariable"
-            label={"Climate Variable"}
-            array={transformObject(ElNinoToolDataIndicators)}
-            state={{
-              value: filterData.dependentVariable,
-              setValue: handleChange,
-            }}
-          />
+          <div className="mt-5">
+            <div className="flex gap-2 ">
+              <Label className="mb-2 font-semibold">Data Source </Label>
+              <HelpHoverCard
+                title={" Source "}
+                content={` The source of dataset that you want to use for the current
+              analysis. `}
+              />
+            </div>
+            <Combobox
+              name="source"
+              label={"Source"}
+              array={transformSourceObject(params?.source)}
+              state={{
+                value: filterData.source,
+                setValue: handleChange,
+              }}
+            />
+          </div>
+
+          {containsCropAnalysis(filterData.dependentVariable) && (
+            <div className="mt-5">
+              <div className="flex gap-2 ">
+                <Label className="mb-2 font-semibold">Crop </Label>
+                <HelpHoverCard
+                  title={" Crop "}
+                  content={` The specific crop you want to use for the current
+              analysis. `}
+                />
+              </div>
+              <Combobox
+                name="crop"
+                label={"Crop"}
+                array={transformObject(params?.crop)}
+                state={{
+                  value: filterData.cropValue,
+                  setValue: handleChange,
+                }}
+              />
+            </div>
+          )}
         </div>
 
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold">El Nino</Label>
-            <HelpHoverCard
-              title={"El Nino"}
-              content={`A single variable used to compare against the data`}
+        <div className="flex flex-col  p-3 shadow-md shadow-gray-300 rounded-lg">
+          <div>
+            <div className="flex gap-2 ">
+              <Label className="mb-2 font-semibold">El Nino</Label>
+              <HelpHoverCard
+                title={"El Nino"}
+                content={`A single variable used to compare against the data`}
+              />
+            </div>
+            <Combobox
+              name="elNinoVariable"
+              label={"El Nino Variable"}
+              array={transformObject(ElNinoVariables)}
+              state={{
+                value: filterData.elNinoVariable,
+                setValue: handleChange,
+              }}
             />
           </div>
-          <Combobox
-            name="elNinoVariable"
-            label={"El Nino Variable"}
-            array={transformObject(ElNinoVariables)}
-            state={{
-              value: filterData.elNinoVariable,
-              setValue: handleChange,
-            }}
-          />
+
+          <div className="mt-5">
+            <div className="flex gap-2 ">
+              <Label className="mb-2 font-semibold">El Nino Source </Label>
+              <HelpHoverCard
+                title={" Source "}
+                content={` The source of dataset that you want to use for the current
+              analysis. `}
+              />
+            </div>
+            <Combobox
+              name="source"
+              label={"Source"}
+              array={transformSourceObject(params?.source)}
+              state={{
+                value: filterData.source,
+                setValue: handleChange,
+              }}
+            />
+          </div>
         </div>
 
         <div>
@@ -121,28 +190,6 @@ const ElNinoCommonFilter = ({
 
         <div>
           <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> Source </Label>
-            <HelpHoverCard
-              title={" Source "}
-              content={` The source of dataset that you want to use for the current
-              analysis. `}
-            />
-          </div>
-          <Combobox
-            name="source"
-            label={"Source"}
-            array={transformSourceObject(params?.source)}
-            state={{
-              value: filterData.source,
-              setValue: handleChange,
-            }}
-          />
-        </div>
-      </div>
-
-      <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
-        <div>
-          <div className="flex gap-2 ">
             <Label className="mb-2 font-semibold"> Country </Label>
             <HelpHoverCard
               title={" Country "}
@@ -159,7 +206,9 @@ const ElNinoCommonFilter = ({
             }}
           />
         </div>
+      </div>
 
+      <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
         {filterType === "predictive" && (
           <div>
             <div className="flex gap-2 ">
