@@ -200,7 +200,9 @@ const GDDToolsFilter = ({ filterData, handleChange }: GDDFilterProps) => {
         <div>
           <div>
             <div className="flex gap-2 ">
-              <Label className="font-semibold">Start date</Label>
+              <Label className="font-semibold">
+                Planting & Harvesting Date
+              </Label>
               <HelpHoverCard
                 title={"Start date"}
                 content={`The start date of the date range, you'd like to be analyzed.`}

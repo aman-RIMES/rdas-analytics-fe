@@ -25,10 +25,10 @@ const ElNinoCommonFilter = ({
       <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
         <div>
           <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold">Climate Variable</Label>
+            <Label className="mb-2 font-semibold">Data</Label>
             <HelpHoverCard
-              title={"Climate Variable"}
-              content={`A single climate variable used to compare against an El Nino
+              title={"Data"}
+              content={`Data used to compare against an El Nino
               variable.`}
             />
           </div>
@@ -47,10 +47,10 @@ const ElNinoCommonFilter = ({
 
         <div>
           <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold">El Nino Variable</Label>
+            <Label className="mb-2 font-semibold">El Nino</Label>
             <HelpHoverCard
-              title={"El Nino Variable"}
-              content={`A single variable used to compare against the climate variable.`}
+              title={"El Nino"}
+              content={`A single variable used to compare against the data`}
             />
           </div>
           <Combobox

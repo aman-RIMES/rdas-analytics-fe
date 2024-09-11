@@ -107,7 +107,9 @@ const DescriptiveAnalysis = ({ filterData, typeOfAnalysis }: FilterProps) => {
         <>
           <div className="flex 2xl:flex-row flex-col justify-center 2xl:gap-20 gap-10 items-center mt-10 w-full">
             <div className="w-full h-[370px] flex flex-col items-center justify-center sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
-              <p className="text-xl font-medium mb-5 ml-3">Head</p>
+              <p className="text-xl font-medium mb-5 ml-3">
+                Summary From Top 10 Rows Of The Dataset
+              </p>
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -147,9 +149,7 @@ const DescriptiveAnalysis = ({ filterData, typeOfAnalysis }: FilterProps) => {
             </div>
 
             <div className="w-full h-[370px] mt-5 md:mt-0 flex flex-col justify-center items-center sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
-              <p className="text-xl font-medium mb-5  ml-3">
-                Dataset Availability
-              </p>
+              <p className="text-xl font-medium mb-5  ml-3">Data Overview</p>
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -194,7 +194,7 @@ const DescriptiveAnalysis = ({ filterData, typeOfAnalysis }: FilterProps) => {
           </div>
 
           <div className="flex flex-col items-center justify-center mt-16 sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
-            <p className="text-xl font-medium mb-10">Statistics</p>
+            <p className="text-xl font-medium mb-10">Data Statistics</p>
             <Table>
               <TableHeader>
                 <TableRow>
