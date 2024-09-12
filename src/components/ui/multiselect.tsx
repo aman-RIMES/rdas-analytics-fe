@@ -72,13 +72,17 @@ export function FancyMultiSelect({
       className="overflow-visible bg-transparent "
     >
       <div className="group rounded-md border bg-white border-input px-3 py-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
-        <div className="flex flex-wrap gap-1">
+        <div className="flex flex-col gap-1">
           {selected?.map((element: any) => {
             return (
-              <Badge key={element?.value} variant="secondary">
+              <Badge
+                key={element?.value}
+                variant="secondary"
+                className="text-md flex justify-between hover:bg-gray-300"
+              >
                 {element?.label}
                 <button
-                  className="ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                  className="ml-1 rounded-md outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2"
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       handleUnselect(element);
@@ -90,7 +94,7 @@ export function FancyMultiSelect({
                   }}
                   onClick={() => handleUnselect(element)}
                 >
-                  <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+                  <X className="h-5 w-5 text-muted-foreground hover:text-foreground" />
                 </button>
               </Badge>
             );
@@ -103,7 +107,7 @@ export function FancyMultiSelect({
             onBlur={() => setOpen(false)}
             onFocus={() => setOpen(true)}
             placeholder={placeholder}
-            className="ml-2 flex-1 bg-transparent outline-none placeholder:font-medium  placeholder:text-black placeholder:text-muted-foreground"
+            className="ml-2 flex-1 bg-transparent outline-none placeholder:font-medium  placeholder:text-black placeholder:text-md placeholder:text-muted-foreground"
           />
         </div>
       </div>
