@@ -39,7 +39,7 @@ function Combobox({ array, state, label, name }: any) {
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="p-0">
+        <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height] p-0">
           <Command>
             <CommandInput placeholder="Search ..." />
             <CommandEmpty>{`No ${label} found`}</CommandEmpty>
