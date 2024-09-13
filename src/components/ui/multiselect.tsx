@@ -78,7 +78,7 @@ export function FancyMultiSelect({
               <Badge
                 key={element?.value}
                 variant="secondary"
-                className="text-md flex justify-between hover:bg-gray-300"
+                className="text-md rounded-md flex justify-between hover:bg-gray-300"
               >
                 {element?.label}
                 <button

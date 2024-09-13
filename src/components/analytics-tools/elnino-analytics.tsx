@@ -146,12 +146,12 @@ const ElNinoAnalytics = () => {
           </div>
 
           <div className="mb-10">
-            {isFinished(dynamicChartStatus) && (
+            {/* {isFinished(dynamicChartStatus) && (
               <DescriptiveAnalysis
                 filterData={filterData}
                 typeOfAnalysis={analysisType.elnino}
               />
-            )}
+            )} */}
             <AnalyticsData
               timeSeriesChartData={timeSeriesChartData}
               countryValue={filterData.countryValue}
