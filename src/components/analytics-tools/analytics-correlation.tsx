@@ -75,29 +75,29 @@ const AnalyticsCorrelation = ({
               end: `${filterData.toYear}-01-01`,
             }
       );
-      const regressionModelData = await axios.post(
-        "http://203.156.108.67:1580/regression_analysis",
-        typeOfAnalysis === analysisType.climate
-          ? {
-              source: "ERA5",
-              indic: `${correlationFilterData.correlationVariable1},${correlationFilterData.correlationVariable2}`,
-              period: filterData.periodValue,
-              district: filterData.districtValue,
-              start: `${filterData.fromYear}-01-01`,
-              end: `${filterData.toYear}-01-01`,
-            }
-          : {
-              source: "ERA5",
-              indic: `${correlationFilterData.correlationVariable1},${correlationFilterData.correlationVariable2}`,
-              period: "annual",
-              district: getAllDistrictsOfCountry(filterData?.districtList).join(
-                ","
-              ),
-              start: `${filterData.fromYear}-01-01`,
-              end: `${filterData.toYear}-01-01`,
-            }
-      );
-      setRegressionModelChartData(regressionModelData.data);
+      // const regressionModelData = await axios.post(
+      //   "http://203.156.108.67:1580/regression_analysis",
+      //   typeOfAnalysis === analysisType.climate
+      //     ? {
+      //         source: "ERA5",
+      //         indic: `${correlationFilterData.correlationVariable1},${correlationFilterData.correlationVariable2}`,
+      //         period: filterData.periodValue,
+      //         district: filterData.districtValue,
+      //         start: `${filterData.fromYear}-01-01`,
+      //         end: `${filterData.toYear}-01-01`,
+      //       }
+      //     : {
+      //         source: "ERA5",
+      //         indic: `${correlationFilterData.correlationVariable1},${correlationFilterData.correlationVariable2}`,
+      //         period: "annual",
+      //         district: getAllDistrictsOfCountry(filterData?.districtList).join(
+      //           ","
+      //         ),
+      //         start: `${filterData.fromYear}-01-01`,
+      //         end: `${filterData.toYear}-01-01`,
+      //       }
+      // );
+      // setRegressionModelChartData(regressionModelData.data);
       setCorrelationChartData(correlationData.data);
       setCorrelationStatus(requestStatus.isFinished);
     } catch (error) {
