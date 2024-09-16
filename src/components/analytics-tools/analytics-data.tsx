@@ -79,26 +79,43 @@ const AnalyticsData = ({
 
             {isFinished(dynamiMapStatus) && (
               <div className=" my-16 rounded-lg bg-white p-1 pb-10 shadow-md">
-                <p className="text-xl font-semibold flex justify-center my-8">
-                  Rainfall Anomaly
-                </p>
-                <Leaflet country={countryValue} geoJsonData={dynamicMapData} />
-                <div className=" w-full h-5 ml-5 mt-5 flex flex-row gap-5">
+                <div className="grid gap-4 md:grid-cols-2 grid-cols-1">
+                  <div className="p-10 ">
+                    <p className="text-lg mb-5 font-medium flex justify-center">
+                      Normal Rainfall
+                    </p>
+                    <Leaflet
+                      country={countryValue}
+                      geoJsonData={dynamicMapData}
+                    />
+                  </div>
+                  <div className="p-10">
+                    <p className="text-lg mb-5 font-medium flex justify-center">
+                      Rainfall Anomaly
+                    </p>
+                    <Leaflet
+                      country={countryValue}
+                      geoJsonData={dynamicMapData}
+                    />
+                  </div>
+                </div>
+
+                <div className=" w-full h-5 ml-5 mt-5 flex flex-row justify-center gap-5">
                   <div className="flex flex-row gap-2  justify-center">
-                    <div className="bg-[#019110] h-8 w-16 rounded-sm"></div>
-                    <p className="text-lg font-medium mt-1">{`Very High (> 900)`}</p>
+                    <div className="bg-[#019110] h-6 w-12 rounded-sm"></div>
+                    <p className="text-md font-medium ">{`Very High (> 900)`}</p>
                   </div>
                   <div className="flex flex-row gap-2  justify-center">
-                    <div className="bg-[#67bd70] h-8 w-16 rounded-sm"></div>
-                    <p className="text-lg font-medium mt-1">{`High (600 - 900)`}</p>
+                    <div className="bg-[#67bd70] h-6 w-12 rounded-sm"></div>
+                    <p className="text-md font-medium ">{`High (600 - 900)`}</p>
                   </div>
                   <div className="flex flex-row gap-2  justify-center">
-                    <div className="bg-[#98d29e] h-8 w-16 rounded-sm"></div>
-                    <p className="text-lg font-medium mt-1">{`Medium (300 - 600)`}</p>
+                    <div className="bg-[#98d29e] h-6 w-12 rounded-sm"></div>
+                    <p className="text-md font-medium ">{`Medium (300 - 600)`}</p>
                   </div>
                   <div className="flex flex-row gap-2  justify-center">
-                    <div className="bg-[#cde8cf] h-8 w-16 rounded-sm"></div>
-                    <p className="text-lg font-medium mt-1">{`Low < 300`}</p>
+                    <div className="bg-[#cde8cf] h-6 w-12 rounded-sm"></div>
+                    <p className="text-md font-medium ">{`Low < 300`}</p>
                   </div>
                 </div>
               </div>
