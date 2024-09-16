@@ -16,6 +16,7 @@ import { District, FilterProps } from "@/types";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { FancyMultiSelect } from "../ui/multiselect";
+import { Input } from "../ui/input";
 
 const ElNinoCommonFilter = ({
   params,
@@ -34,8 +35,8 @@ const ElNinoCommonFilter = ({
 
   return (
     <div>
-      <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
-        <div className="flex flex-col  p-3 shadow-md shadow-gray-300 rounded-lg">
+      <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center shadow-md shadow-gray-300 rounded-lg">
+        <div className="flex flex-col  p-3 ">
           <div className="col-span-2">
             <div className="flex gap-2">
               <Label className="mb-2 font-semibold">Data</Label>
@@ -56,28 +57,8 @@ const ElNinoCommonFilter = ({
             />
           </div>
 
-          <div className="mt-5">
-            <div className="flex gap-2 ">
-              <Label className="mb-2 font-semibold">Data Source </Label>
-              <HelpHoverCard
-                title={" Source "}
-                content={` The source of dataset that you want to use for the current
-              analysis. `}
-              />
-            </div>
-            <Combobox
-              name="source"
-              label={"Source"}
-              array={transformSourceObject(params?.source)}
-              state={{
-                value: filterData.source,
-                setValue: handleChange,
-              }}
-            />
-          </div>
-
           {containsCropAnalysis(filterData.dataVariable) && (
-            <div className="mt-5">
+            <div className="mt-2">
               <div className="flex gap-2 ">
                 <Label className="mb-2 font-semibold">Crop </Label>
                 <HelpHoverCard
@@ -99,29 +80,10 @@ const ElNinoCommonFilter = ({
           )}
         </div>
 
-        <div className="flex flex-col  p-3 shadow-md shadow-gray-300 rounded-lg">
+        <div className="flex flex-col  p-3">
           <div>
             <div className="flex gap-2 ">
-              <Label className="mb-2 font-semibold">El Nino</Label>
-              <HelpHoverCard
-                title={"El Nino"}
-                content={`A single variable used to compare against the data`}
-              />
-            </div>
-            <Combobox
-              name="elNinoVariable"
-              label={"El Nino Variable"}
-              array={transformObject(ElNinoVariables)}
-              state={{
-                value: filterData.elNinoVariable,
-                setValue: handleChange,
-              }}
-            />
-          </div>
-
-          <div className="mt-5">
-            <div className="flex gap-2 ">
-              <Label className="mb-2 font-semibold">El Nino Source </Label>
+              <Label className="mb-2 font-semibold">Data Source </Label>
               <HelpHoverCard
                 title={" Source "}
                 content={` The source of dataset that you want to use for the current
@@ -129,17 +91,41 @@ const ElNinoCommonFilter = ({
               />
             </div>
             <Combobox
-              name="elNinoDataSource"
+              name="source"
               label={"Source"}
-              array={transformSourceObject(params?.source)}
+              array={[
+                { value: "customDataset", label: "Custom Dataset" },
+                ...transformSourceObject(params?.source),
+              ]}
               state={{
-                value: filterData.elNinoDataSource,
+                value: filterData.source,
                 setValue: handleChange,
               }}
             />
           </div>
-        </div>
 
+          {filterData.source === "customDataset" && (
+            <div className="mt-3">
+              <div className="flex gap-2 ">
+                <Label className="mb-2 font-semibold">Custom Dataset</Label>
+                <HelpHoverCard
+                  title={" Custom Dataset "}
+                  content={` The custom dataset that you want to upload and use for the current
+              analysis. `}
+                />
+              </div>
+              <Input
+                onChange={(e) => {}}
+                id="picture"
+                type="file"
+                // value={fileName}
+              />
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
         <div>
           <div className="grid gap-4 md:grid-cols-2 grid-cols-1 justify-center">
             <div>

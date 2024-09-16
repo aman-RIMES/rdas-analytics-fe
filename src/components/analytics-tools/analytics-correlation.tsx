@@ -35,8 +35,7 @@ const AnalyticsCorrelation = ({
         typeOfAnalysis === analysisType.elnino
           ? Array.from(filterData.dataVariable)[0]
           : "",
-      correlationVariable2:
-        typeOfAnalysis === analysisType.elnino ? filterData.elNinoVariable : "",
+      correlationVariable2: "",
     });
   const [correlationStatus, setCorrelationStatus] = useState<requestStatus>();
   const [correlationChartData, setCorrelationChartData] = useState<any>({});

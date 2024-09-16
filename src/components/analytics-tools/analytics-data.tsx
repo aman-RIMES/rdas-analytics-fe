@@ -43,11 +43,12 @@ const AnalyticsData = ({
 
       {isFinished(dynamicChartStatus) && (
         <div className="sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
-          <div className="rounded-lg bg-white p-1 shadow-md">
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={timeSeriesChartData}
-            />
+          <div className="flex flex-col gap-10">
+            {timeSeriesChartData.map((chartData, index) => (
+              <div className="rounded-lg bg-white p-1 shadow-md">
+                <HighchartsReact highcharts={Highcharts} options={chartData} />
+              </div>
+            ))}
           </div>
 
           <div>

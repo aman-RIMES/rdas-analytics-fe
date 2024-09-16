@@ -75,10 +75,8 @@ export interface Country {
 export interface FilterData {
   dataVariable?: string[];
   dependentVariable?: string;
-  elNinoVariable?: string;
   independentVariables?: string[];
   source?: string;
-  elNinoDataSource?: string;
   districtValue?: string;
   countryValue: string;
   periodValue?: string;

@@ -29,10 +29,8 @@ const ElNinoAnalytics = () => {
 
   const [filterData, setFilterData] = useState<FilterData>({
     dataVariable: [],
-    elNinoVariable: "",
     cropValue: "",
     source: "",
-    elNinoDataSource: "",
     countryValue: "",
     districtList: [],
     fromYear: "",
@@ -46,9 +44,7 @@ const ElNinoAnalytics = () => {
   const verifyFilters = () => {
     return (
       filterData.dataVariable.length > 0 &&
-      filterData.elNinoVariable !== "" &&
       filterData.source !== "" &&
-      filterData.elNinoDataSource !== "" &&
       filterData.fromYear !== "" &&
       filterData.toYear !== "" &&
       filterData.countryValue !== ""
@@ -73,16 +69,11 @@ const ElNinoAnalytics = () => {
     setDynamicMapData({});
     try {
       const response = await axios.post(
-        "http://203.156.108.67:1580/dynamic_charts",
+        "http://203.156.108.67:1580/el_nino_time_series_chart",
         {
           source: "ERA5",
-          indic: `${filterData.dataVariable.join(",")},${
-            filterData.elNinoVariable
-          }`,
-          period: "annual",
-          district: getAllDistrictsOfCountry(filterData?.districtList).join(
-            ","
-          ),
+          indic: `rainfall`,
+          country: filterData.countryValue,
           crop: filterData.cropValue,
           start: `${filterData.fromYear}-01-01`,
           end: `${filterData.toYear}-01-01`,
