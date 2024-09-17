@@ -94,7 +94,7 @@ const ElNinoCommonFilter = ({
               name="source"
               label={"Source"}
               array={[
-                { value: "customDataset", label: "Custom Dataset" },
+                { value: "customDataset", label: "CUSTOM DATASET" },
                 ...transformSourceObject(params?.source),
               ]}
               state={{

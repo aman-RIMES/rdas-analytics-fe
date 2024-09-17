@@ -6,14 +6,13 @@ import "@/leaflet.css";
 import { formatTitle } from "@/lib/utils";
 import { useEffect } from "react";
 
-const Leaflet = ({ geoJsonData, country, mapType }: any) => {
+const Leaflet = ({ geoJsonData, country, mapType, chosenYear }: any) => {
   const subjectCountry = countries.find((e) => e.value === country);
 
   const countryStyle = {
-    fillColor: "grey",
     fillOpacity: 0.7,
     color: "black",
-    weight: 0.5,
+    weight: 0.2,
     // dashArray: 5,
   };
 
@@ -23,7 +22,7 @@ const Leaflet = ({ geoJsonData, country, mapType }: any) => {
     const value =
       mapType === mapDataType.normal
         ? district?.properties?.normal_rainfall
-        : district?.properties?.rainfall_anomaly[0];
+        : district?.properties?.rainfall_anomaly[chosenYear - 1];
 
     layer.bindPopup(`
       ${
@@ -31,19 +30,33 @@ const Leaflet = ({ geoJsonData, country, mapType }: any) => {
       } District,                                              
       ${provinceName ? provinceName : "--"} : ${parseInt(value)?.toFixed(2)}`);
 
-    layer.options.fillColor = value > 0 ? "green" : "red";
-
-    value < 300
-      ? (layer.options.fillOpacity = 0.2)
-      : value < 600
-      ? (layer.options.fillOpacity = 0.4)
-      : value < 1200
-      ? (layer.options.fillOpacity = 0.4)
-      : value < 1800
-      ? (layer.options.fillOpacity = 0.4)
-      : value < 2500
-      ? (layer.options.fillOpacity = 0.6)
-      : (layer.options.fillOpacity = 1);
+    value < -1200
+      ? (layer.options.fillColor = "#991b1b")
+      : value < -1000
+      ? (layer.options.fillColor = "#b91c1c")
+      : value < -800
+      ? (layer.options.fillColor = "#dc2626")
+      : value < -600
+      ? (layer.options.fillColor = "#ef4444")
+      : value < -400
+      ? (layer.options.fillColor = "#f87171")
+      : value < -200
+      ? (layer.options.fillColor = "#fca5a5")
+      : value < 0
+      ? (layer.options.fillColor = "#fecaca")
+      : value < 700
+      ? (layer.options.fillColor = "#bbf7d0")
+      : value < 1400
+      ? (layer.options.fillColor = "#dcfce7")
+      : value < 2100
+      ? (layer.options.fillColor = "#f0fdf4")
+      : value < 2800
+      ? (layer.options.fillColor = "#16a34a")
+      : value < 3500
+      ? (layer.options.fillColor = "#15803d")
+      : value < 4200
+      ? (layer.options.fillColor = "#166534")
+      : (layer.options.fillColor = "#86efac");
 
     // layer.on({
     //   click: (event) => {

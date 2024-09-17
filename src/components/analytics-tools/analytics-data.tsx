@@ -24,17 +24,18 @@ const AnalyticsData = ({
   const [chosenYear, setChosenYear] = useState(filterData.fromYear);
 
   const yearList = [];
+  let count = 0;
   for (
     let i: any = parseInt(filterData.fromYear);
     i <= parseInt(filterData.toYear);
     i++
   ) {
-    yearList.push({ value: i.toString(), label: i.toString() });
+    count += 1;
+    yearList.push({ value: count.toString(), label: i.toString() });
   }
 
   const handleChange = (name: string, value: string | []) => {
     setChosenYear(value.toString());
-    console.log(chosenYear);
   };
 
   return (
@@ -109,17 +110,21 @@ const AnalyticsData = ({
                       country={countryValue}
                       geoJsonData={dynamicMapData}
                       mapType={"normal"}
+                      chosenYear={chosenYear}
                     />
                   </div>
                   <div className="p-10">
                     <p className="text-lg mb-5 font-medium flex justify-center">
                       Rainfall Anomaly
                     </p>
-                    <Leaflet
-                      country={countryValue}
-                      geoJsonData={dynamicMapData}
-                      mapType={"anomaly"}
-                    />
+                    {chosenYear !== "0" && (
+                      <Leaflet
+                        country={countryValue}
+                        geoJsonData={dynamicMapData}
+                        mapType={"anomaly"}
+                        chosenYear={chosenYear}
+                      />
+                    )}
                     <div className="z-50">
                       <div className="flex gap-2 ">
                         <Label className="mb-2 font-semibold">
@@ -144,9 +149,23 @@ const AnalyticsData = ({
                   </div>
                 </div>
 
-                <div className="flex flex-col items-center justify-center">
-                  <div className="h-5 w-4/5 bg-gradient-to-r from-green-600 via-white to-red-500 rounded-3xl"></div>
-                  <p className="mt-5">* WORK IN PROGRESS *</p>
+                <div className="flex flex-col items-center justify-center p-5">
+                  <div className="h-5 w-full bg-gradient-to-r from-green-500 via-white to-red-400 rounded-3xl"></div>
+                  <div className="flex flex-row justify-between w-full p-3 mt-">
+                    <p className="">4200</p>
+                    <p className="">3500</p>
+                    <p className="">2800</p>
+                    <p className="">2100</p>
+                    <p className="">1400</p>
+                    <p className="">700 </p>
+                    <p className="">0</p>
+                    <p className="">-200</p>
+                    <p className="">-400</p>
+                    <p className="">-600</p>
+                    <p className="">-800</p>
+                    <p className="">-1000</p>
+                    <p className="">-1200</p>
+                  </div>
                 </div>
               </div>
             )}
