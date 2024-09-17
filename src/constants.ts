@@ -20,6 +20,11 @@ export enum analysisType {
   elnino = "elnino",
 }
 
+export enum mapDataType {
+  normal = "normal",
+  anomaly = "anomaly",
+}
+
 export const menus = [
   {
     id: 1,

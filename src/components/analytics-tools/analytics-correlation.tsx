@@ -39,9 +39,6 @@ const AnalyticsCorrelation = ({
     });
   const [correlationStatus, setCorrelationStatus] = useState<requestStatus>();
   const [correlationChartData, setCorrelationChartData] = useState<any>({});
-  const [regressionModelChartData, setRegressionModelChartData] = useState<any>(
-    {}
-  );
 
   const handleChange = (name: string, value: string | []) => {
     setCorrelationFilterData((prev) => ({ ...prev, [name]: value }));
@@ -50,10 +47,9 @@ const AnalyticsCorrelation = ({
   const generateCorrelationPlot = async () => {
     setCorrelationStatus(requestStatus.isLoading);
     setCorrelationChartData({});
-    setRegressionModelChartData({});
     try {
       const correlationData = await axios.post(
-        "http://203.156.108.67:1580/correlation_plot",
+        "http://203.156.108.67:1580/el_nino_correlation",
         typeOfAnalysis === analysisType.climate
           ? {
               source: "ERA5",
@@ -65,38 +61,12 @@ const AnalyticsCorrelation = ({
             }
           : {
               source: "ERA5",
-              indic: `${correlationFilterData.correlationVariable1},${correlationFilterData.correlationVariable2}`,
-              period: "annual",
-              district: getAllDistrictsOfCountry(filterData?.districtList).join(
-                ","
-              ),
+              indic: `rainfall`,
+              country: filterData.countryValue,
               start: `${filterData.fromYear}-01-01`,
               end: `${filterData.toYear}-01-01`,
             }
       );
-      // const regressionModelData = await axios.post(
-      //   "http://203.156.108.67:1580/regression_analysis",
-      //   typeOfAnalysis === analysisType.climate
-      //     ? {
-      //         source: "ERA5",
-      //         indic: `${correlationFilterData.correlationVariable1},${correlationFilterData.correlationVariable2}`,
-      //         period: filterData.periodValue,
-      //         district: filterData.districtValue,
-      //         start: `${filterData.fromYear}-01-01`,
-      //         end: `${filterData.toYear}-01-01`,
-      //       }
-      //     : {
-      //         source: "ERA5",
-      //         indic: `${correlationFilterData.correlationVariable1},${correlationFilterData.correlationVariable2}`,
-      //         period: "annual",
-      //         district: getAllDistrictsOfCountry(filterData?.districtList).join(
-      //           ","
-      //         ),
-      //         start: `${filterData.fromYear}-01-01`,
-      //         end: `${filterData.toYear}-01-01`,
-      //       }
-      // );
-      // setRegressionModelChartData(regressionModelData.data);
       setCorrelationChartData(correlationData.data);
       setCorrelationStatus(requestStatus.isFinished);
     } catch (error) {
@@ -112,47 +82,32 @@ const AnalyticsCorrelation = ({
         </h1>
       </div>
 
-      <div className="grid gap-4 my-8 md:grid-cols-3 grid-cols-1 justify-center">
-        <Combobox
-          name={"correlationVariable1"}
-          label={"First Variable"}
-          array={transformObject(
-            typeOfAnalysis === analysisType.climate
-              ? params.indic
-              : ElNinoToolDataIndicators
-          ).filter(
-            (e: any) => e.value !== correlationFilterData.correlationVariable2
-          )}
-          state={{
-            value: correlationFilterData.correlationVariable1,
-            setValue: handleChange,
-          }}
-        />
-        <Combobox
-          name={"correlationVariable2"}
-          label={"Second Variable"}
-          array={transformObject(
-            typeOfAnalysis === analysisType.climate
-              ? params.indic
-              : ElNinoVariables
-          ).filter(
-            (e: any) => e.value !== correlationFilterData.correlationVariable1
-          )}
-          state={{
-            value: correlationFilterData.correlationVariable2,
-            setValue: handleChange,
-          }}
-        />
-        <Button
-          disabled={
-            correlationFilterData.correlationVariable1 === "" ||
-            correlationFilterData.correlationVariable2 === ""
-          }
-          className="mt-8 md:mt-0 bg-green-800 text-white hover:text-gray-800 hover:bg-yellow-300"
-          onClick={generateCorrelationPlot}
-        >
-          Analyze Correlation
-        </Button>
+      <div className="flex justify-center">
+        <div className="grid w-2/3 gap-4 my-8 xl:grid-cols-2 grid-cols-1 ">
+          <Combobox
+            name={"correlationVariable1"}
+            label={"First Variable"}
+            array={transformObject(
+              typeOfAnalysis === analysisType.climate
+                ? params.indic
+                : ElNinoToolDataIndicators
+            ).filter(
+              (e: any) => e.value !== correlationFilterData.correlationVariable2
+            )}
+            state={{
+              value: correlationFilterData.correlationVariable1,
+              setValue: handleChange,
+            }}
+          />
+
+          <Button
+            disabled={correlationFilterData.correlationVariable1 === ""}
+            className="mt-8 md:mt-0 bg-green-800 text-white hover:text-gray-800 hover:bg-yellow-300"
+            onClick={generateCorrelationPlot}
+          >
+            Analyze Correlation
+          </Button>
+        </div>
       </div>
 
       {isLoading(correlationStatus) && (
@@ -183,56 +138,19 @@ const AnalyticsCorrelation = ({
 
       {isFinished(correlationStatus) && (
         <div className="mt-10">
-          <div className="flex flex-col">
+          <div className="grid gap-4 my-8 md:grid-cols-2 grid-cols-1 justify-center">
             <div>
               <HighchartsReact
                 highcharts={Highcharts}
-                options={correlationChartData}
+                options={correlationChartData.scatter}
               />
             </div>
-
-            <div className="flex justify-center items-center">
-              <p className="mt-5 w-4/5">
-                The Correlation matrix shows the strength and direction of the
-                relationship between{" "}
-                <span className="font-bold">
-                  {" "}
-                  {
-                    ElNinoToolDataIndicators[
-                      correlationFilterData.correlationVariable1
-                    ]
-                  }{" "}
-                </span>
-                and{" "}
-                <span className="font-bold">
-                  {ElNinoVariables[correlationFilterData.correlationVariable2]}{" "}
-                </span>
-                variables. In this case, there&#39;s a{" "}
-                <span className="font-bold">Negative</span> correlation between{" "}
-                {ElNinoVariables[correlationFilterData.correlationVariable2]}{" "}
-                and{" "}
-                {
-                  ElNinoToolDataIndicators[
-                    correlationFilterData.correlationVariable1
-                  ]
-                }{" "}
-                , suggesting that as{" "}
-                {ElNinoVariables[correlationFilterData.correlationVariable2]}{" "}
-                <span className="font-bold">intensifies</span>,{" "}
-                {
-                  ElNinoToolDataIndicators[
-                    correlationFilterData.correlationVariable1
-                  ]
-                }{" "}
-                tends to <span className="font-bold">decrease</span>.
-              </p>
+            <div>
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={correlationChartData.plot}
+              />
             </div>
-          </div>
-          <div className="mt-10">
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={regressionModelChartData}
-            />
           </div>
         </div>
       )}

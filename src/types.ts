@@ -107,6 +107,7 @@ export interface FilterProps {
 }
 
 export interface AnalyticsDataProps {
+  filterData: FilterData;
   timeSeriesChartData: any;
   countryValue: string;
   dynamicMapData: any;

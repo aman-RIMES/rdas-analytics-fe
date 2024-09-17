@@ -6,16 +6,37 @@ import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
 import { isError, isFinished, isLoading } from "@/lib/utils";
 import { AnalyticsDataProps } from "@/types";
 import { grid, reuleaux } from "ldrs";
+import { Label } from "@radix-ui/react-dropdown-menu";
+import HelpHoverCard from "../help-hover-card";
+import Combobox from "../ui/combobox";
+import { useState } from "react";
 reuleaux.register("l-reuleaux");
 grid.register("l-loader");
 
 const AnalyticsData = ({
+  filterData,
   timeSeriesChartData,
   countryValue,
   dynamicMapData,
   dynamicChartStatus,
   dynamiMapStatus,
 }: AnalyticsDataProps) => {
+  const [chosenYear, setChosenYear] = useState(filterData.fromYear);
+
+  const yearList = [];
+  for (
+    let i: any = parseInt(filterData.fromYear);
+    i <= parseInt(filterData.toYear);
+    i++
+  ) {
+    yearList.push({ value: i.toString(), label: i.toString() });
+  }
+
+  const handleChange = (name: string, value: string | []) => {
+    setChosenYear(value.toString());
+    console.log(chosenYear);
+  };
+
   return (
     <div className=" mt-10">
       {isLoading(dynamicChartStatus) && (
@@ -87,6 +108,7 @@ const AnalyticsData = ({
                     <Leaflet
                       country={countryValue}
                       geoJsonData={dynamicMapData}
+                      mapType={"normal"}
                     />
                   </div>
                   <div className="p-10">
@@ -96,27 +118,35 @@ const AnalyticsData = ({
                     <Leaflet
                       country={countryValue}
                       geoJsonData={dynamicMapData}
+                      mapType={"anomaly"}
                     />
+                    <div className="z-50">
+                      <div className="flex gap-2 ">
+                        <Label className="mb-2 font-semibold">
+                          {" "}
+                          Anomaly Year{" "}
+                        </Label>
+                        <HelpHoverCard
+                          title={" Anomaly Year "}
+                          content={` The year of anomaly that you would like to view `}
+                        />
+                      </div>
+                      <Combobox
+                        name="year"
+                        label={"Year"}
+                        array={yearList}
+                        state={{
+                          value: chosenYear,
+                          setValue: handleChange,
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
 
-                <div className=" w-full h-5 ml-5 mt-5 flex flex-row justify-center gap-5">
-                  <div className="flex flex-row gap-2  justify-center">
-                    <div className="bg-[#019110] h-6 w-12 rounded-sm"></div>
-                    <p className="text-md font-medium ">{`Very High (> 900)`}</p>
-                  </div>
-                  <div className="flex flex-row gap-2  justify-center">
-                    <div className="bg-[#67bd70] h-6 w-12 rounded-sm"></div>
-                    <p className="text-md font-medium ">{`High (600 - 900)`}</p>
-                  </div>
-                  <div className="flex flex-row gap-2  justify-center">
-                    <div className="bg-[#98d29e] h-6 w-12 rounded-sm"></div>
-                    <p className="text-md font-medium ">{`Medium (300 - 600)`}</p>
-                  </div>
-                  <div className="flex flex-row gap-2  justify-center">
-                    <div className="bg-[#cde8cf] h-6 w-12 rounded-sm"></div>
-                    <p className="text-md font-medium ">{`Low < 300`}</p>
-                  </div>
+                <div className="flex flex-col items-center justify-center">
+                  <div className="h-5 w-4/5 bg-gradient-to-r from-green-600 via-white to-red-500 rounded-3xl"></div>
+                  <p className="mt-5">* WORK IN PROGRESS *</p>
                 </div>
               </div>
             )}

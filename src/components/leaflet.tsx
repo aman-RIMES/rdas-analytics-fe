@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MapContainer, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { countries } from "@/constants";
+import { countries, mapDataType } from "@/constants";
 import "@/leaflet.css";
 import { formatTitle } from "@/lib/utils";
 import { useEffect } from "react";
 
-const Leaflet = ({ geoJsonData, country }: any) => {
+const Leaflet = ({ geoJsonData, country, mapType }: any) => {
   const subjectCountry = countries.find((e) => e.value === country);
 
   const countryStyle = {
@@ -20,20 +20,28 @@ const Leaflet = ({ geoJsonData, country }: any) => {
   const onEachDistrict = (district: any, layer: any) => {
     const districtName = district?.properties?.District;
     const provinceName = district?.properties?.Province;
-    const value = district?.properties?.data_value;
+    const value =
+      mapType === mapDataType.normal
+        ? district?.properties?.normal_rainfall
+        : district?.properties?.rainfall_anomaly[0];
+
     layer.bindPopup(`
       ${
         districtName ? formatTitle(districtName) : "--"
       } District,                                              
       ${provinceName ? provinceName : "--"} : ${parseInt(value)?.toFixed(2)}`);
 
-    layer.options.fillColor = "green";
+    layer.options.fillColor = value > 0 ? "green" : "red";
 
-    district.properties.data_value < 300
+    value < 300
       ? (layer.options.fillOpacity = 0.2)
-      : district.properties.data_value < 600
+      : value < 600
       ? (layer.options.fillOpacity = 0.4)
-      : district.properties.data_value < 900
+      : value < 1200
+      ? (layer.options.fillOpacity = 0.4)
+      : value < 1800
+      ? (layer.options.fillOpacity = 0.4)
+      : value < 2500
       ? (layer.options.fillOpacity = 0.6)
       : (layer.options.fillOpacity = 1);
 
@@ -46,6 +54,7 @@ const Leaflet = ({ geoJsonData, country }: any) => {
     //   },
     // });
   };
+
   return (
     <div>
       <div className="">

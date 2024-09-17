@@ -90,14 +90,11 @@ const ElNinoAnalytics = () => {
     try {
       setDynamiMapStatus(requestStatus.isLoading);
       const geoJson = await axios.post(
-        "http://203.156.108.67:1580/dynamic_map",
+        "http://203.156.108.67:1580/el_nino_map",
         {
           source: "ERA5",
-          indic: "rainfall_deviation",
-          period: "annual",
-          district: getAllDistrictsOfCountry(filterData?.districtList).join(
-            ","
-          ),
+          indic: "rainfall",
+          country: filterData.countryValue,
           start: `${filterData.fromYear}-01-01`,
           end: `${filterData.toYear}-01-01`,
         }
@@ -137,13 +134,8 @@ const ElNinoAnalytics = () => {
           </div>
 
           <div className="mb-10">
-            {/* {isFinished(dynamicChartStatus) && (
-              <DescriptiveAnalysis
-                filterData={filterData}
-                typeOfAnalysis={analysisType.elnino}
-              />
-            )} */}
             <AnalyticsData
+              filterData={filterData}
               timeSeriesChartData={timeSeriesChartData}
               countryValue={filterData.countryValue}
               dynamicMapData={dynamicMapData}
