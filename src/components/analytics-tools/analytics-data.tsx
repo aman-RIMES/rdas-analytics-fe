@@ -10,6 +10,8 @@ import { Label } from "@radix-ui/react-dropdown-menu";
 import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
 import { useState } from "react";
+import { DividerVerticalIcon } from "@radix-ui/react-icons";
+import MapLegend from "../map-legend";
 reuleaux.register("l-reuleaux");
 grid.register("l-loader");
 
@@ -104,7 +106,7 @@ const AnalyticsData = ({
                 <div className="grid gap-4 md:grid-cols-2 grid-cols-1">
                   <div className="p-10 ">
                     <p className="text-lg mb-5 font-medium flex justify-center">
-                      Normal Rainfall
+                      Normal Rainfall (mm)
                     </p>
                     <Leaflet
                       country={countryValue}
@@ -115,7 +117,7 @@ const AnalyticsData = ({
                   </div>
                   <div className="p-10">
                     <p className="text-lg mb-5 font-medium flex justify-center">
-                      Rainfall Anomaly
+                      Rainfall Anomaly (mm)
                     </p>
                     {chosenYear !== "0" && (
                       <Leaflet
@@ -149,24 +151,7 @@ const AnalyticsData = ({
                   </div>
                 </div>
 
-                <div className="flex flex-col items-center justify-center p-5">
-                  <div className="h-5 w-full bg-gradient-to-r from-green-500 via-white to-red-400 rounded-3xl"></div>
-                  <div className="flex flex-row justify-between w-full p-3 mt-">
-                    <p className="">4200</p>
-                    <p className="">3500</p>
-                    <p className="">2800</p>
-                    <p className="">2100</p>
-                    <p className="">1400</p>
-                    <p className="">700 </p>
-                    <p className="">0</p>
-                    <p className="">-200</p>
-                    <p className="">-400</p>
-                    <p className="">-600</p>
-                    <p className="">-800</p>
-                    <p className="">-1000</p>
-                    <p className="">-1200</p>
-                  </div>
-                </div>
+                <MapLegend />
               </div>
             )}
           </div>

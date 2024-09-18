@@ -12,7 +12,7 @@ const Leaflet = ({ geoJsonData, country, mapType, chosenYear }: any) => {
   const countryStyle = {
     fillOpacity: 0.7,
     color: "black",
-    weight: 0.2,
+    weight: 0.1,
     // dashArray: 5,
   };
 
@@ -45,18 +45,18 @@ const Leaflet = ({ geoJsonData, country, mapType, chosenYear }: any) => {
       : value < 0
       ? (layer.options.fillColor = "#fecaca")
       : value < 700
-      ? (layer.options.fillColor = "#bbf7d0")
-      : value < 1400
       ? (layer.options.fillColor = "#dcfce7")
+      : value < 1400
+      ? (layer.options.fillColor = "#bbf7d0")
       : value < 2100
-      ? (layer.options.fillColor = "#f0fdf4")
+      ? (layer.options.fillColor = "#86efac")
       : value < 2800
-      ? (layer.options.fillColor = "#16a34a")
+      ? (layer.options.fillColor = "#4ade80")
       : value < 3500
-      ? (layer.options.fillColor = "#15803d")
+      ? (layer.options.fillColor = "#22c55e")
       : value < 4200
-      ? (layer.options.fillColor = "#166534")
-      : (layer.options.fillColor = "#86efac");
+      ? (layer.options.fillColor = "#15803d")
+      : (layer.options.fillColor = "#166534");
 
     // layer.on({
     //   click: (event) => {
