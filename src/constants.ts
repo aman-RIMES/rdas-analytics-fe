@@ -317,18 +317,18 @@ export const Indicators = {
 };
 
 export const ElNinoToolDataIndicators = {
-  temperature_max_monthly: "Temperature max monthly, year wise",
-  temperature_min_monthly: "Temperature min monthly, year wise",
-  temperature_avg_monthly: "Average / mean temperature monthly, year wise",
-  rainfall_cummulative_monthly: "Rainfall cumulative monthly, year wise",
+  // temperature_max_monthly: "Temperature max monthly, year wise",
+  // temperature_min_monthly: "Temperature min monthly, year wise",
+  // temperature_avg_monthly: "Average / mean temperature monthly, year wise",
+  // rainfall_cummulative_monthly: "Rainfall cumulative monthly, year wise",
   rainfall_cummulative_seasonal: "Rainfall cumulative seasonal, Year wise",
-  rainfall_max_monthly: "Rainfall max monthly year wise",
-  rainfall_min_monthly: "Rainfall min monthly, year wise",
-  crop_production_monthly: "Crop production acreage monthly, year wise",
-  crop_production_seasonal: "Crop production acreage seasonal year wise",
-  crop_yield_seasonal: "Crop-wise yield seasonal, year wise",
-  crop_price_monthly: "Crop-wise price monthly, yearly",
-  crop_price_seasonal: "Crop-wise price seasonal, year wise",
+  // rainfall_max_monthly: "Rainfall max monthly year wise",
+  // rainfall_min_monthly: "Rainfall min monthly, year wise",
+  // crop_production_monthly: "Crop production acreage monthly, year wise",
+  // crop_production_seasonal: "Crop production acreage seasonal year wise",
+  // crop_yield_seasonal: "Crop-wise yield seasonal, year wise",
+  // crop_price_monthly: "Crop-wise price monthly, yearly",
+  // crop_price_seasonal: "Crop-wise price seasonal, year wise",
 };
 
 export const ElNinoVariables = {

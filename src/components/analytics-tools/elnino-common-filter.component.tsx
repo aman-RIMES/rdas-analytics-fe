@@ -54,6 +54,7 @@ const ElNinoCommonFilter = ({
               array={transformObject(ElNinoToolDataIndicators).filter(
                 (e) => !filterData.dataVariable?.includes(e.value)
               )}
+              ScrollAreaHeight={12}
             />
           </div>
 
