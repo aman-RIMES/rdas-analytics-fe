@@ -89,6 +89,7 @@ export interface FilterData {
   yearsValue?: YearsList[];
   fromYear?: string;
   toYear?: string;
+  chosenYear?: string;
 }
 
 export interface CorrelationFilterData {
@@ -113,6 +114,7 @@ export interface AnalyticsDataProps {
   dynamicMapData: any;
   dynamicChartStatus: requestStatus;
   dynamiMapStatus: requestStatus;
+  handleChange?: (name, value) => void;
 }
 
 export interface PredictiveDataProps {

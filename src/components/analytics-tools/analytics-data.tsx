@@ -9,8 +9,7 @@ import { grid, reuleaux } from "ldrs";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
-import { useState } from "react";
-import { DividerVerticalIcon } from "@radix-ui/react-icons";
+import { useEffect, useState } from "react";
 import MapLegend from "../map-legend";
 reuleaux.register("l-reuleaux");
 grid.register("l-loader");
@@ -22,9 +21,8 @@ const AnalyticsData = ({
   dynamicMapData,
   dynamicChartStatus,
   dynamiMapStatus,
+  handleChange,
 }: AnalyticsDataProps) => {
-  const [chosenYear, setChosenYear] = useState(filterData.fromYear);
-
   const yearList = [];
   let count = 0;
   for (
@@ -35,10 +33,6 @@ const AnalyticsData = ({
     count += 1;
     yearList.push({ value: count.toString(), label: i.toString() });
   }
-
-  const handleChange = (name: string, value: string | []) => {
-    setChosenYear(value.toString());
-  };
 
   return (
     <div className=" mt-10">
@@ -112,21 +106,19 @@ const AnalyticsData = ({
                       country={countryValue}
                       geoJsonData={dynamicMapData}
                       mapType={"normal"}
-                      chosenYear={chosenYear}
+                      chosenYear={filterData.chosenYear}
                     />
                   </div>
                   <div className="p-10">
                     <p className="text-lg mb-5 font-medium flex justify-center">
                       Rainfall Anomaly (mm)
                     </p>
-                    {chosenYear !== "0" && (
-                      <Leaflet
-                        country={countryValue}
-                        geoJsonData={dynamicMapData}
-                        mapType={"anomaly"}
-                        chosenYear={chosenYear}
-                      />
-                    )}
+                    <Leaflet
+                      country={countryValue}
+                      geoJsonData={dynamicMapData}
+                      mapType={"anomaly"}
+                      chosenYear={filterData.chosenYear}
+                    />
                     <div className="z-50">
                       <div className="flex gap-2 ">
                         <Label className="mb-2 font-semibold">
@@ -139,11 +131,11 @@ const AnalyticsData = ({
                         />
                       </div>
                       <Combobox
-                        name="year"
+                        name="chosenYear"
                         label={"Year"}
                         array={yearList}
                         state={{
-                          value: chosenYear,
+                          value: filterData.chosenYear,
                           setValue: handleChange,
                         }}
                       />

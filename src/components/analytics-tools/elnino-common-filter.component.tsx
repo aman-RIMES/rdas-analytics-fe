@@ -7,6 +7,7 @@ import {
 } from "@/constants";
 import {
   containsCropAnalysis,
+  transformDistrictParams,
   transformObject,
   transformSourceObject,
 } from "@/lib/utils";
@@ -179,23 +180,45 @@ const ElNinoCommonFilter = ({
           </div>
         </div>
 
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> Country </Label>
-            <HelpHoverCard
-              title={" Country "}
-              content={` The country of chosen location that you'd like to analyze. `}
+        <div className="grid gap-4 md:grid-cols-2 grid-cols-1 justify-center">
+          <div>
+            <div className="flex gap-2 ">
+              <Label className="mb-2 font-semibold"> Country </Label>
+              <HelpHoverCard
+                title={" Country "}
+                content={` The country of chosen location that you'd like to analyze. `}
+              />
+            </div>
+            <Combobox
+              name="countryValue"
+              label={"Country"}
+              array={countries}
+              state={{
+                value: filterData.countryValue,
+                setValue: handleChange,
+              }}
             />
           </div>
-          <Combobox
-            name="countryValue"
-            label={"Country"}
-            array={countries}
-            state={{
-              value: filterData.countryValue,
-              setValue: handleChange,
-            }}
-          />
+
+          <div>
+            <div className="flex gap-2 ">
+              <Label className="mb-2 font-semibold"> District </Label>
+              <HelpHoverCard
+                title={" District "}
+                content={`  The specific district of the chosen country to be used for the
+              analysis. `}
+              />
+            </div>
+            <Combobox
+              name="districtValue"
+              label={"District"}
+              array={transformDistrictParams(filterData?.districtList)}
+              state={{
+                value: filterData.districtValue,
+                setValue: handleChange,
+              }}
+            />
+          </div>
         </div>
       </div>
 

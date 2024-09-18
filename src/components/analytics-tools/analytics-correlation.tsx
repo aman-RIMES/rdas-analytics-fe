@@ -62,7 +62,7 @@ const AnalyticsCorrelation = ({
           : {
               source: "ERA5",
               indic: `rainfall`,
-              country: filterData.countryValue,
+              area: [`${filterData.districtValue}`],
               start: `${filterData.fromYear}-01-01`,
               end: `${filterData.toYear}-01-01`,
             }
@@ -138,19 +138,26 @@ const AnalyticsCorrelation = ({
 
       {isFinished(correlationStatus) && (
         <div className="mt-10">
-          <div className="grid gap-4 my-8 md:grid-cols-2 grid-cols-1 justify-center">
-            <div>
-              <HighchartsReact
-                highcharts={Highcharts}
-                options={correlationChartData.scatter}
-              />
-            </div>
-            <div>
-              <HighchartsReact
-                highcharts={Highcharts}
-                options={correlationChartData.plot}
-              />
-            </div>
+          <div className="flex flex-col">
+            {correlationChartData.map((chartData, index) => (
+              <div
+                key={index}
+                className="grid gap-4 my-8 md:grid-cols-2 grid-cols-1 justify-center"
+              >
+                <div>
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={chartData.scatter}
+                  />
+                </div>
+                <div>
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={chartData.plot}
+                  />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}
