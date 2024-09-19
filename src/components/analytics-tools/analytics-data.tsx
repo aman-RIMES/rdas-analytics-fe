@@ -97,7 +97,7 @@ const AnalyticsData = ({
 
             {isFinished(dynamiMapStatus) && (
               <div className=" my-16 rounded-lg bg-white p-1 pb-10 shadow-md">
-                <div className="grid gap-4 md:grid-cols-2 grid-cols-1">
+                <div className="grid md:grid-cols-2 grid-cols-1">
                   <div className="p-10 ">
                     <p className="text-lg mb-5 font-medium flex justify-center">
                       Normal Rainfall (mm)

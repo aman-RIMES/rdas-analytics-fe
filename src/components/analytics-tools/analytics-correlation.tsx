@@ -22,6 +22,7 @@ import {
 } from "@/constants";
 import { CorrelationFilterData, FilterProps } from "@/types";
 import { quantum } from "ldrs";
+import CorrelationPlotLegend from "../correlation-plot-legend";
 quantum.register("l-quantum");
 
 const AnalyticsCorrelation = ({
@@ -159,6 +160,8 @@ const AnalyticsCorrelation = ({
               </div>
             ))}
           </div>
+
+          <CorrelationPlotLegend />
         </div>
       )}
     </div>

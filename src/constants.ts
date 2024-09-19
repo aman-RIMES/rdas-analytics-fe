@@ -336,3 +336,35 @@ export const ElNinoVariables = {
   el_nino_strong: "Strong El Nino Events",
   el_nino_weak: "Weak El Nino Events",
 };
+
+export const correlationLegendObject = {
+  "-1": "Perfect Negative Correlation",
+  "-1 < r ≤ -0.8": "Very Strong Negative Correlation",
+  "-0.8 < r ≤ -0.6": "Strong Negative Correlation",
+  "-0.6 < r ≤ 0.4": "Medium Negative Correlation",
+  "-0.4 < r ≤ 0.2": "Weak Negative Correlation",
+  "-0.2 < r < 0": "Very Weak Negative Correlation",
+  "0": "No Correlation",
+  "0 < r < 0.2": "Very Weak Positive Correlation",
+  "0.2 ≤ r < 0.4": "Weak Positive Correlation",
+  "0.4 ≤ r < 0.6": "Medium Positive Correlation",
+  "0.6 ≤ r < 0.8": "Strong Positive Correlation",
+  "0.8 ≤ r < 1.0": "Very Strong Positive Correlation",
+  "1": "Perfect Positive Correlation",
+};
+
+export const correlationLegendStyle = [
+  "bg-blue-700 text-white",
+  "bg-blue-600 text-white",
+  "bg-blue-500 text-white",
+  "bg-blue-400 text-white",
+  "bg-blue-300 text-black",
+  "bg-blue-200 text-black",
+  "bg-gray-200 text-black",
+  "bg-red-200 text-black",
+  "bg-red-300 text-black",
+  "bg-red-400 text-white",
+  "bg-red-500 text-white",
+  "bg-red-600 text-white",
+  "bg-red-700 text-white",
+];
