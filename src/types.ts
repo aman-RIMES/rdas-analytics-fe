@@ -114,6 +114,7 @@ export interface AnalyticsDataProps {
   dynamicMapData: any;
   dynamicChartStatus: requestStatus;
   dynamiMapStatus: requestStatus;
+  anomalyMapStatus?: requestStatus;
   handleChange?: (name, value) => void;
 }
 

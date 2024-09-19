@@ -23,6 +23,9 @@ const ElNinoAnalytics = () => {
   const [dynamiMapStatus, setDynamiMapStatus] = useState<requestStatus>(
     requestStatus.idle
   );
+  const [anomlayMapStatus, setAnomalyMapStatus] = useState<requestStatus>(
+    requestStatus.idle
+  );
   const [timeSeriesChartData, setTimeSeriesChartData] = useState<any>({});
   const [dynamicMapData, setDynamicMapData] = useState<any>({});
   const [selected, setSelected] = useState<[]>([]);
@@ -65,6 +68,10 @@ const ElNinoAnalytics = () => {
     })();
   }, []);
 
+  useEffect(() => {
+    reloadAnomalyMap();
+  }, [filterData.chosenYear]);
+
   const generateDynamicChart = async () => {
     setDynamicChartStatus(requestStatus.isLoading);
     setDynamiMapStatus(requestStatus.isLoading);
@@ -105,6 +112,18 @@ const ElNinoAnalytics = () => {
       );
       setDynamicMapData(geoJson.data);
       setDynamiMapStatus(requestStatus.isFinished);
+      setAnomalyMapStatus(requestStatus.isFinished);
+    } catch (error) {
+      setDynamiMapStatus(requestStatus.isError);
+    }
+  };
+
+  const reloadAnomalyMap = async () => {
+    try {
+      setAnomalyMapStatus(requestStatus.isLoading);
+      setTimeout(() => {
+        setAnomalyMapStatus(requestStatus.isFinished);
+      }, 0);
     } catch (error) {
       setDynamiMapStatus(requestStatus.isError);
     }
@@ -145,6 +164,7 @@ const ElNinoAnalytics = () => {
               dynamicMapData={dynamicMapData}
               dynamicChartStatus={dynamicChartStatus}
               dynamiMapStatus={dynamiMapStatus}
+              anomalyMapStatus={anomlayMapStatus}
               handleChange={handleChange}
             />
             {isFinished(dynamicChartStatus) && (

@@ -1,6 +1,6 @@
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highmaps";
-import { AlertCircle, LoaderIcon } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import Leaflet from "../leaflet";
 import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
 import { isError, isFinished, isLoading } from "@/lib/utils";
@@ -9,7 +9,6 @@ import { grid, reuleaux } from "ldrs";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
-import { useEffect, useState } from "react";
 import MapLegend from "../map-legend";
 reuleaux.register("l-reuleaux");
 grid.register("l-loader");
@@ -21,6 +20,7 @@ const AnalyticsData = ({
   dynamicMapData,
   dynamicChartStatus,
   dynamiMapStatus,
+  anomalyMapStatus,
   handleChange,
 }: AnalyticsDataProps) => {
   const yearList = [];
@@ -63,7 +63,7 @@ const AnalyticsData = ({
         <div className="sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
           <div className="flex flex-col gap-10">
             {timeSeriesChartData.map((chartData, index) => (
-              <div className="rounded-lg bg-white p-1 shadow-md">
+              <div key={index} className="rounded-lg bg-white p-1 shadow-md">
                 <HighchartsReact highcharts={Highcharts} options={chartData} />
               </div>
             ))}
@@ -102,24 +102,38 @@ const AnalyticsData = ({
                     <p className="text-lg mb-5 font-medium flex justify-center">
                       Normal Rainfall (mm)
                     </p>
-                    <Leaflet
-                      country={countryValue}
-                      geoJsonData={dynamicMapData}
-                      mapType={"normal"}
-                      chosenYear={filterData.chosenYear}
-                    />
+                    <div className="shadow-md rounded-xl p-2">
+                      <Leaflet
+                        country={countryValue}
+                        geoJsonData={dynamicMapData}
+                        mapType={"normal"}
+                        chosenYear={filterData.chosenYear}
+                      />
+                    </div>
                   </div>
                   <div className="p-10">
                     <p className="text-lg mb-5 font-medium flex justify-center">
                       Rainfall Anomaly (mm)
                     </p>
-                    <Leaflet
-                      country={countryValue}
-                      geoJsonData={dynamicMapData}
-                      mapType={"anomaly"}
-                      chosenYear={filterData.chosenYear}
-                    />
-                    <div className="z-50">
+
+                    <div className="w-full min-h-[420px] shadow-md rounded-xl p-2">
+                      {isLoading(anomalyMapStatus) && (
+                        <div className=" flex flex-col items-center justify-center mt-40">
+                          {/* @ts-ignore */}
+                          <l-loader color="green" size="50"></l-loader>
+                        </div>
+                      )}
+                      {isFinished(anomalyMapStatus) && (
+                        <Leaflet
+                          country={countryValue}
+                          geoJsonData={dynamicMapData}
+                          mapType={"anomaly"}
+                          chosenYear={filterData.chosenYear}
+                        />
+                      )}
+                    </div>
+
+                    <div className="w-full mt-5">
                       <div className="flex gap-2 ">
                         <Label className="mb-2 font-semibold">
                           {" "}
