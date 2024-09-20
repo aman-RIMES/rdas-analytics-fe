@@ -337,34 +337,70 @@ export const ElNinoVariables = {
   el_nino_weak: "Weak El Nino Events",
 };
 
-export const correlationLegendObject = {
-  "-1": "Perfect Negative Correlation",
-  "-1 < r ≤ -0.8": "Very Strong Negative Correlation",
-  "-0.8 < r ≤ -0.6": "Strong Negative Correlation",
-  "-0.6 < r ≤ 0.4": "Medium Negative Correlation",
-  "-0.4 < r ≤ 0.2": "Weak Negative Correlation",
-  "-0.2 < r < 0": "Very Weak Negative Correlation",
-  "0": "No Correlation",
-  "0 < r < 0.2": "Very Weak Positive Correlation",
-  "0.2 ≤ r < 0.4": "Weak Positive Correlation",
-  "0.4 ≤ r < 0.6": "Medium Positive Correlation",
-  "0.6 ≤ r < 0.8": "Strong Positive Correlation",
-  "0.8 ≤ r < 1.0": "Very Strong Positive Correlation",
-  "1": "Perfect Positive Correlation",
-};
-
-export const correlationLegendStyle = [
-  "bg-blue-700 text-white",
-  "bg-blue-600 text-white",
-  "bg-blue-500 text-white",
-  "bg-blue-400 text-white",
-  "bg-blue-300 text-black",
-  "bg-blue-200 text-black",
-  "bg-gray-200 text-black",
-  "bg-red-200 text-black",
-  "bg-red-300 text-black",
-  "bg-red-400 text-white",
-  "bg-red-500 text-white",
-  "bg-red-600 text-white",
-  "bg-red-700 text-white",
+export const correlationLegendObject = [
+  {
+    coefficient: "-1",
+    description: "Perfect Negative Correlation",
+    style: "bg-blue-700 text-white",
+  },
+  {
+    coefficient: "-1 < r ≤ -0.8",
+    description: "Very Strong Negative Correlation",
+    style: "bg-blue-600 text-white",
+  },
+  {
+    coefficient: "-0.8 < r ≤ -0.6",
+    description: "Strong Negative Correlation",
+    style: "bg-blue-500 text-white",
+  },
+  {
+    coefficient: "-0.6 < r ≤ 0.4",
+    description: "Medium Negative Correlation",
+    style: "bg-blue-400 text-white",
+  },
+  {
+    coefficient: "-0.4 < r ≤ 0.2",
+    description: "Weak Negative Correlation",
+    style: "bg-blue-300 text-black",
+  },
+  {
+    coefficient: "-0.2 < r < 0",
+    description: "Very Weak Negative Correlation",
+    style: "bg-blue-200 text-black",
+  },
+  {
+    coefficient: "0",
+    description: "No Correlation",
+    style: "bg-gray-200 text-black",
+  },
+  {
+    coefficient: "0 < r < 0.2",
+    description: "Very Weak Positive Correlation",
+    style: "bg-red-200 text-black",
+  },
+  {
+    coefficient: "0.2 ≤ r < 0.4",
+    description: "Weak Positive Correlation",
+    style: "bg-red-300 text-black",
+  },
+  {
+    coefficient: "0.4 ≤ r < 0.6",
+    description: "Medium Positive Correlation",
+    style: "bg-red-400 text-white",
+  },
+  {
+    coefficient: "0.6 ≤ r < 0.8",
+    description: "Strong Positive Correlation",
+    style: "bg-red-500 text-white",
+  },
+  {
+    coefficient: "0.8 ≤ r < 1.0",
+    description: "Very Strong Positive Correlation",
+    style: "bg-red-600 text-white",
+  },
+  {
+    coefficient: "1",
+    description: "Perfect Positive Correlation",
+    style: "bg-red-700 text-white",
+  },
 ];

@@ -178,7 +178,7 @@ const ElNinoAnalytics = () => {
                 <div className="flex justify-center mt-16">
                   <Button
                     variant="default"
-                    className="text-xl p-10 bg-green-800 text-white hover:bg-yellow-300 hover:text-gray-800"
+                    className="text-xl p-7 bg-green-800 text-white hover:bg-yellow-300 hover:text-gray-800"
                     onClick={() =>
                       navigate("/predictive-tools", {
                         state: {

@@ -169,7 +169,7 @@ const AnalyticsCorrelation = ({
 
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
-              <AccordionTrigger className="flex justify-center text-2xl gap-5 text-green-700">
+              <AccordionTrigger className="flex justify-center text-md gap-2 text-green-700">
                 Correlation Plot Interpretation Guide
               </AccordionTrigger>
               <AccordionContent>

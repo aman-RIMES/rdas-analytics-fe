@@ -7,37 +7,41 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
-import { correlationLegendObject, correlationLegendStyle } from "@/constants";
+import { correlationLegendObject } from "@/constants";
 
 const CorrelationPlotLegend = () => {
   return (
-    <div className="flex flex-col items-center justify-center sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
-      <Table>
-        <TableHeader>
-          <TableRow className="bg-yellow-300 hover:bg-yellow-300">
-            <TableHead className=" text-black text-lg font-medium">
-              Correlation Coefficient (R) Value
-            </TableHead>
-            <TableHead className=" text-black text-lg font-medium">
-              Direction & Strength of Correlation
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {Object.keys(correlationLegendObject)?.map((key, index) => (
-            <TableRow
-              key={key}
-              className={`${correlationLegendStyle[index]} hover:${correlationLegendStyle[index]}`}
-            >
-              <TableCell className="text-lg font-bold">{key}</TableCell>
-
-              <TableCell className="text-lg font-medium">
-                {correlationLegendObject[key]}
-              </TableCell>
+    <div className=" flex flex-col items-center justify-center sm:p-10 p-4 m-1 rounded-lg bg-gray-50 shadow-lg">
+      <div className="w-3/4">
+        <Table>
+          <TableHeader>
+            <TableRow className="bg-yellow-200 hover:bg-yellow-200">
+              <TableHead className=" text-black text-center text-md font-medium h-8">
+                Correlation Coefficient (R) Value
+              </TableHead>
+              <TableHead className=" text-black text-center text-md font-medium h-8">
+                Direction & Strength of Correlation
+              </TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {correlationLegendObject?.map((element, index) => (
+              <TableRow
+                key={index}
+                className={`${element.style} hover:${element.style}`}
+              >
+                <TableCell className="text-xs text-center font-bold p-1">
+                  {element.coefficient}
+                </TableCell>
+
+                <TableCell className="text-xs text-center font-medium p-1">
+                  {element.description}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 };
