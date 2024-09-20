@@ -24,6 +24,12 @@ import { CorrelationFilterData, FilterProps } from "@/types";
 import { quantum } from "ldrs";
 import CorrelationPlotLegend from "../correlation-plot-legend";
 quantum.register("l-quantum");
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const AnalyticsCorrelation = ({
   filterData,
@@ -161,7 +167,16 @@ const AnalyticsCorrelation = ({
             ))}
           </div>
 
-          <CorrelationPlotLegend />
+          <Accordion type="single" collapsible>
+            <AccordionItem value="item-1">
+              <AccordionTrigger className="flex justify-center text-2xl gap-5 text-green-700">
+                Correlation Plot Interpretation Guide
+              </AccordionTrigger>
+              <AccordionContent>
+                <CorrelationPlotLegend />
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       )}
     </div>

@@ -12,9 +12,6 @@ import { correlationLegendObject, correlationLegendStyle } from "@/constants";
 const CorrelationPlotLegend = () => {
   return (
     <div className="flex flex-col items-center justify-center sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
-      <p className="text-2xl font-bold mb-10">
-        Correlation Plot Interpretation
-      </p>
       <Table>
         <TableHeader>
           <TableRow className="bg-yellow-300 hover:bg-yellow-300">
