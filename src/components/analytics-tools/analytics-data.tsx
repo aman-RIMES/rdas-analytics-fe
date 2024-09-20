@@ -10,6 +10,7 @@ import { Label } from "@radix-ui/react-dropdown-menu";
 import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
 import MapLegend from "../map-legend";
+import { countries } from "@/constants";
 reuleaux.register("l-reuleaux");
 grid.register("l-loader");
 
@@ -100,7 +101,9 @@ const AnalyticsData = ({
                 <div className="grid md:grid-cols-2 grid-cols-1">
                   <div className="p-10 ">
                     <p className="text-lg mb-5 font-medium flex justify-center">
-                      Normal Rainfall (mm)
+                      Normal Rainfall for{" "}
+                      {countries.find((e) => e.value === countryValue).label}{" "}
+                      (mm)
                     </p>
                     <div className="shadow-md rounded-xl p-2">
                       <Leaflet
@@ -113,7 +116,9 @@ const AnalyticsData = ({
                   </div>
                   <div className="p-10">
                     <p className="text-lg mb-5 font-medium flex justify-center">
-                      Rainfall Anomaly (mm)
+                      Rainfall Anomaly for{" "}
+                      {countries.find((e) => e.value === countryValue).label}{" "}
+                      (mm)
                     </p>
 
                     <div className="w-full min-h-[420px] shadow-md rounded-xl p-2">
