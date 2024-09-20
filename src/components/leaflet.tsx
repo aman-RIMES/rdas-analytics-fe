@@ -28,7 +28,9 @@ const Leaflet = ({ geoJsonData, country, mapType, chosenYear }: any) => {
       ${
         districtName ? formatTitle(districtName) : "--"
       } District,                                              
-      ${provinceName ? provinceName : "--"} : ${parseInt(value)?.toFixed(2)}`);
+      ${provinceName ? provinceName : "--"} : ${parseInt(value)?.toFixed(
+      2
+    )} mm`);
 
     value < -1200
       ? (layer.options.fillColor = "#991b1b")
