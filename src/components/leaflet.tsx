@@ -17,8 +17,14 @@ const Leaflet = ({ geoJsonData, country, mapType, chosenYear }: any) => {
   };
 
   const onEachDistrict = (district: any, layer: any) => {
-    const districtName = district?.properties?.District;
-    const provinceName = district?.properties?.Province;
+    const districtName =
+      country === "PAK"
+        ? district?.properties?.ADM2_EN
+        : district?.properties?.District;
+    const provinceName =
+      country === "PAK"
+        ? district?.properties?.ADM1_EN
+        : district?.properties?.Province;
     const value =
       mapType === mapDataType.normal
         ? district?.properties?.normal_rainfall
