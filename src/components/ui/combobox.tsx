@@ -16,17 +16,19 @@ import {
 } from "@/components/ui/popover";
 import { CommandList } from "cmdk";
 import { ScrollArea } from "./scroll-area";
+import { useState } from "react";
 
 function Combobox({ array, state, label, name }: any) {
+  const [open, setOpen] = useState(false);
   return (
     <div className="flex flex-col justify-start gap-2 ">
       {/* <Label className="font-semibold">{label}</Label> */}
-      <Popover open={state.open} onOpenChange={state.setOpen}>
+      <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
             role="combobox"
-            aria-expanded={state.open}
+            aria-expanded={open}
             className={
               cn(!state.value && "text-gray-500") +
               " justify-between border-0 shadow-md"
@@ -55,7 +57,7 @@ function Combobox({ array, state, label, name }: any) {
                           name,
                           currentValue === state.value ? "" : currentValue
                         );
-                        // state.setOpen(false);
+                        setOpen(false);
                       }}
                     >
                       <Check
