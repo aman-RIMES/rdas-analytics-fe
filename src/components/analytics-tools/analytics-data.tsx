@@ -17,18 +17,18 @@ grid.register("l-loader");
 const AnalyticsData = ({
   filterData,
   timeSeriesChartData,
-  countryValue,
   dynamicMapData,
   dynamicChartStatus,
   dynamiMapStatus,
   anomalyMapStatus,
   handleChange,
+  mapFormData,
 }: AnalyticsDataProps) => {
   const yearList = [];
   let count = 0;
   for (
-    let i: any = parseInt(filterData.fromYear);
-    i <= parseInt(filterData.toYear);
+    let i: any = parseInt(mapFormData.fromYear);
+    i <= parseInt(mapFormData.toYear);
     i++
   ) {
     count += 1;
@@ -102,12 +102,16 @@ const AnalyticsData = ({
                   <div className="p-10 ">
                     <p className="text-lg mb-5 font-medium flex justify-center">
                       Normal Rainfall for{" "}
-                      {countries.find((e) => e.value === countryValue).label}{" "}
+                      {
+                        countries.find(
+                          (e) => e.value === mapFormData.countryValue
+                        ).label
+                      }{" "}
                       (mm)
                     </p>
                     <div className="flex flex-col ">
                       <Leaflet
-                        country={countryValue}
+                        country={mapFormData.countryValue}
                         geoJsonData={dynamicMapData}
                         mapType={"normal"}
                         chosenYear={filterData.chosenYear}
@@ -118,7 +122,11 @@ const AnalyticsData = ({
                   <div className="p-10">
                     <p className="text-lg mb-5 font-medium flex justify-center">
                       Rainfall Anomaly for{" "}
-                      {countries.find((e) => e.value === countryValue).label}{" "}
+                      {
+                        countries.find(
+                          (e) => e.value === mapFormData.countryValue
+                        ).label
+                      }{" "}
                       (mm) in{" "}
                       {
                         yearList.find((e) => e.value === filterData.chosenYear)
@@ -136,7 +144,7 @@ const AnalyticsData = ({
                       {isFinished(anomalyMapStatus) && (
                         <div className="flex flex-col">
                           <Leaflet
-                            country={countryValue}
+                            country={mapFormData.countryValue}
                             geoJsonData={dynamicMapData}
                             mapType={"anomaly"}
                             chosenYear={filterData.chosenYear}

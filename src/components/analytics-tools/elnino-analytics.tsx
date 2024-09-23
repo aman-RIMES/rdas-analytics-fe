@@ -3,7 +3,7 @@ import { analysisType, BODY_PARAMS_URL, requestStatus } from "@/constants";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { FilterData } from "@/types";
+import { FilterData, MapFormData } from "@/types";
 import { getAllDistrictsOfCountry, isFinished } from "@/lib/utils";
 import { Button } from "../ui/button";
 import AnalyticsCorrelation from "./analytics-correlation";
@@ -29,6 +29,11 @@ const ElNinoAnalytics = () => {
   const [timeSeriesChartData, setTimeSeriesChartData] = useState<any>({});
   const [dynamicMapData, setDynamicMapData] = useState<any>({});
   const [selected, setSelected] = useState<[]>([]);
+  const [mapFormData, setMapFormData] = useState<MapFormData>({
+    fromYear: "",
+    toYear: "",
+    countryValue: "",
+  });
 
   const [filterData, setFilterData] = useState<FilterData>({
     dataVariable: [],
@@ -93,6 +98,11 @@ const ElNinoAnalytics = () => {
 
       setTimeSeriesChartData(response.data);
       setDynamicChartStatus(requestStatus.isFinished);
+      setMapFormData({
+        fromYear: filterData.fromYear,
+        toYear: filterData.toYear,
+        countryValue: filterData.countryValue,
+      });
     } catch (error) {
       setDynamicChartStatus(requestStatus.isError);
       return;
@@ -160,12 +170,12 @@ const ElNinoAnalytics = () => {
             <AnalyticsData
               filterData={filterData}
               timeSeriesChartData={timeSeriesChartData}
-              countryValue={filterData.countryValue}
               dynamicMapData={dynamicMapData}
               dynamicChartStatus={dynamicChartStatus}
               dynamiMapStatus={dynamiMapStatus}
               anomalyMapStatus={anomlayMapStatus}
               handleChange={handleChange}
+              mapFormData={mapFormData}
             />
             {isFinished(dynamicChartStatus) && (
               <>

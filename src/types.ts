@@ -110,12 +110,12 @@ export interface FilterProps {
 export interface AnalyticsDataProps {
   filterData: FilterData;
   timeSeriesChartData: any;
-  countryValue: string;
   dynamicMapData: any;
   dynamicChartStatus: requestStatus;
   dynamiMapStatus: requestStatus;
   anomalyMapStatus?: requestStatus;
   handleChange?: (name, value) => void;
+  mapFormData?: MapFormData;
 }
 
 export interface PredictiveDataProps {
@@ -133,4 +133,10 @@ export interface GDDDataProps {
 export interface GDDFilterProps {
   filterData: FilterData;
   handleChange: (name, value) => void;
+}
+
+export interface MapFormData {
+  countryValue: string;
+  fromYear: string;
+  toYear: string;
 }
