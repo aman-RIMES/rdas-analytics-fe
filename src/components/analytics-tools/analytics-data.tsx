@@ -98,6 +98,19 @@ const AnalyticsData = ({
 
             {isFinished(dynamiMapStatus) && (
               <div className=" my-16 rounded-lg bg-white p-1 pb-10 shadow-md">
+                <div className="flex flex-row shadow-md rounded-xl">
+                  <div className="">
+                    <MapLegend />
+                  </div>
+                  <div className="w-full">
+                    <Leaflet
+                      country={countryValue}
+                      geoJsonData={dynamicMapData}
+                      mapType={"normal"}
+                      chosenYear={filterData.chosenYear}
+                    />
+                  </div>
+                </div>
                 <div className="grid md:grid-cols-2 grid-cols-1">
                   <div className="p-10 ">
                     <p className="text-lg mb-5 font-medium flex justify-center">
@@ -105,13 +118,18 @@ const AnalyticsData = ({
                       {countries.find((e) => e.value === countryValue).label}{" "}
                       (mm)
                     </p>
-                    <div className="shadow-md rounded-xl p-2">
-                      <Leaflet
-                        country={countryValue}
-                        geoJsonData={dynamicMapData}
-                        mapType={"normal"}
-                        chosenYear={filterData.chosenYear}
-                      />
+                    <div className="flex flex-row shadow-md rounded-xl max-h-16 p-3">
+                      <div className="h-full">
+                        <MapLegend />
+                      </div>
+                      <div className="w-full">
+                        <Leaflet
+                          country={countryValue}
+                          geoJsonData={dynamicMapData}
+                          mapType={"normal"}
+                          chosenYear={filterData.chosenYear}
+                        />
+                      </div>
                     </div>
                   </div>
                   <div className="p-10">
