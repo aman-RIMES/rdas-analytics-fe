@@ -98,48 +98,35 @@ const AnalyticsData = ({
 
             {isFinished(dynamiMapStatus) && (
               <div className=" my-16 rounded-lg bg-white p-1 pb-10 shadow-md">
-                <div className="flex flex-row shadow-md rounded-xl">
-                  <div className="">
-                    <MapLegend />
-                  </div>
-                  <div className="w-full">
-                    <Leaflet
-                      country={countryValue}
-                      geoJsonData={dynamicMapData}
-                      mapType={"normal"}
-                      chosenYear={filterData.chosenYear}
-                    />
-                  </div>
-                </div>
-                <div className="grid md:grid-cols-2 grid-cols-1">
+                <div className="grid xl:grid-cols-2 grid-cols-1">
                   <div className="p-10 ">
                     <p className="text-lg mb-5 font-medium flex justify-center">
                       Normal Rainfall for{" "}
                       {countries.find((e) => e.value === countryValue).label}{" "}
                       (mm)
                     </p>
-                    <div className="flex flex-row shadow-md rounded-xl max-h-16 p-3">
-                      <div className="h-full">
-                        <MapLegend />
-                      </div>
-                      <div className="w-full">
-                        <Leaflet
-                          country={countryValue}
-                          geoJsonData={dynamicMapData}
-                          mapType={"normal"}
-                          chosenYear={filterData.chosenYear}
-                        />
-                      </div>
+                    <div className="flex flex-col ">
+                      <Leaflet
+                        country={countryValue}
+                        geoJsonData={dynamicMapData}
+                        mapType={"normal"}
+                        chosenYear={filterData.chosenYear}
+                      />
+                      <MapLegend />
                     </div>
                   </div>
                   <div className="p-10">
                     <p className="text-lg mb-5 font-medium flex justify-center">
                       Rainfall Anomaly for{" "}
                       {countries.find((e) => e.value === countryValue).label}{" "}
-                      (mm)
+                      (mm) in{" "}
+                      {
+                        yearList.find((e) => e.value === filterData.chosenYear)
+                          .label
+                      }
                     </p>
 
-                    <div className="w-full min-h-[420px] shadow-md rounded-xl p-2">
+                    <div className="w-full min-h-[420px] ">
                       {isLoading(anomalyMapStatus) && (
                         <div className=" flex flex-col items-center justify-center mt-40">
                           {/* @ts-ignore */}
@@ -147,16 +134,19 @@ const AnalyticsData = ({
                         </div>
                       )}
                       {isFinished(anomalyMapStatus) && (
-                        <Leaflet
-                          country={countryValue}
-                          geoJsonData={dynamicMapData}
-                          mapType={"anomaly"}
-                          chosenYear={filterData.chosenYear}
-                        />
+                        <div className="flex flex-col">
+                          <Leaflet
+                            country={countryValue}
+                            geoJsonData={dynamicMapData}
+                            mapType={"anomaly"}
+                            chosenYear={filterData.chosenYear}
+                          />
+                          <MapLegend />
+                        </div>
                       )}
                     </div>
 
-                    <div className="w-full mt-5">
+                    <div className="w-full mt-5 z-10">
                       <div className="flex gap-2 ">
                         <Label className="mb-2 font-semibold">
                           {" "}
@@ -179,8 +169,6 @@ const AnalyticsData = ({
                     </div>
                   </div>
                 </div>
-
-                <MapLegend />
               </div>
             )}
           </div>

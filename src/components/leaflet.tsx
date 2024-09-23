@@ -84,6 +84,9 @@ const Leaflet = ({ geoJsonData, country, mapType, chosenYear }: any) => {
           center={subjectCountry?.coordinates}
           zoom={subjectCountry?.zoom}
           scrollWheelZoom={false}
+          style={{
+            zIndex: 1,
+          }}
         >
           {/* <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
