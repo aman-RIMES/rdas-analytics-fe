@@ -10,7 +10,7 @@ import { Label } from "@radix-ui/react-dropdown-menu";
 import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
 import MapLegend from "../map-legend";
-import { countries } from "@/constants";
+import { countries, mapDataType } from "@/constants";
 reuleaux.register("l-reuleaux");
 grid.register("l-loader");
 
@@ -116,7 +116,10 @@ const AnalyticsData = ({
                         mapType={"normal"}
                         chosenYear={filterData.chosenYear}
                       />
-                      <MapLegend />
+                      <MapLegend mapType={mapDataType.normal} />
+                      <p className="text-center text-xs">
+                        Normal Rainfall (mm)
+                      </p>
                     </div>
                   </div>
                   <div className="p-10">
@@ -149,7 +152,10 @@ const AnalyticsData = ({
                             mapType={"anomaly"}
                             chosenYear={filterData.chosenYear}
                           />
-                          <MapLegend />
+                          <MapLegend mapType={mapDataType.anomaly} />
+                          <p className="text-center text-xs">
+                            Rainfall Anomaly (mm)
+                          </p>
                         </div>
                       )}
                     </div>

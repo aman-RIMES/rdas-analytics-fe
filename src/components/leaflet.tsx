@@ -38,20 +38,26 @@ const Leaflet = ({ geoJsonData, country, mapType, chosenYear }: any) => {
       2
     )} mm`);
 
-    value < -1200
+    value < -1600
+      ? (layer.options.fillColor = "#7f1d1d")
+      : value < -1400
       ? (layer.options.fillColor = "#991b1b")
-      : value < -1000
+      : value < -1200
       ? (layer.options.fillColor = "#b91c1c")
-      : value < -800
+      : value < -1000
       ? (layer.options.fillColor = "#dc2626")
-      : value < -600
+      : value < -800
       ? (layer.options.fillColor = "#ef4444")
-      : value < -400
+      : value < -600
       ? (layer.options.fillColor = "#f87171")
-      : value < -200
+      : value < -400
       ? (layer.options.fillColor = "#fca5a5")
-      : value < 0
+      : value < -200
       ? (layer.options.fillColor = "#fecaca")
+      : value < 0
+      ? (layer.options.fillColor = "#fee2e2")
+      : value < 350
+      ? (layer.options.fillColor = "#f0fdf4")
       : value < 700
       ? (layer.options.fillColor = "#dcfce7")
       : value < 1400
