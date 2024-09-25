@@ -88,7 +88,7 @@ const ElNinoAnalytics = () => {
         "http://203.156.108.67:1580/el_nino_time_series_chart",
         {
           source: "ERA5",
-          indic: `rainfall`,
+          indic: `rainfall,normal_rainfall`,
           area: [`${filterData.districtValue}`],
           crop: filterData.cropValue,
           start: `${filterData.fromYear}-01-01`,
