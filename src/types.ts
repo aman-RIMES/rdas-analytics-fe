@@ -75,6 +75,7 @@ export interface Country {
 export interface FilterData {
   dataVariable?: string[];
   dependentVariable?: string;
+  elNinoVariable?: string;
   independentVariables?: string[];
   source?: string;
   districtValue?: string;
@@ -123,6 +124,9 @@ export interface PredictiveDataProps {
   regressionModelStatus: requestStatus;
   predictiveDataType: any;
   modelType: string;
+  elNinoCategory?: string;
+  filterData?: FilterData;
+  handleChange?: (name, value) => void;
 }
 
 export interface GDDDataProps {

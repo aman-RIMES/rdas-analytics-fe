@@ -332,9 +332,9 @@ export const ElNinoToolDataIndicators = {
 };
 
 export const ElNinoVariables = {
-  el_nino_moderate: "Moderate El Nino Events",
-  el_nino_strong: "Strong El Nino Events",
-  el_nino_weak: "Weak El Nino Events",
+  moderate: "Moderate El Nino Events",
+  strong: "Strong El Nino Events",
+  weak: "Weak El Nino Events",
 };
 
 export const correlationLegendObject = [

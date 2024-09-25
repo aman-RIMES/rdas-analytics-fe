@@ -24,10 +24,9 @@ const PredictiveTools = () => {
   const [selected, setSelected] = useState<any>([]);
   const [filterData, setFilterData] = useState<FilterData>({
     dataVariable: [],
-    elNinoVariable: "",
+    elNinoVariable: "moderate",
     cropValue: "",
     source: "",
-    elNinoDataSource: "",
     countryValue: "",
     districtList: [],
     fromYear: "",
@@ -44,7 +43,6 @@ const PredictiveTools = () => {
       filterData.dataVariable.length > 0 &&
       filterData.elNinoVariable !== "" &&
       filterData.source !== "" &&
-      filterData.elNinoDataSource !== "" &&
       filterData.countryValue !== "" &&
       filterData.modelType !== "" &&
       filterData.toYear !== "" &&
@@ -53,16 +51,19 @@ const PredictiveTools = () => {
   };
 
   useEffect(() => {
-    handleChange("fromYear", data?.fromYear);
-    handleChange("toYear", data?.toYear);
-    handleChange("countryValue", data?.countryValue);
-    handleChange("source", data?.source);
-    handleChange("elNinoDataSource", data?.elNinoDataSource);
+    data?.dataVariable ? handleChange("fromYear", data?.fromYear) : null;
+    data?.dataVariable ? handleChange("toYear", data?.toYear) : null;
+    data?.dataVariable
+      ? handleChange("countryValue", data?.countryValue)
+      : null;
+    data?.dataVariable ? handleChange("source", data?.source) : null;
+    data?.dataVariable
+      ? handleChange("elNinoDataSource", data?.elNinoDataSource)
+      : null;
     data?.dataVariable
       ? handleChange("dataVariable", data?.dataVariable)
       : null;
     data?.selected ? setSelected(data?.selected) : null;
-    handleChange("elNinoVariable", data?.elNinoVariable);
   }, []);
 
   useEffect(() => {
@@ -82,21 +83,23 @@ const PredictiveTools = () => {
     setRegressionModelStatus(requestStatus.isLoading);
     try {
       const response = await axios.post(
-        "http://203.156.108.67:1580/prediction_model",
+        "http://203.156.108.67:1580/el_nino_prediction_model",
         {
           source: "ERA5",
-          indic: filterData.dataVariable.join(","),
-          period: "annual",
-          district: getAllDistrictsOfCountry(filterData.districtList).join(","),
+          indic_y: "rainfall",
+          // period: "annual",
+          area: [`${filterData.districtValue}`],
           start: `${filterData.fromYear}-01-01`,
           end: `${filterData.toYear}-01-01`,
-          indic_0: filterData.elNinoVariable,
-          model: filterData.modelType,
+          // indic_0: filterData.elNinoVariable,
+          model: "linear",
         }
       );
       setRegressionModelData(response.data);
       setPredictiveDataType(filterData.modelType);
+      handleChange("elNinoVariable", "moderate");
       setRegressionModelStatus(requestStatus.isFinished);
+      console.log(filterData.elNinoVariable);
     } catch (error) {
       console.log(error);
       setRegressionModelStatus(requestStatus.isError);
@@ -135,9 +138,11 @@ const PredictiveTools = () => {
             regressionModelData={regressionModelData}
             predictiveDataType={predictiveDataType}
             modelType={filterData.modelType}
+            filterData={filterData}
+            handleChange={handleChange}
           />
 
-          {isFinished(regressionModelStatus) && (
+          {/* {isFinished(regressionModelStatus) && (
             <>
               {predictiveDataType === predictiveModelDataType.linear && (
                 <div className="mt-10 sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
@@ -147,7 +152,7 @@ const PredictiveTools = () => {
                 </div>
               )}
             </>
-          )}
+          )} */}
         </div>
       </div>
     </>
