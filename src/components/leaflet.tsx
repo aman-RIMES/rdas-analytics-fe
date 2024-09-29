@@ -1,22 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { MapContainer, GeoJSON } from "react-leaflet";
+import { MapContainer, GeoJSON, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { countries, mapDataType } from "@/constants";
 import "@/leaflet.css";
 import { formatTitle } from "@/lib/utils";
 import { useEffect } from "react";
 
-const Leaflet = ({ geoJsonData, country, mapType, chosenYear }: any) => {
+const Leaflet = ({
+  geoJsonData,
+  country,
+  mapType,
+  chosenYear,
+  chosenDistrict,
+}: any) => {
   const subjectCountry = countries.find((e) => e.value === country);
 
   const countryStyle = {
     fillOpacity: 0.7,
-    color: "black",
-    weight: 0.1,
+    // color: "blue",
+    // weight: 0.1,
     // dashArray: 5,
   };
 
   const onEachDistrict = (district: any, layer: any) => {
+    const districtCode =
+      country === "PAK"
+        ? district?.properties?.ADM2_PCODE
+        : district?.properties?.SA_Code;
     const districtName =
       country === "PAK"
         ? district?.properties?.ADM2_EN
@@ -37,6 +47,12 @@ const Leaflet = ({ geoJsonData, country, mapType, chosenYear }: any) => {
       ${provinceName ? provinceName : "--"} : ${parseInt(value)?.toFixed(
       2
     )} mm`);
+
+    console.log(chosenDistrict);
+
+    chosenDistrict === districtCode
+      ? ((layer.options.weight = 3), (layer.options.color = "orange"))
+      : ((layer.options.weight = 0.2), (layer.options.color = "black"));
 
     value < -1600
       ? (layer.options.fillColor = "#7f1d1d")
@@ -95,8 +111,8 @@ const Leaflet = ({ geoJsonData, country, mapType, chosenYear }: any) => {
           }}
         >
           {/* <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
           /> */}
 
           <GeoJSON

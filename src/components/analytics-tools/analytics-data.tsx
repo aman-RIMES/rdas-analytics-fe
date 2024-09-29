@@ -115,6 +115,7 @@ const AnalyticsData = ({
                         geoJsonData={dynamicMapData}
                         mapType={"normal"}
                         chosenYear={filterData.chosenYear}
+                        chosenDistrict={filterData.districtValue}
                       />
                       <MapLegend mapType={mapDataType.normal} />
                       <p className="text-center text-xs">
@@ -151,6 +152,7 @@ const AnalyticsData = ({
                             geoJsonData={dynamicMapData}
                             mapType={"anomaly"}
                             chosenYear={filterData.chosenYear}
+                            chosenDistrict={filterData.districtValue}
                           />
                           <MapLegend mapType={mapDataType.anomaly} />
                           <p className="text-center text-xs">
