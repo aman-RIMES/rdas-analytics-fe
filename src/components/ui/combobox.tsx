@@ -53,10 +53,7 @@ function Combobox({ array, state, label, name }: any) {
                       key={Math.random()}
                       value={framework.value}
                       onSelect={(currentValue) => {
-                        state.setValue(
-                          name,
-                          currentValue === state.value ? "" : currentValue
-                        );
+                        state.setValue(name, currentValue);
                         setOpen(false);
                       }}
                     >
