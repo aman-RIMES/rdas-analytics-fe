@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Combobox from "../ui/combobox";
 import {
   transformObject,
@@ -30,90 +30,87 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Label } from "@radix-ui/react-dropdown-menu";
+import HelpHoverCard from "../help-hover-card";
 
 const AnalyticsCorrelation = ({
   filterData,
   params,
   typeOfAnalysis,
 }: FilterProps) => {
-  const [correlationFilterData, setCorrelationFilterData] =
-    useState<CorrelationFilterData>({
-      correlationVariable1:
-        typeOfAnalysis === analysisType.elnino
-          ? Array.from(filterData.dataVariable)[0]
-          : "",
-      correlationVariable2: "",
-    });
+  const [correlationVariable, setCorrelationVariable] = useState(
+    filterData?.dataVariable[0]
+  );
   const [correlationStatus, setCorrelationStatus] = useState<requestStatus>();
   const [correlationChartData, setCorrelationChartData] = useState<any>({});
 
-  const handleChange = (name: string, value: string | []) => {
-    setCorrelationFilterData((prev) => ({ ...prev, [name]: value }));
+  const handleChange = (name: string, value: string) => {
+    setCorrelationVariable(value);
   };
 
-  const generateCorrelationPlot = async () => {
-    setCorrelationStatus(requestStatus.isLoading);
-    setCorrelationChartData({});
-    try {
-      const correlationData = await axios.post(
-        "http://203.156.108.67:1580/el_nino_correlation",
-        typeOfAnalysis === analysisType.climate
-          ? {
-              source: "ERA5",
-              indic: `${correlationFilterData.correlationVariable1},${correlationFilterData.correlationVariable2}`,
-              period: filterData.periodValue,
-              district: filterData.districtValue,
-              start: `${filterData.fromYear}-01-01`,
-              end: `${filterData.toYear}-01-01`,
-            }
-          : {
-              source: "ERA5",
-              indic: `rainfall`,
-              area: [`${filterData.districtValue}`],
-              start: `${filterData.fromYear}-01-01`,
-              end: `${filterData.toYear}-01-01`,
-            }
-      );
-      setCorrelationChartData(correlationData.data);
-      setCorrelationStatus(requestStatus.isFinished);
-    } catch (error) {
-      setCorrelationStatus(requestStatus.isError);
-    }
-  };
+  useEffect(() => {
+    (async () => {
+      setCorrelationStatus(requestStatus.isLoading);
+      setCorrelationChartData({});
+      try {
+        const correlationData = await axios.post(
+          "http://203.156.108.67:1580/el_nino_correlation",
+          typeOfAnalysis === analysisType.climate
+            ? {
+                source: "ERA5",
+                indic: `${filterData.dataVariable.join(",")}`,
+                period: filterData.periodValue,
+                district: filterData.districtValue,
+                start: `${filterData.fromYear}-01-01`,
+                end: `${filterData.toYear}-01-01`,
+              }
+            : {
+                source: "ERA5",
+                indic: `${filterData.dataVariable.join(",")}`,
+                area: [`${filterData.districtValue}`],
+                start: `${filterData.fromYear}-01-01`,
+                end: `${filterData.toYear}-01-01`,
+                useEffect,
+              }
+        );
+        setCorrelationChartData(correlationData.data);
+        setCorrelationStatus(requestStatus.isFinished);
+      } catch (error) {
+        setCorrelationStatus(requestStatus.isError);
+      }
+    })();
+  }, []);
 
   return (
     <div className="sm:p-10 p-4 mt-10 rounded-lg bg-gray-50 shadow-lg">
       <div className="flex justify-center mb-10">
         <h1 className="text-xl font-semibold">
-          Correlation between two variables
+          Correlation between Variables and El Nino
         </h1>
       </div>
 
       <div className="flex justify-center">
-        <div className="grid w-2/3 gap-4 my-8 xl:grid-cols-2 grid-cols-1 ">
+        <div className="w-1/2">
+          <div className="flex gap-2 ">
+            <Label className="mb-2 font-semibold">Data Variable</Label>
+            <HelpHoverCard
+              title={"Data Variable"}
+              content={` The Data Variable you would like to compare against each El Nino category. `}
+            />
+          </div>
           <Combobox
-            name={"correlationVariable1"}
-            label={"First Variable"}
+            name="correlationVariable"
+            label={"Data Variable"}
             array={transformObject(
               typeOfAnalysis === analysisType.climate
                 ? params.indic
                 : ElNinoToolDataIndicators
-            ).filter(
-              (e: any) => e.value !== correlationFilterData.correlationVariable2
             )}
             state={{
-              value: correlationFilterData.correlationVariable1,
+              value: correlationVariable,
               setValue: handleChange,
             }}
           />
-
-          <Button
-            disabled={correlationFilterData.correlationVariable1 === ""}
-            className="mt-8 md:mt-0 bg-green-800 text-white hover:text-gray-800 hover:bg-yellow-300"
-            onClick={generateCorrelationPlot}
-          >
-            Analyze Correlation
-          </Button>
         </div>
       </div>
 
@@ -146,25 +143,27 @@ const AnalyticsCorrelation = ({
       {isFinished(correlationStatus) && (
         <div className="mt-10">
           <div className="flex flex-col">
-            {correlationChartData.map((chartData, index) => (
-              <div
-                key={index}
-                className="grid gap-4 my-8 md:grid-cols-2 grid-cols-1 justify-center"
-              >
-                <div>
-                  <HighchartsReact
-                    highcharts={Highcharts}
-                    options={chartData.scatter}
-                  />
+            {correlationChartData[correlationVariable].map(
+              (chartData, index) => (
+                <div
+                  key={index}
+                  className="grid gap-4 my-8 md:grid-cols-2 grid-cols-1 justify-center"
+                >
+                  <div>
+                    <HighchartsReact
+                      highcharts={Highcharts}
+                      options={chartData.scatter}
+                    />
+                  </div>
+                  <div>
+                    <HighchartsReact
+                      highcharts={Highcharts}
+                      options={chartData.plot}
+                    />
+                  </div>
                 </div>
-                <div>
-                  <HighchartsReact
-                    highcharts={Highcharts}
-                    options={chartData.plot}
-                  />
-                </div>
-              </div>
-            ))}
+              )
+            )}
           </div>
 
           <Accordion type="single" collapsible>
