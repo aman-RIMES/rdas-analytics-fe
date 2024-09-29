@@ -51,14 +51,14 @@ const PredictiveTools = () => {
   };
 
   useEffect(() => {
-    data?.dataVariable ? handleChange("fromYear", data?.fromYear) : null;
-    data?.dataVariable ? handleChange("toYear", data?.toYear) : null;
-    data?.dataVariable
+    data?.fromYear ? handleChange("fromYear", data?.fromYear) : null;
+    data?.toYear ? handleChange("toYear", data?.toYear) : null;
+    data?.countryValue
       ? handleChange("countryValue", data?.countryValue)
       : null;
-    data?.dataVariable ? handleChange("source", data?.source) : null;
-    data?.dataVariable
-      ? handleChange("elNinoDataSource", data?.elNinoDataSource)
+    data?.source ? handleChange("source", data?.source) : null;
+    data?.districtValue
+      ? handleChange("districtValue", data?.districtValue)
       : null;
     data?.dataVariable
       ? handleChange("dataVariable", data?.dataVariable)
