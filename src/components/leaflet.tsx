@@ -12,6 +12,7 @@ const Leaflet = ({
   mapType,
   chosenYear,
   chosenDistrict,
+  preferredZoomScale,
 }: any) => {
   const subjectCountry = countries.find((e) => e.value === country);
 
@@ -72,6 +73,8 @@ const Leaflet = ({
       ? (layer.options.fillColor = "#fecaca")
       : value < 0
       ? (layer.options.fillColor = "#fee2e2")
+      : value === 0
+      ? (layer.options.fillColor = "#fff")
       : value < 350
       ? (layer.options.fillColor = "#f0fdf4")
       : value < 700
@@ -104,7 +107,7 @@ const Leaflet = ({
         <MapContainer
           //@ts-ignore
           center={subjectCountry?.coordinates}
-          zoom={subjectCountry?.zoom}
+          zoom={preferredZoomScale ? preferredZoomScale : subjectCountry?.zoom}
           scrollWheelZoom={false}
           style={{
             zIndex: 1,

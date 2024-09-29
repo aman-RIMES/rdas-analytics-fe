@@ -91,7 +91,8 @@ export interface FilterData {
   yearsValue?: YearsList[];
   fromYear?: string;
   toYear?: string;
-  chosenYear?: string;
+  anomalyYear1?: string;
+  anomalyYear2?: string;
 }
 
 export interface CorrelationFilterData {
@@ -115,7 +116,8 @@ export interface AnalyticsDataProps {
   dynamicMapData: any;
   dynamicChartStatus: requestStatus;
   dynamiMapStatus: requestStatus;
-  anomalyMapStatus?: requestStatus;
+  firstAnomalyMapStatus?: requestStatus;
+  secondAnomalyMapStatus?: requestStatus;
   handleChange?: (name, value) => void;
   mapFormData?: MapFormData;
 }

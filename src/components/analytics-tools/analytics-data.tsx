@@ -20,7 +20,8 @@ const AnalyticsData = ({
   dynamicMapData,
   dynamicChartStatus,
   dynamiMapStatus,
-  anomalyMapStatus,
+  firstAnomalyMapStatus,
+  secondAnomalyMapStatus,
   handleChange,
   mapFormData,
 }: AnalyticsDataProps) => {
@@ -98,60 +99,61 @@ const AnalyticsData = ({
 
             {isFinished(dynamiMapStatus) && (
               <div className=" my-16 rounded-lg bg-white p-1 pb-10 shadow-md">
-                <div className="grid xl:grid-cols-2 grid-cols-1">
-                  <div className="p-10 ">
-                    <p className="text-lg mb-5 font-medium flex justify-center">
-                      Normal Rainfall for{" "}
-                      {
-                        countries.find(
-                          (e) => e.value === mapFormData.countryValue
-                        ).label
-                      }{" "}
-                      (mm)
-                    </p>
-                    <div className="flex flex-col ">
-                      <Leaflet
-                        country={mapFormData.countryValue}
-                        geoJsonData={dynamicMapData}
-                        mapType={"normal"}
-                        chosenYear={filterData.chosenYear}
-                        chosenDistrict={filterData.districtValue}
-                      />
-                      <MapLegend mapType={mapDataType.normal} />
-                      <p className="text-center text-xs">
-                        Normal Rainfall (mm)
-                      </p>
-                    </div>
+                <div className="p-10 ">
+                  <p className="text-lg mb-5 font-medium flex justify-center">
+                    Normal Rainfall for{" "}
+                    {
+                      countries.find(
+                        (e) => e.value === mapFormData.countryValue
+                      ).label
+                    }{" "}
+                    (mm)
+                  </p>
+                  <div className="flex flex-col ">
+                    <Leaflet
+                      country={mapFormData.countryValue}
+                      geoJsonData={dynamicMapData}
+                      mapType={"normal"}
+                      chosenYear={filterData.anomalyYear1}
+                      chosenDistrict={filterData.districtValue}
+                      preferredZoomScale={7}
+                    />
+                    <MapLegend mapType={mapDataType.normal} />
+                    <p className="text-center text-xs">Normal Rainfall (mm)</p>
                   </div>
+                </div>
+
+                <div className="grid xl:grid-cols-2 grid-cols-1">
                   <div className="p-10">
                     <p className="text-lg mb-5 font-medium flex justify-center">
                       Rainfall Anomaly for{" "}
                       {
                         countries.find(
-                          (e) => e.value === mapFormData.countryValue
+                          (e) => e.value === mapFormData?.countryValue
                         ).label
                       }{" "}
                       (mm) in{" "}
                       {
-                        yearList.find((e) => e.value === filterData.chosenYear)
-                          .label
+                        yearList.find(
+                          (e) => e.value === filterData?.anomalyYear1
+                        ).label
                       }
                     </p>
 
                     <div className="w-full min-h-[420px] ">
-                      {isLoading(anomalyMapStatus) && (
+                      {isLoading(firstAnomalyMapStatus) && (
                         <div className=" flex flex-col items-center justify-center mt-40">
                           {/* @ts-ignore */}
                           <l-loader color="green" size="50"></l-loader>
                         </div>
                       )}
-                      {isFinished(anomalyMapStatus) && (
+                      {isFinished(firstAnomalyMapStatus) && (
                         <div className="flex flex-col">
                           <Leaflet
                             country={mapFormData.countryValue}
                             geoJsonData={dynamicMapData}
                             mapType={"anomaly"}
-                            chosenYear={filterData.chosenYear}
+                            chosenYear={filterData.anomalyYear1}
                             chosenDistrict={filterData.districtValue}
                           />
                           <MapLegend mapType={mapDataType.anomaly} />
@@ -174,11 +176,74 @@ const AnalyticsData = ({
                         />
                       </div>
                       <Combobox
-                        name="chosenYear"
+                        name="anomalyYear1"
                         label={"Year"}
                         array={yearList}
                         state={{
-                          value: filterData.chosenYear,
+                          value: filterData.anomalyYear1,
+                          setValue: handleChange,
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="p-10">
+                    <p className="text-lg mb-5 font-medium flex justify-center">
+                      Rainfall Anomaly for{" "}
+                      {
+                        countries.find(
+                          (e) => e.value === mapFormData?.countryValue
+                        ).label
+                      }{" "}
+                      (mm) in{" "}
+                      {
+                        yearList.find(
+                          (e) => e.value === filterData?.anomalyYear2
+                        ).label
+                      }
+                    </p>
+
+                    <div className="w-full min-h-[420px] ">
+                      {isLoading(secondAnomalyMapStatus) && (
+                        <div className=" flex flex-col items-center justify-center mt-40">
+                          {/* @ts-ignore */}
+                          <l-loader color="green" size="50"></l-loader>
+                        </div>
+                      )}
+                      {isFinished(secondAnomalyMapStatus) && (
+                        <div className="flex flex-col">
+                          <Leaflet
+                            country={mapFormData.countryValue}
+                            geoJsonData={dynamicMapData}
+                            mapType={"anomaly"}
+                            chosenYear={filterData.anomalyYear2}
+                            chosenDistrict={filterData.districtValue}
+                          />
+                          <MapLegend mapType={mapDataType.anomaly} />
+                          <p className="text-center text-xs">
+                            Rainfall Anomaly (mm)
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="w-full mt-5 z-10">
+                      <div className="flex gap-2 ">
+                        <Label className="mb-2 font-semibold">
+                          {" "}
+                          Anomaly Year{" "}
+                        </Label>
+                        <HelpHoverCard
+                          title={" Anomaly Year "}
+                          content={` The year of anomaly that you would like to view `}
+                        />
+                      </div>
+                      <Combobox
+                        name="anomalyYear2"
+                        label={"Year"}
+                        array={yearList}
+                        state={{
+                          value: filterData.anomalyYear2,
                           setValue: handleChange,
                         }}
                       />
