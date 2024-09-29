@@ -18,6 +18,7 @@ import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { FancyMultiSelect } from "../ui/multiselect";
 import { Input } from "../ui/input";
+import downloadTemplate from "@/data/body_params.json";
 
 const ElNinoCommonFilter = ({
   params,
@@ -55,7 +56,7 @@ const ElNinoCommonFilter = ({
               array={transformObject(ElNinoToolDataIndicators).filter(
                 (e) => !filterData.dataVariable?.includes(e.value)
               )}
-              ScrollAreaHeight={12}
+              ScrollAreaHeight={22}
             />
           </div>
 
@@ -107,22 +108,43 @@ const ElNinoCommonFilter = ({
           </div>
 
           {filterData.source === "customDataset" && (
-            <div className="mt-3">
-              <div className="flex gap-2 ">
-                <Label className="mb-2 font-semibold">Custom Dataset</Label>
-                <HelpHoverCard
-                  title={" Custom Dataset "}
-                  content={` The custom dataset that you want to upload and use for the current
-              analysis. `}
+            <>
+              <div className="mt-3">
+                <div className="flex gap-2 ">
+                  <Label className="mb-2 font-semibold">
+                    Upload Custom Dataset (CSV)
+                  </Label>
+                  <HelpHoverCard
+                    title={" Custom Dataset "}
+                    content={` The custom dataset that you want to upload and use for the current
+              analysis. You can upload CSV files only`}
+                  />
+                  <a
+                    className="text-green-600 font-semibold"
+                    href={"src/data/rdas_monthly_template.csv"}
+                    download
+                  >
+                    Download Dataset Template
+                  </a>
+                </div>
+                <Input
+                  onChange={(e) => {
+                    handleChange("customDataset", e.target.files[0]);
+                  }}
+                  id="customDataset"
+                  type="file"
+                  accept=".csv"
+                  // value={fileName}
                 />
               </div>
-              <Input
-                onChange={(e) => {}}
-                id="picture"
-                type="file"
-                // value={fileName}
-              />
-            </div>
+              <div className="flex items-center gap-1  mt-2">
+                <InfoCircledIcon className="h-4 w-4" />
+                <p className="text-sm">
+                  Please make sure your custom dataset strictly follows our CSV
+                  template.
+                </p>
+              </div>
+            </>
           )}
         </div>
       </div>

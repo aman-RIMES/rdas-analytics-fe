@@ -39,6 +39,7 @@ const ElNinoAnalytics = () => {
     dataVariable: [],
     cropValue: "",
     source: "",
+    customDataset: null,
     countryValue: "",
     districtValue: "",
     districtList: [],
@@ -78,6 +79,22 @@ const ElNinoAnalytics = () => {
   }, [filterData.chosenYear]);
 
   const generateDynamicChart = async () => {
+    console.log(filterData);
+
+    const requestBody = {
+      // source: filterData.cropValue,
+      indic: `${filterData.dataVariable.join(",")}`,
+      area: [`${filterData.districtValue}`],
+      crop: filterData.cropValue,
+      start: `${filterData.fromYear}-01-01`,
+      end: `${filterData.toYear}-01-01`,
+    };
+    const formData = new FormData();
+    Object.keys(requestBody).map((key) => {
+      formData.append(key, requestBody[key]);
+    });
+    formData.append(`source`, filterData.customDataset);
+
     setDynamicChartStatus(requestStatus.isLoading);
     setDynamiMapStatus(requestStatus.isLoading);
     setTimeSeriesChartData({});
@@ -86,13 +103,11 @@ const ElNinoAnalytics = () => {
     try {
       const response = await axios.post(
         "http://203.156.108.67:1580/el_nino_time_series_chart",
+        formData,
         {
-          source: "ERA5",
-          indic: `rainfall,normal_rainfall`,
-          area: [`${filterData.districtValue}`],
-          crop: filterData.cropValue,
-          start: `${filterData.fromYear}-01-01`,
-          end: `${filterData.toYear}-01-01`,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
 
@@ -114,13 +129,15 @@ const ElNinoAnalytics = () => {
         "http://203.156.108.67:1580/el_nino_map",
         {
           source: "ERA5",
-          indic: "rainfall",
+          indic: `${filterData.dataVariable.join(",")}`,
           country: filterData.countryValue,
           start: `${filterData.fromYear}-01-01`,
           end: `${filterData.toYear}-01-01`,
         }
       );
+      console.log("DONEWITH DYNAMIC MAP");
       setDynamicMapData(geoJson.data);
+
       setDynamiMapStatus(requestStatus.isFinished);
       setAnomalyMapStatus(requestStatus.isFinished);
     } catch (error) {

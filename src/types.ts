@@ -78,6 +78,7 @@ export interface FilterData {
   elNinoVariable?: string;
   independentVariables?: string[];
   source?: string;
+  customDataset?: any;
   districtValue?: string;
   countryValue: string;
   periodValue?: string;
