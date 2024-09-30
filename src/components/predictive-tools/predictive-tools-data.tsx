@@ -47,12 +47,6 @@ const PredictiveToolsData = ({
     )
   );
 
-  console.log(
-    regressionModelData[predictiveFilterData.predictiveVariable].filter(
-      (element) => element.category === predictiveFilterData.elNinoCategory
-    )
-  );
-
   return (
     <>
       {isLoading(regressionModelStatus) && (
