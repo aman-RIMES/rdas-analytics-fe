@@ -24,7 +24,6 @@ const PredictiveTools = () => {
   const [selected, setSelected] = useState<any>([]);
   const [filterData, setFilterData] = useState<FilterData>({
     dataVariable: [],
-    elNinoVariable: "moderate",
     cropValue: "",
     source: "",
     countryValue: "",
@@ -41,7 +40,6 @@ const PredictiveTools = () => {
   const verifyFilters = () => {
     return (
       filterData.dataVariable.length > 0 &&
-      filterData.elNinoVariable !== "" &&
       filterData.source !== "" &&
       filterData.countryValue !== "" &&
       filterData.modelType !== "" &&
@@ -80,26 +78,37 @@ const PredictiveTools = () => {
   }, []);
 
   const generateRegressionModel = async () => {
+    const requestBody = {
+      indic_y: `${filterData.dataVariable.join(",")}`,
+      area: [`${filterData.districtValue}`],
+      crop: filterData.cropValue,
+      start: `${filterData.fromYear}-01-01`,
+      end: `${filterData.toYear}-01-01`,
+      model: filterData.modelType,
+    };
+    const formData = new FormData();
+    Object.keys(requestBody).map((key) => {
+      formData.append(key, requestBody[key]);
+    });
+    formData.append(
+      `source`,
+      filterData.source === "customDataset" ? filterData.customDataset : `ERA5`
+    );
+
     setRegressionModelStatus(requestStatus.isLoading);
     try {
       const response = await axios.post(
         "http://203.156.108.67:1580/el_nino_prediction_model",
+        formData,
         {
-          source: "ERA5",
-          indic_y: "rainfall",
-          // period: "annual",
-          area: [`${filterData.districtValue}`],
-          start: `${filterData.fromYear}-01-01`,
-          end: `${filterData.toYear}-01-01`,
-          // indic_0: filterData.elNinoVariable,
-          model: "linear",
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
       setRegressionModelData(response.data);
       setPredictiveDataType(filterData.modelType);
-      handleChange("elNinoVariable", "moderate");
       setRegressionModelStatus(requestStatus.isFinished);
-      console.log(filterData.elNinoVariable);
     } catch (error) {
       console.log(error);
       setRegressionModelStatus(requestStatus.isError);
@@ -142,7 +151,7 @@ const PredictiveTools = () => {
             handleChange={handleChange}
           />
 
-          {/* {isFinished(regressionModelStatus) && (
+          {isFinished(regressionModelStatus) && (
             <>
               {predictiveDataType === predictiveModelDataType.linear && (
                 <div className="mt-10 sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
@@ -152,7 +161,7 @@ const PredictiveTools = () => {
                 </div>
               )}
             </>
-          )} */}
+          )}
         </div>
       </div>
     </>

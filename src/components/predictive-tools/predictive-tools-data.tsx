@@ -1,12 +1,4 @@
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../ui/table";
-import {
   formatTitle,
   isError,
   isFinished,
@@ -17,19 +9,13 @@ import Highcharts from "highcharts/highmaps";
 import HighchartsReact from "highcharts-react-official";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { AlertCircle } from "lucide-react";
-import { PredictiveDataProps } from "@/types";
-import { ElNinoVariables, predictiveModelDataType } from "@/constants";
+import { PredictiveDataProps, PredictiveFilterData } from "@/types";
+import { ElNinoToolDataIndicators, ElNinoVariables } from "@/constants";
 import { helix } from "ldrs";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "../ui/accordion";
-import PerformanceMetricsInference from "../performance-metrics-inference";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
+import { useState } from "react";
 helix.register("l-helix");
 
 const PredictiveToolsData = ({
@@ -40,6 +26,33 @@ const PredictiveToolsData = ({
   filterData,
   handleChange,
 }: PredictiveDataProps) => {
+  // regressionModelData[predictiveFilterData.predictiveVariable]
+  //             ?.filter(
+  //               (element) =>
+  //                 element.category === predictiveFilterData.elNinoCategory
+
+  const [predictiveFilterData, setPredictiveFilterData] =
+    useState<PredictiveFilterData>({
+      elNinoCategory: "moderate",
+      predictiveVariable: "rainfall",
+    });
+
+  const handlePredictiveFilterChange = (name: string, value: string | []) => {
+    setPredictiveFilterData((prev: any) => ({ ...prev, [name]: value }));
+  };
+
+  const predictionVariables = Object.fromEntries(
+    Object.entries(ElNinoToolDataIndicators).filter(([key, val]) =>
+      filterData.dataVariable.includes(key)
+    )
+  );
+
+  console.log(
+    regressionModelData[predictiveFilterData.predictiveVariable].filter(
+      (element) => element.category === predictiveFilterData.elNinoCategory
+    )
+  );
+
   return (
     <>
       {isLoading(regressionModelStatus) && (
@@ -75,8 +88,8 @@ const PredictiveToolsData = ({
             </h1>
           </div>
 
-          <div className="flex justify-center">
-            <div className="w-1/2">
+          <div className="flex flex-row gap-5 justify-center">
+            <div className="w-1/3">
               <div className="flex gap-2 ">
                 <Label className="mb-2 font-semibold">El Nino Category</Label>
                 <HelpHoverCard
@@ -85,66 +98,65 @@ const PredictiveToolsData = ({
                 />
               </div>
               <Combobox
-                name="elNinoVariable"
+                name="elNinoCategory"
                 label={"El Nino Category"}
                 array={transformObject(ElNinoVariables)}
                 state={{
-                  value: filterData.elNinoVariable,
-                  setValue: handleChange,
+                  value: predictiveFilterData.elNinoCategory,
+                  setValue: handlePredictiveFilterChange,
+                }}
+              />
+            </div>
+            <div className="w-1/3">
+              <div className="flex gap-2 ">
+                <Label className="mb-2 font-semibold">Variable</Label>
+                <HelpHoverCard
+                  title={"Variable"}
+                  content={` The variable that you would like to use for the prediction. `}
+                />
+              </div>
+              <Combobox
+                name="predictiveVariable"
+                label={"Variable"}
+                array={transformObject(predictionVariables)}
+                state={{
+                  value: predictiveFilterData.predictiveVariable,
+                  setValue: handlePredictiveFilterChange,
                 }}
               />
             </div>
           </div>
 
           <div className="flex flex-col gap-20">
-            {regressionModelData[0]?.map(
-              (data) =>
-                data?.category === filterData.elNinoVariable && (
-                  <div className="p-5 shadow-md shadow-gray-200 rounded-lg">
-                    <div className="mt-5 sm:p-10 p-4 rounded-lg bg-white shadow-lg">
+            {regressionModelData[predictiveFilterData.predictiveVariable]
+              ?.filter(
+                (element) =>
+                  element.category === predictiveFilterData.elNinoCategory
+              )
+              .map((data) => (
+                <div key={data?.category}>
+                  <div className="mt-5 flex flex-col gap-10">
+                    <div className="sm:p-10 p-4 rounded-lg bg-white shadow-lg">
                       <HighchartsReact
                         highcharts={Highcharts}
                         options={data?.chart}
                       />
                     </div>
-
-                    <div className="mt-10 ">
-                      <p className="text-xl text-center font-semibold">
-                        {formatTitle(data.category)} El Nino Performance Metrics
-                      </p>
+                    <div className="sm:p-10 p-4 rounded-lg bg-white shadow-lg">
+                      <HighchartsReact
+                        highcharts={Highcharts}
+                        options={data?.qq_plot}
+                      />
                     </div>
-                    <div className="flex flex-row justify-center gap-20">
-                      <div className="w-full flex flex-col items-center justify-center mt-10 mb-10 sm:p-10 p-4 rounded-lg bg-white shadow-lg">
-                        <p className="text-xl font-medium">
-                          MSE - Mean Square Error
-                        </p>
-                        <p className="text-5xl font-semibold mt-5">
-                          {data.performance_metrics?.mse.toFixed(2)}
-                        </p>
-                      </div>
-                      <div className="w-full flex flex-col items-center justify-center mt-10 mb-10 sm:p-10 p-4 rounded-lg bg-white shadow-lg">
-                        <p className="text-xl font-medium">
-                          R2 - Proportion of Variance
-                        </p>
-                        <p className="text-5xl font-semibold mt-5">
-                          {data.performance_metrics?.r2.toFixed(2)}
-                        </p>
-                      </div>
+                    <div className="sm:p-10 p-4 rounded-lg bg-white shadow-lg">
+                      <HighchartsReact
+                        highcharts={Highcharts}
+                        options={data?.histogram}
+                      />
                     </div>
-
-                    <Accordion type="single" collapsible>
-                      <AccordionItem value="item-1">
-                        <AccordionTrigger className="flex justify-center text-md gap-2 text-green-700">
-                          Performance Metrics Interpretation
-                        </AccordionTrigger>
-                        <AccordionContent>
-                          <PerformanceMetricsInference />
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
                   </div>
-                )
-            )}
+                </div>
+              ))}
           </div>
 
           {/* {predictiveDataType === predictiveModelDataType.logistic && (
