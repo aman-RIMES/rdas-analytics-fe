@@ -50,6 +50,26 @@ const AnalyticsCorrelation = ({
 
   useEffect(() => {
     (async () => {
+      const requestBody = {
+        indic: `${filterData.dataVariable.join(",")}`,
+        area: [`${filterData.districtValue}`],
+        crop: filterData.cropValue,
+        start: `${filterData.fromYear}-01-01`,
+        end: `${filterData.toYear}-01-01`,
+        country: filterData.countryValue,
+        //TODO: Make dynamic map use custom datastes
+      };
+      const formData = new FormData();
+      Object.keys(requestBody).map((key) => {
+        formData.append(key, requestBody[key]);
+      });
+      formData.append(
+        `source`,
+        filterData.source === "customDataset"
+          ? filterData.customDataset
+          : `ERA5`
+      );
+
       setCorrelationStatus(requestStatus.isLoading);
       setCorrelationChartData({});
       try {
@@ -64,14 +84,7 @@ const AnalyticsCorrelation = ({
                 start: `${filterData.fromYear}-01-01`,
                 end: `${filterData.toYear}-01-01`,
               }
-            : {
-                source: "ERA5",
-                indic: `${filterData.dataVariable.join(",")}`,
-                area: [`${filterData.districtValue}`],
-                start: `${filterData.fromYear}-01-01`,
-                end: `${filterData.toYear}-01-01`,
-                useEffect,
-              }
+            : formData
         );
         setCorrelationChartData(correlationData.data);
         setCorrelationStatus(requestStatus.isFinished);

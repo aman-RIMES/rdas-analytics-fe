@@ -76,6 +76,7 @@ const ElNinoAnalytics = () => {
     })();
   }, []);
 
+  //TODO: Control the reloading of the maps from the analytics-data component
   useEffect(() => {
     reloadAnomalyMap(setFirstAnomalyMapStatus);
   }, [filterData.anomalyYear1]);
@@ -90,6 +91,7 @@ const ElNinoAnalytics = () => {
       crop: filterData.cropValue,
       start: `${filterData.fromYear}-01-01`,
       end: `${filterData.toYear}-01-01`,
+      country: filterData.countryValue,
     };
     const formData = new FormData();
     Object.keys(requestBody).map((key) => {
@@ -109,12 +111,7 @@ const ElNinoAnalytics = () => {
     try {
       const response = await axios.post(
         "http://203.156.108.67:1580/el_nino_time_series_chart",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        formData
       );
 
       setTimeSeriesChartData(response.data);
@@ -133,15 +130,13 @@ const ElNinoAnalytics = () => {
       setDynamiMapStatus(requestStatus.isLoading);
       const geoJson = await axios.post(
         "http://203.156.108.67:1580/el_nino_map",
+        formData,
         {
-          source: "ERA5",
-          indic: `${filterData.dataVariable.join(",")}`,
-          country: filterData.countryValue,
-          start: `${filterData.fromYear}-01-01`,
-          end: `${filterData.toYear}-01-01`,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
-      console.log("DONEWITH DYNAMIC MAP");
       setDynamicMapData(geoJson.data);
       setDynamiMapStatus(requestStatus.isFinished);
       setFirstAnomalyMapStatus(requestStatus.isFinished);
