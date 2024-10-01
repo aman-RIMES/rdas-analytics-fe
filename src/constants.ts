@@ -343,66 +343,91 @@ export const correlationLegendObject = [
   {
     coefficient: "-1",
     description: "Perfect Negative Correlation",
+    interpretation:
+      "The variables move in opposite directions. If one increases, the other decreases in perfect proportion.",
     style: "bg-blue-700 text-white",
   },
   {
     coefficient: "-1 < r ≤ -0.8",
     description: "Very Strong Negative Correlation",
+    interpretation:
+      "The variables move in opposite directions. If one increases, the other decreases in very strong proportion.",
     style: "bg-blue-600 text-white",
   },
   {
     coefficient: "-0.8 < r ≤ -0.6",
     description: "Strong Negative Correlation",
+    interpretation:
+      "The variables move in opposite directions. If one increases, the other decreases in strong proportion.",
     style: "bg-blue-500 text-white",
   },
   {
     coefficient: "-0.6 < r ≤ 0.4",
     description: "Medium Negative Correlation",
+    interpretation:
+      "The variables move in opposite directions. If one increases, the other decreases in medium proportion.",
     style: "bg-blue-400 text-white",
   },
   {
     coefficient: "-0.4 < r ≤ 0.2",
     description: "Weak Negative Correlation",
+    interpretation:
+      "The variables move in opposite directions. If one increases, the other decreases in weak proportion.",
     style: "bg-blue-300 text-black",
   },
   {
     coefficient: "-0.2 < r < 0",
     description: "Very Weak Negative Correlation",
+    interpretation:
+      "The variables move in opposite directions. If one increases, the other decreases in very weak proportion.",
     style: "bg-blue-200 text-black",
   },
   {
     coefficient: "0",
     description: "No Correlation",
+    interpretation: "There is no linear relationship between the variables.",
     style: "bg-gray-200 text-black",
   },
   {
     coefficient: "0 < r < 0.2",
     description: "Very Weak Positive Correlation",
+    interpretation:
+      "Both variables move in same direction. If one increases, the other also increases in very weak proportion.",
     style: "bg-red-200 text-black",
   },
   {
     coefficient: "0.2 ≤ r < 0.4",
     description: "Weak Positive Correlation",
+    interpretation:
+      "Both variables move in same direction. If one increases, the other also increases in weak proportion.",
     style: "bg-red-300 text-black",
   },
   {
     coefficient: "0.4 ≤ r < 0.6",
     description: "Medium Positive Correlation",
+    interpretation:
+      "Both variables move in same direction. If one increases, the other also increases in medium proportion.",
     style: "bg-red-400 text-white",
   },
   {
     coefficient: "0.6 ≤ r < 0.8",
     description: "Strong Positive Correlation",
+    interpretation:
+      "Both variables move in same direction. If one increases, the other also increases in strong proportion.",
     style: "bg-red-500 text-white",
   },
   {
     coefficient: "0.8 ≤ r < 1.0",
     description: "Very Strong Positive Correlation",
+    interpretation:
+      "Both variables move in same direction. If one increases, the other also increases in very strong proportion.",
     style: "bg-red-600 text-white",
   },
   {
     coefficient: "1",
     description: "Perfect Positive Correlation",
+    interpretation:
+      "Both variables move in same direction. If one increases, the other also increases in perfect proportion.",
     style: "bg-red-700 text-white",
   },
 ];

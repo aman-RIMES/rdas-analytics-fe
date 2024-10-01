@@ -12,15 +12,18 @@ import { correlationLegendObject } from "@/constants";
 const CorrelationPlotLegend = () => {
   return (
     <div className=" flex flex-col items-center justify-center sm:p-10 p-4 m-1 rounded-lg bg-gray-50 shadow-lg">
-      <div className="w-1/2">
+      <div className="w-full">
         <Table>
           <TableHeader>
-            <TableRow className="bg-yellow-200 hover:bg-yellow-200">
-              <TableHead className=" text-black text-center text-md font-medium h-8">
+            <TableRow className="bg-fuchsia-900 hover:bg-fuchsia-900">
+              <TableHead className=" text-white text-center text-md font-medium h-8">
                 Correlation Coefficient (R) Value
               </TableHead>
-              <TableHead className=" text-black text-center text-md font-medium h-8">
+              <TableHead className=" text-white text-center text-md font-medium h-8">
                 Direction & Strength of Correlation
+              </TableHead>
+              <TableHead className=" text-white text-center text-md font-medium h-8">
+                Interpretation of Correlation
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -28,7 +31,7 @@ const CorrelationPlotLegend = () => {
             {correlationLegendObject?.map((element, index) => (
               <TableRow
                 key={index}
-                className={`${element.style} hover:${element.style}`}
+                className={`${element.style} hover:${element.style} hover:bg-gray-400`}
               >
                 <TableCell className="text-xs text-center font-bold p-1">
                   {element.coefficient}
@@ -36,6 +39,10 @@ const CorrelationPlotLegend = () => {
 
                 <TableCell className="text-xs text-center font-medium p-1">
                   {element.description}
+                </TableCell>
+
+                <TableCell className="text-xs text-center font-medium p-1">
+                  {element.interpretation}
                 </TableCell>
               </TableRow>
             ))}
