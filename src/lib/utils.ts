@@ -82,16 +82,20 @@ export const formatStatisticsLabel = (title: string) => {
 };
 
 export const calculateLinearPredictiveValue = (
-  fields: string[],
-  coeff: number[],
-  intercept: number
+  input: string,
+  coeff: number,
+  intercept: number,
+  std_error: number
 ) => {
-  let sum = 0;
-  fields.map((e: any, index: any) => {
-    sum += parseInt(e) * coeff[index];
-  });
+  const predictedValue = parseFloat(input) * coeff + intercept;
+  const min = predictedValue * (std_error / 100 - 1);
+  const max = predictedValue * (std_error / 100);
 
-  return sum + intercept;
+  return {
+    min: min.toFixed(2),
+    max: max.toFixed(2),
+    input: input,
+  };
 };
 
 export const containsCropAnalysis = (dependentVariables) => {

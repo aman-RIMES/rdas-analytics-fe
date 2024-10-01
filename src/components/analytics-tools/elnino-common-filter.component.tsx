@@ -244,7 +244,7 @@ const ElNinoCommonFilter = ({
         </div>
       </div>
 
-      <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
+      {/* <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
         {filterType === "predictive" && (
           <div>
             <div className="flex gap-2 ">
@@ -270,7 +270,7 @@ const ElNinoCommonFilter = ({
             />
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

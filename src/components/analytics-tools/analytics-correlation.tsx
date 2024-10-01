@@ -98,7 +98,7 @@ const AnalyticsCorrelation = ({
     <div className="sm:p-10 p-4 mt-10 rounded-lg bg-gray-50 shadow-lg">
       <div className="flex justify-center mb-10">
         <h1 className="text-xl font-semibold">
-          Correlation between Variables and El Nino
+          Correlation between Data Variables and El Nino
         </h1>
       </div>
 

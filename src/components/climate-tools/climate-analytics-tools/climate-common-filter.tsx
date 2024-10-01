@@ -132,12 +132,7 @@ const ClimateCommonFilter = ({
             selected={selected}
             setSelected={setSelected}
             setState={handleChange}
-            array={transformObject(params?.indic).filter(
-              (e) =>
-                e.value !== filterData.dependentVariable &&
-                e.value !== "rainfall_deviation" &&
-                !filterData.independentVariables?.includes(e.value)
-            )}
+            array={transformObject(params?.indic)}
           />
         </div>
       </div>

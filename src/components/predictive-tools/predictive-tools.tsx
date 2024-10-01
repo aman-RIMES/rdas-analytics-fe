@@ -27,10 +27,11 @@ const PredictiveTools = () => {
     cropValue: "",
     source: "",
     countryValue: "",
+    districtValue: "",
     districtList: [],
     fromYear: "",
     toYear: "",
-    modelType: "",
+    modelType: "linear",
   });
 
   const handleChange = (name: string, value: string | []) => {
@@ -42,6 +43,7 @@ const PredictiveTools = () => {
       filterData.dataVariable.length > 0 &&
       filterData.source !== "" &&
       filterData.countryValue !== "" &&
+      filterData.districtValue !== "" &&
       filterData.modelType !== "" &&
       filterData.toYear !== "" &&
       filterData.fromYear !== ""
@@ -150,18 +152,6 @@ const PredictiveTools = () => {
             filterData={filterData}
             handleChange={handleChange}
           />
-
-          {isFinished(regressionModelStatus) && (
-            <>
-              {predictiveDataType === predictiveModelDataType.linear && (
-                <div className="mt-10 sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
-                  <PredictiveCalculation
-                    regressionModelData={regressionModelData}
-                  />
-                </div>
-              )}
-            </>
-          )}
         </div>
       </div>
     </>

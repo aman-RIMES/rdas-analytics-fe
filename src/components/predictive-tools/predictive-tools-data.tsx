@@ -15,7 +15,8 @@ import { helix } from "ldrs";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import PredictiveCalculation from "./predictve-tools-calculation";
 helix.register("l-helix");
 
 const PredictiveToolsData = ({
@@ -26,16 +27,19 @@ const PredictiveToolsData = ({
   filterData,
   handleChange,
 }: PredictiveDataProps) => {
-  // regressionModelData[predictiveFilterData.predictiveVariable]
-  //             ?.filter(
-  //               (element) =>
-  //                 element.category === predictiveFilterData.elNinoCategory
-
   const [predictiveFilterData, setPredictiveFilterData] =
     useState<PredictiveFilterData>({
       elNinoCategory: "moderate",
       predictiveVariable: "rainfall",
     });
+  const [predictiveEvaluation, setPredictiveEvaluation] = useState({
+    chart: {},
+    qq_plot: {},
+    histogram: {},
+    intercept: ``,
+    coefficients: [],
+    std_error: ``,
+  });
 
   const handlePredictiveFilterChange = (name: string, value: string | []) => {
     setPredictiveFilterData((prev: any) => ({ ...prev, [name]: value }));
@@ -46,6 +50,19 @@ const PredictiveToolsData = ({
       filterData.dataVariable.includes(key)
     )
   );
+
+  useEffect(() => {
+    const evaluation = regressionModelData[
+      predictiveFilterData.predictiveVariable
+    ]?.find(
+      (element) => element.category === predictiveFilterData.elNinoCategory
+    );
+    setPredictiveEvaluation(evaluation);
+  }, [
+    predictiveFilterData.predictiveVariable,
+    predictiveFilterData.elNinoCategory,
+    regressionModelData,
+  ]);
 
   return (
     <>
@@ -75,155 +92,91 @@ const PredictiveToolsData = ({
       )}
 
       {isFinished(regressionModelStatus) && (
-        <div className="mt-10 sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
-          <div className="flex justify-center mb-10">
-            <h1 className="text-3xl font-semibold">
-              {`${formatTitle(predictiveDataType)} Predictive Model`}
-            </h1>
-          </div>
-
-          <div className="flex flex-row gap-5 justify-center">
-            <div className="w-1/3">
-              <div className="flex gap-2 ">
-                <Label className="mb-2 font-semibold">El Nino Category</Label>
-                <HelpHoverCard
-                  title={"El Nino Category"}
-                  content={` The El Nino Category you would like to use for the prediction. `}
+        <>
+          <div className="mt-10 sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
+            <div className="flex flex-row gap-5 justify-center">
+              <div className="w-1/3">
+                <div className="flex gap-2 ">
+                  <Label className="mb-2 font-semibold">El Nino Category</Label>
+                  <HelpHoverCard
+                    title={"El Nino Category"}
+                    content={` The El Nino Category you would like to use for the prediction. `}
+                  />
+                </div>
+                <Combobox
+                  name="elNinoCategory"
+                  label={"El Nino Category"}
+                  array={transformObject(ElNinoVariables)}
+                  state={{
+                    value: predictiveFilterData.elNinoCategory,
+                    setValue: handlePredictiveFilterChange,
+                  }}
                 />
               </div>
-              <Combobox
-                name="elNinoCategory"
-                label={"El Nino Category"}
-                array={transformObject(ElNinoVariables)}
-                state={{
-                  value: predictiveFilterData.elNinoCategory,
-                  setValue: handlePredictiveFilterChange,
-                }}
-              />
-            </div>
-            <div className="w-1/3">
-              <div className="flex gap-2 ">
-                <Label className="mb-2 font-semibold">Variable</Label>
-                <HelpHoverCard
-                  title={"Variable"}
-                  content={` The variable that you would like to use for the prediction. `}
+              <div className="w-1/3">
+                <div className="flex gap-2 ">
+                  <Label className="mb-2 font-semibold">Variable</Label>
+                  <HelpHoverCard
+                    title={"Variable"}
+                    content={` The variable that you would like to use for the prediction. `}
+                  />
+                </div>
+                <Combobox
+                  name="predictiveVariable"
+                  label={"Variable"}
+                  array={transformObject(predictionVariables)}
+                  state={{
+                    value: predictiveFilterData.predictiveVariable,
+                    setValue: handlePredictiveFilterChange,
+                  }}
                 />
               </div>
-              <Combobox
-                name="predictiveVariable"
-                label={"Variable"}
-                array={transformObject(predictionVariables)}
-                state={{
-                  value: predictiveFilterData.predictiveVariable,
-                  setValue: handlePredictiveFilterChange,
-                }}
-              />
             </div>
-          </div>
 
-          <div className="flex flex-col gap-20">
-            {regressionModelData[predictiveFilterData.predictiveVariable]
-              ?.filter(
-                (element) =>
-                  element.category === predictiveFilterData.elNinoCategory
-              )
-              .map((data) => (
-                <div key={data?.category}>
-                  <div className="mt-5 flex flex-col gap-10">
-                    <div className="sm:p-10 p-4 rounded-lg bg-white shadow-lg">
-                      <HighchartsReact
-                        highcharts={Highcharts}
-                        options={data?.chart}
-                      />
-                    </div>
-                    <div className="sm:p-10 p-4 rounded-lg bg-white shadow-lg">
-                      <HighchartsReact
-                        highcharts={Highcharts}
-                        options={data?.qq_plot}
-                      />
-                    </div>
-                    <div className="sm:p-10 p-4 rounded-lg bg-white shadow-lg">
-                      <HighchartsReact
-                        highcharts={Highcharts}
-                        options={data?.histogram}
-                      />
-                    </div>
+            <div className="flex justify-center mt-10">
+              <h1 className="text-2xl font-semibold">
+                {`Predictive Model Evaluation`}
+              </h1>
+            </div>
+
+            <div className="flex flex-col gap-20">
+              {/* {predictiveEvaluation?.map((data) => ( */}
+              {/* <div key={data?.category}> */}
+              <div>
+                <div className="mt-5 flex flex-col gap-10">
+                  <div className="sm:p-10 p-4 rounded-lg bg-white shadow-lg">
+                    <HighchartsReact
+                      highcharts={Highcharts}
+                      options={predictiveEvaluation?.chart}
+                    />
+                  </div>
+                  <div className="sm:p-10 p-4 rounded-lg bg-white shadow-lg">
+                    <HighchartsReact
+                      highcharts={Highcharts}
+                      options={predictiveEvaluation?.qq_plot}
+                    />
+                  </div>
+                  <div className="sm:p-10 p-4 rounded-lg bg-white shadow-lg">
+                    <HighchartsReact
+                      highcharts={Highcharts}
+                      options={predictiveEvaluation?.histogram}
+                    />
                   </div>
                 </div>
-              ))}
+              </div>
+              {/* ))} */}
+            </div>
           </div>
 
-          {/* {predictiveDataType === predictiveModelDataType.logistic && (
-            <>
-              <div className="flex flex-row justify-center items-center gap-20 mt-10">
-                <div className="h-[340px] flex flex-col items-center justify-center mt-10 mb-10 sm:p-10 p-4 rounded-lg bg-white shadow-lg w-full">
-                  <p className="text-2xl font-medium">Accuracy</p>
-                  <p className="text-8xl font-semibold mt-5">
-                    {regressionModelData?.accuracy?.toFixed(2)}
-                  </p>
-                </div>
-
-                <div className="h-[350px] flex flex-col justify-center items-center sm:p-10 p-4 rounded-lg bg-white shadow-lg w-full">
-                  <p className="text-2xl font-medium">Confusion Matrix</p>
-                  <Table className="mt-5">
-                    <TableBody>
-                      {regressionModelData?.confusion_matrix?.map(
-                        (element: any, index: number) => (
-                          <TableRow key={index}>
-                            {element.map((cell: number) => (
-                              <TableCell className="text-black text-md px-5">
-                                {cell}
-                              </TableCell>
-                            ))}
-                          </TableRow>
-                        )
-                      )}
-                    </TableBody>
-                  </Table>
-                </div>
-              </div>
-
-              <div className="mt-10 sm:p-10 p-4 rounded-lg bg-white shadow-lg w-full">
-                <p className="flex justify-center text-xl font-medium">
-                  Classification Report
-                </p>
-                <Table className="mt-10">
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="text-md text-black font-medium">
-                        Value
-                      </TableHead>
-                      {Object.keys(
-                        regressionModelData?.classification_report["macro avg"]
-                      ).map((element: any) => (
-                        <TableHead className="text-md text-black font-medium">
-                          {formatTitle(element)}
-                        </TableHead>
-                      ))}
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {Object.keys(regressionModelData.classification_report)
-                      .filter((e) => e !== "accuracy")
-                      .map((e) => (
-                        <TableRow>
-                          <TableCell className="text-black text-md font-medium">
-                            {e}
-                          </TableCell>
-
-                          {Object.values(
-                            regressionModelData.classification_report[e]
-                          ).map((element: any) => (
-                            <TableCell className="text-md">{element}</TableCell>
-                          ))}
-                        </TableRow>
-                      ))}
-                  </TableBody>
-                </Table>
-              </div>
-            </>
-          )} */}
-        </div>
+          <div className="mt-10 sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
+            <PredictiveCalculation
+              intercept={predictiveEvaluation?.intercept}
+              coefficient={predictiveEvaluation?.coefficients[0]}
+              std_error={predictiveEvaluation?.std_error}
+              variable={predictiveFilterData?.predictiveVariable}
+            />
+          </div>
+        </>
       )}
     </>
   );
