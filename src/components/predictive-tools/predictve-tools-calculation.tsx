@@ -37,7 +37,7 @@ const PredictiveCalculation = ({
         </div>
         <div className="mt-5 w-80">
           <label className="text-lg font-medium" htmlFor="rainfall">
-            El Nino Intensity
+            El Nino ONI Index
           </label>
           <Input
             id="rainfall"
@@ -58,7 +58,10 @@ const PredictiveCalculation = ({
       {showPredictedValue && (
         <>
           <div className="flex flex-col items-center justify-center mt-16">
-            <p className="text-xl font-semibold">Final Predicted Range (mm)</p>
+            <p className="text-xl font-semibold">
+              Final Predicted Range for {formatTitle(variable)}{" "}
+              {variable === "temperature" ? "(°C)" : "(mm)"}
+            </p>
             <p className="text-8xl font-semibold mt-5">
               <CountUp
                 start={parseFloat(predictedValue.min) - 50}
@@ -75,7 +78,7 @@ const PredictiveCalculation = ({
               />
             </p>
             <p className="text-xl mt-16">
-              This means when ElNino intensity is{" "}
+              This means when ElNino ONI Index is{" "}
               <span className="text-2xl font-semibold">
                 {predictedValue.input}
               </span>
@@ -88,8 +91,7 @@ const PredictiveCalculation = ({
                   end={parseFloat(predictedValue.min)}
                 />
               </span>
-              {"mm "}
-              and{" "}
+              {variable === "temperature" ? "°C" : "mm"} and{" "}
               <span className="text-2xl font-semibold">
                 <CountUp
                   start={parseFloat(predictedValue.max) - 50}
@@ -98,7 +100,7 @@ const PredictiveCalculation = ({
                   end={parseFloat(predictedValue.max)}
                 />
               </span>
-              {"mm"}.
+              {variable === "temperature" ? "°C" : "mm"}.
             </p>
           </div>
         </>
