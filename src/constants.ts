@@ -272,6 +272,21 @@ export const yearsList: YearsList[] = [
   },
 ];
 
+export const monthsList = [
+  { value: "January", label: "January" },
+  { value: "February", label: "February" },
+  { value: "March", label: "March" },
+  { value: "April", label: "April" },
+  { value: "May", label: "May" },
+  { value: "June", label: "June" },
+  { value: "July", label: "July" },
+  { value: "August", label: "August" },
+  { value: "September", label: "September" },
+  { value: "October", label: "October" },
+  { value: "November", label: "November" },
+  { value: "December", label: "December" },
+];
+
 export const countries = [
   { value: "NPL", label: "Nepal", coordinates: [28.3949, 84.124], zoom: 6 },
   { value: "IND", label: "India", coordinates: [20.5937, 78.9629], zoom: 3 },

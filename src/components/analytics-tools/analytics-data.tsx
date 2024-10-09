@@ -10,7 +10,8 @@ import { Label } from "@radix-ui/react-dropdown-menu";
 import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
 import MapLegend from "../map-legend";
-import { countries, mapDataType } from "@/constants";
+import { countries, mapDataType, monthsList } from "@/constants";
+import { useState } from "react";
 reuleaux.register("l-reuleaux");
 grid.register("l-loader");
 
@@ -35,6 +36,11 @@ const AnalyticsData = ({
     count += 1;
     yearList.push({ value: count.toString(), label: i.toString() });
   }
+
+  const [chosenMonth, setChosenMonth] = useState("January");
+  const handleMonthChange = (name: string, value: string) => {
+    setChosenMonth(value);
+  };
 
   return (
     <div className=" mt-10">
@@ -64,11 +70,44 @@ const AnalyticsData = ({
       {isFinished(dynamicChartStatus) && (
         <div className="sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
           <div className="flex flex-col gap-10">
-            {timeSeriesChartData.map((chartData, index) => (
-              <div key={index} className="rounded-lg bg-white p-1 shadow-md">
-                <HighchartsReact highcharts={Highcharts} options={chartData} />
+            <div className="rounded-lg bg-white p-1 shadow-md">
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={timeSeriesChartData[0]}
+              />
+            </div>
+
+            <div className="flex justify-center mt-8">
+              <div className="w-1/3">
+                <div className="flex gap-2 ">
+                  <Label className="mb-2 font-semibold">Month</Label>
+                  <HelpHoverCard
+                    title={"Months"}
+                    content={` The month you would like to view the charts for. `}
+                  />
+                </div>
+                <Combobox
+                  name="month"
+                  label={"Months"}
+                  array={monthsList}
+                  state={{
+                    value: chosenMonth,
+                    setValue: handleMonthChange,
+                  }}
+                />
               </div>
-            ))}
+            </div>
+
+            {timeSeriesChartData
+              .filter((element) => element.title.text === chosenMonth)
+              .map((chartData, index) => (
+                <div key={index} className="rounded-lg bg-white p-1 shadow-md">
+                  <HighchartsReact
+                    highcharts={Highcharts}
+                    options={chartData}
+                  />
+                </div>
+              ))}
           </div>
 
           <div>
