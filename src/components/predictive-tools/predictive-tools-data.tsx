@@ -10,7 +10,7 @@ import HighchartsReact from "highcharts-react-official";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { AlertCircle } from "lucide-react";
 import { PredictiveDataProps, PredictiveFilterData } from "@/types";
-import { ElNinoToolDataIndicators, ElNinoVariables } from "@/constants";
+import { ElNinoToolDataIndicators, ElNinoCategories } from "@/constants";
 import { helix } from "ldrs";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import HelpHoverCard from "../help-hover-card";
@@ -106,7 +106,7 @@ const PredictiveToolsData = ({
                 <Combobox
                   name="elNinoCategory"
                   label={"El Nino Category"}
-                  array={transformObject(ElNinoVariables)}
+                  array={ElNinoCategories}
                   state={{
                     value: predictiveFilterData.elNinoCategory,
                     setValue: handlePredictiveFilterChange,

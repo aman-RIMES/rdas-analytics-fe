@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import {
   countries,
   ElNinoToolDataIndicators,
-  ElNinoVariables,
   elNinoYearsList,
 } from "@/constants";
 import {
@@ -18,7 +17,6 @@ import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { FancyMultiSelect } from "../ui/multiselect";
 import { Input } from "../ui/input";
-import downloadTemplate from "@/data/body_params.json";
 
 const ElNinoCommonFilter = ({
   params,

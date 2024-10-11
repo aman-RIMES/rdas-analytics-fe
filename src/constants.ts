@@ -273,18 +273,18 @@ export const yearsList: YearsList[] = [
 ];
 
 export const monthsList = [
-  { value: "January", label: "January" },
-  { value: "February", label: "February" },
-  { value: "March", label: "March" },
-  { value: "April", label: "April" },
-  { value: "May", label: "May" },
-  { value: "June", label: "June" },
-  { value: "July", label: "July" },
-  { value: "August", label: "August" },
-  { value: "September", label: "September" },
-  { value: "October", label: "October" },
-  { value: "November", label: "November" },
-  { value: "December", label: "December" },
+  { value: "1", label: "January" },
+  { value: "2", label: "February" },
+  { value: "3", label: "March" },
+  { value: "4", label: "April" },
+  { value: "5", label: "May" },
+  { value: "6", label: "June" },
+  { value: "7", label: "July" },
+  { value: "8", label: "August" },
+  { value: "9", label: "September" },
+  { value: "10", label: "October" },
+  { value: "11", label: "November" },
+  { value: "12", label: "December" },
 ];
 
 export const countries = [
@@ -348,10 +348,38 @@ export const ElNinoToolDataIndicators = {
   // crop_price_seasonal: "Crop-wise price seasonal, year wise",
 };
 
-export const ElNinoVariables = {
-  moderate: "Moderate El Nino Events",
-  strong: "Strong El Nino Events",
-  weak: "Weak El Nino Events",
+export const ElNinoCategories = [
+  { value: "moderate", label: "Moderate El Nino Events" },
+  { value: "weak", label: "Weak El Nino Events" },
+  { value: "strong", label: "Strong El Nino Events" },
+  { value: "veryStrong", label: "Very strong El Nino Events" },
+];
+
+export const ElNinoYears = {
+  weak: [
+    { value: "1980", label: "1980" },
+    { value: "1988", label: "1988" },
+    { value: "1993", label: "1993" },
+    { value: "2004", label: "2004" },
+    { value: "2005", label: "2005" },
+    { value: "2007", label: "2007" },
+  ],
+  moderate: [
+    { value: "1986", label: "1986" },
+    { value: "1994", label: "1994" },
+    { value: "2002", label: "2002" },
+    { value: "2010", label: "2010" },
+  ],
+  strong: [
+    { value: "1982", label: "1982" },
+    { value: "1983", label: "1983" },
+    { value: "1987", label: "1987" },
+    { value: "1991", label: "1991" },
+    { value: "1992", label: "1992" },
+    { value: "1997", label: "1997" },
+    { value: "1998", label: "1998" },
+    { value: "2009", label: "2009" },
+  ],
 };
 
 export const correlationLegendObject = [
