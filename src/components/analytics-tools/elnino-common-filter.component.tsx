@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   countries,
   ElNinoToolDataIndicators,
   elNinoYearsList,
+  monthsList,
 } from "@/constants";
 import {
   containsCropAnalysis,
@@ -32,6 +33,7 @@ const ElNinoCommonFilter = ({
     );
     handleChange("districtList", districtsData);
   }, [filterData.countryValue]);
+  const [selectedMonths, setSelectedMonths] = useState([]);
 
   return (
     <div>
@@ -239,6 +241,27 @@ const ElNinoCommonFilter = ({
               }}
             />
           </div>
+        </div>
+      </div>
+
+      <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
+        <div className="">
+          <div className="flex gap-2">
+            <Label className="mb-2 font-semibold">Months</Label>
+            <HelpHoverCard
+              title={"Months"}
+              content={`The month used to compare against the El Nino
+              variable.`}
+            />
+          </div>
+          <FancyMultiSelect
+            name="months"
+            selected={selectedMonths}
+            setSelected={setSelectedMonths}
+            setState={handleChange}
+            array={monthsList}
+            ScrollAreaHeight={180}
+          />
         </div>
       </div>
 

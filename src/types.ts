@@ -93,6 +93,7 @@ export interface FilterData {
   toYear?: string;
   anomalyYear1?: string;
   anomalyYear2?: string;
+  months?: [];
 }
 
 export interface CorrelationFilterData {

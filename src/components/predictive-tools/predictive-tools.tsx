@@ -32,6 +32,7 @@ const PredictiveTools = () => {
     fromYear: "",
     toYear: "",
     modelType: "linear",
+    months: [],
   });
 
   const handleChange = (name: string, value: string | []) => {
@@ -41,6 +42,7 @@ const PredictiveTools = () => {
   const verifyFilters = () => {
     return (
       filterData.dataVariable.length > 0 &&
+      filterData.months.length > 0 &&
       filterData.source !== "" &&
       filterData.countryValue !== "" &&
       filterData.districtValue !== "" &&
@@ -82,6 +84,7 @@ const PredictiveTools = () => {
   const generateRegressionModel = async () => {
     const requestBody = {
       indic_y: `${filterData.dataVariable.join(",")}`,
+      months: `${filterData.months.join(",")}`,
       area: [`${filterData.districtValue}`],
       crop: filterData.cropValue,
       start: `${filterData.fromYear}-01-01`,
