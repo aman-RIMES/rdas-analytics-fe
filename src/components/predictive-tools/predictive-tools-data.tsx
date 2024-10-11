@@ -36,8 +36,7 @@ const PredictiveToolsData = ({
       elNinoCategory: "moderate",
       predictiveVariable: "rainfall",
     });
-  const [predictiveEvaluation, setPredictiveEvaluation] =
-    useState<PredictiveEvaluation>();
+  const [predictiveEvaluation, setPredictiveEvaluation] = useState<any>();
 
   const handlePredictiveFilterChange = (name: string, value: string | []) => {
     setPredictiveFilterData((prev: any) => ({ ...prev, [name]: value }));
@@ -175,13 +174,13 @@ const PredictiveToolsData = ({
               <div className="w-full flex flex-col items-center justify-center mt-10 mb-10 sm:p-10 p-4 rounded-lg bg-white shadow-lg">
                 <p className="text-xl font-medium">Test Statistic</p>
                 <p className="text-5xl font-semibold mt-5">
-                  {predictiveEvaluation["shapiro-wilk"]["stat"].toFixed(2)}
+                  {/* {predictiveEvaluation["shapiro-wilk"]["stat"].toFixed(2)} */}
                 </p>
               </div>
               <div className="w-full flex flex-col items-center justify-center mt-10 mb-10 sm:p-10 p-4 rounded-lg bg-white shadow-lg">
                 <p className="text-xl font-medium">P-Value</p>
                 <p className="text-5xl font-semibold mt-5">
-                  {predictiveEvaluation["shapiro-wilk"]["p_value"].toFixed(2)}
+                  {/* {predictiveEvaluation["shapiro-wilk"]["p_value"].toFixed(2)} */}
                 </p>
               </div>
             </div>
