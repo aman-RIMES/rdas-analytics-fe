@@ -21,6 +21,14 @@ import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
 import { useEffect, useState } from "react";
 import PredictiveCalculation from "./predictve-tools-calculation";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../ui/table";
 helix.register("l-helix");
 
 const PredictiveToolsData = ({
@@ -36,7 +44,7 @@ const PredictiveToolsData = ({
       elNinoCategory: "moderate",
       predictiveVariable: "rainfall",
     });
-  const [predictiveEvaluation, setPredictiveEvaluation] = useState<any>();
+  const [predictiveEvaluation, setPredictiveEvaluation] = useState<any>({});
 
   const handlePredictiveFilterChange = (name: string, value: string | []) => {
     setPredictiveFilterData((prev: any) => ({ ...prev, [name]: value }));
@@ -54,6 +62,7 @@ const PredictiveToolsData = ({
     ]?.find(
       (element) => element.category === predictiveFilterData.elNinoCategory
     );
+
     setPredictiveEvaluation(evaluation);
   }, [
     predictiveFilterData.predictiveVariable,
@@ -137,8 +146,6 @@ const PredictiveToolsData = ({
             </div>
 
             <div className="flex flex-col gap-20">
-              {/* {predictiveEvaluation?.map((data) => ( */}
-              {/* <div key={data?.category}> */}
               <div>
                 <div className="mt-5 flex flex-col gap-10">
                   <div className="sm:p-10 p-4 rounded-lg bg-white shadow-lg">
@@ -161,7 +168,6 @@ const PredictiveToolsData = ({
                   </div>
                 </div>
               </div>
-              {/* ))} */}
             </div>
           </div>
 
@@ -174,13 +180,15 @@ const PredictiveToolsData = ({
               <div className="w-full flex flex-col items-center justify-center mt-10 mb-10 sm:p-10 p-4 rounded-lg bg-white shadow-lg">
                 <p className="text-xl font-medium">Test Statistic</p>
                 <p className="text-5xl font-semibold mt-5">
-                  {/* {predictiveEvaluation["shapiro-wilk"]["stat"].toFixed(2)} */}
+                  {predictiveEvaluation &&
+                    predictiveEvaluation["shapiro-wilk"]["stat"].toFixed(2)}
                 </p>
               </div>
               <div className="w-full flex flex-col items-center justify-center mt-10 mb-10 sm:p-10 p-4 rounded-lg bg-white shadow-lg">
                 <p className="text-xl font-medium">P-Value</p>
                 <p className="text-5xl font-semibold mt-5">
-                  {/* {predictiveEvaluation["shapiro-wilk"]["p_value"].toFixed(2)} */}
+                  {predictiveEvaluation &&
+                    predictiveEvaluation["shapiro-wilk"]["p_value"].toFixed(2)}
                 </p>
               </div>
             </div>
