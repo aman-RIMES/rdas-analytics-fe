@@ -182,7 +182,7 @@ const DynamicMap = ({
                 <Combobox
                   name="anomalyYear1"
                   label={"Year"}
-                  array={ElNinoYears[chosenCategory]}
+                  array={yearList}
                   state={{
                     value: filterData.anomalyYear1,
                     setValue: handleChange,
@@ -238,7 +238,7 @@ const DynamicMap = ({
                 <Combobox
                   name="anomalyYear2"
                   label={"Year"}
-                  array={ElNinoYears[chosenCategory]}
+                  array={yearList}
                   state={{
                     value: filterData.anomalyYear2,
                     setValue: handleChange,

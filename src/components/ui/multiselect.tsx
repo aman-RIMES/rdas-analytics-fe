@@ -22,11 +22,12 @@ export function FancyMultiSelect({
   setState,
   array,
   placeholder = "Select variables",
-  ScrollAreaHeight = 72,
+  ScrollAreaHeight = "180",
 }: any) {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
   const [selectedAnswers, setSelectedAnswers] = useState<any>([]);
+  // const [selected, setSelected] = useState<any>([]);
   const [inputValue, setInputValue] = React.useState("");
 
   useEffect(() => {
@@ -117,7 +118,7 @@ export function FancyMultiSelect({
         <CommandList>
           {open && selectables.length > 0 ? (
             <div className="absolute top-0 z-10 w-full rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
-              <ScrollArea className={`h-${ScrollAreaHeight}`}>
+              <ScrollArea className={`h-[${ScrollAreaHeight}px]`}>
                 <CommandGroup className="h-full overflow-auto">
                   {selectables.map((element: any) => {
                     return (
