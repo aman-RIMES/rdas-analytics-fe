@@ -153,3 +153,15 @@ export interface PredictiveFilterData {
   elNinoCategory: string;
   predictiveVariable: string;
 }
+
+export interface PredictiveEvaluation {
+  chart: {};
+  qq_plot: {};
+  histogram: {};
+  intercept: ``;
+  coefficients: [];
+  "shapiro-wilk": any;
+  performance_metrics: any;
+  prediction_table: {};
+  std_error: ``;
+}

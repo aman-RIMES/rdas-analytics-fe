@@ -9,7 +9,11 @@ import Highcharts from "highcharts/highmaps";
 import HighchartsReact from "highcharts-react-official";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { AlertCircle } from "lucide-react";
-import { PredictiveDataProps, PredictiveFilterData } from "@/types";
+import {
+  PredictiveDataProps,
+  PredictiveEvaluation,
+  PredictiveFilterData,
+} from "@/types";
 import { ElNinoToolDataIndicators, ElNinoCategories } from "@/constants";
 import { helix } from "ldrs";
 import { Label } from "@radix-ui/react-dropdown-menu";
@@ -32,14 +36,8 @@ const PredictiveToolsData = ({
       elNinoCategory: "moderate",
       predictiveVariable: "rainfall",
     });
-  const [predictiveEvaluation, setPredictiveEvaluation] = useState({
-    chart: {},
-    qq_plot: {},
-    histogram: {},
-    intercept: ``,
-    coefficients: [],
-    std_error: ``,
-  });
+  const [predictiveEvaluation, setPredictiveEvaluation] =
+    useState<PredictiveEvaluation>();
 
   const handlePredictiveFilterChange = (name: string, value: string | []) => {
     setPredictiveFilterData((prev: any) => ({ ...prev, [name]: value }));
@@ -169,12 +167,37 @@ const PredictiveToolsData = ({
           </div>
 
           <div className="mt-10 sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
-            <PredictiveCalculation
+            <div className="flex justify-center">
+              <p className="text-2xl font-bold">Predictive Evaluation</p>
+            </div>
+
+            <div className="flex flex-row justify-center gap-20">
+              <div className="w-full flex flex-col items-center justify-center mt-10 mb-10 sm:p-10 p-4 rounded-lg bg-white shadow-lg">
+                <p className="text-xl font-medium">Test Statistic</p>
+                <p className="text-5xl font-semibold mt-5">
+                  {predictiveEvaluation["shapiro-wilk"]["stat"].toFixed(2)}
+                </p>
+              </div>
+              <div className="w-full flex flex-col items-center justify-center mt-10 mb-10 sm:p-10 p-4 rounded-lg bg-white shadow-lg">
+                <p className="text-xl font-medium">P-Value</p>
+                <p className="text-5xl font-semibold mt-5">
+                  {predictiveEvaluation["shapiro-wilk"]["p_value"].toFixed(2)}
+                </p>
+              </div>
+            </div>
+
+            <p className="text-center">
+              Sample Inference: The P-Value is greater than 0.05, meaning that
+              the sample follows a normal distribution and the model is a good
+              fit.
+            </p>
+
+            {/* <PredictiveCalculation
               intercept={predictiveEvaluation?.intercept}
               coefficient={predictiveEvaluation?.coefficients[0]}
               std_error={predictiveEvaluation?.std_error}
               variable={predictiveFilterData?.predictiveVariable}
-            />
+            /> */}
           </div>
         </>
       )}
