@@ -8,10 +8,6 @@ export const MenuButton = ({ url, icon, title }: any) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
-    console.log(location.pathname);
-  });
-
   return (
     <Button
       variant="ghost"

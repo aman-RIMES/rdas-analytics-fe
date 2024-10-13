@@ -109,3 +109,15 @@ export const containsCropAnalysis = (dependentVariables) => {
 
   return cropVariables.some((element) => dependentVariables.includes(element));
 };
+
+export const transformPredictionTableData = (array: Array<object>) => {
+  const newArray = [];
+  for (let i = 0; i < 5; i++) {
+    let newObject = {};
+    Object.entries(array).map((e: any) => {
+      newObject = { ...newObject, [e[0]]: e[1][i] };
+    });
+    newArray.push(newObject);
+  }
+  return newArray;
+};

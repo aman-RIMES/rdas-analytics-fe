@@ -4,6 +4,7 @@ import {
   isFinished,
   isLoading,
   transformObject,
+  transformPredictionTableData,
 } from "@/lib/utils";
 import Highcharts from "highcharts/highmaps";
 import HighchartsReact from "highcharts-react-official";
@@ -34,10 +35,8 @@ helix.register("l-helix");
 const PredictiveToolsData = ({
   regressionModelData,
   regressionModelStatus,
-  predictiveDataType,
   modelType,
   filterData,
-  handleChange,
 }: PredictiveDataProps) => {
   const [predictiveFilterData, setPredictiveFilterData] =
     useState<PredictiveFilterData>({
@@ -193,11 +192,50 @@ const PredictiveToolsData = ({
               </div>
             </div>
 
-            <p className="text-center">
-              Sample Inference: The P-Value is greater than 0.05, meaning that
-              the sample follows a normal distribution and the model is a good
-              fit.
-            </p>
+            {predictiveEvaluation &&
+              predictiveEvaluation["shapiro-wilk"]["p_value"] > 0.05 && (
+                <>
+                  <p className="text-center">
+                    The P-Value is greater than{" "}
+                    <span className="font-bold">0.05</span>, meaning that the
+                    sample follows a normal distribution and the model is a good
+                    fit.
+                  </p>
+
+                  <div>
+                    <p className="text-center font-semibold text-lg mt-8">
+                      Table of Prediction
+                    </p>
+                    <Table className="mt-10">
+                      <TableHeader>
+                        <TableRow>
+                          {Object.keys(
+                            predictiveEvaluation["prediction_table"]
+                          )?.map((element: any) => (
+                            <TableHead className="text-md text-black font-medium">
+                              {element}
+                            </TableHead>
+                          ))}
+                        </TableRow>
+                      </TableHeader>
+
+                      <TableBody>
+                        {transformPredictionTableData(
+                          predictiveEvaluation["prediction_table"]
+                        ).map((e) => (
+                          <TableRow>
+                            {Object.values(e).map((element: any) => (
+                              <TableCell className="text-md">
+                                {element}
+                              </TableCell>
+                            ))}
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </>
+              )}
 
             {/* <PredictiveCalculation
               intercept={predictiveEvaluation?.intercept}
