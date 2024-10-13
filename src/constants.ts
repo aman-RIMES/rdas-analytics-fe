@@ -352,7 +352,7 @@ export const ElNinoCategories = [
   { value: "moderate", label: "Moderate El Nino Events" },
   { value: "weak", label: "Weak El Nino Events" },
   { value: "strong", label: "Strong El Nino Events" },
-  { value: "veryStrong", label: "Very strong El Nino Events" },
+  { value: "very_strong", label: "Very strong El Nino Events" },
 ];
 
 export const ElNinoYears = {
