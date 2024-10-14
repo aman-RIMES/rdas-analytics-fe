@@ -7,12 +7,16 @@ import {
   ElNinoToolDataIndicators,
   ElNinoYears,
   mapDataType,
+  monthsList,
   requestStatus,
 } from "@/constants";
 import { isFinished, isLoading, transformObject } from "@/lib/utils";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
+import { MapFilterData } from "@/types";
+import { grid } from "ldrs";
+grid.register("l-loader");
 
 const DynamicMap = ({
   mapFormData,
@@ -24,23 +28,22 @@ const DynamicMap = ({
   handleChange,
   setDynamicMapStatus,
 }) => {
-  const [chosenCategory, seChosenCategory] = useState("moderate");
-  const [chosenVariable, setChosenVariable] = useState("rainfall");
+  const [mapFilter, setMapFilter] = useState<MapFilterData>({
+    dataVariable: "rainfall",
+    chosenMonth: "1",
+  });
 
   const [mapLoadingStatus, setMapLoadingStatus] = useState(
     requestStatus.isFinished
   );
 
-  const handleCategoryChange = (name: string, value: string) => {
-    seChosenCategory(value);
-  };
-  const handleVariableChange = (name: string, value: string) => {
-    setChosenVariable(value);
+  const handleMapFilterChange = (name: string, value: string) => {
+    setMapFilter((prev) => ({ ...prev, [name]: value }));
   };
 
   useEffect(() => {
     reloadAnomalyMap();
-  }, [chosenCategory, chosenVariable]);
+  }, [mapFilter]);
 
   const reloadAnomalyMap = async () => {
     try {
@@ -55,56 +58,55 @@ const DynamicMap = ({
 
   return (
     <div className=" my-16 rounded-lg bg-white p-1 pb-10 shadow-md">
-      {/* <div className="flex justify-center gap-8 ">
-        <div className="flex justify-center mt-8">
+      <div className="flex justify-center">
+        <div className="grid grid-cols-2 gap-5 p-5 w-2/3 mt-7">
           <div className="">
             <div className="flex gap-2 ">
-              <Label className="mb-2 font-semibold">El Nino category</Label>
+              <Label className="mb-2 font-semibold">Data Variable</Label>
               <HelpHoverCard
-                title={"El Nino category"}
-                content={` The El Nino category you would like to view the the maps for. `}
+                title={"Data Variable"}
+                content={` The Data Variable you would like to compare against each El Nino category. `}
               />
             </div>
             <Combobox
-              name="elNinoCategory"
-              label={"El Nino Category"}
-              array={ElNinoCategories.filter((e) => e.value !== "veryStrong")}
+              name="dataVariable"
+              label={"Data Variable"}
+              array={transformObject(ElNinoToolDataIndicators)}
               state={{
-                value: chosenCategory,
-                setValue: handleCategoryChange,
+                value: mapFilter.dataVariable,
+                setValue: handleMapFilterChange,
               }}
             />
           </div>
-        </div>
 
-        <div className="flex justify-center mt-8">
           <div className="">
             <div className="flex gap-2 ">
               <Label className="mb-2 font-semibold">Month</Label>
               <HelpHoverCard
                 title={"Months"}
-                content={` The month you would like to view the charts for. `}
+                content={`The month used to compare against the El Nino
+              variable.`}
               />
             </div>
             <Combobox
-              name="month"
-              label={"Months"}
-              array={transformObject(ElNinoToolDataIndicators)}
+              name="chosenMonth"
+              label={"Month"}
+              array={monthsList}
               state={{
-                value: chosenVariable,
-                setValue: handleVariableChange,
+                value: mapFilter.chosenMonth,
+                setValue: handleMapFilterChange,
               }}
             />
           </div>
         </div>
-      </div> */}
+      </div>
 
       {isLoading(mapLoadingStatus) && (
         <div className="my-20  flex justify-center bg-transparent">
           <div className="flex items-center justify-center gap-8 lg:w-2/4 border-lime-700 border rounded-xl p-5">
             {/* @ts-ignore */}
-            <l-infinity color="green" size="35"></l-infinity>
-            <p className="text-2xl text-lime-700 font-medium">Loading Map</p>
+            <l-loader color="green" size="50"></l-loader>
+            <p className="text-2xl text-lime-700 font-medium">Reloading Map</p>
           </div>
         </div>
       )}
@@ -115,7 +117,7 @@ const DynamicMap = ({
             <p className="text-lg mb-5 font-medium flex justify-center">
               Normal Rainfall for{" "}
               {
-                countries.find((e) => e.value === mapFormData.countryValue)
+                countries?.find((e) => e.value === mapFormData.countryValue)
                   .label
               }{" "}
               (mm)
@@ -128,6 +130,7 @@ const DynamicMap = ({
                 chosenYear={filterData.anomalyYear1}
                 chosenDistrict={filterData.districtValue}
                 preferredZoomScale={7}
+                mapFilter={mapFilter}
               />
               <MapLegend mapType={mapDataType.normal} />
               <p className="text-center text-xs">Normal Rainfall (mm)</p>
@@ -140,12 +143,12 @@ const DynamicMap = ({
                 Rainfall Anomaly for{" "}
                 {
                   countries.find((e) => e.value === mapFormData?.countryValue)
-                    .label
+                    ?.label
                 }{" "}
                 (mm) in{" "}
                 {
                   yearList.find((e) => e.value === filterData?.anomalyYear1)
-                    .label
+                    ?.label
                 }
               </p>
 
@@ -164,6 +167,7 @@ const DynamicMap = ({
                       mapType={"anomaly"}
                       chosenYear={filterData.anomalyYear1}
                       chosenDistrict={filterData.districtValue}
+                      mapFilter={mapFilter}
                     />
                     <MapLegend mapType={mapDataType.anomaly} />
                     <p className="text-center text-xs">Rainfall Anomaly (mm)</p>
@@ -196,12 +200,12 @@ const DynamicMap = ({
                 Rainfall Anomaly for{" "}
                 {
                   countries.find((e) => e.value === mapFormData?.countryValue)
-                    .label
+                    ?.label
                 }{" "}
                 (mm) in{" "}
                 {
                   yearList.find((e) => e.value === filterData?.anomalyYear2)
-                    .label
+                    ?.label
                 }
               </p>
 
@@ -220,6 +224,7 @@ const DynamicMap = ({
                       mapType={"anomaly"}
                       chosenYear={filterData.anomalyYear2}
                       chosenDistrict={filterData.districtValue}
+                      mapFilter={mapFilter}
                     />
                     <MapLegend mapType={mapDataType.anomaly} />
                     <p className="text-center text-xs">Rainfall Anomaly (mm)</p>

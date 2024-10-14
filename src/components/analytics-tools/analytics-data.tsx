@@ -28,14 +28,12 @@ const AnalyticsData = ({
   mapFormData,
 }: AnalyticsDataProps) => {
   const yearList = [];
-  let count = 0;
   for (
     let i: any = parseInt(mapFormData.fromYear);
     i <= parseInt(mapFormData.toYear);
     i++
   ) {
-    count += 1;
-    yearList.push({ value: count.toString(), label: i.toString() });
+    yearList.push({ value: i.toString(), label: i.toString() });
   }
 
   const [chosenMonth, setChosenMonth] = useState("1");

@@ -193,49 +193,53 @@ const PredictiveToolsData = ({
             </div>
 
             {predictiveEvaluation &&
-              predictiveEvaluation["shapiro-wilk"]["p_value"] > 0.05 && (
-                <>
-                  <p className="text-center">
-                    The P-Value is greater than{" "}
-                    <span className="font-bold">0.05</span>, meaning that the
-                    sample follows a normal distribution and the model is a good
-                    fit.
-                  </p>
+            predictiveEvaluation["shapiro-wilk"]["p_value"] > 0.05 ? (
+              <>
+                <p className="text-center">
+                  The P-Value is greater than{" "}
+                  <span className="font-bold">0.05</span>, meaning that the
+                  sample follows a normal distribution and the model is a good
+                  fit.
+                </p>
 
-                  <div>
-                    <p className="text-center font-semibold text-lg mt-8">
-                      Table of Prediction
-                    </p>
-                    <Table className="mt-10">
-                      <TableHeader>
+                <div>
+                  <p className="text-center font-semibold text-lg mt-8">
+                    Table of Prediction
+                  </p>
+                  <Table className="mt-10">
+                    <TableHeader>
+                      <TableRow>
+                        {Object.keys(
+                          predictiveEvaluation["prediction_table"]
+                        )?.map((element: any) => (
+                          <TableHead className="text-md text-black font-medium">
+                            {element}
+                          </TableHead>
+                        ))}
+                      </TableRow>
+                    </TableHeader>
+
+                    <TableBody>
+                      {transformPredictionTableData(
+                        predictiveEvaluation["prediction_table"]
+                      ).map((e) => (
                         <TableRow>
-                          {Object.keys(
-                            predictiveEvaluation["prediction_table"]
-                          )?.map((element: any) => (
-                            <TableHead className="text-md text-black font-medium">
-                              {element}
-                            </TableHead>
+                          {Object.values(e).map((element: any) => (
+                            <TableCell className="text-md">{element}</TableCell>
                           ))}
                         </TableRow>
-                      </TableHeader>
-
-                      <TableBody>
-                        {transformPredictionTableData(
-                          predictiveEvaluation["prediction_table"]
-                        ).map((e) => (
-                          <TableRow>
-                            {Object.values(e).map((element: any) => (
-                              <TableCell className="text-md">
-                                {element}
-                              </TableCell>
-                            ))}
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-                </>
-              )}
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              </>
+            ) : (
+              <p className="text-center">
+                The P-Value is less than <span className="font-bold">0.05</span>
+                , meaning that the sample does not follow a normal distribution
+                and the model is not a good fit.
+              </p>
+            )}
 
             {/* <PredictiveCalculation
               intercept={predictiveEvaluation?.intercept}

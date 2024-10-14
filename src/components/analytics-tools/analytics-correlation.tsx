@@ -119,11 +119,7 @@ const AnalyticsCorrelation = ({
             <Combobox
               name="correlationVariable"
               label={"Data Variable"}
-              array={transformObject(
-                typeOfAnalysis === analysisType.climate
-                  ? params.indic
-                  : ElNinoToolDataIndicators
-              )}
+              array={transformObject(ElNinoToolDataIndicators)}
               state={{
                 value: correlationFilter.correlationVariable,
                 setValue: handleChange,

@@ -149,6 +149,11 @@ export interface MapFormData {
   toYear: string;
 }
 
+export interface MapFilterData {
+  dataVariable: string;
+  chosenMonth: string;
+}
+
 export interface PredictiveFilterData {
   elNinoCategory: string;
   predictiveVariable: string;

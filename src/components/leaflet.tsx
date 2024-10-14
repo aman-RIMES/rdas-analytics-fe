@@ -13,6 +13,7 @@ const Leaflet = ({
   chosenYear,
   chosenDistrict,
   preferredZoomScale,
+  mapFilter,
 }: any) => {
   const subjectCountry = countries.find((e) => e.value === country);
 
@@ -38,9 +39,12 @@ const Leaflet = ({
         : district?.properties?.Province;
     const value =
       mapType === mapDataType.normal
-        ? district?.properties?.normal_rainfall
-        : district?.properties?.rainfall_anomaly[chosenYear - 1];
-
+        ? district?.properties[mapFilter.dataVariable][mapType][
+            mapFilter.chosenMonth - 1
+          ]
+        : district?.properties[mapFilter.dataVariable][mapType][
+            mapFilter.chosenMonth - 1
+          ][chosenYear];
     layer.bindPopup(`
       ${
         districtName ? formatTitle(districtName) : "--"
@@ -48,8 +52,6 @@ const Leaflet = ({
       ${provinceName ? provinceName : "--"} : ${parseInt(value)?.toFixed(
       2
     )} mm`);
-
-    console.log(chosenDistrict);
 
     chosenDistrict === districtCode
       ? ((layer.options.weight = 3), (layer.options.color = "orange"))
