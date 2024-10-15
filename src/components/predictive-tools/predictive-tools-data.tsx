@@ -175,20 +175,24 @@ const PredictiveToolsData = ({
               <p className="text-2xl font-bold">Predictive Evaluation</p>
             </div>
 
-            <div className="flex flex-row justify-center gap-20">
-              <div className="w-full flex flex-col items-center justify-center mt-10 mb-10 sm:p-10 p-4 rounded-lg bg-white shadow-lg">
-                <p className="text-xl font-medium">Test Statistic</p>
-                <p className="text-5xl font-semibold mt-5">
-                  {predictiveEvaluation &&
-                    predictiveEvaluation["shapiro-wilk"]["stat"].toFixed(2)}
-                </p>
-              </div>
-              <div className="w-full flex flex-col items-center justify-center mt-10 mb-10 sm:p-10 p-4 rounded-lg bg-white shadow-lg">
-                <p className="text-xl font-medium">P-Value</p>
-                <p className="text-5xl font-semibold mt-5">
-                  {predictiveEvaluation &&
-                    predictiveEvaluation["shapiro-wilk"]["p_value"].toFixed(2)}
-                </p>
+            <div className=" flex justify-center">
+              <div className="w-2/3 flex flex-row justify-center gap-20">
+                <div className="w-full flex flex-col items-center justify-center mt-10 mb-10 sm:p-10 p-4 rounded-lg bg-white shadow-lg">
+                  <p className="text-xl font-medium">Test Statistic</p>
+                  <p className="text-6xl font-semibold mt-5">
+                    {predictiveEvaluation &&
+                      predictiveEvaluation["shapiro-wilk"]["stat"].toFixed(2)}
+                  </p>
+                </div>
+                <div className="w-full flex flex-col items-center justify-center mt-10 mb-10 sm:p-10 p-4 rounded-lg bg-white shadow-lg">
+                  <p className="text-xl font-medium">P-Value</p>
+                  <p className="text-6xl font-semibold mt-5">
+                    {predictiveEvaluation &&
+                      predictiveEvaluation["shapiro-wilk"]["p_value"].toFixed(
+                        2
+                      )}
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -212,7 +216,7 @@ const PredictiveToolsData = ({
                         {Object.keys(
                           predictiveEvaluation["prediction_table"]
                         )?.map((element: any) => (
-                          <TableHead className="text-md text-black font-medium">
+                          <TableHead className="text-md text-black font-medium text-center">
                             {element}
                           </TableHead>
                         ))}
@@ -225,7 +229,9 @@ const PredictiveToolsData = ({
                       ).map((e) => (
                         <TableRow>
                           {Object.values(e).map((element: any) => (
-                            <TableCell className="text-md">{element}</TableCell>
+                            <TableCell className="text-md text-center">
+                              {element.toFixed(2)}
+                            </TableCell>
                           ))}
                         </TableRow>
                       ))}
