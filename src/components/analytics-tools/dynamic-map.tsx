@@ -10,7 +10,12 @@ import {
   monthsList,
   requestStatus,
 } from "@/constants";
-import { isFinished, isLoading, transformObject } from "@/lib/utils";
+import {
+  formatTitle,
+  isFinished,
+  isLoading,
+  transformObject,
+} from "@/lib/utils";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
@@ -54,6 +59,10 @@ const DynamicMap = ({
     } catch (error) {
       setMapLoadingStatus(requestStatus.isError);
     }
+  };
+
+  const getMetricUnit = () => {
+    return mapFilter.dataVariable === "rainfall" ? "(mm)" : "(°C)";
   };
 
   return (
@@ -115,12 +124,11 @@ const DynamicMap = ({
         <>
           <div className="p-10 ">
             <p className="text-lg mb-5 font-medium flex justify-center">
-              Normal Rainfall for{" "}
+              Normal {formatTitle(mapFilter.dataVariable)} {getMetricUnit()} for{" "}
               {
                 countries?.find((e) => e.value === mapFormData.countryValue)
                   .label
               }{" "}
-              (mm)
             </p>
             <div className="flex flex-col ">
               <Leaflet
@@ -133,19 +141,21 @@ const DynamicMap = ({
                 mapFilter={mapFilter}
               />
               <MapLegend mapType={mapDataType.normal} />
-              <p className="text-center text-xs">Normal Rainfall (mm)</p>
+              <p className="text-center text-xs">
+                Normal Rainfall {getMetricUnit()}
+              </p>
             </div>
           </div>
 
           <div className="grid xl:grid-cols-2 grid-cols-1">
             <div className="p-10">
               <p className="text-lg mb-5 font-medium flex justify-center">
-                Rainfall Anomaly for{" "}
+                {formatTitle(mapFilter.dataVariable)} {getMetricUnit()} in{" "}
+                Anomaly for{" "}
                 {
                   countries.find((e) => e.value === mapFormData?.countryValue)
                     ?.label
                 }{" "}
-                (mm) in{" "}
                 {
                   yearList.find((e) => e.value === filterData?.anomalyYear1)
                     ?.label
@@ -170,7 +180,10 @@ const DynamicMap = ({
                       mapFilter={mapFilter}
                     />
                     <MapLegend mapType={mapDataType.anomaly} />
-                    <p className="text-center text-xs">Rainfall Anomaly (mm)</p>
+                    <p className="text-center text-xs">
+                      {formatTitle(mapFilter.dataVariable)} Anomaly{" "}
+                      {getMetricUnit()}
+                    </p>
                   </div>
                 )}
               </div>
@@ -197,12 +210,13 @@ const DynamicMap = ({
 
             <div className="p-10">
               <p className="text-lg mb-5 font-medium flex justify-center">
-                Rainfall Anomaly for{" "}
+                {formatTitle(mapFilter.dataVariable)} Anomaly {getMetricUnit()}{" "}
+                for{" "}
                 {
                   countries.find((e) => e.value === mapFormData?.countryValue)
                     ?.label
                 }{" "}
-                (mm) in{" "}
+                in{" "}
                 {
                   yearList.find((e) => e.value === filterData?.anomalyYear2)
                     ?.label
@@ -227,7 +241,10 @@ const DynamicMap = ({
                       mapFilter={mapFilter}
                     />
                     <MapLegend mapType={mapDataType.anomaly} />
-                    <p className="text-center text-xs">Rainfall Anomaly (mm)</p>
+                    <p className="text-center text-xs">
+                      {formatTitle(mapFilter.dataVariable)} Anomaly{" "}
+                      {getMetricUnit()}
+                    </p>
                   </div>
                 )}
               </div>
