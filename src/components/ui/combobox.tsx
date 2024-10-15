@@ -30,8 +30,12 @@ function Combobox({ array, state, label, name }: any) {
             role="combobox"
             aria-expanded={open}
             className={
-              cn(!state.value && "text-gray-500") +
-              " justify-between border-0 shadow-md"
+              cn(
+                !state.value && "text-gray-500",
+                open
+                  ? "border-green-600 shadow-sm shadow-green-600"
+                  : "border-0 shadow-md"
+              ) + " justify-between "
             }
           >
             {state.value
