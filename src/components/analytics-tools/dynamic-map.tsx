@@ -68,7 +68,7 @@ const DynamicMap = ({
   return (
     <div className=" my-16 rounded-lg bg-white p-1 pb-10 shadow-md">
       <div className="flex justify-center">
-        <div className="grid grid-cols-2 gap-5 p-5 w-2/3 mt-7">
+        <div className="grid grid-cols-2 gap-5 p-5 w-2/3 mt-5">
           <div className="">
             <div className="flex gap-2 ">
               <Label className="mb-2 font-semibold">Data Variable</Label>
@@ -122,8 +122,8 @@ const DynamicMap = ({
 
       {isFinished(mapLoadingStatus) && (
         <>
-          <div className="p-10 ">
-            <p className="text-lg mb-5 font-medium flex justify-center">
+          <div className="px-10 mt-5">
+            <p className="text-lg mb-2 font-medium flex justify-center">
               Normal {formatTitle(mapFilter.dataVariable)} {getMetricUnit()} for{" "}
               {
                 countries?.find((e) => e.value === mapFormData.countryValue)
@@ -137,10 +137,13 @@ const DynamicMap = ({
                 mapType={"normal"}
                 chosenYear={filterData.anomalyYear1}
                 chosenDistrict={filterData.districtValue}
-                preferredZoomScale={7}
+                preferredZoomScale={6}
                 mapFilter={mapFilter}
               />
-              <MapLegend mapType={mapDataType.normal} />
+              <MapLegend
+                mapType={mapDataType.normal}
+                variable={mapFilter.dataVariable}
+              />
               <p className="text-center text-xs">
                 Normal Rainfall {getMetricUnit()}
               </p>
@@ -149,7 +152,7 @@ const DynamicMap = ({
 
           <div className="grid xl:grid-cols-2 grid-cols-1">
             <div className="p-10">
-              <p className="text-lg mb-5 font-medium flex justify-center">
+              <p className="text-lg mb-2 font-medium flex justify-center">
                 {formatTitle(mapFilter.dataVariable)} {getMetricUnit()} in{" "}
                 Anomaly for{" "}
                 {
@@ -162,9 +165,9 @@ const DynamicMap = ({
                 }
               </p>
 
-              <div className="w-full min-h-[420px] ">
+              <div className="w-full">
                 {isLoading(firstAnomalyMapStatus) && (
-                  <div className=" flex flex-col items-center justify-center mt-40">
+                  <div className=" mb-[240px] flex flex-col items-center justify-center mt-40">
                     {/* @ts-ignore */}
                     <l-loader color="green" size="50"></l-loader>
                   </div>
@@ -179,7 +182,10 @@ const DynamicMap = ({
                       chosenDistrict={filterData.districtValue}
                       mapFilter={mapFilter}
                     />
-                    <MapLegend mapType={mapDataType.anomaly} />
+                    <MapLegend
+                      mapType={mapDataType.anomaly}
+                      variable={mapFilter.dataVariable}
+                    />
                     <p className="text-center text-xs">
                       {formatTitle(mapFilter.dataVariable)} Anomaly{" "}
                       {getMetricUnit()}
@@ -209,7 +215,7 @@ const DynamicMap = ({
             </div>
 
             <div className="p-10">
-              <p className="text-lg mb-5 font-medium flex justify-center">
+              <p className="text-lg mb-2 font-medium flex justify-center">
                 {formatTitle(mapFilter.dataVariable)} Anomaly {getMetricUnit()}{" "}
                 for{" "}
                 {
@@ -223,9 +229,9 @@ const DynamicMap = ({
                 }
               </p>
 
-              <div className="w-full min-h-[420px] ">
+              <div className="w-full">
                 {isLoading(secondAnomalyMapStatus) && (
-                  <div className=" flex flex-col items-center justify-center mt-40">
+                  <div className="mb-[240px] flex flex-col items-center justify-center mt-40">
                     {/* @ts-ignore */}
                     <l-loader color="green" size="50"></l-loader>
                   </div>
@@ -240,7 +246,10 @@ const DynamicMap = ({
                       chosenDistrict={filterData.districtValue}
                       mapFilter={mapFilter}
                     />
-                    <MapLegend mapType={mapDataType.anomaly} />
+                    <MapLegend
+                      mapType={mapDataType.anomaly}
+                      variable={mapFilter.dataVariable}
+                    />
                     <p className="text-center text-xs">
                       {formatTitle(mapFilter.dataVariable)} Anomaly{" "}
                       {getMetricUnit()}

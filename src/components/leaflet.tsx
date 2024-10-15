@@ -49,7 +49,7 @@ const Leaflet = ({
       ${
         districtName ? formatTitle(districtName) : "--"
       } District,                                              
-      ${provinceName ? provinceName : "--"} : ${parseInt(value)?.toFixed(
+      ${provinceName ? provinceName : "--"} : ${parseFloat(value)?.toFixed(
       2
     )} mm`);
 
@@ -57,41 +57,83 @@ const Leaflet = ({
       ? ((layer.options.weight = 3), (layer.options.color = "orange"))
       : ((layer.options.weight = 0.2), (layer.options.color = "black"));
 
-    value < -1600
-      ? (layer.options.fillColor = "#7f1d1d")
-      : value < -1400
-      ? (layer.options.fillColor = "#991b1b")
-      : value < -1200
-      ? (layer.options.fillColor = "#b91c1c")
-      : value < -1000
-      ? (layer.options.fillColor = "#dc2626")
-      : value < -800
-      ? (layer.options.fillColor = "#ef4444")
-      : value < -600
-      ? (layer.options.fillColor = "#f87171")
-      : value < -400
-      ? (layer.options.fillColor = "#fca5a5")
-      : value < -200
-      ? (layer.options.fillColor = "#fecaca")
-      : value < 0
-      ? (layer.options.fillColor = "#fee2e2")
-      : value === 0
-      ? (layer.options.fillColor = "#fff")
-      : value < 350
-      ? (layer.options.fillColor = "#f0fdf4")
-      : value < 700
-      ? (layer.options.fillColor = "#dcfce7")
-      : value < 1400
-      ? (layer.options.fillColor = "#bbf7d0")
-      : value < 2100
-      ? (layer.options.fillColor = "#86efac")
-      : value < 2800
-      ? (layer.options.fillColor = "#4ade80")
-      : value < 3500
-      ? (layer.options.fillColor = "#22c55e")
-      : value < 4200
-      ? (layer.options.fillColor = "#15803d")
-      : (layer.options.fillColor = "#166534");
+    if (mapFilter.dataVariable === "rainfall") {
+      value < -1600
+        ? (layer.options.fillColor = "#7f1d1d")
+        : value < -1400
+        ? (layer.options.fillColor = "#991b1b")
+        : value < -1200
+        ? (layer.options.fillColor = "#b91c1c")
+        : value < -1000
+        ? (layer.options.fillColor = "#dc2626")
+        : value < -800
+        ? (layer.options.fillColor = "#ef4444")
+        : value < -600
+        ? (layer.options.fillColor = "#f87171")
+        : value < -400
+        ? (layer.options.fillColor = "#fca5a5")
+        : value < -200
+        ? (layer.options.fillColor = "#fecaca")
+        : value < 0
+        ? (layer.options.fillColor = "#fee2e2")
+        : value === 0
+        ? (layer.options.fillColor = "#fff")
+        : value < 350
+        ? (layer.options.fillColor = "#f0fdf4")
+        : value < 700
+        ? (layer.options.fillColor = "#dcfce7")
+        : value < 1400
+        ? (layer.options.fillColor = "#bbf7d0")
+        : value < 2100
+        ? (layer.options.fillColor = "#86efac")
+        : value < 2800
+        ? (layer.options.fillColor = "#4ade80")
+        : value < 3500
+        ? (layer.options.fillColor = "#22c55e")
+        : value < 4200
+        ? (layer.options.fillColor = "#15803d")
+        : (layer.options.fillColor = "#fff");
+    } else if (mapFilter.dataVariable === "temperature") {
+      value < -40
+        ? (layer.options.fillColor = "#064e3b")
+        : value < -35
+        ? (layer.options.fillColor = "#065f46")
+        : value < -30
+        ? (layer.options.fillColor = "#047857")
+        : value < -25
+        ? (layer.options.fillColor = "#059669")
+        : value < -20
+        ? (layer.options.fillColor = "#10b981")
+        : value < -15
+        ? (layer.options.fillColor = "#34d399")
+        : value < -10
+        ? (layer.options.fillColor = "#6ee7b7")
+        : value < -5
+        ? (layer.options.fillColor = "#a7f3d0")
+        : value < 0
+        ? (layer.options.fillColor = "#ecfdf5")
+        : value < 5
+        ? (layer.options.fillColor = "#fffbeb")
+        : value < 10
+        ? (layer.options.fillColor = "#fef3c7")
+        : value < 15
+        ? (layer.options.fillColor = "#fde68a")
+        : value < 20
+        ? (layer.options.fillColor = "#fcd34d")
+        : value < 25
+        ? (layer.options.fillColor = "#fbbf24")
+        : value < 30
+        ? (layer.options.fillColor = "#f59e0b")
+        : value < 35
+        ? (layer.options.fillColor = "#d97706")
+        : value < 40
+        ? (layer.options.fillColor = "#b45309")
+        : value < 45
+        ? (layer.options.fillColor = "#92400e")
+        : value < 50
+        ? (layer.options.fillColor = "#78350f")
+        : (layer.options.fillColor = "#fff");
+    }
 
     // layer.on({
     //   click: (event) => {
