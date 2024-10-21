@@ -5,10 +5,10 @@ import React from "react";
 
 const MapLegend = ({ mapType, variable }) => {
   const normal_rainfall_increments = [
-    4800, 4200, 3600, 3000, 2400, 1800, 1200, 600, 0,
+    0, 150, 300, 450, 600, 750, 900, 1050, 1200,
   ];
   const anomaly_rainfall_increments = [
-    900, 600, 300, 0, -300, -600, -900, -1200, -1500, -1800,
+    -1800, -1500, -1200, -900, -600, -300, 0, 450, 300, 150,
   ];
   const normal_temperature_increments = [
     -50, -40, -30, -20, -10, 0, 10, 20, 30, 40, 50,
@@ -34,7 +34,7 @@ const MapLegend = ({ mapType, variable }) => {
         <div
           className={cn(
             variable === "rainfall"
-              ? "from-green-700 to-green-100"
+              ? "from-green-100 to-green-700"
               : "from-emerald-500 via-white to-amber-600",
             "h-3 w-full bg-gradient-to-r rounded-3xl"
           )}
@@ -43,7 +43,7 @@ const MapLegend = ({ mapType, variable }) => {
         <div
           className={cn(
             variable === "rainfall"
-              ? "from-green-200 via-white to-red-700 via-30%"
+              ? "from-red-700 via-white to-green-200 via-70%"
               : "from-emerald-200 via-white to-amber-200",
             "h-3 w-full bg-gradient-to-r rounded-3xl"
           )}

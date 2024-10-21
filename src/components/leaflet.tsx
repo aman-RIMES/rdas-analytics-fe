@@ -58,39 +58,39 @@ const Leaflet = ({
       : ((layer.options.weight = 0.2), (layer.options.color = "black"));
 
     if (mapFilter.dataVariable === "rainfall") {
-      value < -1600
+      value < -800
         ? (layer.options.fillColor = "#7f1d1d")
-        : value < -1400
+        : value < -700
         ? (layer.options.fillColor = "#991b1b")
-        : value < -1200
-        ? (layer.options.fillColor = "#b91c1c")
-        : value < -1000
-        ? (layer.options.fillColor = "#dc2626")
-        : value < -800
-        ? (layer.options.fillColor = "#ef4444")
         : value < -600
-        ? (layer.options.fillColor = "#f87171")
+        ? (layer.options.fillColor = "#b91c1c")
+        : value < -500
+        ? (layer.options.fillColor = "#dc2626")
         : value < -400
-        ? (layer.options.fillColor = "#fca5a5")
+        ? (layer.options.fillColor = "#ef4444")
+        : value < -300
+        ? (layer.options.fillColor = "#f87171")
         : value < -200
+        ? (layer.options.fillColor = "#fca5a5")
+        : value < -100
         ? (layer.options.fillColor = "#fecaca")
         : value < 0
         ? (layer.options.fillColor = "#fee2e2")
         : value === 0
         ? (layer.options.fillColor = "#fff")
-        : value < 350
+        : value < 150
         ? (layer.options.fillColor = "#f0fdf4")
-        : value < 700
+        : value < 300
         ? (layer.options.fillColor = "#dcfce7")
-        : value < 1400
+        : value < 450
         ? (layer.options.fillColor = "#bbf7d0")
-        : value < 2100
+        : value < 600
         ? (layer.options.fillColor = "#86efac")
-        : value < 2800
+        : value < 750
         ? (layer.options.fillColor = "#4ade80")
-        : value < 3500
+        : value < 900
         ? (layer.options.fillColor = "#22c55e")
-        : value < 4200
+        : value < 1100
         ? (layer.options.fillColor = "#15803d")
         : (layer.options.fillColor = "#fff");
     } else if (mapFilter.dataVariable === "temperature") {
