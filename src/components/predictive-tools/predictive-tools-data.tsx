@@ -176,22 +176,45 @@ const PredictiveToolsData = ({
             </div>
 
             <div className=" flex justify-center">
-              <div className="w-2/3 flex flex-row justify-center gap-20">
-                <div className="w-full flex flex-col items-center justify-center mt-10 mb-10 sm:p-10 p-4 rounded-lg bg-white shadow-lg">
-                  <p className="text-xl font-medium">Test Statistic</p>
-                  <p className="text-6xl font-semibold mt-5">
-                    {predictiveEvaluation &&
-                      predictiveEvaluation["shapiro-wilk"]["stat"].toFixed(2)}
-                  </p>
+              <div className=" grid grid-cols-2 justify-center gap-10">
+                <div className="flex flex-col">
+                  <div className="z-10 h-full w-full flex flex-col items-center justify-center mt-10 mb-10 sm:p-10 p-4 rounded-lg bg-white shadow-lg">
+                    <p className="text-xl font-medium">Test Statistic</p>
+                    <p className="text-6xl font-semibold mt-5">
+                      {predictiveEvaluation &&
+                        predictiveEvaluation["shapiro-wilk"]["stat"].toFixed(2)}
+                    </p>
+                  </div>
+                  <div className="z-0 bg-emerald-600 h-full w-full flex flex-col items-center mt-[-50px]  justify-center mb-10 sm:px-5  rounded-lg shadow-lg">
+                    <p className="text-sm text-white font-medium mt-5 mb-3">
+                      The <span className="italic">Test Statistic</span> value
+                      ranges between <span className="underline">0 and 1</span>,
+                      with values closer to 1 indicating that the sample data is
+                      more likely to be normally distributed, and a test
+                      statistic value below 1 suggests that the data departs
+                      from normality.
+                    </p>
+                  </div>
                 </div>
-                <div className="w-full flex flex-col items-center justify-center mt-10 mb-10 sm:p-10 p-4 rounded-lg bg-white shadow-lg">
-                  <p className="text-xl font-medium">P-Value</p>
-                  <p className="text-6xl font-semibold mt-5">
-                    {predictiveEvaluation &&
-                      predictiveEvaluation["shapiro-wilk"]["p_value"].toFixed(
-                        2
-                      )}
-                  </p>
+                <div className="flex flex-col">
+                  <div className="z-10 h-full w-full flex flex-col items-center justify-center mt-10 mb-10 sm:p-10 p-4 rounded-lg bg-white shadow-lg">
+                    <p className="text-xl font-medium">P-Value</p>
+                    <p className="text-6xl font-semibold mt-5">
+                      {predictiveEvaluation &&
+                        predictiveEvaluation["shapiro-wilk"]["p_value"].toFixed(
+                          2
+                        )}
+                    </p>
+                  </div>
+
+                  <div className="z-0 bg-emerald-600 h-full w-full flex flex-col items-center mt-[-50px]  justify-center mb-10 sm:px-5  rounded-lg shadow-lg">
+                    <p className="text-sm text-white font-medium mt-5 mb-3">
+                      The <span className="italic">P-Value</span> is greater
+                      than <span className="underline font-bold">0.05</span>,
+                      meaning that the sample follows a normal distribution and
+                      the model is a good fit.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -199,15 +222,8 @@ const PredictiveToolsData = ({
             {predictiveEvaluation &&
             predictiveEvaluation["shapiro-wilk"]["p_value"] > 0.05 ? (
               <>
-                <p className="text-center">
-                  The P-Value is greater than{" "}
-                  <span className="font-bold">0.05</span>, meaning that the
-                  sample follows a normal distribution and the model is a good
-                  fit.
-                </p>
-
                 <div>
-                  <p className="text-center font-semibold text-lg mt-8">
+                  <p className="text-center font-semibold text-lg mt-3">
                     Table of Prediction
                   </p>
                   <Table className="mt-10">

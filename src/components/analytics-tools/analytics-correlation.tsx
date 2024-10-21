@@ -138,6 +138,7 @@ const AnalyticsCorrelation = ({
             </div>
             <FancyMultiSelect
               name="chosenMonths"
+              placeholder="Select multiple months"
               selected={selected}
               setSelected={setSelected}
               setState={handleChange}
