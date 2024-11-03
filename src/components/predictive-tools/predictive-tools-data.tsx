@@ -9,7 +9,7 @@ import {
 import Highcharts from "highcharts/highmaps";
 import HighchartsReact from "highcharts-react-official";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, HelpCircle } from "lucide-react";
 import {
   PredictiveDataProps,
   PredictiveEvaluation,
@@ -30,6 +30,12 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "../ui/hover-card";
+import { title } from "process";
 helix.register("l-helix");
 
 const PredictiveToolsData = ({
@@ -87,10 +93,11 @@ const PredictiveToolsData = ({
         <div className="flex justify-center my-20">
           <Alert className="lg:w-2/4" variant="destructive">
             <AlertCircle className="h-5 w-5 mt-1" />
-            <AlertTitle className="text-lg">API Error !</AlertTitle>
+            <AlertTitle className="text-lg">Error !</AlertTitle>
             <AlertDescription className="text-md">
-              Failed to generate model. This could be due to missing datasets.
-              Try changing your filters and start the analysis again.
+              Failed to generate model. This could be due to missing data for
+              the chosen months. Try changing your filters/months and start the
+              prediction again.
             </AlertDescription>
           </Alert>
         </div>
@@ -242,11 +249,28 @@ const PredictiveToolsData = ({
                     <TableBody>
                       {transformPredictionTableData(
                         predictiveEvaluation["prediction_table"]
-                      ).map((e) => (
-                        <TableRow>
-                          {Object.values(e).map((element: any) => (
-                            <TableCell className="text-md text-center">
-                              {element.toFixed(2)}
+                      ).map((e, index) => (
+                        <TableRow key={index}>
+                          {Object.values(e).map((element: any, index) => (
+                            <TableCell
+                              key={index}
+                              className="text-md text-center"
+                            >
+                              <HoverCard>
+                                <HoverCardTrigger>
+                                  {element === 0 &&
+                                  index > 0 &&
+                                  predictiveFilterData.predictiveVariable ===
+                                    "rainfall"
+                                    ? "No Rainfall"
+                                    : element.toFixed(2)}
+                                </HoverCardTrigger>
+                                <HoverCardContent className="flex flex-col">
+                                  <p className="text-sm ">
+                                    This means that ...{" "}
+                                  </p>
+                                </HoverCardContent>
+                              </HoverCard>
                             </TableCell>
                           ))}
                         </TableRow>
