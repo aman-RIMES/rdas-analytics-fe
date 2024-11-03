@@ -227,65 +227,59 @@ const PredictiveToolsData = ({
             </div>
 
             {predictiveEvaluation &&
-            predictiveEvaluation["shapiro-wilk"]["p_value"] > 0.05 ? (
-              <>
-                <div>
-                  <p className="text-center font-semibold text-lg mt-3">
-                    Table of Prediction
-                  </p>
-                  <Table className="mt-10">
-                    <TableHeader>
-                      <TableRow>
-                        {Object.keys(
-                          predictiveEvaluation["prediction_table"]
-                        )?.map((element: any) => (
-                          <TableHead className="text-md text-black font-medium text-center">
-                            {element}
-                          </TableHead>
-                        ))}
-                      </TableRow>
-                    </TableHeader>
-
-                    <TableBody>
-                      {transformPredictionTableData(
-                        predictiveEvaluation["prediction_table"]
-                      ).map((e, index) => (
-                        <TableRow key={index}>
-                          {Object.values(e).map((element: any, index) => (
-                            <TableCell
-                              key={index}
-                              className="text-md text-center"
-                            >
-                              <HoverCard>
-                                <HoverCardTrigger>
-                                  {element === 0 &&
-                                  index > 0 &&
-                                  predictiveFilterData.predictiveVariable ===
-                                    "rainfall"
-                                    ? "No Rainfall"
-                                    : element.toFixed(2)}
-                                </HoverCardTrigger>
-                                <HoverCardContent className="flex flex-col">
-                                  <p className="text-sm ">
-                                    This means that ...{" "}
-                                  </p>
-                                </HoverCardContent>
-                              </HoverCard>
-                            </TableCell>
+              predictiveEvaluation["shapiro-wilk"]["p_value"] > 0.05 && (
+                <>
+                  <div>
+                    <p className="text-center font-semibold text-lg mt-3">
+                      Table of Prediction
+                    </p>
+                    <Table className="mt-10">
+                      <TableHeader>
+                        <TableRow>
+                          {Object.keys(
+                            predictiveEvaluation["prediction_table"]
+                          )?.map((element: any) => (
+                            <TableHead className="text-md text-black font-medium text-center">
+                              {element}
+                            </TableHead>
                           ))}
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
-              </>
-            ) : (
-              <p className="text-center">
-                The P-Value is less than <span className="font-bold">0.05</span>
-                , meaning that the sample does not follow a normal distribution
-                and the model is not a good fit.
-              </p>
-            )}
+                      </TableHeader>
+
+                      <TableBody>
+                        {transformPredictionTableData(
+                          predictiveEvaluation["prediction_table"]
+                        ).map((e, index) => (
+                          <TableRow key={index}>
+                            {Object.values(e).map((element: any, index) => (
+                              <TableCell
+                                key={index}
+                                className="text-md text-center"
+                              >
+                                <HoverCard>
+                                  <HoverCardTrigger>
+                                    {element === 0 &&
+                                    index > 0 &&
+                                    predictiveFilterData.predictiveVariable ===
+                                      "rainfall"
+                                      ? "No Rainfall"
+                                      : element.toFixed(2)}
+                                  </HoverCardTrigger>
+                                  <HoverCardContent className="flex flex-col">
+                                    <p className="text-sm ">
+                                      This means that ...{" "}
+                                    </p>
+                                  </HoverCardContent>
+                                </HoverCard>
+                              </TableCell>
+                            ))}
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </>
+              )}
 
             {/* <PredictiveCalculation
               intercept={predictiveEvaluation?.intercept}
