@@ -6,7 +6,7 @@ import MenuButton from "./menu-button";
 export function Sidebar() {
   return (
     <div className={cn("pb-12")}>
-      <div className="space-y-4 my-5 bg-green-800 rounded-lg p-5 h-screen shadow-md">
+      <div className="space-y-4 my-1 bg-green-800 rounded-lg p-5 h-screen shadow-md">
         <div className="pl-3 py-2 max-w-80 text-white">
           <h2 className="mb-2 px-4 text-xl font-semibold tracking-tight ">
             Climate
