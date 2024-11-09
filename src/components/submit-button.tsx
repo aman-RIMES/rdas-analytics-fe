@@ -15,7 +15,7 @@ const SubmitButton = ({
     <HoverCard>
       <HoverCardTrigger className="w-full flex justify-center">
         <Button
-          className="md:w-1/3 w-full bg-green-800 text-white hover:text-gray-800 hover:bg-yellow-300"
+          className="w-full bg-green-800 text-white hover:text-gray-800 hover:bg-yellow-300"
           disabled={!verifyFilters || isLoading(loadingStatus)}
           // disabled={!verifyFilters}
           onClick={submitFunction}

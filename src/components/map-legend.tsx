@@ -29,14 +29,14 @@ const MapLegend = ({ mapType, variable }) => {
     }
   };
   return (
-    <div className="flex flex-col items-center justify-center p-3">
+    <div className="flex flex-col items-center justify-center px-2 mt-2">
       {mapType === mapDataType.normal ? (
         <div
           className={cn(
             variable === "rainfall"
               ? "from-green-100 to-green-700"
               : "from-emerald-500 via-white to-amber-600",
-            "h-3 w-full bg-gradient-to-r rounded-3xl"
+            "h-2 w-full bg-gradient-to-r rounded-3xl"
           )}
         ></div>
       ) : (
@@ -45,15 +45,15 @@ const MapLegend = ({ mapType, variable }) => {
             variable === "rainfall"
               ? "from-red-700 via-white to-green-200 via-70%"
               : "from-emerald-200 via-white to-amber-200",
-            "h-3 w-full bg-gradient-to-r rounded-3xl"
+            "h-2 w-full bg-gradient-to-r rounded-3xl"
           )}
         ></div>
       )}
-      <div className="flex flex-row justify-between w-full p-1 mt-">
+      <div className="flex flex-row justify-between w-full p-1">
         {legend_increments().map((e) => (
           <div key={e} className="flex flex-col justify-center items-center">
             <DividerVerticalIcon />
-            <p className="text-xs lg:text-xs 2xl:text:3xs">{e}</p>
+            <p className="text-2xs lg:text-xs 2xl:text:3xs">{e}</p>
           </div>
         ))}
       </div>

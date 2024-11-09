@@ -11,7 +11,7 @@ const HelpHoverCard = ({ title, content }: HoverCardProps) => {
   return (
     <HoverCard>
       <HoverCardTrigger>
-        <HelpCircle className="h-4 w-4 mt-1" />
+        <HelpCircle className="h-2 w-2 mt-1" />
       </HoverCardTrigger>
       <HoverCardContent className="flex flex-col">
         <div className="flex items-center gap-1">

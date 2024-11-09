@@ -35,7 +35,7 @@ function Combobox({ array, state, label, name }: any) {
                 open
                   ? "border-green-600 shadow-sm shadow-green-600"
                   : "border-0 shadow-md"
-              ) + " justify-between "
+              ) + " justify-between text-xs"
             }
           >
             {state.value

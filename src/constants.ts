@@ -336,7 +336,7 @@ export const ElNinoToolDataIndicators = {
   // temperature_min_monthly: "Temperature min monthly, year wise",
   // temperature_avg_monthly: "Average / mean temperature monthly, year wise",
   // rainfall_cummulative_monthly: "Rainfall cumulative monthly, year wise",
-  rainfall: "Rainfall cumulative seasonal, Year wise",
+  rainfall: "Rainfall cumulative, Year wise",
   temperature: "Temperature, Year wise",
   // rainfall_cummulative_seasonal: "Rainfall cumulative seasonal, Year wise",
   // rainfall_max_monthly: "Rainfall max monthly year wise",
