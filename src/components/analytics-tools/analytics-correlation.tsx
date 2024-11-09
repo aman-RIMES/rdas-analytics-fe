@@ -99,8 +99,8 @@ const AnalyticsCorrelation = ({
   };
 
   return (
-    <div className="sm:p-10 p-4 mt-10 rounded-lg bg-gray-50 shadow-lg">
-      <div className="flex justify-center mb-10">
+    <div className="p-2 rounded-lg bg-gray-100 h-[320px] shadow-lg">
+      {/* <div className="flex justify-center mb-10">
         <h1 className="text-xl font-semibold">
           Correlation between Data Variables and El Nino
         </h1>
@@ -154,7 +154,7 @@ const AnalyticsCorrelation = ({
           submitFunction={generateCorrelationMap}
           verifyFilters={correlationFilter.chosenMonths.length > 0}
         />
-      </div>
+      </div> */}
 
       {isLoading(correlationStatus) && (
         <div className="my-20  flex justify-center bg-transparent">
@@ -183,12 +183,13 @@ const AnalyticsCorrelation = ({
       )}
 
       {isFinished(correlationStatus) && (
-        <div className="mt-10">
-          <div className="grid gap-4 my-8 md:grid-cols-2 grid-cols-1 justify-center">
+        <div className="">
+          <div className="grid gap-4 md:grid-cols-4 grid-cols-1 ">
             {correlationChartData[correlationFilter.correlationVariable].map(
               (chartData, index) => (
                 <div key={index}>
                   <HighchartsReact
+                    containerProps={{ style: { height: "300px" } }}
                     highcharts={Highcharts}
                     options={chartData.scatter}
                   />
@@ -204,13 +205,13 @@ const AnalyticsCorrelation = ({
             )}
           </div>
 
-          <Accordion type="single" collapsible>
+          {/* <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
               <AccordionTrigger className="flex justify-center text-md gap-2 text-green-700">
                 Correlation Plot
               </AccordionTrigger>
               <AccordionContent>
-                <div className="grid gap-4 my-8 md:grid-cols-2 grid-cols-1 justify-center">
+                <div className="grid gap-4 my-8 md:grid-cols-4 grid-cols-1 justify-center">
                   {correlationChartData[
                     correlationFilter.correlationVariable
                   ].map((chartData, index) => (
@@ -221,12 +222,11 @@ const AnalyticsCorrelation = ({
                       />
                     </div>
                   ))}
+                  <CorrelationPlotLegend />
                 </div>
-
-                <CorrelationPlotLegend />
               </AccordionContent>
             </AccordionItem>
-          </Accordion>
+          </Accordion> */}
         </div>
       )}
     </div>

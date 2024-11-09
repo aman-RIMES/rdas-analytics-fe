@@ -4,7 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FilterData, MapFormData } from "@/types";
-import { getAllDistrictsOfCountry, isFinished } from "@/lib/utils";
+import {
+  getAllDistrictsOfCountry,
+  isError,
+  isFinished,
+  isLoading,
+} from "@/lib/utils";
 import { Button } from "../ui/button";
 import AnalyticsCorrelation from "./analytics-correlation";
 import DescriptiveAnalysis from "./analytics-descriptive-analysis";
@@ -12,6 +17,10 @@ import AnalyticsData from "./analytics-data";
 import bodyParams from "../../data/body_params.json";
 import ElNinoCommonFilter from "./elnino-common-filter.component";
 import SubmitButton from "../submit-button";
+import DynamicMap from "./dynamic-map";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { AlertCircle } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
 const ElNinoAnalytics = () => {
   const navigate = useNavigate();
@@ -35,6 +44,15 @@ const ElNinoAnalytics = () => {
     toYear: "",
     countryValue: "",
   });
+
+  const yearList = [];
+  for (
+    let i: any = parseInt(mapFormData.fromYear);
+    i <= parseInt(mapFormData.toYear);
+    i++
+  ) {
+    yearList.push({ value: i.toString(), label: i.toString() });
+  }
 
   const [filterData, setFilterData] = useState<FilterData>({
     dataVariable: [],
@@ -159,52 +177,130 @@ const ElNinoAnalytics = () => {
 
   return (
     <>
-      <div className="flex justify-center">
+      {/* <div className="flex justify-center">
         <h1 className="text-4xl font-bold">El Nino Analytics</h1>
-      </div>
+      </div> */}
 
-      <div className="my-10">
-        <div className="">
-          <div className="sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
-            <ElNinoCommonFilter
-              params={params}
-              filterData={filterData}
-              handleChange={handleChange}
-              selected={selected}
-              setSelected={setSelected}
-              filterType="analytics"
-            />
+      <div className="p-2">
+        <div className=" flex flex-col gap-2">
+          <div className="grid grid-cols-6 gap-3 ">
+            <div className="col-span-1">
+              <div className=" border-grey-600 rounded-lg ">
+                <div className="bg-green-800 text-white text-md p-1 rounded-t-lg font-medium">
+                  <p className="ml-2"> Parameters</p>
+                </div>
+                <div className="bg-gray-100 p-2 rounded-b-lg flex flex-col gap-5 shadow-lg">
+                  <ElNinoCommonFilter
+                    params={params}
+                    filterData={filterData}
+                    handleChange={handleChange}
+                    selected={selected}
+                    setSelected={setSelected}
+                    filterType="analytics"
+                  />
 
-            <div className="md:mt-12 w-full">
-              <SubmitButton
-                verifyFilters={verifyFilters()}
-                submitFunction={generateDynamicChart}
-                loadingStatus={dynamicChartStatus}
-              />
+                  <div className="w-full h-full">
+                    <SubmitButton
+                      verifyFilters={verifyFilters()}
+                      submitFunction={generateDynamicChart}
+                      loadingStatus={dynamicChartStatus}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-span-5">
+              <div className="">
+                <div>
+                  {isLoading(dynamiMapStatus) && (
+                    <div className="bg-white w-full h-full">
+                      <div className="flex justify-center bg-transparent ">
+                        <div className="flex items-center justify-center gap-8 lg:w-2/4 border-lime-700 border rounded-xl p-5">
+                          {/* @ts-ignore */}
+                          <l-loader color="green" size="50"></l-loader>
+                          <p className="text-xl text-lime-700 font-medium">
+                            Loading Dynamic Map
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {isError(dynamiMapStatus) && (
+                    <div className="my-20 flex justify-center">
+                      <Alert className="lg:w-2/4" variant="destructive">
+                        <AlertCircle className="h-5 w-5 mt-1" />
+                        <AlertTitle className="text-lg">API Error !</AlertTitle>
+                        <AlertDescription className="text-md">
+                          Failed to load the Dynamic Map. This could be due to
+                          missing datasets. Try changing your filters and start
+                          the analysis again.
+                        </AlertDescription>
+                      </Alert>
+                    </div>
+                  )}
+
+                  {isFinished(dynamiMapStatus) && (
+                    <DynamicMap
+                      mapFormData={mapFormData}
+                      filterData={filterData}
+                      dynamicMapData={dynamicMapData}
+                      yearList={yearList}
+                      firstAnomalyMapStatus={firstAnomlayMapStatus}
+                      secondAnomalyMapStatus={secondAnomlayMapStatus}
+                      handleChange={handleChange}
+                      setDynamicMapStatus
+                    />
+                  )}
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="mb-10">
-            <AnalyticsData
-              filterData={filterData}
-              timeSeriesChartData={timeSeriesChartData}
-              dynamicMapData={dynamicMapData}
-              dynamicChartStatus={dynamicChartStatus}
-              dynamiMapStatus={dynamiMapStatus}
-              firstAnomalyMapStatus={firstAnomlayMapStatus}
-              secondAnomalyMapStatus={secondAnomlayMapStatus}
-              handleChange={handleChange}
-              mapFormData={mapFormData}
-            />
-            {isFinished(dynamicChartStatus) && (
-              <>
-                <AnalyticsCorrelation
-                  filterData={filterData}
-                  params={params}
-                  typeOfAnalysis={analysisType.elnino}
-                />
+          <div className="w-full bg-gray-100 border-500 rounded-lg">
+            <div className="w-full">
+              <Tabs defaultValue="account" className="w-full bg-gray-100">
+                <TabsList className="w-full">
+                  <div className="flex  justify-between w-full">
+                    <TabsTrigger
+                      className="w-full text-green-600"
+                      value="charts"
+                    >
+                      Normal vs Monthly Averaged during El Nino Years
+                    </TabsTrigger>
+                    <TabsTrigger
+                      className="w-full text-green-600"
+                      value="correlation"
+                    >
+                      Pearson Correlation Plot | Matrix
+                    </TabsTrigger>
+                  </div>
+                </TabsList>
+                <TabsContent value="charts" className="mt-[-2px]">
+                  <div className="">
+                    <AnalyticsData
+                      filterData={filterData}
+                      timeSeriesChartData={timeSeriesChartData}
+                      dynamicMapData={dynamicMapData}
+                      dynamicChartStatus={dynamicChartStatus}
+                      dynamiMapStatus={dynamiMapStatus}
+                      firstAnomalyMapStatus={firstAnomlayMapStatus}
+                      secondAnomalyMapStatus={secondAnomlayMapStatus}
+                      handleChange={handleChange}
+                      mapFormData={mapFormData}
+                    />
+                  </div>
+                </TabsContent>
+                <TabsContent value="correlation">
+                  {isFinished(dynamicChartStatus) && (
+                    <>
+                      <AnalyticsCorrelation
+                        filterData={filterData}
+                        params={params}
+                        typeOfAnalysis={analysisType.elnino}
+                      />
 
-                <div className="flex justify-center mt-16">
+                      {/* <div className="flex justify-center mt-16">
                   <Button
                     variant="default"
                     className="text-xl p-7 bg-green-800 text-white hover:bg-yellow-300 hover:text-gray-800"
@@ -219,12 +315,25 @@ const ElNinoAnalytics = () => {
                   >
                     Move to Prediction
                   </Button>
-                </div>
-              </>
-            )}
+                </div> */}
+                    </>
+                  )}
+                </TabsContent>
+              </Tabs>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* <div className=" h-screen w-screen">
+        <div className="flex flex-col gap-5 h-screen w-screen">
+          <div className="grid grid-cols-4 gap-5 h-3/5 w-screen">
+            <div className="col-span-1 w-full h-full bg-blue-600">bb</div>
+            <div className="col-span-3 w-full h-full bg-blue-600">cc</div>
+          </div>
+          <div className="w-full h-2/5 bg-blue-600">dd</div>
+        </div>
+      </div> */}
     </>
   );
 };

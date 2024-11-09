@@ -42,7 +42,7 @@ const AnalyticsData = ({
   };
 
   return (
-    <div className=" mt-10">
+    <div className="">
       {isLoading(dynamicChartStatus) && (
         <div className="my-20  flex justify-center bg-transparent">
           <div className="flex items-center justify-center gap-8 lg:w-2/4 border-lime-700 border rounded-xl p-5">
@@ -67,16 +67,17 @@ const AnalyticsData = ({
       )}
 
       {isFinished(dynamicChartStatus) && (
-        <div className="sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
-          <div className="flex flex-col gap-10">
+        <div className="p-2 rounded-lg  shadow-lg">
+          <div className="grid grid-cols-2 gap-5">
             <div className="rounded-lg bg-white p-1 shadow-md">
               <HighchartsReact
+                containerProps={{ style: { height: "300px " } }}
                 highcharts={Highcharts}
                 options={timeSeriesChartData[0]}
               />
             </div>
 
-            <div className="flex justify-center mt-8">
+            {/* <div className="flex justify-center mt-8">
               <div className="w-1/3">
                 <div className="flex gap-2 ">
                   <Label className="mb-2 font-semibold">Month</Label>
@@ -95,54 +96,15 @@ const AnalyticsData = ({
                   }}
                 />
               </div>
-            </div>
+            </div> */}
 
-            <div className="rounded-lg bg-white p-1 shadow-md">
+            <div className="rounded-lg bg-white p-1 shadow-md ">
               <HighchartsReact
+                containerProps={{ style: { height: "300px " } }}
                 highcharts={Highcharts}
                 options={timeSeriesChartData[chosenMonth]}
               />
             </div>
-          </div>
-
-          <div>
-            {isLoading(dynamiMapStatus) && (
-              <div className="my-20 flex justify-center bg-transparent">
-                <div className="flex items-center justify-center gap-8 lg:w-2/4 border-lime-700 border rounded-xl p-5">
-                  {/* @ts-ignore */}
-                  <l-loader color="green" size="50"></l-loader>
-                  <p className="text-xl text-lime-700 font-medium">
-                    Loading Dynamic Map
-                  </p>
-                </div>
-              </div>
-            )}
-            {isError(dynamiMapStatus) && (
-              <div className="my-20 flex justify-center">
-                <Alert className="lg:w-2/4" variant="destructive">
-                  <AlertCircle className="h-5 w-5 mt-1" />
-                  <AlertTitle className="text-lg">API Error !</AlertTitle>
-                  <AlertDescription className="text-md">
-                    Failed to load the Dynamic Map. This could be due to missing
-                    datasets. Try changing your filters and start the analysis
-                    again.
-                  </AlertDescription>
-                </Alert>
-              </div>
-            )}
-
-            {isFinished(dynamiMapStatus) && (
-              <DynamicMap
-                mapFormData={mapFormData}
-                filterData={filterData}
-                dynamicMapData={dynamicMapData}
-                yearList={yearList}
-                firstAnomalyMapStatus={firstAnomalyMapStatus}
-                secondAnomalyMapStatus={secondAnomalyMapStatus}
-                handleChange={handleChange}
-                setDynamicMapStatus
-              />
-            )}
           </div>
         </div>
       )}

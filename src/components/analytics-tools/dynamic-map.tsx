@@ -66,12 +66,12 @@ const DynamicMap = ({
   };
 
   return (
-    <div className=" my-16 rounded-lg bg-white p-1 pb-10 shadow-md">
-      <div className="flex justify-center">
-        <div className="grid grid-cols-2 gap-5 p-5 w-2/3 mt-5">
+    <div className="rounded-lg bg-white p-1 pb-2 shadow-md">
+      {/* <div className="flex justify-start p-3">
+        <div className="grid grid-cols-2 gap-5 w-2/5 ">
           <div className="">
             <div className="flex gap-2 ">
-              <Label className="mb-2 font-semibold">Data Variable</Label>
+              <Label className="text-xs font-semibold">Data Variable</Label>
               <HelpHoverCard
                 title={"Data Variable"}
                 content={` The Data Variable you would like to compare against each El Nino category. `}
@@ -90,7 +90,7 @@ const DynamicMap = ({
 
           <div className="">
             <div className="flex gap-2 ">
-              <Label className="mb-2 font-semibold">Month</Label>
+              <Label className="text-xs font-semibold">Month</Label>
               <HelpHoverCard
                 title={"Months"}
                 content={`The month used to compare against the El Nino
@@ -108,10 +108,10 @@ const DynamicMap = ({
             />
           </div>
         </div>
-      </div>
+      </div> */}
 
       {isLoading(mapLoadingStatus) && (
-        <div className="my-20  flex justify-center bg-transparent">
+        <div className="my-[190px]  flex justify-center bg-transparent">
           <div className="flex items-center justify-center gap-8 lg:w-2/4 border-lime-700 border rounded-xl p-5">
             {/* @ts-ignore */}
             <l-loader color="green" size="50"></l-loader>
@@ -122,7 +122,7 @@ const DynamicMap = ({
 
       {isFinished(mapLoadingStatus) && (
         <>
-          <div className="px-10 mt-5">
+          {/* <div className="px-10 mt-5">
             <p className="text-lg mb-2 font-medium flex justify-center">
               Normal {formatTitle(mapFilter.dataVariable)} {getMetricUnit()} for{" "}
               {
@@ -148,11 +148,85 @@ const DynamicMap = ({
                 Normal Rainfall {getMetricUnit()}
               </p>
             </div>
-          </div>
+          </div> */}
 
-          <div className="grid xl:grid-cols-2 grid-cols-1">
-            <div className="p-10">
-              <p className="text-lg mb-2 font-medium flex justify-center">
+          <div className="grid xl:grid-cols-3 grid-cols-1">
+            <div className="p-1 ">
+              <p className="text-sm mb-2 font-medium flex justify-center">
+                Normal {formatTitle(mapFilter.dataVariable)} {getMetricUnit()}{" "}
+                for{" "}
+                {
+                  countries?.find((e) => e.value === mapFormData.countryValue)
+                    .label
+                }{" "}
+              </p>
+              <div className="flex flex-col ">
+                <Leaflet
+                  country={mapFormData.countryValue}
+                  geoJsonData={dynamicMapData}
+                  mapType={"normal"}
+                  chosenYear={filterData.anomalyYear1}
+                  chosenDistrict={filterData.districtValue}
+                  preferredZoomScale={6}
+                  mapFilter={mapFilter}
+                />
+                <MapLegend
+                  mapType={mapDataType.normal}
+                  variable={mapFilter.dataVariable}
+                />
+                <p className="text-center text-xs">
+                  Normal Rainfall {getMetricUnit()}
+                </p>
+              </div>
+
+              <div className="w-full z-10 mt-2">
+                <div className="grid grid-cols-2 gap-5 ">
+                  <div className="">
+                    <div className="flex gap-2 ">
+                      <Label className="text-xs font-semibold">
+                        Data Variable
+                      </Label>
+                      <HelpHoverCard
+                        title={"Data Variable"}
+                        content={` The Data Variable you would like to compare against each El Nino category. `}
+                      />
+                    </div>
+                    <Combobox
+                      name="dataVariable"
+                      label={"Data Variable"}
+                      array={transformObject(ElNinoToolDataIndicators)}
+                      state={{
+                        value: mapFilter.dataVariable,
+                        setValue: handleMapFilterChange,
+                      }}
+                    />
+                  </div>
+
+                  <div className="">
+                    <div className="flex gap-2 ">
+                      <Label className="text-xs font-semibold">Month</Label>
+                      <HelpHoverCard
+                        title={"Months"}
+                        content={`The month used to compare against the El Nino
+              variable.`}
+                      />
+                    </div>
+                    <Combobox
+                      name="chosenMonth"
+                      label={"Month"}
+                      array={monthsList}
+                      state={{
+                        value: mapFilter.chosenMonth,
+                        setValue: handleMapFilterChange,
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-1">
+              <p className="text-sm mb-2 font-medium flex justify-center">
                 {formatTitle(mapFilter.dataVariable)} {getMetricUnit()} in{" "}
                 Anomaly for{" "}
                 {
@@ -167,7 +241,7 @@ const DynamicMap = ({
 
               <div className="w-full">
                 {isLoading(firstAnomalyMapStatus) && (
-                  <div className=" mb-[240px] flex flex-col items-center justify-center mt-40">
+                  <div className=" mb-[188px] flex flex-col items-center justify-center mt-40">
                     {/* @ts-ignore */}
                     <l-loader color="green" size="50"></l-loader>
                   </div>
@@ -194,9 +268,12 @@ const DynamicMap = ({
                 )}
               </div>
 
-              <div className="w-full mt-5 z-10">
+              <div className="w-full z-10 mt-2">
                 <div className="flex gap-2 ">
-                  <Label className="mb-2 font-semibold"> Anomaly Year </Label>
+                  <Label className="text-xs font-semibold">
+                    {" "}
+                    Anomaly Year{" "}
+                  </Label>
                   <HelpHoverCard
                     title={" Anomaly Year "}
                     content={` The year of anomaly that you would like to view `}
@@ -214,15 +291,14 @@ const DynamicMap = ({
               </div>
             </div>
 
-            <div className="p-10">
-              <p className="text-lg mb-2 font-medium flex justify-center">
+            <div className="p-1">
+              <p className="text-sm mb-2 font-medium flex justify-center">
                 {formatTitle(mapFilter.dataVariable)} Anomaly {getMetricUnit()}{" "}
                 for{" "}
                 {
                   countries.find((e) => e.value === mapFormData?.countryValue)
                     ?.label
                 }{" "}
-                in{" "}
                 {
                   yearList.find((e) => e.value === filterData?.anomalyYear2)
                     ?.label
@@ -231,7 +307,7 @@ const DynamicMap = ({
 
               <div className="w-full">
                 {isLoading(secondAnomalyMapStatus) && (
-                  <div className="mb-[240px] flex flex-col items-center justify-center mt-40">
+                  <div className="mb-[188px] flex flex-col items-center justify-center mt-40">
                     {/* @ts-ignore */}
                     <l-loader color="green" size="50"></l-loader>
                   </div>
@@ -258,9 +334,12 @@ const DynamicMap = ({
                 )}
               </div>
 
-              <div className="w-full mt-5 z-10">
+              <div className="w-full z-10 mt-2">
                 <div className="flex gap-2 ">
-                  <Label className="mb-2 font-semibold"> Anomaly Year </Label>
+                  <Label className=" text-xs font-semibold">
+                    {" "}
+                    Anomaly Year{" "}
+                  </Label>
                   <HelpHoverCard
                     title={" Anomaly Year "}
                     content={` The year of anomaly that you would like to view `}

@@ -18,7 +18,7 @@ const Leaflet = ({
   const subjectCountry = countries.find((e) => e.value === country);
 
   const countryStyle = {
-    fillOpacity: 0.7,
+    fillOpacity: 0.9,
     // color: "blue",
     // weight: 0.1,
     // dashArray: 5,
@@ -54,7 +54,7 @@ const Leaflet = ({
     )} mm`);
 
     chosenDistrict === districtCode
-      ? ((layer.options.weight = 3), (layer.options.color = "orange"))
+      ? ((layer.options.weight = 3), (layer.options.color = "blue"))
       : ((layer.options.weight = 0.2), (layer.options.color = "black"));
 
     if (mapFilter.dataVariable === "rainfall") {
@@ -157,10 +157,10 @@ const Leaflet = ({
             zIndex: 1,
           }}
         >
-          {/* <TileLayer
+          <TileLayer
             // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-          /> */}
+          />
 
           <GeoJSON
             style={countryStyle}

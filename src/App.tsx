@@ -7,6 +7,7 @@ import ElNinoAnalytics from "./components/analytics-tools/elnino-analytics";
 import GDDPredictiveTools from "./components/gdd-tools/gdd-tools";
 import ClimateAnalytics from "./components/climate-tools/climate-analytics-tools/climate-analytics";
 import ClimatePredictiveTools from "./components/climate-tools/climate-predictive-tools/climate-predictive-tools";
+import Test from "./components/test";
 function App() {
   const router = createBrowserRouter([
     {
@@ -47,6 +48,10 @@ function App() {
           element: <ClimatePredictiveTools />,
         },
       ],
+    },
+    {
+      path: "/test",
+      element: <Test />,
     },
   ]);
 
