@@ -77,33 +77,36 @@ const AnalyticsData = ({
               />
             </div>
 
-            {/* <div className="flex justify-center mt-8">
-              <div className="w-1/3">
-                <div className="flex gap-2 ">
-                  <Label className="mb-2 font-semibold">Month</Label>
-                  <HelpHoverCard
-                    title={"Months"}
-                    content={` The month you would like to view the charts for. `}
-                  />
-                </div>
-                <Combobox
-                  name="month"
-                  label={"Months"}
-                  array={monthsList}
-                  state={{
-                    value: chosenMonth,
-                    setValue: handleMonthChange,
-                  }}
+            <div className="flex flex-col">
+              <div className="rounded-lg bg-white p-1">
+                <HighchartsReact
+                  containerProps={{ style: { height: "300px " } }}
+                  highcharts={Highcharts}
+                  options={timeSeriesChartData[chosenMonth]}
                 />
               </div>
-            </div> */}
 
-            <div className="rounded-lg bg-white p-1  ">
-              <HighchartsReact
-                containerProps={{ style: { height: "300px " } }}
-                highcharts={Highcharts}
-                options={timeSeriesChartData[chosenMonth]}
-              />
+              <div className="flex justify-center">
+                <div className="w-1/3">
+                  <div className="flex">
+                    <Label className="text-xs font-medium">Month</Label>
+                    <HelpHoverCard
+                      title={"Months"}
+                      content={` The month you would like to view the charts for. `}
+                    />
+                  </div>
+                  <Combobox
+                    name="month"
+                    label={"Months"}
+                    array={monthsList}
+                    state={{
+                      value: chosenMonth,
+                      setValue: handleMonthChange,
+                    }}
+                    height="10"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
