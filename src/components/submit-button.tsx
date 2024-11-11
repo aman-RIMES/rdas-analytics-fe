@@ -3,19 +3,23 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { Button } from "./ui/button";
 import { AlertCircle } from "lucide-react";
 import { requestStatus } from "@/constants";
-import { isLoading } from "@/lib/utils";
+import { cn, isLoading } from "@/lib/utils";
 
 const SubmitButton = ({
   verifyFilters,
   submitFunction,
   loadingStatus = requestStatus.idle,
   label = "Start Analysis",
+  height = 40,
 }: any) => {
   return (
     <HoverCard>
       <HoverCardTrigger className="w-full flex justify-center">
         <Button
-          className="w-full bg-green-800 text-white hover:text-gray-800 hover:bg-yellow-300"
+          className={cn(
+            `h-[${height}px]`,
+            "w-full bg-green-800 text-white hover:text-gray-800 hover:bg-yellow-300"
+          )}
           disabled={!verifyFilters || isLoading(loadingStatus)}
           // disabled={!verifyFilters}
           onClick={submitFunction}

@@ -122,39 +122,51 @@ const PredictiveTools = () => {
 
   return (
     <>
-      <div className="flex justify-center">
+      {/* <div className="flex justify-center">
         <h1 className="text-4xl font-bold">El Nino Predictive Tools</h1>
-      </div>
+      </div> */}
 
-      <div className="my-10">
-        <div className="sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
-          <ElNinoCommonFilter
-            params={params}
-            filterData={filterData}
-            handleChange={handleChange}
-            selected={selected}
-            setSelected={setSelected}
-            filterType="predictive"
-          />
+      <div className="p-2 h-screen  overflow-auto">
+        <div className=" flex flex-row gap-2">
+          <div className="grid grid-cols-6 gap-3 ">
+            <div className="col-span-1">
+              <div className=" border-grey-600 rounded-lg h-[88vh]">
+                <div className="bg-green-800 text-white text-md p-1 rounded-t-lg font-medium ">
+                  <p className="ml-2"> Parameters</p>
+                </div>
+                <div className="bg-gray-100 p-2 rounded-b-lg flex flex-col gap-5 shadow-lg h-full">
+                  <ElNinoCommonFilter
+                    params={params}
+                    filterData={filterData}
+                    handleChange={handleChange}
+                    selected={selected}
+                    setSelected={setSelected}
+                    filterType="predictive"
+                  />
 
-          <div className="md:mt-12 w-full">
-            <SubmitButton
-              verifyFilters={verifyFilters()}
-              submitFunction={generateRegressionModel}
-              loadingStatus={regressionModelStatus}
-              label="Generate Predictive Model"
-            />
+                  <div className="w-full h-full">
+                    <SubmitButton
+                      verifyFilters={verifyFilters()}
+                      submitFunction={generateRegressionModel}
+                      loadingStatus={regressionModelStatus}
+                      label="Generate Predictive Model"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-span-5">
+              <PredictiveToolsData
+                regressionModelStatus={regressionModelStatus}
+                regressionModelData={regressionModelData}
+                predictiveDataType={predictiveDataType}
+                modelType={filterData.modelType}
+                filterData={filterData}
+                handleChange={handleChange}
+              />
+            </div>
           </div>
-        </div>
-        <div>
-          <PredictiveToolsData
-            regressionModelStatus={regressionModelStatus}
-            regressionModelData={regressionModelData}
-            predictiveDataType={predictiveDataType}
-            modelType={filterData.modelType}
-            filterData={filterData}
-            handleChange={handleChange}
-          />
         </div>
       </div>
     </>

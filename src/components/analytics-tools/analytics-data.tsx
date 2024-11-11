@@ -44,7 +44,7 @@ const AnalyticsData = ({
   return (
     <div className="">
       {isLoading(dynamicChartStatus) && (
-        <div className="my-20  flex justify-center bg-transparent">
+        <div className="flex items-center pt-[100px] justify-center bg-transparent">
           <div className="flex items-center justify-center gap-8 lg:w-2/4 border-lime-700 border rounded-xl p-5">
             {/* @ts-ignore */}
             <l-reuleaux color="green" size="35"></l-reuleaux>
@@ -67,9 +67,9 @@ const AnalyticsData = ({
       )}
 
       {isFinished(dynamicChartStatus) && (
-        <div className="p-2 rounded-lg  shadow-lg">
+        <div className="p-2 ">
           <div className="grid grid-cols-2 gap-5">
-            <div className="rounded-lg bg-white p-1 shadow-md">
+            <div className="rounded-lg bg-white p-1 ">
               <HighchartsReact
                 containerProps={{ style: { height: "300px " } }}
                 highcharts={Highcharts}
@@ -98,7 +98,7 @@ const AnalyticsData = ({
               </div>
             </div> */}
 
-            <div className="rounded-lg bg-white p-1 shadow-md ">
+            <div className="rounded-lg bg-white p-1  ">
               <HighchartsReact
                 containerProps={{ style: { height: "300px " } }}
                 highcharts={Highcharts}

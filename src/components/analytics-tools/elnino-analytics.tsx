@@ -189,7 +189,7 @@ const ElNinoAnalytics = () => {
                 <div className="bg-green-800 text-white text-md p-1 rounded-t-lg font-medium">
                   <p className="ml-2"> Parameters</p>
                 </div>
-                <div className="bg-gray-100 p-2 rounded-b-lg flex flex-col gap-5 shadow-lg">
+                <div className="bg-gray-200 pb-4 p-2 rounded-b-lg flex flex-col gap-5 shadow-lg">
                   <ElNinoCommonFilter
                     params={params}
                     filterData={filterData}
@@ -210,11 +210,11 @@ const ElNinoAnalytics = () => {
               </div>
             </div>
 
-            <div className="col-span-5">
+            <div className="col-span-5 w-full h-full bg-white rounded-lg">
               <div className="">
                 <div>
                   {isLoading(dynamiMapStatus) && (
-                    <div className="bg-white w-full h-full">
+                    <div className="bg-white w-full h-full pt-[100px]">
                       <div className="flex justify-center bg-transparent ">
                         <div className="flex items-center justify-center gap-8 lg:w-2/4 border-lime-700 border rounded-xl p-5">
                           {/* @ts-ignore */}
@@ -257,9 +257,9 @@ const ElNinoAnalytics = () => {
             </div>
           </div>
 
-          <div className="w-full bg-gray-100 border-500 rounded-lg">
+          <div className="w-full border-500 rounded-lg">
             <div className="w-full">
-              <Tabs defaultValue="account" className="w-full bg-gray-100">
+              <Tabs defaultValue="charts" className="w-full ">
                 <TabsList className="w-full">
                   <div className="flex  justify-between w-full">
                     <TabsTrigger
@@ -276,64 +276,59 @@ const ElNinoAnalytics = () => {
                     </TabsTrigger>
                   </div>
                 </TabsList>
-                <TabsContent value="charts" className="mt-[-2px]">
-                  <div className="">
-                    <AnalyticsData
-                      filterData={filterData}
-                      timeSeriesChartData={timeSeriesChartData}
-                      dynamicMapData={dynamicMapData}
-                      dynamicChartStatus={dynamicChartStatus}
-                      dynamiMapStatus={dynamiMapStatus}
-                      firstAnomalyMapStatus={firstAnomlayMapStatus}
-                      secondAnomalyMapStatus={secondAnomlayMapStatus}
-                      handleChange={handleChange}
-                      mapFormData={mapFormData}
-                    />
-                  </div>
-                </TabsContent>
-                <TabsContent value="correlation">
+                <div className="bg-white min-h-[360px] rounded-lg">
+                  <TabsContent value="charts">
+                    <div className="">
+                      <AnalyticsData
+                        filterData={filterData}
+                        timeSeriesChartData={timeSeriesChartData}
+                        dynamicMapData={dynamicMapData}
+                        dynamicChartStatus={dynamicChartStatus}
+                        dynamiMapStatus={dynamiMapStatus}
+                        firstAnomalyMapStatus={firstAnomlayMapStatus}
+                        secondAnomalyMapStatus={secondAnomlayMapStatus}
+                        handleChange={handleChange}
+                        mapFormData={mapFormData}
+                      />
+                    </div>
+                  </TabsContent>
+                  <TabsContent value="correlation">
+                    {isFinished(dynamicChartStatus) && (
+                      <>
+                        <AnalyticsCorrelation
+                          filterData={filterData}
+                          params={params}
+                          typeOfAnalysis={analysisType.elnino}
+                        />
+                      </>
+                    )}
+                  </TabsContent>
                   {isFinished(dynamicChartStatus) && (
                     <>
-                      <AnalyticsCorrelation
-                        filterData={filterData}
-                        params={params}
-                        typeOfAnalysis={analysisType.elnino}
-                      />
-
-                      {/* <div className="flex justify-center mt-16">
-                  <Button
-                    variant="default"
-                    className="text-xl p-7 bg-green-800 text-white hover:bg-yellow-300 hover:text-gray-800"
-                    onClick={() =>
-                      navigate("/predictive-tools", {
-                        state: {
-                          ...filterData,
-                          selected,
-                        },
-                      })
-                    }
-                  >
-                    Move to Prediction
-                  </Button>
-                </div> */}
+                      <div className="flex justify-center ">
+                        <Button
+                          variant="default"
+                          className="text-md px-5 bg-green-800 text-white hover:bg-yellow-300 hover:text-gray-800"
+                          onClick={() =>
+                            navigate("/predictive-tools", {
+                              state: {
+                                ...filterData,
+                                selected,
+                              },
+                            })
+                          }
+                        >
+                          Move to Prediction
+                        </Button>
+                      </div>
                     </>
                   )}
-                </TabsContent>
+                </div>
               </Tabs>
             </div>
           </div>
         </div>
       </div>
-
-      {/* <div className=" h-screen w-screen">
-        <div className="flex flex-col gap-5 h-screen w-screen">
-          <div className="grid grid-cols-4 gap-5 h-3/5 w-screen">
-            <div className="col-span-1 w-full h-full bg-blue-600">bb</div>
-            <div className="col-span-3 w-full h-full bg-blue-600">cc</div>
-          </div>
-          <div className="w-full h-2/5 bg-blue-600">dd</div>
-        </div>
-      </div> */}
     </>
   );
 };

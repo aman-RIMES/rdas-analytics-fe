@@ -18,7 +18,7 @@ import { CommandList } from "cmdk";
 import { ScrollArea } from "./scroll-area";
 import { useState } from "react";
 
-function Combobox({ array, state, label, name }: any) {
+function Combobox({ array, state, label, name, height = 40 }: any) {
   const [open, setOpen] = useState(false);
   return (
     <div className="flex flex-col justify-start gap-2 ">
@@ -34,7 +34,9 @@ function Combobox({ array, state, label, name }: any) {
                 !state.value && "text-gray-500",
                 open
                   ? "border-green-600 shadow-sm shadow-green-600"
-                  : "border-0 shadow-md"
+                  : "border-0",
+                `h-[${height}px]`,
+                "border-2"
               ) + " justify-between text-xs"
             }
           >

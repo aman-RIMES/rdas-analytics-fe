@@ -12,6 +12,7 @@ import {
 import { Command as CommandPrimitive } from "cmdk";
 import { useEffect, useState } from "react";
 import { ScrollArea } from "./scroll-area";
+import { cn } from "@/lib/utils";
 
 type Indicator = Record<"value" | "label", string>;
 
@@ -23,6 +24,7 @@ export function FancyMultiSelect({
   array,
   placeholder = "Select variables",
   ScrollAreaHeight = "180",
+  orientation = "vertical",
 }: any) {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
@@ -74,7 +76,12 @@ export function FancyMultiSelect({
       className="overflow-visible bg-transparent "
     >
       <div className="group rounded-md border bg-white border-input px-3 py-2 text-xs ring-offset-background focus-within:border-green-600 focus-within:shadow-green-600 focus-within:shadow-sm">
-        <div className="flex flex-col gap-1">
+        <div
+          className={cn(
+            orientation === "vertical" ? "flex-col" : "flex-wrap",
+            "flex  gap-1"
+          )}
+        >
           {selected?.map((element: any) => {
             return (
               <Badge

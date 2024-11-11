@@ -99,18 +99,12 @@ const AnalyticsCorrelation = ({
   };
 
   return (
-    <div className="p-2 rounded-lg bg-gray-100 h-[320px] shadow-lg">
-      {/* <div className="flex justify-center mb-10">
-        <h1 className="text-xl font-semibold">
-          Correlation between Data Variables and El Nino
-        </h1>
-      </div>
-
+    <div className=" rounded-lg">
       <div className="flex justify-center">
-        <div className="grid w-2/3 gap-4 my-8 xl:grid-cols-2 grid-cols-1">
+        <div className="grid w-2/3 gap-4 lg:grid-cols-4 grid-cols-1 mb-1 mt-2">
           <div className="">
-            <div className="flex gap-2 ">
-              <Label className="mb-2 font-semibold">Data Variable</Label>
+            <div className="flex ">
+              <Label className="text-xs font-semibold">Data Variable</Label>
               <HelpHoverCard
                 title={"Data Variable"}
                 content={` The Data Variable you would like to compare against each El Nino category. `}
@@ -124,12 +118,13 @@ const AnalyticsCorrelation = ({
                 value: correlationFilter.correlationVariable,
                 setValue: handleChange,
               }}
+              height={31}
             />
           </div>
 
-          <div className="">
-            <div className="flex gap-2">
-              <Label className="mb-2 font-semibold">Months</Label>
+          <div className="col-span-2">
+            <div className="flex">
+              <Label className="text-xs font-semibold">Months</Label>
               <HelpHoverCard
                 title={"Months"}
                 content={`The month used to compare against the El Nino
@@ -143,18 +138,20 @@ const AnalyticsCorrelation = ({
               setSelected={setSelected}
               setState={handleChange}
               array={monthsList}
-              ScrollAreaHeight={180}
+              ScrollAreaHeight="200"
+              orientation="horizontal"
+            />
+          </div>
+          <div className="lg:mt-[17px] ">
+            <SubmitButton
+              label={"Generate Correlation"}
+              submitFunction={generateCorrelationMap}
+              verifyFilters={correlationFilter.chosenMonths.length > 0}
+              height={30}
             />
           </div>
         </div>
       </div>
-      <div className="md:mt-5 w-full">
-        <SubmitButton
-          label={"Generate Correlation Data"}
-          submitFunction={generateCorrelationMap}
-          verifyFilters={correlationFilter.chosenMonths.length > 0}
-        />
-      </div> */}
 
       {isLoading(correlationStatus) && (
         <div className="my-20  flex justify-center bg-transparent">
@@ -183,13 +180,13 @@ const AnalyticsCorrelation = ({
       )}
 
       {isFinished(correlationStatus) && (
-        <div className="">
+        <div className="px-2">
           <div className="grid gap-4 md:grid-cols-4 grid-cols-1 ">
             {correlationChartData[correlationFilter.correlationVariable].map(
               (chartData, index) => (
                 <div key={index}>
                   <HighchartsReact
-                    containerProps={{ style: { height: "300px" } }}
+                    containerProps={{ style: { height: "250px" } }}
                     highcharts={Highcharts}
                     options={chartData.scatter}
                   />

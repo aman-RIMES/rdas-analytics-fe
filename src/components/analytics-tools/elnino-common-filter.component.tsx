@@ -38,7 +38,7 @@ const ElNinoCommonFilter = ({
   return (
     <div className="flex flex-col gap-2">
       <div>
-        <div className="flex gap-2">
+        <div className="flex">
           <Label className=" text-xs font-semibold">Data</Label>
           <HelpHoverCard
             title={"Data"}
@@ -59,7 +59,7 @@ const ElNinoCommonFilter = ({
       </div>
       {containsCropAnalysis(filterData.dataVariable) && (
         <div className="mt-2">
-          <div className="flex gap-2 ">
+          <div className="flex ">
             <Label className=" text-xs font-semibold">Crop </Label>
             <HelpHoverCard
               title={" Crop "}
@@ -79,7 +79,7 @@ const ElNinoCommonFilter = ({
         </div>
       )}
       <div>
-        <div className="flex gap-2 ">
+        <div className="flex ">
           <Label className=" text-xs font-semibold">Data Source </Label>
           <HelpHoverCard
             title={" Source "}
@@ -103,7 +103,7 @@ const ElNinoCommonFilter = ({
       {filterData.source === "customDataset" && (
         <>
           <div>
-            <div className="flex gap-2 ">
+            <div className="flex ">
               <Label className=" text-xs font-semibold">Upload CSV</Label>
               <HelpHoverCard
                 title={" Custom Dataset "}
@@ -141,7 +141,7 @@ const ElNinoCommonFilter = ({
       )}
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <div className="flex gap-2 ">
+          <div className="flex ">
             <Label className=" text-xs font-semibold"> From Year </Label>
             <HelpHoverCard
               title={" From Year "}
@@ -191,7 +191,7 @@ const ElNinoCommonFilter = ({
         </p>
       </div> */}
       <div>
-        <div className="flex gap-2 ">
+        <div className="flex ">
           <Label className=" text-xs font-semibold"> Country </Label>
           <HelpHoverCard
             title={" Country "}
@@ -209,7 +209,7 @@ const ElNinoCommonFilter = ({
         />
       </div>
       <div>
-        <div className="flex gap-2 ">
+        <div className="flex ">
           <Label className=" text-xs font-semibold"> District </Label>
           <HelpHoverCard
             title={" District "}
@@ -228,32 +228,31 @@ const ElNinoCommonFilter = ({
         />
       </div>
       {filterType === "predictive" && (
-        <div className="grid gap-4 mb-6 justify-center">
-          <div className="">
-            <div className="flex gap-2">
-              <Label className=" text-xs font-semibold">Months</Label>
-              <HelpHoverCard
-                title={"Months"}
-                content={`The months used to compare against the data
+        <div>
+          <div className="flex">
+            <Label className=" text-xs font-semibold">Months</Label>
+            <HelpHoverCard
+              title={"Months"}
+              content={`The months used to compare against the data
               variables.`}
-              />
-            </div>
-            <FancyMultiSelect
-              name="months"
-              placeholder="Select Months"
-              selected={selectedMonths}
-              setSelected={setSelectedMonths}
-              setState={handleChange}
-              array={monthsList}
-              ScrollAreaHeight={180}
             />
           </div>
+          <FancyMultiSelect
+            name="months"
+            placeholder="Select Months"
+            selected={selectedMonths}
+            setSelected={setSelectedMonths}
+            setState={handleChange}
+            array={monthsList}
+            ScrollAreaHeight={180}
+            orientation="horizontal"
+          />
         </div>
       )}
       {/* <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
         {filterType === "predictive" && (
           <div>
-            <div className="flex gap-2 ">
+            <div className="flex ">
               <Label className=" text-xs font-semibold">
                 Predictive model type
               </Label>
