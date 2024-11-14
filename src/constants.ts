@@ -3,8 +3,12 @@ import { Country, YearsList } from "./types";
 
 export const BODY_PARAMS_URL = "http://203.156.108.67:1580/body_params";
 
+export const IDLE_PREDICTIVE_CHART_MESSAGE =
+  "Please Generate A Predictive Model";
+export const IDLE_ANALYTICS_CHART_MESSAGE = "Please Start The Analysis";
+
 export enum requestStatus {
-  idle = "",
+  idle = "IDLE",
   isLoading = "LOADING",
   isFinished = "FINISHED",
   isError = "ERROR",

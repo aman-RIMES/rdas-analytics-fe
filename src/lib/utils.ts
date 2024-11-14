@@ -36,6 +36,9 @@ export const isFinished = (status: requestStatus | undefined) =>
 export const isError = (status: requestStatus | undefined) =>
   status === requestStatus.isError;
 
+export const isIdle = (status: requestStatus | undefined) =>
+  status === requestStatus.idle;
+
 export function transformProvinceArray(array: Array<object>) {
   return array.map((e: any) => ({ value: e.province_id, label: e.province }));
 }

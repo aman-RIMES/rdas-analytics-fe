@@ -1,0 +1,349 @@
+{
+  "predictive_chart": {
+    "title": {
+      "text": "Scatter Plot - Observed vs Predicted Cummulative Rainfall",
+      "style": {
+        "fontSize": "0.875rem",
+        "fontWeight": "bold"
+      }
+    },
+    "caption": {
+      "text": "Points closer to the line indicate accurate predictions",
+      "align": "center"
+    },
+    "legend": {
+      "itemStyle": {
+        "fontSize": "0.75rem"
+      }
+    },
+    "xAxis": {
+      "title": {
+        "text": "Observed Cummulative Rainfall (mm)",
+        "style": {
+          "fontSize": "0.75rem",
+          "fontWeight": "bold"
+        }
+      }
+    },
+    "yAxis": {
+      "title": {
+        "text": "Predicted Cummulative Rainfall (mm)",
+        "style": {
+          "fontSize": "0.75rem",
+          "fontWeight": "bold"
+        }
+      }
+    },
+    "series": [
+      {
+        "showInLegend": false,
+        "enableMouseTracking": false,
+        "type": "line",
+        "dashStyle": "Dash",
+        "data": [
+          {
+            "x": 3.1346,
+            "y": 3.1346
+          },
+          {
+            "x": 97.1394,
+            "y": 97.1394
+          }
+        ],
+        "marker": {
+          "enabled": false
+        }
+      },
+      {
+        "showInLegend": false,
+        "type": "scatter",
+        "name": "Predicted",
+        "tooltip": {
+          "headerFormat": "",
+          "pointFormat": "Observed: {point.x:.2f} mm<br/>Predicted: {point.y:.2f} mm"
+        },
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          [47.6903, 36.33603479224378],
+          [16.6771, 41.228134984018766],
+          [19.6, 51.82768539953123],
+          [3.1346, 34.70533472831878],
+          [97.1394, 70.58073613466867],
+          [76.1975, 43.67418507990625],
+          [28.2096, 50.196985335606236],
+          [31.8179, 27.36718444065631],
+          [70.6036, 29.813234536543803],
+          [25.2881, 30.628584568506305]
+        ]
+      },
+      {
+        "showInLegend": false,
+        "type": "scatter",
+        "name": "Upper Bound",
+        "tooltip": {
+          "headerFormat": "",
+          "pointFormat": "Observed: {point.x:.2f} mm<br/>Upper Bound: {point.y:.2f} mm"
+        },
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          [47.6903, 56.8798984307704],
+          [16.6771, 60.14992219624579],
+          [19.6, 76.23688175888556],
+          [3.1346, 56.33347064250151],
+          [97.1394, 118.31461391672346],
+          [76.1975, 62.8361061028516],
+          [28.2096, 73.1250418245328],
+          [31.8179, 56.08022183709766],
+          [70.6036, 55.853886232933604],
+          [25.2881, 55.836480279512614]
+        ]
+      },
+      {
+        "showInLegend": false,
+        "type": "scatter",
+        "name": "Lower Bound",
+        "tooltip": {
+          "headerFormat": "",
+          "pointFormat": "Observed: {point.x:.2f} mm<br/>Lower Bound: {point.y:.2f} mm"
+        },
+        "marker": {
+          "symbol": "triangle-down"
+        },
+        "data": [
+          [47.6903, 15.792171153717156],
+          [16.6771, 22.306347771791742],
+          [19.6, 27.418489040176894],
+          [3.1346, 13.07719881413605],
+          [97.1394, 22.846858352613886],
+          [76.1975, 24.512264056960905],
+          [28.2096, 27.26892884667967],
+          [31.8179, -1.3458529557850412],
+          [70.6036, 3.7725828401540014],
+          [25.2881, 5.4206888575]
+        ]
+      }
+    ]
+  },
+  "qq_plot": {
+    "title": {
+      "text": "Quantile-Quantile Plot - Weak El Nino, Cummulative Rainfall",
+      "style": {
+        "fontSize": "0.875rem",
+        "fontWeight": "bold"
+      }
+    },
+    "caption": {
+      "text": "Points following a straight line indicate accurate normal distribution of residuals. Residuals refer to the difference between the actual observed values and the predicted values from the model for each data point.",
+      "align": "center"
+    },
+    "xAxis": {
+      "title": {
+        "text": "Quantities",
+        "style": {
+          "fontSize": "0.75rem",
+          "fontWeight": "bold"
+        }
+      }
+    },
+    "tooltip": {
+      "enabled": false
+    },
+    "legend": {
+      "itemStyle": {
+        "fontSize": "0.75rem"
+      }
+    },
+    "yAxis": {
+      "title": {
+        "text": "Value",
+        "style": {
+          "fontSize": "0.75rem",
+          "fontWeight": "bold"
+        }
+      }
+    },
+    "series": [
+      {
+        "showInLegend": false,
+        "type": "scatter",
+        "data": [
+          {
+            "x": -1.4987672753589756,
+            "y": -32.227685399531225
+          },
+          {
+            "x": -0.9849466741389483,
+            "y": -31.570734728318783
+          },
+          {
+            "x": -0.6470380273640686,
+            "y": -24.551034984018766
+          },
+          {
+            "x": -0.371098189575024,
+            "y": -21.987385335606238
+          },
+          {
+            "x": -0.12121408713229873,
+            "y": -5.340484568506305
+          },
+          {
+            "x": 0.12121408713229859,
+            "y": 4.450715559343692
+          },
+          {
+            "x": 0.371098189575024,
+            "y": 11.354265207756221
+          },
+          {
+            "x": 0.6470380273640689,
+            "y": 26.558663865331326
+          },
+          {
+            "x": 0.9849466741389483,
+            "y": 32.52331492009375
+          },
+          {
+            "x": 1.4987672753589756,
+            "y": 40.7903654634562
+          }
+        ]
+      },
+      {
+        "showInLegend": false,
+        "type": "line",
+        "marker": {
+          "enabled": false
+        },
+        "data": [
+          {
+            "x": -1.4987672753589756,
+            "y": -43.369624618085204
+          },
+          {
+            "x": -0.9849466741389483,
+            "y": -28.501267827592798
+          },
+          {
+            "x": -0.6470380273640686,
+            "y": -18.72325131577537
+          },
+          {
+            "x": -0.371098189575024,
+            "y": -10.738417793693152
+          },
+          {
+            "x": -0.12121408713229873,
+            "y": -3.5075555383290307
+          },
+          {
+            "x": 0.12121408713229859,
+            "y": 3.507555538329
+          },
+          {
+            "x": 0.371098189575024,
+            "y": 10.738417793693124
+          },
+          {
+            "x": 0.6470380273640689,
+            "y": 18.723251315775354
+          },
+          {
+            "x": 0.9849466741389483,
+            "y": 28.50126782759277
+          },
+          {
+            "x": 1.4987672753589756,
+            "y": 43.369624618085176
+          }
+        ]
+      }
+    ]
+  },
+  "histogram": {
+    "title": {
+      "text": "Histogram of Model - Weak El Nino, Cummulative Rainfall",
+      "style": {
+        "fontSize": "0.875rem",
+        "fontWeight": "bold"
+      }
+    },
+    "caption": {
+      "text": "A bell shape curve suggests a good model for further analysis of prediction",
+      "align": "center"
+    },
+    "xAxis": {
+      "title": {
+        "text": "Residuals",
+        "style": {
+          "fontSize": "0.75rem",
+          "fontWeight": "bold"
+        }
+      },
+      "categories": [
+        "-32.23",
+        "-29.79",
+        "-27.36",
+        "-24.93",
+        "-22.49",
+        "-20.06",
+        "-17.62",
+        "-15.19",
+        "-12.76",
+        "-10.32",
+        "-7.89",
+        "-5.45",
+        "-3.02",
+        "-0.59",
+        "1.85",
+        "4.28",
+        "6.72",
+        "9.15",
+        "11.58",
+        "14.02",
+        "16.45",
+        "18.88",
+        "21.32",
+        "23.75",
+        "26.19",
+        "28.62",
+        "31.05",
+        "33.49",
+        "35.92",
+        "38.36",
+        "40.79"
+      ]
+    },
+    "legend": {
+      "itemStyle": {
+        "fontSize": "0.75rem"
+      }
+    },
+    "tooltip": {
+      "enabled": false
+    },
+    "yAxis": {
+      "title": {
+        "text": "Frequency",
+        "style": {
+          "fontSize": "0.75rem",
+          "fontWeight": "bold"
+        }
+      }
+    },
+    "series": [
+      {
+        "showInLegend": false,
+        "type": "column",
+        "data": [
+          2, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0,
+          0, 1, 0, 1, 0, 0, 1
+        ]
+      }
+    ]
+  }
+}
