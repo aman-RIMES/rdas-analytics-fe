@@ -67,49 +67,6 @@ const DynamicMap = ({
 
   return (
     <div className="rounded-lg bg-white p-1 pb-2 shadow-md">
-      {/* <div className="flex justify-start p-3">
-        <div className="grid grid-cols-2 gap-5 w-2/5 ">
-          <div className="">
-            <div className="flex gap-2 ">
-              <Label className="text-xs font-semibold">Data Variable</Label>
-              <HelpHoverCard
-                title={"Data Variable"}
-                content={` The Data Variable you would like to compare against each El Nino category. `}
-              />
-            </div>
-            <Combobox
-              name="dataVariable"
-              label={"Data Variable"}
-              array={transformObject(ElNinoToolDataIndicators)}
-              state={{
-                value: mapFilter.dataVariable,
-                setValue: handleMapFilterChange,
-              }}
-            />
-          </div>
-
-          <div className="">
-            <div className="flex gap-2 ">
-              <Label className="text-xs font-semibold">Month</Label>
-              <HelpHoverCard
-                title={"Months"}
-                content={`The month used to compare against the El Nino
-              variable.`}
-              />
-            </div>
-            <Combobox
-              name="chosenMonth"
-              label={"Month"}
-              array={monthsList}
-              state={{
-                value: mapFilter.chosenMonth,
-                setValue: handleMapFilterChange,
-              }}
-            />
-          </div>
-        </div>
-      </div> */}
-
       {isLoading(mapLoadingStatus) && (
         <div className="my-[190px]  flex justify-center bg-transparent">
           <div className="flex items-center justify-center gap-8 lg:w-2/4 border-lime-700 border rounded-xl p-5">
@@ -122,34 +79,6 @@ const DynamicMap = ({
 
       {isFinished(mapLoadingStatus) && (
         <>
-          {/* <div className="px-10 mt-5">
-            <p className="text-lg mb-2 font-medium flex justify-center">
-              Normal {formatTitle(mapFilter.dataVariable)} {getMetricUnit()} for{" "}
-              {
-                countries?.find((e) => e.value === mapFormData.countryValue)
-                  .label
-              }{" "}
-            </p>
-            <div className="flex flex-col ">
-              <Leaflet
-                country={mapFormData.countryValue}
-                geoJsonData={dynamicMapData}
-                mapType={"normal"}
-                chosenYear={filterData.anomalyYear1}
-                chosenDistrict={filterData.districtValue}
-                preferredZoomScale={6}
-                mapFilter={mapFilter}
-              />
-              <MapLegend
-                mapType={mapDataType.normal}
-                variable={mapFilter.dataVariable}
-              />
-              <p className="text-center text-xs">
-                Normal Rainfall {getMetricUnit()}
-              </p>
-            </div>
-          </div> */}
-
           <div className="grid xl:grid-cols-3 grid-cols-1">
             <div className="p-1 ">
               <p className="text-sm mb-2 font-medium flex justify-center">
@@ -157,12 +86,12 @@ const DynamicMap = ({
                 for{" "}
                 {
                   countries?.find((e) => e.value === mapFormData.countryValue)
-                    .label
+                    ?.label
                 }{" "}
               </p>
               <div className="flex flex-col ">
                 <Leaflet
-                  country={mapFormData.countryValue}
+                  country={mapFormData.countryValue || "NPL"}
                   geoJsonData={dynamicMapData}
                   mapType={"normal"}
                   chosenYear={filterData.anomalyYear1}
@@ -249,7 +178,7 @@ const DynamicMap = ({
                 {isFinished(firstAnomalyMapStatus) && (
                   <div className="flex flex-col">
                     <Leaflet
-                      country={mapFormData.countryValue}
+                      country={mapFormData.countryValue || "PAK"}
                       geoJsonData={dynamicMapData}
                       mapType={"anomaly"}
                       chosenYear={filterData.anomalyYear1}
@@ -315,7 +244,7 @@ const DynamicMap = ({
                 {isFinished(secondAnomalyMapStatus) && (
                   <div className="flex flex-col">
                     <Leaflet
-                      country={mapFormData.countryValue}
+                      country={mapFormData.countryValue || "BGD"}
                       geoJsonData={dynamicMapData}
                       mapType={"anomaly"}
                       chosenYear={filterData.anomalyYear2}

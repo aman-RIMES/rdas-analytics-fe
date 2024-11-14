@@ -3,18 +3,19 @@ import Highcharts from "highcharts/highmaps";
 import { AlertCircle } from "lucide-react";
 import Leaflet from "../leaflet";
 import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
-import { isError, isFinished, isLoading } from "@/lib/utils";
+import { isError, isFinished, isIdle, isLoading } from "@/lib/utils";
 import { AnalyticsDataProps } from "@/types";
 import { grid, reuleaux } from "ldrs";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
 import MapLegend from "../map-legend";
-import { countries, mapDataType, monthsList } from "@/constants";
+import { IDLE_ANALYTICS_CHART_MESSAGE, monthsList } from "@/constants";
 import { useState } from "react";
 import DynamicMap from "./dynamic-map";
 reuleaux.register("l-reuleaux");
 grid.register("l-loader");
+import sampleCharts from "../../data/sample_charts.json";
 
 const AnalyticsData = ({
   filterData,
@@ -66,47 +67,74 @@ const AnalyticsData = ({
         </div>
       )}
 
-      {isFinished(dynamicChartStatus) && (
+      {(isFinished(dynamicChartStatus) || isIdle(dynamicChartStatus)) && (
         <div className="p-2 ">
           <div className="grid grid-cols-2 gap-5">
-            <div className="rounded-lg bg-white p-1 ">
-              <HighchartsReact
-                containerProps={{ style: { height: "300px " } }}
-                highcharts={Highcharts}
-                options={timeSeriesChartData[0]}
-              />
-            </div>
-
-            <div className="flex flex-col">
-              <div className="rounded-lg bg-white p-1">
+            <div className="relative z-0">
+              <div className="rounded-lg bg-white p-1 ">
                 <HighchartsReact
                   containerProps={{ style: { height: "300px " } }}
                   highcharts={Highcharts}
-                  options={timeSeriesChartData[chosenMonth]}
+                  options={
+                    isIdle(dynamicChartStatus)
+                      ? sampleCharts?.analytics_yearly
+                      : timeSeriesChartData[0]
+                  }
                 />
               </div>
+              {isIdle(dynamicChartStatus) && (
+                <div className="absolute inset-0 flex justify-center items-center z-10 bg-white bg-opacity-70 ">
+                  <p className="text-2xl font-bold text-green-800">
+                    {IDLE_ANALYTICS_CHART_MESSAGE}
+                  </p>
+                </div>
+              )}
+            </div>
 
-              <div className="flex justify-center">
-                <div className="w-1/3">
-                  <div className="flex">
-                    <Label className="text-xs font-medium">Month</Label>
-                    <HelpHoverCard
-                      title={"Months"}
-                      content={` The month you would like to view the charts for. `}
-                    />
-                  </div>
-                  <Combobox
-                    name="month"
-                    label={"Months"}
-                    array={monthsList}
-                    state={{
-                      value: chosenMonth,
-                      setValue: handleMonthChange,
-                    }}
-                    height="10"
+            <div className="relative z-0">
+              <div className="flex flex-col">
+                <div className="rounded-lg bg-white p-1 ">
+                  <HighchartsReact
+                    containerProps={{ style: { height: "300px " } }}
+                    highcharts={Highcharts}
+                    options={
+                      isIdle(dynamicChartStatus)
+                        ? sampleCharts?.analytics_monthly
+                        : timeSeriesChartData[chosenMonth]
+                    }
                   />
                 </div>
+
+                <div className="flex justify-center">
+                  <div className="w-1/3">
+                    {/* <div className="flex">
+                      <Label className="text-xs font-medium">Month</Label>
+                      <HelpHoverCard
+                        title={"Months"}
+                        content={` The month you would like to view the charts for. `}
+                      />
+                    </div> */}
+                    <Combobox
+                      name="month"
+                      label={"Months"}
+                      array={monthsList}
+                      state={{
+                        value: chosenMonth,
+                        setValue: handleMonthChange,
+                      }}
+                      height="10"
+                    />
+                  </div>
+                </div>
               </div>
+
+              {isIdle(dynamicChartStatus) && (
+                <div className="absolute inset-0 flex justify-center items-center z-10 bg-white bg-opacity-70 ">
+                  <p className="text-2xl font-bold text-green-800">
+                    {IDLE_ANALYTICS_CHART_MESSAGE}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>

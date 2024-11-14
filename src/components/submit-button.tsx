@@ -11,6 +11,7 @@ const SubmitButton = ({
   loadingStatus = requestStatus.idle,
   label = "Start Analysis",
   height = 40,
+  className,
 }: any) => {
   return (
     <HoverCard>
@@ -18,7 +19,8 @@ const SubmitButton = ({
         <Button
           className={cn(
             `h-[${height}px]`,
-            "w-full bg-green-800 text-white hover:text-gray-800 hover:bg-yellow-300"
+            "w-full bg-green-800 text-white hover:text-gray-800 hover:bg-yellow-300",
+            className
           )}
           disabled={!verifyFilters || isLoading(loadingStatus)}
           // disabled={!verifyFilters}

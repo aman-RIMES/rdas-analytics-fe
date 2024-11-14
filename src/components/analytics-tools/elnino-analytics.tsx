@@ -8,6 +8,7 @@ import {
   getAllDistrictsOfCountry,
   isError,
   isFinished,
+  isIdle,
   isLoading,
 } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -189,7 +190,7 @@ const ElNinoAnalytics = () => {
                 <div className="bg-green-800 text-white text-md p-1 rounded-t-lg font-medium">
                   <p className="ml-2"> Parameters</p>
                 </div>
-                <div className="bg-gray-200 pb-4 p-2 rounded-b-lg flex flex-col gap-5 shadow-lg">
+                <div className="bg-gray-200 p-2 rounded-b-lg flex flex-col gap-5 shadow-lg">
                   <ElNinoCommonFilter
                     params={params}
                     filterData={filterData}
@@ -205,6 +206,16 @@ const ElNinoAnalytics = () => {
                       submitFunction={generateDynamicChart}
                       loadingStatus={dynamicChartStatus}
                     />
+
+                    {isFinished(dynamicChartStatus) && (
+                      <SubmitButton
+                        className="mt-2 border border-green-600 text-green-800 bg-transparent hover:text-gray-800 hover:border-yellow-300"
+                        label="Move to Prediction"
+                        verifyFilters={verifyFilters()}
+                        submitFunction={generateDynamicChart}
+                        loadingStatus={dynamicChartStatus}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
@@ -240,7 +251,7 @@ const ElNinoAnalytics = () => {
                     </div>
                   )}
 
-                  {isFinished(dynamiMapStatus) && (
+                  {(isFinished(dynamiMapStatus) || isIdle(dynamiMapStatus)) && (
                     <DynamicMap
                       mapFormData={mapFormData}
                       filterData={filterData}
@@ -276,7 +287,7 @@ const ElNinoAnalytics = () => {
                     </TabsTrigger>
                   </div>
                 </TabsList>
-                <div className="bg-white min-h-[360px] rounded-lg">
+                <div className="bg-white rounded-lg">
                   <TabsContent value="charts">
                     <div className="">
                       <AnalyticsData
@@ -303,26 +314,6 @@ const ElNinoAnalytics = () => {
                       </>
                     )}
                   </TabsContent>
-                  {isFinished(dynamicChartStatus) && (
-                    <>
-                      <div className="flex justify-center ">
-                        <Button
-                          variant="default"
-                          className="text-md px-5 bg-green-800 text-white hover:bg-yellow-300 hover:text-gray-800"
-                          onClick={() =>
-                            navigate("/predictive-tools", {
-                              state: {
-                                ...filterData,
-                                selected,
-                              },
-                            })
-                          }
-                        >
-                          Move to Prediction
-                        </Button>
-                      </div>
-                    </>
-                  )}
                 </div>
               </Tabs>
             </div>
