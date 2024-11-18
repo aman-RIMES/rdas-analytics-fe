@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { analysisType, BODY_PARAMS_URL, requestStatus } from "@/constants";
+import {
+  analysisType,
+  BASE_URL,
+  BODY_PARAMS_URL,
+  requestStatus,
+} from "@/constants";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -129,7 +134,7 @@ const ElNinoAnalytics = () => {
     handleChange("anomalyYear2", "2");
     try {
       const response = await axios.post(
-        "http://203.156.108.67:1580/el_nino_time_series_chart",
+        `${BASE_URL}/el_nino_time_series_chart`,
         formData
       );
 
@@ -147,15 +152,11 @@ const ElNinoAnalytics = () => {
 
     try {
       setDynamiMapStatus(requestStatus.isLoading);
-      const geoJson = await axios.post(
-        "http://203.156.108.67:1580/el_nino_map",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const geoJson = await axios.post(`${BASE_URL}/el_nino_map`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       setDynamicMapData(geoJson.data);
       setDynamiMapStatus(requestStatus.isFinished);
       setFirstAnomalyMapStatus(requestStatus.isFinished);

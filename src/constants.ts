@@ -1,7 +1,9 @@
 import { Icons } from "./components/ui/icons";
 import { Country, YearsList } from "./types";
 
-export const BODY_PARAMS_URL = "http://203.156.108.67:1580/body_params";
+// export const BASE_URL = "http://203.156.108.67:1580";
+export const BASE_URL = "https://analytics-api.rimes.int";
+export const BODY_PARAMS_URL = `${BASE_URL}/body_params`;
 
 export const IDLE_PREDICTIVE_CHART_MESSAGE =
   "Please Generate A Predictive Model";

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import GDDToolsFilter from "./gdd-tools-filter";
 import GDDToolsData from "./gdd-tools-data";
-import { requestStatus, yearsList } from "@/constants";
+import { BASE_URL, requestStatus, yearsList } from "@/constants";
 import { useState } from "react";
 import { FilterData } from "@/types";
 import { formatDate } from "@/lib/utils";
@@ -45,7 +45,7 @@ const GDDPredictiveTools = () => {
     try {
       setGddStatus(requestStatus.isLoading);
       const response: any = await axios.get(
-        `http://203.156.108.67:1580/gdd?start_date=${formatDate(
+        `${BASE_URL}/gdd?start_date=${formatDate(
           filterData.dateRange?.from
         )}&end_date=${formatDate(filterData.dateRange?.to)}&tehsil_id=${
           filterData.tehsilValue

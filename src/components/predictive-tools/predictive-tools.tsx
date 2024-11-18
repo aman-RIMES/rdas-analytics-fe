@@ -4,7 +4,7 @@ import { formatDate, getAllDistrictsOfCountry, isFinished } from "@/lib/utils";
 import { Button } from "../ui/button";
 import axios from "axios";
 import { FilterData } from "@/types";
-import { predictiveModelDataType, requestStatus } from "@/constants";
+import { BASE_URL, predictiveModelDataType, requestStatus } from "@/constants";
 import bodyParams from "../../data/body_params.json";
 import { useLocation } from "react-router-dom";
 import PredictiveToolsData from "./predictive-tools-data";
@@ -71,9 +71,7 @@ const PredictiveTools = () => {
   useEffect(() => {
     (async () => {
       try {
-        const response: any = await axios.get(
-          "http://203.156.108.67:1580/body_params"
-        );
+        const response: any = await axios.get(`${BASE_URL}/body_params`);
         setParams(response.data);
       } catch (error) {
         console.log(error);
@@ -103,7 +101,7 @@ const PredictiveTools = () => {
     setRegressionModelStatus(requestStatus.isLoading);
     try {
       const response = await axios.post(
-        "http://203.156.108.67:1580/el_nino_prediction_model",
+        `${BASE_URL}/el_nino_prediction_model`,
         formData,
         {
           headers: {

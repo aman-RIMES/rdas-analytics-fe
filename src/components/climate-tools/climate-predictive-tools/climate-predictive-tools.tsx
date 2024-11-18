@@ -4,6 +4,7 @@ import { formatDate, getAllDistrictsOfCountry, isFinished } from "@/lib/utils";
 import axios from "axios";
 import { FilterData } from "@/types";
 import {
+  BASE_URL,
   BODY_PARAMS_URL,
   predictiveModelDataType,
   requestStatus,
@@ -84,19 +85,16 @@ const ClimatePredictiveTools = () => {
   const generateRegressionModel = async () => {
     setRegressionModelStatus(requestStatus.isLoading);
     try {
-      const response = await axios.post(
-        "http://203.156.108.67:1580/prediction_model",
-        {
-          source: filterData.source,
-          indic: filterData.independentVariables.join(","),
-          period: filterData.periodValue,
-          district: filterData.districtValue,
-          start: `${filterData.fromYear}-01-01`,
-          end: `${filterData.toYear}-01-01`,
-          indic_0: filterData.dependentVariable,
-          model: filterData.modelType,
-        }
-      );
+      const response = await axios.post(`${BASE_URL}/prediction_model`, {
+        source: filterData.source,
+        indic: filterData.independentVariables.join(","),
+        period: filterData.periodValue,
+        district: filterData.districtValue,
+        start: `${filterData.fromYear}-01-01`,
+        end: `${filterData.toYear}-01-01`,
+        indic_0: filterData.dependentVariable,
+        model: filterData.modelType,
+      });
       setRegressionModelData(response.data);
       setPredictiveDataType(filterData.modelType);
       setRegressionModelStatus(requestStatus.isFinished);

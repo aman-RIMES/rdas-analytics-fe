@@ -20,7 +20,7 @@ import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
 import { useEffect, useState } from "react";
 import { FilterProps } from "@/types";
 import axios from "axios";
-import { analysisType, requestStatus } from "@/constants";
+import { analysisType, BASE_URL, requestStatus } from "@/constants";
 import { tailChase } from "ldrs";
 tailChase.register("l-tailchase");
 
@@ -40,7 +40,7 @@ const DescriptiveAnalysis = ({ filterData, typeOfAnalysis }: FilterProps) => {
     setDescriptiveAnalysisData({});
     try {
       const response = await axios.post(
-        "http://203.156.108.67:1580/description_analysis",
+        `${BASE_URL}/description_analysis`,
         typeOfAnalysis === analysisType.climate
           ? {
               source: "ERA5",

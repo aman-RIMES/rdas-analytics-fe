@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { analysisType, BODY_PARAMS_URL, requestStatus } from "@/constants";
+import {
+  analysisType,
+  BASE_URL,
+  BODY_PARAMS_URL,
+  requestStatus,
+} from "@/constants";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -80,17 +85,14 @@ const ClimateAnalytics = () => {
     setTimeSeriesChartData({});
     setDynamicMapData({});
     try {
-      const response = await axios.post(
-        "http://203.156.108.67:1580/dynamic_charts",
-        {
-          source: filterData.source,
-          indic: filterData.independentVariables.join(","),
-          period: filterData.periodValue,
-          district: filterData.districtValue,
-          start: `${filterData.fromYear}-01-01`,
-          end: `${filterData.toYear}-01-01`,
-        }
-      );
+      const response = await axios.post(`${BASE_URL}/dynamic_charts`, {
+        source: filterData.source,
+        indic: filterData.independentVariables.join(","),
+        period: filterData.periodValue,
+        district: filterData.districtValue,
+        start: `${filterData.fromYear}-01-01`,
+        end: `${filterData.toYear}-01-01`,
+      });
 
       setTimeSeriesChartData(response.data);
       setDynamicChartStatus(requestStatus.isFinished);
@@ -101,17 +103,14 @@ const ClimateAnalytics = () => {
 
     try {
       setDynamiMapStatus(requestStatus.isLoading);
-      const geoJson = await axios.post(
-        "http://203.156.108.67:1580/dynamic_map",
-        {
-          source: "ERA5",
-          indic: "rainfall_deviation",
-          period: "annual",
-          district: getAllDistrictsOfCountry(districtList).join(","),
-          start: `${filterData.fromYear}-01-01`,
-          end: `${filterData.toYear}-01-01`,
-        }
-      );
+      const geoJson = await axios.post(`${BASE_URL}/dynamic_map`, {
+        source: "ERA5",
+        indic: "rainfall_deviation",
+        period: "annual",
+        district: getAllDistrictsOfCountry(districtList).join(","),
+        start: `${filterData.fromYear}-01-01`,
+        end: `${filterData.toYear}-01-01`,
+      });
       setDynamicMapData(geoJson.data);
       setDynamiMapStatus(requestStatus.isFinished);
     } catch (error) {

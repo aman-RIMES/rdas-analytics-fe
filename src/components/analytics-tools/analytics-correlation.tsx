@@ -16,6 +16,7 @@ import { Button } from "../ui/button";
 import axios from "axios";
 import {
   analysisType,
+  BASE_URL,
   ElNinoToolDataIndicators,
   monthsList,
   requestStatus,
@@ -79,7 +80,7 @@ const AnalyticsCorrelation = ({
     setCorrelationChartData({});
     try {
       const correlationData = await axios.post(
-        "http://203.156.108.67:1580/el_nino_correlation",
+        `${BASE_URL}/el_nino_correlation`,
         typeOfAnalysis === analysisType.climate
           ? {
               source: "ERA5",
