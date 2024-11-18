@@ -186,12 +186,12 @@ const ElNinoAnalytics = () => {
       <div className="p-2">
         <div className=" flex flex-col gap-2">
           <div className="grid grid-cols-6 gap-3 ">
-            <div className="col-span-1 w-full h-full">
-              <div className=" border-grey-600 rounded-lg ">
+            <div className="col-span-1 w-full h-full bg-gray-200 rounded-b-lg">
+              <div className="   ">
                 <div className="bg-green-800 text-white text-md p-1 rounded-t-lg font-medium">
                   <p className="ml-2"> Parameters</p>
                 </div>
-                <div className="bg-gray-200 p-2 rounded-b-lg flex flex-col gap-5 shadow-lg">
+                <div className=" p-2 flex flex-col gap-5 justify-between">
                   <ElNinoCommonFilter
                     params={params}
                     filterData={filterData}

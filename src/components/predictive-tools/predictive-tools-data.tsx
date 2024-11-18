@@ -177,8 +177,8 @@ const PredictiveToolsData = ({
                 </div>
               </div>
 
-              <div className="relative z-0 col-span-2">
-                <div className="p-1 rounded-lg bg-white shadow-lg ">
+              <div className="relative z-0 col-span-2 bg-white shadow-lg rounded-lg ">
+                <div className="p-1  ">
                   <div className="flex justify-center">
                     <p className="text-md font-medium">Predictive Evaluation</p>
                   </div>
@@ -250,7 +250,7 @@ const PredictiveToolsData = ({
                                   {Object.keys(
                                     predictiveEvaluation["prediction_table"]
                                   )?.map((element: any) => (
-                                    <TableHead className="text-md text-black font-medium text-center">
+                                    <TableHead className="text-xs text-black font-medium text-center">
                                       {element}
                                     </TableHead>
                                   ))}
@@ -266,7 +266,7 @@ const PredictiveToolsData = ({
                                       (element: any, index) => (
                                         <TableCell
                                           key={index}
-                                          className="text-md text-center"
+                                          className="text-xs text-center"
                                         >
                                           <HoverCard>
                                             <HoverCardTrigger>
