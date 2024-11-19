@@ -89,7 +89,8 @@ const DynamicMap = ({
                 </p>
                 <div className="flex flex-col ">
                   {(isLoading(dynamicMapStatus) ||
-                    isIdle(dynamicMapStatus)) && (
+                    isIdle(dynamicMapStatus) ||
+                    isError(dynamicMapStatus)) && (
                     <Leaflet
                       country={mapFormData.countryValue || "PAK"}
                       geoJsonData={dynamicMapData}
@@ -206,7 +207,8 @@ const DynamicMap = ({
                   {isFinished(firstAnomalyMapStatus) && (
                     <div className="flex flex-col">
                       {(isLoading(dynamicMapStatus) ||
-                        isIdle(dynamicMapStatus)) && (
+                        isIdle(dynamicMapStatus) ||
+                        isError(dynamicMapStatus)) && (
                         <Leaflet
                           country={mapFormData.countryValue || "PAK"}
                           geoJsonData={dynamicMapData}
@@ -303,7 +305,8 @@ const DynamicMap = ({
                   {isFinished(secondAnomalyMapStatus) && (
                     <div className="flex flex-col">
                       {(isLoading(dynamicMapStatus) ||
-                        isIdle(dynamicMapStatus)) && (
+                        isIdle(dynamicMapStatus) ||
+                        isError(dynamicMapStatus)) && (
                         <Leaflet
                           country={mapFormData.countryValue || "BGD"}
                           geoJsonData={dynamicMapData}
