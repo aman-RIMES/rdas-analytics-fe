@@ -1,4 +1,205 @@
 {
+  "scatter_chart": {
+    "title": {
+      "text": "Correlation between Weak El Nino and Cummulative Rainfall",
+      "style": {
+        "fontSize": "0.875rem",
+        "fontWeight": "bold"
+      }
+    },
+    "xAxis": {
+      "title": {
+        "text": "El Nino (ONI index)",
+        "style": {
+          "fontSize": "0.75rem",
+          "fontWeight": "bold"
+        }
+      },
+      "allowDecimals": false,
+      "min": 0.22
+    },
+    "yAxis": {
+      "title": {
+        "text": "Cummulative Rainfall (mm)",
+        "style": {
+          "fontSize": "0.75rem",
+          "fontWeight": "bold"
+        }
+      },
+      "min": 3.1346
+    },
+    "legend": {
+      "itemStyle": {
+        "fontSize": "0.75rem"
+      }
+    },
+    "caption": {
+      "text": "<i>Pearson correlation coefficient: -0.09</i><br><br>The value -0.09 indicates Weak El Nino has a very weak negative correlation with Cummulative Rainfall in ARGHAKHANCHI. \n                    This is based on analysis of Cummulative Rainfall behavior in ARGHAKHANCHI from 1982 to 2013 where Weak El Nino was recorded.",
+      "align": "center",
+      "style": {
+        "color": "black",
+        "fontSize": "0.75rem"
+      }
+    },
+    "tooltip": {
+      "headerFormat": "{point.key}<br/>",
+      "pointFormat": "ONI value: {point.x:.2f} <br/>Cummulative Rainfall: {point.y:.2f} mm"
+    },
+    "series": [
+      {
+        "type": "scatter",
+        "name": "Observations",
+        "showInLegend": false,
+        "data": [
+          {
+            "name": "2004-08",
+            "x": 0.64,
+            "y": 282.2554
+          },
+          {
+            "name": "2004-09",
+            "x": 0.7,
+            "y": 270.1692
+          },
+          {
+            "name": "2004-10",
+            "x": 0.67,
+            "y": 73.0639
+          },
+          {
+            "name": "2004-11",
+            "x": 0.66,
+            "y": 12.4518
+          },
+          {
+            "name": "2004-12",
+            "x": 0.69,
+            "y": 6.2482
+          },
+          {
+            "name": "2005-01",
+            "x": 0.64,
+            "y": 47.6903
+          },
+          {
+            "name": "2005-02",
+            "x": 0.58,
+            "y": 16.6771
+          },
+          {
+            "name": "2005-03",
+            "x": 0.45,
+            "y": 19.6
+          },
+          {
+            "name": "2005-04",
+            "x": 0.43,
+            "y": 23.4171
+          },
+          {
+            "name": "2005-05",
+            "x": 0.29,
+            "y": 67.7922
+          },
+          {
+            "name": "2006-10",
+            "x": 0.77,
+            "y": 40.8056
+          },
+          {
+            "name": "2006-11",
+            "x": 0.94,
+            "y": 11.6757
+          },
+          {
+            "name": "2006-12",
+            "x": 0.94,
+            "y": 11.3013
+          },
+          {
+            "name": "2007-01",
+            "x": 0.66,
+            "y": 3.1346
+          },
+          {
+            "name": "2007-02",
+            "x": 0.22,
+            "y": 97.1394
+          }
+        ]
+      },
+      {
+        "type": "line",
+        "enableMouseTracking": false,
+        "showInLegend": false,
+        "marker": {
+          "enabled": false
+        },
+        "data": [
+          {
+            "x": 0.64,
+            "y": 64.75436755850536
+          },
+          {
+            "x": 0.7,
+            "y": 62.48443881680174
+          },
+          {
+            "x": 0.67,
+            "y": 63.61940318765355
+          },
+          {
+            "x": 0.66,
+            "y": 63.99772464460416
+          },
+          {
+            "x": 0.69,
+            "y": 62.86276027375235
+          },
+          {
+            "x": 0.64,
+            "y": 64.75436755850536
+          },
+          {
+            "x": 0.58,
+            "y": 67.02429630020899
+          },
+          {
+            "x": 0.45,
+            "y": 71.94247524056682
+          },
+          {
+            "x": 0.43,
+            "y": 72.69911815446804
+          },
+          {
+            "x": 0.29,
+            "y": 77.99561855177647
+          },
+          {
+            "x": 0.77,
+            "y": 59.83618861814752
+          },
+          {
+            "x": 0.94,
+            "y": 53.40472384998727
+          },
+          {
+            "x": 0.94,
+            "y": 53.40472384998727
+          },
+          {
+            "x": 0.66,
+            "y": 63.99772464460416
+          },
+          {
+            "x": 0.22,
+            "y": 80.6438687504307
+          }
+        ]
+      }
+    ]
+  },
   "predictive_chart": {
     "title": {
       "text": "Scatter Plot - Observed vs Predicted Cummulative Rainfall",

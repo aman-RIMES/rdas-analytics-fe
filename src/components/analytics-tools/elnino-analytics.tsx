@@ -226,34 +226,6 @@ const ElNinoAnalytics = () => {
             <div className="col-span-5 w-full h-full bg-white rounded-lg">
               <div className="">
                 <div>
-                  {/* {isLoading(dynamiMapStatus) && (
-                    <div className="bg-white w-full h-full pt-[100px]">
-                      <div className="flex justify-center bg-transparent ">
-                        <div className="flex items-center justify-center gap-8 lg:w-2/4 border-lime-700 border rounded-xl p-5">
-                          @ts-ignore
-                          <l-loader color="green" size="50"></l-loader>
-                          <p className="text-xl text-lime-700 font-medium">
-                            Loading Dynamic Map
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  {isError(dynamiMapStatus) && (
-                    <div className="my-20 flex justify-center">
-                      <Alert className="lg:w-2/4" variant="destructive">
-                        <AlertCircle className="h-5 w-5 mt-1" />
-                        <AlertTitle className="text-lg">API Error !</AlertTitle>
-                        <AlertDescription className="text-md">
-                          Failed to load the Dynamic Map. This could be due to
-                          missing datasets. Try changing your filters and start
-                          the analysis again.
-                        </AlertDescription>
-                      </Alert>
-                    </div>
-                  )} */}
-
-                  {/* {(isFinished(dynamiMapStatus) || isIdle(dynamiMapStatus)) && ( */}
                   <DynamicMap
                     mapFormData={mapFormData}
                     filterData={filterData}
@@ -265,7 +237,6 @@ const ElNinoAnalytics = () => {
                     handleChange={handleChange}
                     setDynamicMapStatus
                   />
-                  {/* )} */}
                 </div>
               </div>
             </div>
@@ -307,15 +278,13 @@ const ElNinoAnalytics = () => {
                     </div>
                   </TabsContent>
                   <TabsContent value="correlation">
-                    {isFinished(dynamicChartStatus) && (
-                      <>
-                        <AnalyticsCorrelation
-                          filterData={filterData}
-                          params={params}
-                          typeOfAnalysis={analysisType.elnino}
-                        />
-                      </>
-                    )}
+                    <>
+                      <AnalyticsCorrelation
+                        filterData={filterData}
+                        params={params}
+                        typeOfAnalysis={analysisType.elnino}
+                      />
+                    </>
                   </TabsContent>
                 </div>
               </Tabs>

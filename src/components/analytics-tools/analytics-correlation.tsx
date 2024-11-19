@@ -7,6 +7,7 @@ import {
   isError,
   isFinished,
   getAllDistrictsOfCountry,
+  isIdle,
 } from "@/lib/utils";
 import { AlertCircle } from "lucide-react";
 import HighchartsReact from "highcharts-react-official";
@@ -18,6 +19,7 @@ import {
   analysisType,
   BASE_URL,
   ElNinoToolDataIndicators,
+  IDLE_ANALYTICS_CHART_MESSAGE,
   monthsList,
   requestStatus,
 } from "@/constants";
@@ -35,6 +37,9 @@ import { Label } from "@radix-ui/react-dropdown-menu";
 import HelpHoverCard from "../help-hover-card";
 import { FancyMultiSelect } from "../ui/multiselect";
 import SubmitButton from "../submit-button";
+import sampleCharts from "../../data/sample_charts.json";
+import ErrorMessage from "../ui/error-message";
+import Loading from "../ui/loading";
 
 const AnalyticsCorrelation = ({
   filterData,
@@ -45,7 +50,9 @@ const AnalyticsCorrelation = ({
     correlationVariable: filterData?.dataVariable[0],
     chosenMonths: [],
   });
-  const [correlationStatus, setCorrelationStatus] = useState<requestStatus>();
+  const [correlationStatus, setCorrelationStatus] = useState<requestStatus>(
+    requestStatus.idle
+  );
   const [correlationChartData, setCorrelationChartData] = useState<any>({});
   const [selected, setSelected] = useState([]);
 
@@ -53,8 +60,23 @@ const AnalyticsCorrelation = ({
     setCorrelationFilter((prev: any) => ({ ...prev, [name]: value }));
   };
 
+  const verifyFilters = () => {
+    return (
+      filterData.dataVariable.length > 0 &&
+      filterData.source !== "" &&
+      filterData.fromYear !== "" &&
+      filterData.toYear !== "" &&
+      filterData.districtValue !== "" &&
+      filterData.countryValue !== ""
+    );
+  };
+
   useEffect(() => {
-    generateCorrelationMap();
+    console.log(verifyFilters());
+
+    if (verifyFilters()) {
+      generateCorrelationMap();
+    }
   }, []);
 
   const generateCorrelationMap = async () => {
@@ -154,79 +176,81 @@ const AnalyticsCorrelation = ({
         </div>
       </div>
 
-      {isLoading(correlationStatus) && (
-        <div className="my-20  flex justify-center bg-transparent">
-          <div className="flex items-center justify-center gap-8 lg:w-2/4 border-lime-700 border rounded-xl p-5">
-            {/* @ts-ignore */}
-            <l-quantum color="green" size="35"></l-quantum>
-            <p className="text-2xl text-lime-700 font-medium">
-              Generating Correlation Data
-            </p>
-          </div>
-        </div>
-      )}
-
-      {isError(correlationStatus) && (
-        <div className="flex justify-center mt-10">
-          <Alert className="lg:w-3/4" variant="destructive">
-            <AlertCircle className="h-5 w-5 mt-1" />
-            <AlertTitle className="text-lg">API Error !</AlertTitle>
-            <AlertDescription className="text-md">
-              Failed to generate the Correlation Data. This could be due to
-              missing datasets. Try changing your filters and start the analysis
-              again.
-            </AlertDescription>
-          </Alert>
-        </div>
-      )}
-
-      {isFinished(correlationStatus) && (
-        <div className="px-2">
-          <div className="grid gap-4 md:grid-cols-4 grid-cols-1 ">
-            {correlationChartData[correlationFilter.correlationVariable].map(
-              (chartData, index) => (
-                <div key={index}>
-                  <HighchartsReact
-                    containerProps={{ style: { height: "250px" } }}
-                    highcharts={Highcharts}
-                    options={chartData.scatter}
-                  />
-                </div>
-                //   {/* <div>
-                //     <HighchartsReact
-                //       highcharts={Highcharts}
-                //       options={chartData.plot}
-                //     />
-                //   </div> */}
-                // // </div>
-              )
-            )}
-          </div>
-
-          {/* <Accordion type="single" collapsible>
-            <AccordionItem value="item-1">
-              <AccordionTrigger className="flex justify-center text-md gap-2 text-green-700">
-                Correlation Plot
-              </AccordionTrigger>
-              <AccordionContent>
-                <div className="grid gap-4 my-8 md:grid-cols-4 grid-cols-1 justify-center">
-                  {correlationChartData[
-                    correlationFilter.correlationVariable
-                  ].map((chartData, index) => (
+      <div className="px-2">
+        <div className="grid gap-4 md:grid-cols-4 grid-cols-1 ">
+          {isFinished(correlationStatus)
+            ? correlationChartData[correlationFilter.correlationVariable].map(
+                (chartData, index) => (
+                  <div className="relative z-0">
                     <div key={index}>
                       <HighchartsReact
+                        containerProps={{ style: { height: "250px" } }}
                         highcharts={Highcharts}
-                        options={chartData.plot}
+                        options={chartData.scatter}
                       />
                     </div>
-                  ))}
-                  <CorrelationPlotLegend />
+                  </div>
+                )
+              )
+            : [0, 1, 2, 3].map((i) => (
+                <div className="relative">
+                  <div key={i}>
+                    <HighchartsReact
+                      containerProps={{ style: { height: "250px" } }}
+                      highcharts={Highcharts}
+                      options={sampleCharts.scatter_chart}
+                    />
+                  </div>
+
+                  {!isFinished(correlationStatus) && (
+                    <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
+                      {isIdle(correlationStatus) ? (
+                        <p className="text-xl font-bold text-green-800">
+                          {IDLE_ANALYTICS_CHART_MESSAGE}
+                        </p>
+                      ) : isError(correlationStatus) ? (
+                        <ErrorMessage />
+                      ) : (
+                        <Loading
+                          animation={
+                            <l-quantum
+                              color="green"
+                              // @ts-ignore
+                              stroke={8}
+                              size="50"
+                            ></l-quantum>
+                          }
+                        />
+                      )}
+                    </div>
+                  )}
                 </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion> */}
+              ))}
         </div>
-      )}
+
+        {/* <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="flex justify-center text-md gap-2 text-green-700">
+              Correlation Plot
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="grid gap-4 my-8 md:grid-cols-4 grid-cols-1 justify-center">
+                {correlationChartData[
+                  correlationFilter.correlationVariable
+                ].map((chartData, index) => (
+                  <div key={index}>
+                    <HighchartsReact
+                      highcharts={Highcharts}
+                      options={chartData.plot}
+                    />
+                  </div>
+                ))}
+                <CorrelationPlotLegend />
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion> */}
+      </div>
     </div>
   );
 };
