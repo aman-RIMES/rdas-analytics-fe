@@ -179,14 +179,10 @@ const ElNinoAnalytics = () => {
 
   return (
     <>
-      {/* <div className="flex justify-center">
-        <h1 className="text-4xl font-bold">El Nino Analytics</h1>
-      </div> */}
-
       <div className="p-2">
         <div className=" flex flex-col gap-2">
           <div className="grid grid-cols-6 gap-3 ">
-            <div className="col-span-1 w-full h-full bg-gray-200 rounded-b-lg">
+            <div className="col-span-1 w-full h-full bg-gray-100 rounded-b-lg">
               <div className="   ">
                 <div className="bg-green-800 text-white text-md p-1 rounded-t-lg font-medium">
                   <p className="ml-2"> Parameters</p>
@@ -208,22 +204,20 @@ const ElNinoAnalytics = () => {
                       loadingStatus={dynamicChartStatus}
                     />
 
-                    {isFinished(dynamicChartStatus) && (
-                      <SubmitButton
-                        className="mt-2 border border-green-600 text-green-800 bg-transparent hover:text-gray-800 hover:border-yellow-300"
-                        label="Move to Prediction"
-                        verifyFilters={verifyFilters()}
-                        submitFunction={() =>
-                          navigate("/predictive-tools", {
-                            state: {
-                              ...filterData,
-                              selected,
-                            },
-                          })
-                        }
-                        loadingStatus={dynamicChartStatus}
-                      />
-                    )}
+                    <SubmitButton
+                      className="mt-2 border border-green-600 text-green-800 bg-transparent hover:text-gray-800 hover:border-yellow-300"
+                      label="Move to Prediction"
+                      verifyFilters={isFinished(dynamicChartStatus)}
+                      submitFunction={() =>
+                        navigate("/predictive-tools", {
+                          state: {
+                            ...filterData,
+                            selected,
+                          },
+                        })
+                      }
+                      loadingStatus={dynamicChartStatus}
+                    />
                   </div>
                 </div>
               </div>
@@ -232,11 +226,11 @@ const ElNinoAnalytics = () => {
             <div className="col-span-5 w-full h-full bg-white rounded-lg">
               <div className="">
                 <div>
-                  {isLoading(dynamiMapStatus) && (
+                  {/* {isLoading(dynamiMapStatus) && (
                     <div className="bg-white w-full h-full pt-[100px]">
                       <div className="flex justify-center bg-transparent ">
                         <div className="flex items-center justify-center gap-8 lg:w-2/4 border-lime-700 border rounded-xl p-5">
-                          {/* @ts-ignore */}
+                          @ts-ignore
                           <l-loader color="green" size="50"></l-loader>
                           <p className="text-xl text-lime-700 font-medium">
                             Loading Dynamic Map
@@ -257,20 +251,21 @@ const ElNinoAnalytics = () => {
                         </AlertDescription>
                       </Alert>
                     </div>
-                  )}
+                  )} */}
 
-                  {(isFinished(dynamiMapStatus) || isIdle(dynamiMapStatus)) && (
-                    <DynamicMap
-                      mapFormData={mapFormData}
-                      filterData={filterData}
-                      dynamicMapData={dynamicMapData}
-                      yearList={yearList}
-                      firstAnomalyMapStatus={firstAnomlayMapStatus}
-                      secondAnomalyMapStatus={secondAnomlayMapStatus}
-                      handleChange={handleChange}
-                      setDynamicMapStatus
-                    />
-                  )}
+                  {/* {(isFinished(dynamiMapStatus) || isIdle(dynamiMapStatus)) && ( */}
+                  <DynamicMap
+                    mapFormData={mapFormData}
+                    filterData={filterData}
+                    dynamicMapData={dynamicMapData}
+                    dynamicMapStatus={dynamiMapStatus}
+                    yearList={yearList}
+                    firstAnomalyMapStatus={firstAnomlayMapStatus}
+                    secondAnomalyMapStatus={secondAnomlayMapStatus}
+                    handleChange={handleChange}
+                    setDynamicMapStatus
+                  />
+                  {/* )} */}
                 </div>
               </div>
             </div>

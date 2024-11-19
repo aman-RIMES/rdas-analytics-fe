@@ -24,6 +24,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
+import Loading from "../ui/loading";
+import ErrorMessage from "../ui/error-message";
 
 const AnalyticsData = ({
   filterData,
@@ -52,137 +54,141 @@ const AnalyticsData = ({
 
   return (
     <div className="">
-      {isLoading(dynamicChartStatus) && (
-        <div className="flex items-center pt-[100px] justify-center bg-transparent">
-          <div className="flex items-center justify-center gap-8 lg:w-2/4 border-lime-700 border rounded-xl p-5">
-            {/* @ts-ignore */}
-            <l-reuleaux color="green" size="35"></l-reuleaux>
-            <p className="text-2xl text-lime-700 font-medium">Analyzing Data</p>
-          </div>
-        </div>
-      )}
+      <div className="p-2 ">
+        <div className="grid grid-cols-2 gap-5">
+          <div className="relative z-0">
+            <div className="absolute inset-0 z-20 max-h-10 flex justify-end items-start">
+              <Dialog>
+                <DialogTrigger className="p-2">
+                  <FullscreenIcon className="h-7 w-7 mt-1 text-green-700" />
+                </DialogTrigger>
+                <DialogContent className="lg:w-[70%]">
+                  <DialogHeader>
+                    <DialogDescription>
+                      <HighchartsReact
+                        containerProps={{ style: { height: "600px " } }}
+                        highcharts={Highcharts}
+                        options={
+                          isIdle(dynamicChartStatus)
+                            ? sampleCharts?.analytics_yearly
+                            : timeSeriesChartData[0]
+                        }
+                      />
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+            </div>
+            <HighchartsReact
+              containerProps={{ style: { height: "312px " } }}
+              highcharts={Highcharts}
+              options={
+                timeSeriesChartData[0]
+                  ? timeSeriesChartData[0]
+                  : sampleCharts?.analytics_yearly
+              }
+            />
 
-      {isError(dynamicChartStatus) && (
-        <div className="flex justify-center my-20">
-          <Alert className="lg:w-2/4" variant="destructive">
-            <AlertCircle className="h-5 w-5 mt-1" />
-            <AlertTitle className="text-lg">API Error !</AlertTitle>
-            <AlertDescription className="text-md">
-              Failed to analyze the given filters. This could be due to missing
-              datasets. Try changing your filters and start the analysis again.
-            </AlertDescription>
-          </Alert>
-        </div>
-      )}
-
-      {(isFinished(dynamicChartStatus) || isIdle(dynamicChartStatus)) && (
-        <div className="p-2 ">
-          <div className="grid grid-cols-2 gap-5">
-            <div className="relative z-0">
-              <div className="absolute inset-0 z-20 max-h-10 flex justify-end items-start">
-                <Dialog>
-                  <DialogTrigger className="p-2">
-                    <FullscreenIcon className="h-7 w-7 mt-1 text-green-700" />
-                  </DialogTrigger>
-                  <DialogContent className="lg:w-[70%]">
-                    <DialogHeader>
-                      <DialogDescription>
-                        <HighchartsReact
-                          containerProps={{ style: { height: "600px " } }}
-                          highcharts={Highcharts}
-                          options={
-                            isIdle(dynamicChartStatus)
-                              ? sampleCharts?.analytics_yearly
-                              : timeSeriesChartData[0]
-                          }
-                        />
-                      </DialogDescription>
-                    </DialogHeader>
-                  </DialogContent>
-                </Dialog>
-              </div>
-              <HighchartsReact
-                containerProps={{ style: { height: "300px " } }}
-                highcharts={Highcharts}
-                options={
-                  isIdle(dynamicChartStatus)
-                    ? sampleCharts?.analytics_yearly
-                    : timeSeriesChartData[0]
-                }
-              />
-              {isIdle(dynamicChartStatus) && (
-                <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
-                  <p className="text-2xl font-bold text-green-800">
+            {!isFinished(dynamicChartStatus) && (
+              <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
+                {isIdle(dynamicChartStatus) ? (
+                  <p className="text-xl font-bold text-green-800">
                     {IDLE_ANALYTICS_CHART_MESSAGE}
                   </p>
-                </div>
-              )}
-            </div>
-
-            <div className="relative z-0">
-              <div className="absolute inset-0 z-20 max-h-10 flex justify-end items-start">
-                <Dialog>
-                  <DialogTrigger className="p-2">
-                    <FullscreenIcon className="h-7 w-7 mt-1 text-green-700" />
-                  </DialogTrigger>
-                  <DialogContent className="lg:w-[70%]">
-                    <DialogHeader>
-                      <DialogDescription>
-                        <HighchartsReact
-                          containerProps={{ style: { height: "600px " } }}
-                          highcharts={Highcharts}
-                          options={
-                            isIdle(dynamicChartStatus)
-                              ? sampleCharts?.analytics_monthly
-                              : timeSeriesChartData[chosenMonth]
-                          }
-                        />
-                      </DialogDescription>
-                    </DialogHeader>
-                  </DialogContent>
-                </Dialog>
-              </div>
-
-              <div className="flex flex-col">
-                <div className="rounded-lg bg-white p-1 ">
-                  <HighchartsReact
-                    containerProps={{ style: { height: "300px " } }}
-                    highcharts={Highcharts}
-                    options={
-                      isIdle(dynamicChartStatus)
-                        ? sampleCharts?.analytics_monthly
-                        : timeSeriesChartData[chosenMonth]
+                ) : isError(dynamicChartStatus) ? (
+                  <ErrorMessage />
+                ) : (
+                  <Loading
+                    animation={
+                      <l-reuleaux
+                        color="green"
+                        stroke={8}
+                        size="50"
+                      ></l-reuleaux>
                     }
                   />
-                </div>
+                )}
+              </div>
+            )}
+          </div>
 
-                <div className="flex justify-center">
-                  <div className="w-1/3">
-                    <Combobox
-                      name="month"
-                      label={"Months"}
-                      array={monthsList}
-                      state={{
-                        value: chosenMonth,
-                        setValue: handleMonthChange,
-                      }}
-                      height="10"
-                    />
-                  </div>
-                </div>
+          <div className="relative z-0">
+            <div className="absolute inset-0 z-20 max-h-10 flex justify-end items-start">
+              <Dialog>
+                <DialogTrigger className="p-2">
+                  <FullscreenIcon className="h-7 w-7 mt-1 text-green-700" />
+                </DialogTrigger>
+                <DialogContent className="lg:w-[70%]">
+                  <DialogHeader>
+                    <DialogDescription>
+                      <HighchartsReact
+                        containerProps={{ style: { height: "600px " } }}
+                        highcharts={Highcharts}
+                        options={
+                          isIdle(dynamicChartStatus)
+                            ? sampleCharts?.analytics_monthly
+                            : timeSeriesChartData[chosenMonth]
+                        }
+                      />
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+            </div>
+
+            <div className="flex flex-col">
+              <div className="rounded-lg bg-white p-1 ">
+                <HighchartsReact
+                  containerProps={{ style: { height: "275px " } }}
+                  highcharts={Highcharts}
+                  options={
+                    timeSeriesChartData[chosenMonth]
+                      ? timeSeriesChartData[chosenMonth]
+                      : sampleCharts?.analytics_monthly
+                  }
+                />
               </div>
 
-              {isIdle(dynamicChartStatus) && (
-                <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
-                  <p className="text-2xl font-bold text-green-800">
+              <div className="flex justify-center">
+                <div className="w-1/3">
+                  <Combobox
+                    name="month"
+                    label={"Months"}
+                    array={monthsList}
+                    state={{
+                      value: chosenMonth,
+                      setValue: handleMonthChange,
+                    }}
+                    height="10"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {!isFinished(dynamicChartStatus) && (
+              <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
+                {isIdle(dynamicChartStatus) ? (
+                  <p className="text-xl font-bold text-green-800">
                     {IDLE_ANALYTICS_CHART_MESSAGE}
                   </p>
-                </div>
-              )}
-            </div>
+                ) : isError(dynamicChartStatus) ? (
+                  <ErrorMessage />
+                ) : (
+                  <Loading
+                    animation={
+                      <l-reuleaux
+                        color="green"
+                        stroke={8}
+                        size="50"
+                      ></l-reuleaux>
+                    }
+                  />
+                )}
+              </div>
+            )}
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };

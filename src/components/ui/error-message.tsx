@@ -13,7 +13,7 @@ const ErrorMessage = ({ errorMessage }: ErrorMessageProps) => {
         <AlertTitle className="text-md">Error !</AlertTitle>
         <AlertDescription className="text-sm">
           {errorMessage ||
-            `Failed to generate model. This could be due to missing data for
+            `Failed to retrieve data. This could be due to missing data for
               the chosen filters. Try changing your filters and start again.`}
         </AlertDescription>
       </Alert>

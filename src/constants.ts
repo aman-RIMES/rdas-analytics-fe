@@ -8,6 +8,8 @@ export const BODY_PARAMS_URL = `${BASE_URL}/body_params`;
 export const IDLE_PREDICTIVE_CHART_MESSAGE =
   "Please Generate A Predictive Model";
 export const IDLE_ANALYTICS_CHART_MESSAGE = "Please Start The Analysis";
+export const DYNAMIC_MAP_ERROR_MESSAGE = `Failed to generate dynamic map. This could be due to missing data for
+              the chosen filters. Try changing your filters and start again.`;
 
 export enum requestStatus {
   idle = "IDLE",
