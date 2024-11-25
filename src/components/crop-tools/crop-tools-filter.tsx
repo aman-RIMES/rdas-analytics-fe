@@ -78,7 +78,7 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
               analysis. You can upload CSV files only`}
               />
               <a
-                className="text-green-600 text-xs font-semibold text-black"
+                className="text-green-600 text-xs font-semibold ml-2"
                 href={"src/data/rdas_monthly_template.csv"}
                 download
               >

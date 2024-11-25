@@ -31,6 +31,8 @@ import {
 import highchartsVariwide from "highcharts/modules/variwide";
 import { ScrollArea } from "../ui/scroll-area";
 highchartsVariwide(Highcharts);
+import { hourglass } from "ldrs";
+hourglass.register("l-hourglass");
 
 const CropTools = () => {
   const [params, setParams] = useState<any>(bodyParams);
@@ -183,13 +185,13 @@ const CropTools = () => {
                                 <p className="font-bold text-lg">
                                   {stage?.name}
                                 </p>
-                                <p className="font-medium">
+                                <p className="font-medium text-sm">
                                   Max Temp: {stage?.tmax_req}
                                 </p>
-                                <p className="font-medium">
+                                <p className="font-medium text-sm">
                                   Min Temp: {stage?.tmin_req}
                                 </p>
-                                <p className="font-medium">
+                                <p className="font-medium text-sm">
                                   Water: {stage?.water_req}
                                 </p>
                               </div>
@@ -215,7 +217,9 @@ const CropTools = () => {
                   <ErrorMessage />
                 ) : (
                   <Loading
-                    animation={<l-helix color="green" size="50"></l-helix>}
+                    animation={
+                      <l-hourglass color="green" size="60"></l-hourglass>
+                    }
                   />
                 )}
               </div>
@@ -244,7 +248,9 @@ const CropTools = () => {
                   <ErrorMessage />
                 ) : (
                   <Loading
-                    animation={<l-helix color="green" size="50"></l-helix>}
+                    animation={
+                      <l-hourglass color="green" size="60"></l-hourglass>
+                    }
                   />
                 )}
               </div>
@@ -259,7 +265,7 @@ const CropTools = () => {
                     <p className="ml-2"> Analysis</p>
                   </div>
 
-                  <ScrollArea className="h-[400px]">
+                  <ScrollArea className="h-[400px] p-2">
                     <div className="w-[520px]">
                       <p className="p-2" style={{ whiteSpace: "break-spaces" }}>
                         {cropAnalysisData?.analysis}
@@ -267,36 +273,42 @@ const CropTools = () => {
                     </div>
 
                     {cropAnalysisData?.analysis_per_stage && (
-                      <Table className="mt-2">
-                        <TableHeader>
-                          <TableRow>
-                            {Object.keys(
-                              cropAnalysisData?.analysis_per_stage[0]
-                            )?.map((key: any) => (
-                              <TableHead className="text-black text-md font-medium text-center">
-                                <div>{formatTitle(key)}</div>
-                              </TableHead>
-                            ))}
-                          </TableRow>
-                        </TableHeader>
-
-                        <TableBody>
-                          {cropAnalysisData?.analysis_per_stage?.map(
-                            (element: any, index) => (
-                              <TableRow>
-                                {Object.keys(element)?.map((e: any) => (
-                                  <TableCell
-                                    key={index}
-                                    className="text-sm text-center p-[2px] "
-                                  >
-                                    {element[e]}
-                                  </TableCell>
+                      <div className="w-[500px]">
+                        <Table className="mt-2">
+                          <TableHeader>
+                            <TableRow>
+                              {Object.keys(
+                                cropAnalysisData?.analysis_per_stage[0]
+                              )
+                                .filter((key) => key !== "number")
+                                ?.map((key: any) => (
+                                  <TableHead className="text-black text-md font-medium text-center">
+                                    <div>{formatTitle(key)}</div>
+                                  </TableHead>
                                 ))}
-                              </TableRow>
-                            )
-                          )}
-                        </TableBody>
-                      </Table>
+                            </TableRow>
+                          </TableHeader>
+
+                          <TableBody>
+                            {cropAnalysisData?.analysis_per_stage?.map(
+                              (element: any, index) => (
+                                <TableRow>
+                                  {Object.keys(element)
+                                    .filter((key) => key !== "number")
+                                    ?.map((e: any) => (
+                                      <TableCell
+                                        key={index}
+                                        className="text-sm text-center p-[2px] "
+                                      >
+                                        {element[e]}
+                                      </TableCell>
+                                    ))}
+                                </TableRow>
+                              )
+                            )}
+                          </TableBody>
+                        </Table>
+                      </div>
                     )}
                   </ScrollArea>
                 </div>
@@ -312,7 +324,9 @@ const CropTools = () => {
                       <ErrorMessage />
                     ) : (
                       <Loading
-                        animation={<l-helix color="green" size="50"></l-helix>}
+                        animation={
+                          <l-hourglass color="green" size="60"></l-hourglass>
+                        }
                       />
                     )}
                   </div>
@@ -323,7 +337,7 @@ const CropTools = () => {
                   <p className="ml-2"> Recommendation</p>
                 </div>
                 <div>
-                  <ScrollArea className="h-[400px]">
+                  <ScrollArea className="h-[400px] p-2">
                     <p className="p-2" style={{ whiteSpace: "break-spaces" }}>
                       {cropAnalysisData?.recommendation}
                     </p>
@@ -341,7 +355,9 @@ const CropTools = () => {
                       <ErrorMessage />
                     ) : (
                       <Loading
-                        animation={<l-helix color="green" size="50"></l-helix>}
+                        animation={
+                          <l-hourglass color="green" size="60"></l-hourglass>
+                        }
                       />
                     )}
                   </div>
@@ -371,7 +387,9 @@ const CropTools = () => {
                   <ErrorMessage />
                 ) : (
                   <Loading
-                    animation={<l-helix color="green" size="50"></l-helix>}
+                    animation={
+                      <l-hourglass color="green" size="60"></l-hourglass>
+                    }
                   />
                 )}
               </div>
