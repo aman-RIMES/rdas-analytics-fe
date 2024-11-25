@@ -94,6 +94,7 @@ export interface FilterData {
   anomalyYear1?: string;
   anomalyYear2?: string;
   months?: [];
+  analysisTimeline?: "";
 }
 
 export interface CorrelationFilterData {

@@ -89,6 +89,17 @@ export default function NavBar() {
               >
                 Predictive Tools
               </NavLink>
+              <NavLink
+                className={cn(
+                  "transition-colors hover:text-foreground/80 text-md text-white hover:bg-yellow-300 rounded-md px-3 py-1",
+                  location.pathname === "/crop-tools"
+                    ? " bg-yellow-300 text-black"
+                    : ""
+                )}
+                to="/crop-tools"
+              >
+                Crop Suitability Calendar
+              </NavLink>
             </nav>
           </div>
         </div>

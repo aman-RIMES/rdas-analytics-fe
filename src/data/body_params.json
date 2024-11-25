@@ -34,6 +34,7 @@
   "indic": {
     "rainfall": "Cummulative Rainfall",
     "normal_rainfall": "Normal Rainfall",
+    "rainfall_anomaly": "Rainfall Anomaly",
     "rainfall_deviation": "Deviation from Normal Rainfall",
     "rainfall_cummulative_monthly": "Rainfall cumulative monthly, year wise",
     "rainfall_cummulative_seasonal": "Rainfall cumulative seasonal, Year wise",
@@ -43,11 +44,11 @@
     "temperature_max_monthly": "Temperature max monthly, year wise",
     "temperature_min_monthly": "Temperature min monthly, year wise",
     "temperature_avg_monthly": "Average/ mean temperature monthly, year wise",
-    "el_nino": "El Nino Events",
+    "el_nino": "ONI Value",
     "el_nino_weak": "Weak El Nino Events",
     "el_nino_moderate": "Moderate El Nino Events",
     "el_nino_strong": "Strong El Nino Events",
-    "oni_index": "El Nino (ONI > 0.5)",
+    "oni_index": "El Nino",
     "crop_production_monthly": "Crop production acreage monthly, year wise",
     "crop_production_seasonal": "Crop production acreage seasonal year wise",
     "crop_yield_seasonal": "Crop-wise yield seasonal, year wise",
@@ -58,12 +59,73 @@
     "maize_production": "Crop Production - Maize",
     "cotton_production": "Crop Production - Cotton"
   },
-  "crop": {
-    "rice": "Rice",
-    "wheat": "Wheat",
-    "cotton": "Cotton",
-    "maize": "Maize"
-  },
+  "crop": [
+    {
+      "uuid": "e0007173-5f01-4584-a9e1-2854f14783b7",
+      "name": "Wheat",
+      "local_name": ""
+    },
+    {
+      "uuid": "cdb38a10-502b-4d9d-8eb4-10d42e25f284",
+      "name": "Rice",
+      "local_name": ""
+    },
+    {
+      "uuid": "cfdec544-ace1-4adb-a05d-e688f0e27a2f",
+      "name": "Cotton",
+      "local_name": "کپاس"
+    },
+    {
+      "uuid": "78a88b7d-4a2c-4b11-8556-f61e1ac44073",
+      "name": "Maize",
+      "local_name": ""
+    },
+    {
+      "uuid": "83a8a4bc-8c3d-4ceb-b703-5f5c073a4cdb",
+      "name": "Groundnut",
+      "local_name": ""
+    },
+    {
+      "uuid": "81b09afd-0c3f-49d8-a987-1903597abd92",
+      "name": "Brassica",
+      "local_name": ""
+    },
+    {
+      "uuid": "bd20c66d-e08b-4700-8c42-064766f15402",
+      "name": "Sesame",
+      "local_name": ""
+    },
+    {
+      "uuid": "ce23b7f1-640a-4e6b-abe1-590faed75c7f",
+      "name": "Soyabean",
+      "local_name": ""
+    },
+    {
+      "uuid": "85255f3f-450c-4f9c-9ca4-f7d91ef26ebc",
+      "name": "Sunflower",
+      "local_name": ""
+    },
+    {
+      "uuid": "8886b9c9-c1ba-4a76-af57-e0550750b360",
+      "name": "Chickpea",
+      "local_name": ""
+    },
+    {
+      "uuid": "e161d932-d13f-403b-88e2-86cba6c5857f",
+      "name": "Lentil",
+      "local_name": ""
+    },
+    {
+      "uuid": "0af043d8-87c5-43cf-88ba-5c52579c93f4",
+      "name": "Mung Bean",
+      "local_name": ""
+    },
+    {
+      "uuid": "4f03ac1f-6771-48a2-956d-cc86c24b7e45",
+      "name": "Cowpea",
+      "local_name": ""
+    }
+  ],
   "period": {
     "annual": "Annual",
     "monthly": "Monthly"

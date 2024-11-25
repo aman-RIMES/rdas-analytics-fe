@@ -281,19 +281,79 @@ export const yearsList: YearsList[] = [
 ];
 
 export const monthsList = [
-  { value: "1", label: "January" },
-  { value: "2", label: "February" },
-  { value: "3", label: "March" },
-  { value: "4", label: "April" },
-  { value: "5", label: "May" },
-  { value: "6", label: "June" },
-  { value: "7", label: "July" },
-  { value: "8", label: "August" },
-  { value: "9", label: "September" },
-  { value: "10", label: "October" },
-  { value: "11", label: "November" },
-  { value: "12", label: "December" },
+  { value: "1", label: "January", shortName: "JAN" },
+  { value: "2", label: "February", shortName: "FEB" },
+  { value: "3", label: "March", shortName: "MAR" },
+  { value: "4", label: "April", shortName: "APR" },
+  { value: "5", label: "May", shortName: "MAY" },
+  { value: "6", label: "June", shortName: "JUN" },
+  { value: "7", label: "July", shortName: "JUL" },
+  { value: "8", label: "August", shortName: "AUG" },
+  { value: "9", label: "September", shortName: "SEP" },
+  { value: "10", label: "October", shortName: "OCT" },
+  { value: "11", label: "November", shortName: "NOV" },
+  { value: "12", label: "December", shortName: "DEC" },
 ];
+
+export const croppingTimeline = [
+  { value: "5", label: "5 Years" },
+  { value: "10", label: "10 Years" },
+  { value: "20", label: "20 Years" },
+  { value: "30", label: "30 Years" },
+];
+
+export const croppingStageBackground = {
+  "Stage 1": "bg-cyan-300",
+  "Stage 2": "bg-pink-300",
+  "Stage 3": "bg-yellow-300",
+  "Stage 4": "bg-green-300",
+  "Stage 5": "bg-purple-300",
+};
+
+export const sampleCroppingResponse = {
+  stages: [
+    {
+      number: 1,
+      name: "Stage 1",
+      months: [11],
+      water_req: 120.0,
+      tmin_req: 5.0,
+      tmax_req: 30.0,
+    },
+    {
+      number: 2,
+      name: "Stage 2",
+      months: [12, 1],
+      water_req: 120.0,
+      tmin_req: 5.0,
+      tmax_req: 30.0,
+    },
+    {
+      number: 3,
+      name: "Stage 3",
+      months: [2, 3, 4],
+      water_req: 120.0,
+      tmin_req: 5.0,
+      tmax_req: 30.0,
+    },
+    {
+      number: 4,
+      name: "Stage 4",
+      months: [5],
+      water_req: 120.0,
+      tmin_req: 5.0,
+      tmax_req: 30.0,
+    },
+    {
+      number: 5,
+      name: "Stage 5",
+      months: [6, 7],
+      water_req: 120.0,
+      tmin_req: 5.0,
+      tmax_req: 30.0,
+    },
+  ],
+};
 
 export const countries = [
   { value: "NPL", label: "Nepal", coordinates: [28.3949, 84.124], zoom: 6 },

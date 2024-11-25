@@ -1209,5 +1209,208 @@
         }
       }
     ]
+  },
+  "crop_rainfall": {
+    "title": {
+      "text": "Wheat Water Requirements vs Observed Rainfall",
+      "style": {
+        "fontSize": "0.875rem",
+        "fontWeight": "bold"
+      }
+    },
+    "tooltip": {
+      "valueDecimals": 2
+    },
+    "xAxis": [
+      {
+        "id": "months",
+        "categories": [
+          "November",
+          "December",
+          "January",
+          "February",
+          "March",
+          "April"
+        ],
+        "title": {
+          "text": "Month",
+          "style": {
+            "fontSize": "0.75rem",
+            "fontWeight": "bold"
+          }
+        }
+      },
+      {
+        "id": "stages",
+        "type": "category",
+        "title": {
+          "text": "Stage",
+          "style": {
+            "fontSize": "0.75rem",
+            "fontWeight": "bold"
+          }
+        },
+        "opposite": true
+      }
+    ],
+    "yAxis": {
+      "title": {
+        "text": "Rainfall (mm)",
+        "style": {
+          "fontSize": "0.75rem",
+          "fontWeight": "bold"
+        }
+      }
+    },
+    "legend": {
+      "itemStyle": {
+        "fontSize": "0.75rem"
+      }
+    },
+    "series": [
+      {
+        "type": "variwide",
+        "xAxis": "stages",
+        "borderRadius": 0,
+        "name": "Water Requirement",
+        "data": [
+          ["Stage 1", 120.0, 1.0],
+          ["Stage 2", 195.0, 0.5],
+          ["Stage 3", 150.0, 1.0],
+          ["Stage 4", 120.0, 1.5],
+          ["Stage 5", 75.0, 2.0]
+        ],
+        "color": "#0000FF80",
+        "tooltip": {
+          "valueSuffix": " mm"
+        }
+      },
+      {
+        "type": "column",
+        "xAxis": "months",
+        "name": "Normal Rainfall",
+        "data": [
+          74.46267499999999, 62.89522000000001, 79.5305370967742, 112.996545,
+          140.46825, 165.14023
+        ],
+        "color": "#0000FF",
+        "zIndex": 1,
+        "tooltip": {
+          "valueSuffix": " mm"
+        }
+      }
+    ]
+  },
+  "crop_temperature": {
+    "title": {
+      "text": "Wheat Temperature Thresholds vs Observed Temperature",
+      "style": {
+        "fontSize": "0.875rem",
+        "fontWeight": "bold"
+      }
+    },
+    "tooltip": {
+      "valueDecimals": 2
+    },
+    "xAxis": [
+      {
+        "id": "months",
+        "categories": [
+          "November",
+          "December",
+          "January",
+          "February",
+          "March",
+          "April"
+        ],
+        "title": {
+          "text": "Month",
+          "style": {
+            "fontSize": "0.75rem",
+            "fontWeight": "bold"
+          }
+        }
+      },
+      {
+        "id": "stages",
+        "type": "category",
+        "title": {
+          "text": "Stage",
+          "style": {
+            "fontSize": "0.75rem",
+            "fontWeight": "bold"
+          }
+        },
+        "opposite": true
+      }
+    ],
+    "yAxis": {
+      "title": {
+        "text": "Average Temperature (°C)",
+        "style": {
+          "fontSize": "0.75rem",
+          "fontWeight": "bold"
+        }
+      }
+    },
+    "legend": {
+      "itemStyle": {
+        "fontSize": "0.75rem"
+      }
+    },
+    "series": [
+      {
+        "type": "variwide",
+        "stacking": "normal",
+        "xAxis": "stages",
+        "borderRadius": 0,
+        "name": "Temperature Threshold",
+        "data": [
+          ["Stage 1", 30.0, 1.0],
+          ["Stage 2", 30.0, 0.5],
+          ["Stage 3", 30.0, 1.0],
+          ["Stage 4", 30.0, 1.5],
+          ["Stage 5", 30.0, 2.0]
+        ],
+        "color": "#FF000080",
+        "tooltip": {
+          "pointFormat": "&ensp; Max Temperature: <b>{point.y} °C</b>"
+        }
+      },
+      {
+        "type": "variwide",
+        "stacking": "normal",
+        "xAxis": "stages",
+        "borderRadius": 0,
+        "name": "Min Temperature",
+        "legendColor": "#FF0000",
+        "data": [
+          ["Stage 1", 5.0, 1.0],
+          ["Stage 2", 5.0, 0.5],
+          ["Stage 3", 5.0, 1.0],
+          ["Stage 4", 5.0, 1.5],
+          ["Stage 5", 5.0, 2.0]
+        ],
+        "color": "#FFFFFFFF",
+        "tooltip": {
+          "valueSuffix": " °C"
+        },
+        "linkedTo": ":previous"
+      },
+      {
+        "type": "column",
+        "xAxis": "months",
+        "name": "Average Temperature",
+        "data": [
+          1.0300466666666666, -1.8532066666666664, -3.7605709677419354,
+          -2.806243333333333, 0.2394466666666667, 3.9100800000000002
+        ],
+        "color": "#FF0000",
+        "zIndex": 1,
+        "tooltip": {
+          "valueSuffix": " °C"
+        }
+      }
+    ]
   }
 }

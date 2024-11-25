@@ -8,6 +8,7 @@ import GDDPredictiveTools from "./components/gdd-tools/gdd-tools";
 import ClimateAnalytics from "./components/climate-tools/climate-analytics-tools/climate-analytics";
 import ClimatePredictiveTools from "./components/climate-tools/climate-predictive-tools/climate-predictive-tools";
 import Test from "./components/test";
+import CropTools from "./components/crop-tools/crop-tools";
 function App() {
   const router = createBrowserRouter([
     {
@@ -34,6 +35,10 @@ function App() {
         {
           path: "/predictive-tools/",
           element: <PredictiveTools />,
+        },
+        {
+          path: "/crop-tools/",
+          element: <CropTools />,
         },
         {
           path: "/gdd-predictive-tools/",
