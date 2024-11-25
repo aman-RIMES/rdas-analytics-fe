@@ -68,8 +68,26 @@ const Leaflet = ({
         ? (layer.options.fillColor = "#B91C1C")
         : value < -150
         ? (layer.options.fillColor = "#DC2626")
-        : value < 0
+        : value < -100
         ? (layer.options.fillColor = "#EF4444")
+        : value < -75
+        ? (layer.options.fillColor = "#f87171")
+        : value < -50
+        ? (layer.options.fillColor = "#fca5a5")
+        : value < -25
+        ? (layer.options.fillColor = "#fecaca")
+        : value < 0
+        ? (layer.options.fillColor = "#fee2e2")
+        : value == 0
+        ? (layer.options.fillColor = "#fff")
+        : value < 25
+        ? (layer.options.fillColor = "#dcfce7")
+        : value < 50
+        ? (layer.options.fillColor = "#bbf7d0")
+        : value < 75
+        ? (layer.options.fillColor = "#86efac")
+        : value < 100
+        ? (layer.options.fillColor = "#4ade80")
         : value < 150
         ? (layer.options.fillColor = "#22c55e")
         : value < 300
@@ -98,6 +116,10 @@ const Leaflet = ({
         ? (layer.options.fillColor = "#60a5fa")
         : value < 0
         ? (layer.options.fillColor = "#93c5fd")
+        : value == 0
+        ? (layer.options.fillColor = "#fff")
+        : value < 2.5
+        ? (layer.options.fillColor = "#fde68a")
         : value < 5
         ? (layer.options.fillColor = "#fcd34d")
         : value < 10

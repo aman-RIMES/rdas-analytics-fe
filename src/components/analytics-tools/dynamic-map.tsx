@@ -185,8 +185,8 @@ const DynamicMap = ({
             <div className="relative z-0">
               <div className="p-1">
                 <p className="text-sm mb-2 font-medium flex justify-center">
-                  {formatTitle(mapFilter.dataVariable)} {getMetricUnit()} in{" "}
-                  Anomaly for{" "}
+                  {formatTitle(mapFilter.dataVariable)} Anomaly{" "}
+                  {getMetricUnit()} for{" "}
                   {
                     countries.find((e) => e.value === mapFormData?.countryValue)
                       ?.label

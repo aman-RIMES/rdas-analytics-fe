@@ -35,7 +35,7 @@ const MapLegend = ({ mapType, variable }) => {
           className={cn(
             variable === "rainfall"
               ? "from-red-700 via-gray-200 to-green-700"
-              : "from-blue-500 via-gray-200 to-amber-700",
+              : "from-blue-500 via-gray-200 to-amber-600",
             "h-2 w-full bg-gradient-to-r rounded-3xl"
           )}
         ></div>
@@ -44,7 +44,7 @@ const MapLegend = ({ mapType, variable }) => {
           className={cn(
             variable === "rainfall"
               ? "from-red-700 via-gray-200 to-green-700"
-              : "from-blue-500 via-gray-200 to-amber-700",
+              : "from-blue-500 via-gray-200 to-amber-600",
             "h-2 w-full bg-gradient-to-r rounded-3xl"
           )}
         ></div>
