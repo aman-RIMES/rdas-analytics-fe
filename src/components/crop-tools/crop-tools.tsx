@@ -17,7 +17,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import SubmitButton from "../submit-button";
 import { PopoverClose } from "@radix-ui/react-popover";
 import { ChevronDown } from "lucide-react";
-import { cn, isError, isIdle, isLoading } from "@/lib/utils";
+import { cn, formatTitle, isError, isIdle, isLoading } from "@/lib/utils";
 import ErrorMessage from "../ui/error-message";
 import Loading from "../ui/loading";
 import {
@@ -146,7 +146,11 @@ const CropTools = () => {
               </Popover>
             </div>
 
-            <Table className="mt-10">
+            <p className="text-xl font-bold text-green-800 text-center my-3">
+              Crop Suitability Calendar
+            </p>
+
+            <Table className="">
               <TableHeader>
                 <TableRow>
                   {cropAnalysisData?.crop_calendar?.map((element: any) => (
@@ -198,6 +202,24 @@ const CropTools = () => {
                 </TableRow>
               </TableBody>
             </Table>
+
+            {(isIdle(cropAnalysisStatus) ||
+              isLoading(cropAnalysisStatus) ||
+              isError(cropAnalysisStatus)) && (
+              <div className="absolute inset-0 flex justify-center items-center z-10 bg-white bg-opacity-70 ">
+                {isIdle(cropAnalysisStatus) ? (
+                  <p className="text-2xl font-bold text-green-800">
+                    {IDLE_ANALYTICS_CHART_MESSAGE}
+                  </p>
+                ) : isError(cropAnalysisStatus) ? (
+                  <ErrorMessage />
+                ) : (
+                  <Loading
+                    animation={<l-helix color="green" size="50"></l-helix>}
+                  />
+                )}
+              </div>
+            )}
           </div>
 
           <div className="col-span-3 w-full  bg-white rounded-lg h-[45vh] p-1 relative z-0">
@@ -237,9 +259,46 @@ const CropTools = () => {
                     <p className="ml-2"> Analysis</p>
                   </div>
 
-                  <div>
-                    <p className="p-2">{cropAnalysisData?.analysis}</p>
-                  </div>
+                  <ScrollArea className="h-[400px]">
+                    <div className="w-[520px]">
+                      <p className="p-2" style={{ whiteSpace: "break-spaces" }}>
+                        {cropAnalysisData?.analysis}
+                      </p>
+                    </div>
+
+                    {cropAnalysisData?.analysis_per_stage && (
+                      <Table className="mt-2">
+                        <TableHeader>
+                          <TableRow>
+                            {Object.keys(
+                              cropAnalysisData?.analysis_per_stage[0]
+                            )?.map((key: any) => (
+                              <TableHead className="text-black text-md font-medium text-center">
+                                <div>{formatTitle(key)}</div>
+                              </TableHead>
+                            ))}
+                          </TableRow>
+                        </TableHeader>
+
+                        <TableBody>
+                          {cropAnalysisData?.analysis_per_stage?.map(
+                            (element: any, index) => (
+                              <TableRow>
+                                {Object.keys(element)?.map((e: any) => (
+                                  <TableCell
+                                    key={index}
+                                    className="text-sm text-center p-[2px] "
+                                  >
+                                    {element[e]}
+                                  </TableCell>
+                                ))}
+                              </TableRow>
+                            )
+                          )}
+                        </TableBody>
+                      </Table>
+                    )}
+                  </ScrollArea>
                 </div>
                 {(isIdle(cropAnalysisStatus) ||
                   isLoading(cropAnalysisStatus) ||
@@ -265,7 +324,9 @@ const CropTools = () => {
                 </div>
                 <div>
                   <ScrollArea className="h-[400px]">
-                    <p className="p-2">{cropAnalysisData?.recommendation}</p>
+                    <p className="p-2" style={{ whiteSpace: "break-spaces" }}>
+                      {cropAnalysisData?.recommendation}
+                    </p>
                   </ScrollArea>
                 </div>
                 {(isIdle(cropAnalysisStatus) ||
