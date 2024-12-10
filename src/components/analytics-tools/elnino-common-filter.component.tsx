@@ -7,6 +7,7 @@ import {
 } from "@/constants";
 import {
   containsCropAnalysis,
+  isIdle,
   transformDistrictParams,
   transformObject,
   transformSourceObject,
@@ -18,6 +19,15 @@ import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { FancyMultiSelect } from "../ui/multiselect";
 import { Input } from "../ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTrigger,
+} from "../ui/dialog";
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
 
 const ElNinoCommonFilter = ({
   params,
@@ -110,13 +120,46 @@ const ElNinoCommonFilter = ({
                 content={` The custom dataset that you want to upload and use for the current
               analysis. You can upload CSV files only`}
               />
-              <a
-                className="text-green-600 text-xs font-semibold"
-                href={"src/data/rdas_monthly_template.csv"}
-                download
-              >
-                Download Template
-              </a>
+
+              <Dialog>
+                <DialogTrigger className="ml-1">
+                  <p className="text-green-600 text-xs font-semibold text-decoration-line: underline">
+                    View Template Guide
+                  </p>
+                </DialogTrigger>
+                <DialogContent className="lg:w-[40%]">
+                  <DialogHeader>
+                    <DialogDescription>
+                      <div>
+                        <p className="mt-5 text-base">
+                          Use the following template to upload your dataset. The
+                          dataset should consist of the year & month, the
+                          average rainfall, and the average temperature.
+                        </p>
+                        <br />
+
+                        <p className="text-black text-base">
+                          Make sure that your CSV file strictly follows the
+                          exact layout shown on the template to make sure the
+                          data is analyzed properly. You can download a sample
+                          CSV template below.
+                        </p>
+
+                        <div className="flex flex-col items-center justify-center m-10 mb-5 ">
+                          <img src={"src/assets/guide.png"} alt="" />
+                          <a
+                            className="text-white text-lg font-semibold bg-green-800 py-1 px-5 rounded-md mt-10"
+                            href={"src/data/rdas_monthly_template.csv"}
+                            download
+                          >
+                            Download Template
+                          </a>
+                        </div>
+                      </div>
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
             </div>
             <Input
               onChange={(e) => {
@@ -128,15 +171,6 @@ const ElNinoCommonFilter = ({
               // value={fileName}
             />
           </div>
-
-          {/* //TODO:Delete if not needed */}
-          {/* <div className="flex items-center gap-1  mt-2">
-            <InfoCircledIcon className="h-4 w-4" />
-            <p className="text-sm">
-              Please make sure your custom dataset strictly follows our CSV
-              template.
-            </p>
-          </div> */}
         </>
       )}
       <div className="grid grid-cols-2 gap-3">
