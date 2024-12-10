@@ -41,8 +41,9 @@ function Combobox({ array, state, label, name, height = 40 }: any) {
             }
           >
             {state.value
-              ? array.find((element: any) => element.value === state.value)
-                  ?.label
+              ? array.find(
+                  (element: any) => element.value.split("+")[0] === state.value
+                )?.label
               : `Select ${label}`}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -59,7 +60,7 @@ function Combobox({ array, state, label, name, height = 40 }: any) {
                       key={Math.random()}
                       value={framework.value}
                       onSelect={(currentValue) => {
-                        state.setValue(name, currentValue);
+                        state.setValue(name, currentValue.split("+")[0]);
                         setOpen(false);
                       }}
                     >

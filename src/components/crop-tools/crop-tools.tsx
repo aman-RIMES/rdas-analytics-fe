@@ -322,7 +322,7 @@ const CropTools = () => {
                                     ?.map((e: any) => (
                                       <TableCell
                                         key={index}
-                                        className="text-sm text-center p-[10px] "
+                                        className="text-sm text-center p-[4px] "
                                       >
                                         {element[e]}
                                       </TableCell>
