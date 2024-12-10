@@ -178,13 +178,37 @@ const CropTools = () => {
                             {calendar.stages.map((stage, stageIndex) => (
                               <div
                                 className={cn(
-                                  "text-xs w-full px-[-10]  py-5",
+                                  "text-xs w-full px-[-10] py-3",
                                   croppingStageBackground[stage?.name]
                                 )}
                               >
                                 <p className="font-bold text-lg">
                                   {stage?.name}
                                 </p>
+                              </div>
+                            ))}
+                          </div>
+                        </>
+                      </TableCell>
+                    )
+                  )}
+                </TableRow>
+                <TableRow>
+                  {cropAnalysisData?.crop_calendar?.map(
+                    (calendar, monthIndex) => (
+                      <TableCell
+                        key={monthIndex}
+                        className="text-xs text-center p-[2px] "
+                      >
+                        <>
+                          <div className="flex flex-row">
+                            {calendar.stages.map((stage, stageIndex) => (
+                              <div
+                                className={cn(
+                                  "text-xs w-full px-[-10]  py-5",
+                                  croppingStageBackground[stage?.name]
+                                )}
+                              >
                                 <p className="font-medium text-sm">
                                   Max Temp: {stage?.tmax_req}
                                 </p>
@@ -231,7 +255,7 @@ const CropTools = () => {
               highcharts={Highcharts}
               options={
                 cropAnalysisData?.chart?.rainfall
-                  ? sampleCharts?.crop_rainfall
+                  ? cropAnalysisData?.chart?.rainfall
                   : sampleCharts?.crop_rainfall
               }
               containerProps={{ style: { height: "425px" } }}
@@ -298,7 +322,7 @@ const CropTools = () => {
                                     ?.map((e: any) => (
                                       <TableCell
                                         key={index}
-                                        className="text-sm text-center p-[2px] "
+                                        className="text-sm text-center p-[10px] "
                                       >
                                         {element[e]}
                                       </TableCell>
