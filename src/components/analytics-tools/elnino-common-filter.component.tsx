@@ -48,6 +48,43 @@ const ElNinoCommonFilter = ({
   return (
     <div className="flex flex-col gap-2">
       <div>
+        <div className="flex ">
+          <Label className=" text-xs font-semibold"> Country </Label>
+          <HelpHoverCard
+            title={" Country "}
+            content={` The country of chosen location that you'd like to analyze. `}
+          />
+        </div>
+        <Combobox
+          name="countryValue"
+          label={"Country"}
+          array={countries}
+          state={{
+            value: filterData.countryValue,
+            setValue: handleChange,
+          }}
+        />
+      </div>
+      <div>
+        <div className="flex ">
+          <Label className=" text-xs font-semibold"> District </Label>
+          <HelpHoverCard
+            title={" District "}
+            content={`  The specific district of the chosen country to be used for the
+              analysis. `}
+          />
+        </div>
+        <Combobox
+          name="districtValue"
+          label={"District"}
+          array={transformDistrictParams(filterData?.districtList)}
+          state={{
+            value: filterData.districtValue,
+            setValue: handleChange,
+          }}
+        />
+      </div>
+      <div>
         <div className="flex">
           <Label className=" text-xs font-semibold">Data</Label>
           <HelpHoverCard
@@ -110,6 +147,59 @@ const ElNinoCommonFilter = ({
           }}
         />
       </div>
+
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <div className="flex ">
+            <Label className=" text-xs font-semibold"> From Year </Label>
+            <HelpHoverCard
+              title={" From Year "}
+              content={` The beginning year for your analysis timeframe `}
+            />
+          </div>
+          <Combobox
+            name="fromYear"
+            label={"Year"}
+            array={elNinoYearsList().filter(
+              (e) => parseInt(e.value) + 30 < new Date().getFullYear()
+            )}
+            state={{
+              value: filterData.fromYear,
+              setValue: handleChange,
+            }}
+          />
+        </div>
+
+        <div>
+          <div className="flex gap-1 ">
+            <Label className=" text-xs font-semibold"> To Year </Label>
+            <HelpHoverCard
+              title={" To Year "}
+              content={` The ending year for your analysis timeframe `}
+            />
+          </div>
+          <Combobox
+            name="toYear"
+            label={"Year"}
+            array={elNinoYearsList().filter(
+              (e) => parseInt(e.value) - parseInt(filterData.fromYear) >= 30
+            )}
+            state={{
+              value: filterData.toYear,
+              setValue: handleChange,
+            }}
+          />
+        </div>
+      </div>
+
+      {/* TODO: Delete if not needed */}
+      {/* <div className="flex items-center gap-1  mt-1">
+        <InfoCircledIcon className="h-4 w-4" />
+        <p className="text-sm">
+          Please choose a minimum of 30 years timeframe.
+        </p>
+      </div> */}
+
       {filterData.source === "customDataset" && (
         <>
           <div>
@@ -173,94 +263,7 @@ const ElNinoCommonFilter = ({
           </div>
         </>
       )}
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <div className="flex ">
-            <Label className=" text-xs font-semibold"> From Year </Label>
-            <HelpHoverCard
-              title={" From Year "}
-              content={` The beginning year for your analysis timeframe `}
-            />
-          </div>
-          <Combobox
-            name="fromYear"
-            label={"Year"}
-            array={elNinoYearsList().filter(
-              (e) => parseInt(e.value) + 30 < new Date().getFullYear()
-            )}
-            state={{
-              value: filterData.fromYear,
-              setValue: handleChange,
-            }}
-          />
-        </div>
 
-        <div>
-          <div className="flex gap-1 ">
-            <Label className=" text-xs font-semibold"> To Year </Label>
-            <HelpHoverCard
-              title={" To Year "}
-              content={` The ending year for your analysis timeframe `}
-            />
-          </div>
-          <Combobox
-            name="toYear"
-            label={"Year"}
-            array={elNinoYearsList().filter(
-              (e) => parseInt(e.value) - parseInt(filterData.fromYear) >= 30
-            )}
-            state={{
-              value: filterData.toYear,
-              setValue: handleChange,
-            }}
-          />
-        </div>
-      </div>
-
-      {/* TODO: Delete if not needed */}
-      {/* <div className="flex items-center gap-1  mt-1">
-        <InfoCircledIcon className="h-4 w-4" />
-        <p className="text-sm">
-          Please choose a minimum of 30 years timeframe.
-        </p>
-      </div> */}
-      <div>
-        <div className="flex ">
-          <Label className=" text-xs font-semibold"> Country </Label>
-          <HelpHoverCard
-            title={" Country "}
-            content={` The country of chosen location that you'd like to analyze. `}
-          />
-        </div>
-        <Combobox
-          name="countryValue"
-          label={"Country"}
-          array={countries}
-          state={{
-            value: filterData.countryValue,
-            setValue: handleChange,
-          }}
-        />
-      </div>
-      <div>
-        <div className="flex ">
-          <Label className=" text-xs font-semibold"> District </Label>
-          <HelpHoverCard
-            title={" District "}
-            content={`  The specific district of the chosen country to be used for the
-              analysis. `}
-          />
-        </div>
-        <Combobox
-          name="districtValue"
-          label={"District"}
-          array={transformDistrictParams(filterData?.districtList)}
-          state={{
-            value: filterData.districtValue,
-            setValue: handleChange,
-          }}
-        />
-      </div>
       {filterType === "predictive" && (
         <div>
           <div className="flex">

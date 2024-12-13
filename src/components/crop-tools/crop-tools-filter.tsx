@@ -22,7 +22,48 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="mt-2">
+      <div>
+        <div className="flex ">
+          <Label className=" text-sm font-semibold text-black"> Country </Label>
+          <HelpHoverCard
+            title={" Country "}
+            content={` The country of chosen location that you'd like to analyze. `}
+          />
+        </div>
+        <Combobox
+          name="countryValue"
+          label={"Country"}
+          array={countries}
+          state={{
+            value: filterData.countryValue,
+            setValue: handleChange,
+          }}
+        />
+      </div>
+      <div>
+        <div className="flex ">
+          <Label className=" text-sm font-semibold text-black">
+            {" "}
+            District{" "}
+          </Label>
+          <HelpHoverCard
+            title={" District "}
+            content={`  The specific district of the chosen country to be used for the
+                analysis. `}
+          />
+        </div>
+        <Combobox
+          name="districtValue"
+          label={"District"}
+          array={transformDistrictParams(filterData?.districtList)}
+          state={{
+            value: filterData.districtValue,
+            setValue: handleChange,
+          }}
+        />
+      </div>
+
+      <div className="">
         <div className="flex ">
           <Label className=" text-sm font-semibold text-black">Crop </Label>
           <HelpHoverCard
@@ -65,6 +106,29 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
           }}
         />
       </div>
+
+      <div>
+        <div className="flex ">
+          <Label className=" text-sm font-semibold text-black">
+            Analysis Timeline{" "}
+          </Label>
+          <HelpHoverCard
+            title={" Analysis Timeline "}
+            content={` The timeline of that you want to use for the current
+              analysis. `}
+          />
+        </div>
+        <Combobox
+          name="analysisTimeline"
+          label={"Cropping Timeline"}
+          array={croppingTimeline}
+          state={{
+            value: filterData.analysisTimeline,
+            setValue: handleChange,
+          }}
+        />
+      </div>
+
       {filterData.source === "customDataset" && (
         <>
           <div>
@@ -97,68 +161,6 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
           </div>
         </>
       )}
-
-      <div>
-        <div className="flex ">
-          <Label className=" text-sm font-semibold text-black">
-            Analysis Timeline{" "}
-          </Label>
-          <HelpHoverCard
-            title={" Analysis Timeline "}
-            content={` The timeline of that you want to use for the current
-              analysis. `}
-          />
-        </div>
-        <Combobox
-          name="analysisTimeline"
-          label={"Cropping Timeline"}
-          array={croppingTimeline}
-          state={{
-            value: filterData.analysisTimeline,
-            setValue: handleChange,
-          }}
-        />
-      </div>
-      <div>
-        <div className="flex ">
-          <Label className=" text-sm font-semibold text-black"> Country </Label>
-          <HelpHoverCard
-            title={" Country "}
-            content={` The country of chosen location that you'd like to analyze. `}
-          />
-        </div>
-        <Combobox
-          name="countryValue"
-          label={"Country"}
-          array={countries}
-          state={{
-            value: filterData.countryValue,
-            setValue: handleChange,
-          }}
-        />
-      </div>
-      <div>
-        <div className="flex ">
-          <Label className=" text-sm font-semibold text-black">
-            {" "}
-            District{" "}
-          </Label>
-          <HelpHoverCard
-            title={" District "}
-            content={`  The specific district of the chosen country to be used for the
-                analysis. `}
-          />
-        </div>
-        <Combobox
-          name="districtValue"
-          label={"District"}
-          array={transformDistrictParams(filterData?.districtList)}
-          state={{
-            value: filterData.districtValue,
-            setValue: handleChange,
-          }}
-        />
-      </div>
     </div>
   );
 };
