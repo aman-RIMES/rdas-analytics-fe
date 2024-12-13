@@ -380,6 +380,24 @@ export const countries = [
     coordinates: [24.051401544067932, 89.94872317279236],
     zoom: 6,
   },
+  {
+    value: "LKA+Sri Lanka",
+    label: "Sri Lanka",
+    coordinates: [7.778338, 80.746848],
+    zoom: 7,
+  },
+  {
+    value: "AFG+Afghanistan",
+    label: "Afghanistan",
+    coordinates: [34.227123, 65.816428],
+    zoom: 3,
+  },
+  {
+    value: "BTN+Bhutan",
+    label: "Bhutan",
+    coordinates: [27.339435, 90.458761],
+    zoom: 7,
+  },
 ];
 
 export const Indicators = {
@@ -410,20 +428,32 @@ export const Indicators = {
 };
 
 export const ElNinoToolDataIndicators = {
-  // temperature_max_monthly: "Temperature max monthly, year wise",
-  // temperature_min_monthly: "Temperature min monthly, year wise",
-  // temperature_avg_monthly: "Average / mean temperature monthly, year wise",
+  rainfall: "Cummulative Rainfall",
+  // normal_rainfall: "Normal Rainfall",
+  // rainfall_anomaly: "Rainfall Anomaly",
+  // rainfall_deviation: "Deviation from Normal Rainfall",
   // rainfall_cummulative_monthly: "Rainfall cumulative monthly, year wise",
-  rainfall: "Rainfall cumulative, Year wise",
-  temperature: "Temperature, Year wise",
   // rainfall_cummulative_seasonal: "Rainfall cumulative seasonal, Year wise",
   // rainfall_max_monthly: "Rainfall max monthly year wise",
   // rainfall_min_monthly: "Rainfall min monthly, year wise",
+  temperature: "Temperature",
+  // temperature_max_monthly: "Temperature max monthly, year wise",
+  // temperature_min_monthly: "Temperature min monthly, year wise",
+  // temperature_avg_monthly: "Average/ mean temperature monthly, year wise",
+  // el_nino: "ONI Value",
+  // el_nino_weak: "Weak El Nino Events",
+  // el_nino_moderate: "Moderate El Nino Events",
+  // el_nino_strong: "Strong El Nino Events",
+  // oni_index: "El Nino",
   // crop_production_monthly: "Crop production acreage monthly, year wise",
   // crop_production_seasonal: "Crop production acreage seasonal year wise",
   // crop_yield_seasonal: "Crop-wise yield seasonal, year wise",
   // crop_price_monthly: "Crop-wise price monthly, yearly",
   // crop_price_seasonal: "Crop-wise price seasonal, year wise",
+  // rice_production: "Crop Production - Rice",
+  // wheat_production: "Crop Production - Wheat",
+  // maize_production: "Crop Production - Maize",
+  // cotton_production: "Crop Production - Cotton"
 };
 
 export const ElNinoCategories = [
