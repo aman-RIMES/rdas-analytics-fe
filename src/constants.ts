@@ -303,11 +303,11 @@ export const croppingTimeline = [
 ];
 
 export const croppingStageBackground = {
-  "Stage 1": "bg-cyan-300",
-  "Stage 2": "bg-pink-300",
-  "Stage 3": "bg-yellow-300",
-  "Stage 4": "bg-green-300",
-  "Stage 5": "bg-purple-300",
+  "Germination, Seedling": "bg-cyan-300",
+  "Vegetative Growth, Flowering": "bg-pink-300",
+  "Boll Formation": "bg-yellow-300",
+  "Boll Maturation": "bg-green-300",
+  Harvest: "bg-purple-300",
 };
 
 export const sampleCroppingResponse = {

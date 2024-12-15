@@ -8,10 +8,9 @@ import { BASE_URL, predictiveModelDataType, requestStatus } from "@/constants";
 import bodyParams from "../../data/body_params.json";
 import { useLocation } from "react-router-dom";
 import PredictiveToolsData from "./predictive-tools-data";
-import PredictiveCalculation from "./predictve-tools-calculation";
-import { AlertCircle } from "lucide-react";
 import ElNinoCommonFilter from "../analytics-tools/elnino-common-filter.component";
 import SubmitButton from "../submit-button";
+import CustomDatasetGuide from "../custom-dataset-guide";
 
 const PredictiveTools = () => {
   const location = useLocation();
@@ -129,8 +128,12 @@ const PredictiveTools = () => {
           <div className="grid grid-cols-6 gap-3 ">
             <div className="col-span-1">
               <div className=" border-grey-600 rounded-lg h-[88vh]">
-                <div className="bg-green-800 text-white text-md p-1 rounded-t-lg font-medium ">
-                  <p className="ml-2"> Parameters</p>
+                <div className="bg-green-800 flex justify-between items-center text-white text-md p-1 rounded-t-lg font-medium ">
+                  <p className="ml-2 text-sm"> Parameters</p>
+                  <CustomDatasetGuide
+                    title="Use Custom Dataset"
+                    className="mr-2 text-sm text-yellow-300 text-decoration-line: underline"
+                  />
                 </div>
                 <div className="bg-gray-100 p-2 rounded-b-lg flex flex-col gap-5 shadow-lg h-full">
                   <ElNinoCommonFilter

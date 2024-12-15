@@ -11,6 +11,7 @@ import Combobox from "../ui/combobox";
 import { District, FilterProps } from "@/types";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { Input } from "../ui/input";
+import CustomDatasetGuide from "../custom-dataset-guide";
 
 const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
   useEffect(() => {
@@ -24,7 +25,7 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
     <div className="flex flex-col gap-2">
       <div>
         <div className="flex ">
-          <Label className=" text-sm font-semibold text-black"> Country </Label>
+          <Label className=" text-xs font-semibold text-black"> Country </Label>
           <HelpHoverCard
             title={" Country "}
             content={` The country of chosen location that you'd like to analyze. `}
@@ -42,7 +43,7 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
       </div>
       <div>
         <div className="flex ">
-          <Label className=" text-sm font-semibold text-black">
+          <Label className=" text-xs font-semibold text-black">
             {" "}
             District{" "}
           </Label>
@@ -65,7 +66,7 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
 
       <div className="">
         <div className="flex ">
-          <Label className=" text-sm font-semibold text-black">Crop </Label>
+          <Label className=" text-xs font-semibold text-black">Crop </Label>
           <HelpHoverCard
             title={" Crop "}
             content={` The specific crop you want to use for the current
@@ -84,7 +85,7 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
       </div>
       <div>
         <div className="flex ">
-          <Label className=" text-sm font-semibold text-black">
+          <Label className=" text-xs font-semibold text-black">
             Data Source{" "}
           </Label>
           <HelpHoverCard
@@ -109,7 +110,7 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
 
       <div>
         <div className="flex ">
-          <Label className=" text-sm font-semibold text-black">
+          <Label className=" text-xs font-semibold text-black">
             Analysis Timeline{" "}
           </Label>
           <HelpHoverCard
@@ -132,8 +133,8 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
       {filterData.source === "customDataset" && (
         <>
           <div>
-            <div className="flex ">
-              <Label className=" text-sm font-semibold text-black">
+            <div className="flex">
+              <Label className=" text-xs font-semibold text-black">
                 Upload CSV
               </Label>
               <HelpHoverCard
@@ -141,13 +142,7 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
                 content={` The custom dataset that you want to upload and use for the current
               analysis. You can upload CSV files only`}
               />
-              <a
-                className="text-green-600 text-xs font-semibold ml-2"
-                href={"src/data/rdas_monthly_template.csv"}
-                download
-              >
-                Download Template
-              </a>
+              <CustomDatasetGuide title="View Template Guide" />
             </div>
             <Input
               onChange={(e) => {
