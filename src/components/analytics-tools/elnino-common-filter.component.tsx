@@ -134,6 +134,14 @@ const ElNinoCommonFilter = ({
             content={` The source of dataset that you want to use for the current
               analysis. `}
           />
+
+          <a
+            className="text-green-600 text-xs font-semibold ml-2 text-decoration-line: underline"
+            href={"http://203.156.108.67:1681/en/new-page"}
+            target="_blank"
+          >
+            Dataset Guide
+          </a>
         </div>
         <Combobox
           name="source"

@@ -3,7 +3,7 @@ import { Icons } from "@/components/ui/icons";
 import { NavLink, useLocation } from "react-router-dom";
 import { buttonVariants } from "./ui/button";
 import AvatarMenu from "./avatar-menu";
-import { AlignJustify } from "lucide-react";
+import { AlignJustify, HelpCircle } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -105,7 +105,11 @@ export default function NavBar() {
         </div>
         <div className="flex">
           <nav className="flex items-center gap-1 md:gap-3">
-            <NavLink rel="noreferrer" to={"/"}>
+            <a
+              rel="noreferrer"
+              href="http://203.156.108.67:1681"
+              target="_blank"
+            >
               <div
                 className={cn(
                   buttonVariants({
@@ -114,10 +118,10 @@ export default function NavBar() {
                   "w-8 p-[-10px] bg-yellow-300 hover:bg-yellow-100"
                 )}
               >
-                <Icons.notification />
+                <HelpCircle className="h-[20px] w-[20px] " />
                 <span className="sr-only">Notification</span>
               </div>
-            </NavLink>
+            </a>
             {/* <ThemeToggle /> */}
             <AvatarMenu />
           </nav>
