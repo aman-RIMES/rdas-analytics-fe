@@ -27,6 +27,7 @@ import DynamicMap from "./dynamic-map";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { AlertCircle } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import CustomDatasetGuide from "../custom-dataset-guide";
 
 const ElNinoAnalytics = () => {
   const navigate = useNavigate();
@@ -184,8 +185,12 @@ const ElNinoAnalytics = () => {
           <div className="grid grid-cols-6 gap-3 ">
             <div className="col-span-1 w-full h-full bg-gray-100 rounded-b-lg">
               <div className="   ">
-                <div className="bg-green-800 text-white text-md p-1 rounded-t-lg font-medium">
-                  <p className="ml-2"> Parameters</p>
+                <div className="bg-green-800 flex justify-between items-center   text-white text-md p-1 rounded-t-lg font-medium">
+                  <p className="ml-2 text-sm"> Parameters</p>
+                  <CustomDatasetGuide
+                    title="Use Custom Dataset"
+                    className="mr-2 text-sm text-yellow-300 text-decoration-line: underline"
+                  />
                 </div>
                 <div className=" p-2 flex flex-col gap-5 justify-between">
                   <ElNinoCommonFilter

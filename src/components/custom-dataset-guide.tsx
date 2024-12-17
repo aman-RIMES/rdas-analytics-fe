@@ -45,7 +45,7 @@ const CustomDatasetGuide = ({ title, className = "" }) => {
                 <p className="mt-5 text-lg text-black">
                   2. Populate data in the CSV file.
                 </p>
-                <ul className="text-black text-base mt-2 ml-5 list-disc">
+                <ul className="text-black text-base mt-2 ml-8 list-disc">
                   <li> Do not replace or remove any column headers</li>
 
                   <li>
@@ -79,7 +79,7 @@ const CustomDatasetGuide = ({ title, className = "" }) => {
                   3. Set the Parameters of the custom dataset.
                 </p>
 
-                <ul className="text-black text-base mt-2 ml-5 list-disc">
+                <ul className="text-black text-base mt-2 ml-5 list-disc ml-8">
                   <li>
                     Country and District - Select which area the uploaded data
                     is associated with
