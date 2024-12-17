@@ -15,7 +15,7 @@ const Leaflet = ({
   preferredZoomScale,
   mapFilter,
 }: any) => {
-  const subjectCountry = countries.find((e) => e.value === country);
+  const subjectCountry = countries.find((e) => e.name === country);
 
   const countryStyle = {
     fillOpacity: 1,

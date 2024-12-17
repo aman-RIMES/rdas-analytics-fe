@@ -357,42 +357,49 @@ export const sampleCroppingResponse = {
 
 export const countries = [
   {
+    name: "NPL",
     value: "NPL+Nepal",
     label: "Nepal",
     coordinates: [28.3949, 84.124],
     zoom: 6,
   },
   {
+    name: "IND",
     value: "IND+India",
     label: "India",
     coordinates: [20.5937, 78.9629],
     zoom: 3,
   },
   {
+    name: "PAK",
     value: "PAK+Pakistan",
     label: "Pakistan",
     coordinates: [31.358464447208497, 70.60622074202406],
     zoom: 5,
   },
   {
+    name: "BGD",
     value: "BGD+Bangladesh",
     label: "Bangladesh",
     coordinates: [24.051401544067932, 89.94872317279236],
     zoom: 6,
   },
   {
+    name: "LKA",
     value: "LKA+Sri Lanka",
     label: "Sri Lanka",
     coordinates: [7.778338, 80.746848],
     zoom: 7,
   },
   {
+    name: "AFG",
     value: "AFG+Afghanistan",
     label: "Afghanistan",
     coordinates: [34.227123, 65.816428],
     zoom: 3,
   },
   {
+    name: "BTN",
     value: "BTN+Bhutan",
     label: "Bhutan",
     coordinates: [27.339435, 90.458761],

@@ -92,7 +92,7 @@ const DynamicMap = ({
                     isIdle(dynamicMapStatus) ||
                     isError(dynamicMapStatus)) && (
                     <Leaflet
-                      country={mapFormData.countryValue || "PAK"}
+                      country={mapFormData.countryValue || "NPL"}
                       geoJsonData={dynamicMapData}
                     />
                   )}
