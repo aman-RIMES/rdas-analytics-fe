@@ -292,7 +292,8 @@ const CropTools = () => {
                   <ScrollArea className="h-[400px] p-2">
                     <div className="w-[520px]">
                       <p className="p-2" style={{ whiteSpace: "break-spaces" }}>
-                        {cropAnalysisData?.analysis}
+                        {cropAnalysisData?.analysis ||
+                          sampleCharts?.crop_analysis}
                       </p>
                     </div>
 
@@ -363,7 +364,8 @@ const CropTools = () => {
                 <div>
                   <ScrollArea className="h-[400px] p-2">
                     <p className="p-2" style={{ whiteSpace: "break-spaces" }}>
-                      {cropAnalysisData?.recommendation}
+                      {cropAnalysisData?.recommendation ||
+                        sampleCharts?.crop_recommendation}
                     </p>
                   </ScrollArea>
                 </div>
