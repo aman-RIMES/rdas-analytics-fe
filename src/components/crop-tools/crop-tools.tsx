@@ -179,7 +179,7 @@ const CropTools = () => {
                               <div
                                 className={cn(
                                   "text-xs w-full px-[-10] py-3",
-                                  croppingStageBackground[stage?.name]
+                                  croppingStageBackground[stage?.number - 1]
                                 )}
                               >
                                 <p className="font-bold text-lg">
@@ -206,7 +206,7 @@ const CropTools = () => {
                               <div
                                 className={cn(
                                   "text-xs w-full px-[-10]  py-5",
-                                  croppingStageBackground[stage?.name]
+                                  croppingStageBackground[stage?.number - 1]
                                 )}
                               >
                                 <p className="font-medium text-sm">

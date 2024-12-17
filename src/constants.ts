@@ -302,13 +302,13 @@ export const croppingTimeline = [
   { value: "30", label: "30 Years" },
 ];
 
-export const croppingStageBackground = {
-  "Germination, Seedling": "bg-cyan-300",
-  "Vegetative Growth, Flowering": "bg-pink-300",
-  "Boll Formation": "bg-yellow-300",
-  "Boll Maturation": "bg-green-300",
-  Harvest: "bg-purple-300",
-};
+export const croppingStageBackground = [
+  "bg-cyan-300",
+  "bg-pink-300",
+  "bg-yellow-300",
+  "bg-green-300",
+  "bg-purple-300",
+];
 
 export const sampleCroppingResponse = {
   stages: [
