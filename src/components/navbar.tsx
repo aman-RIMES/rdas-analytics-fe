@@ -110,16 +110,9 @@ export default function NavBar() {
               href="http://203.156.108.67:1681"
               target="_blank"
             >
-              <div
-                className={cn(
-                  buttonVariants({
-                    variant: "ghost",
-                  }),
-                  "w-8 p-[-10px] bg-yellow-300 hover:bg-yellow-100"
-                )}
-              >
-                <HelpCircle className="h-[20px] w-[20px] " />
-                <span className="sr-only">Notification</span>
+              <div className="flex gap-1 justify-center items-center py-1 px-3 rounded-sm text-white hover:bg-yellow-300 hover:text-black">
+                <HelpCircle className="h-[18px] w-[18px] " />
+                <p className="">Help</p>
               </div>
             </a>
             {/* <ThemeToggle /> */}
