@@ -39,7 +39,7 @@ const CustomDatasetGuide = ({ title, className = "" }) => {
                   href={"src/data/rdas_monthly_template.csv"}
                   download
                 >
-                  Download Template
+                  Download Here
                 </a>
 
                 <p className="mt-5 text-lg text-black">
