@@ -27,6 +27,12 @@ export const transformSourceObject = (object: any) =>
     label: key,
   }));
 
+export const transformNewParamsObject = (object: any) =>
+  Array.from(Object.entries(object), ([key, value]) => ({
+    value: key,
+    label: value,
+  }));
+
 export const isLoading = (status: requestStatus | undefined) =>
   status === requestStatus.isLoading;
 

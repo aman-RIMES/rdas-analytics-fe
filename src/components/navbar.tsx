@@ -76,7 +76,7 @@ export default function NavBar() {
                 )}
                 to="/elnino-analytics"
               >
-                Analytics Tools
+                El Nino Analytics
               </NavLink>
               <NavLink
                 className={cn(
@@ -100,6 +100,24 @@ export default function NavBar() {
               >
                 Crop Suitability Calendar
               </NavLink>
+              <a
+                className={cn(
+                  "transition-colors hover:text-foreground/80 text-md text-white hover:bg-yellow-300 rounded-md px-3 py-1"
+                )}
+                href="https://care-lc.rimes.int/sasia/"
+                target="_blank"
+              >
+                Land Use Tool
+              </a>
+              <a
+                className={cn(
+                  "transition-colors hover:text-foreground/80 text-md text-white hover:bg-yellow-300 rounded-md px-3 py-1"
+                )}
+                href="https://care-lc.rimes.int/sasia/"
+                target="_blank"
+              >
+                TEMPS Tool
+              </a>
             </nav>
           </div>
         </div>

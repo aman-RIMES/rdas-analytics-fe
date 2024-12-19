@@ -4,6 +4,7 @@ import { Country, YearsList } from "./types";
 // export const BASE_URL = "http://203.156.108.67:1580";
 export const BASE_URL = "https://analytics-api.rimes.int";
 export const BODY_PARAMS_URL = `${BASE_URL}/body_params`;
+export const NEW_BODY_PARAMS_URL = `https://apis.rimes.int/data/get-available-metadata?level=2&period=monthly`;
 
 export const IDLE_PREDICTIVE_CHART_MESSAGE =
   "Please Generate A Predictive Model";
@@ -173,9 +174,9 @@ export const menus = [
   },
 ];
 
-export const elNinoYearsList = () => {
+export const elNinoYearsList = (startYear = 1950) => {
   const list = [];
-  for (let i = 1950; i < new Date().getFullYear(); i++) {
+  for (let i = startYear; i < new Date().getFullYear(); i++) {
     list.push({ value: i.toString(), label: i.toString() });
   }
   return list;

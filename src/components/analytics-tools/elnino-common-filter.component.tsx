@@ -4,11 +4,13 @@ import {
   ElNinoToolDataIndicators,
   elNinoYearsList,
   monthsList,
+  NEW_BODY_PARAMS_URL,
 } from "@/constants";
 import {
   containsCropAnalysis,
   isIdle,
   transformDistrictParams,
+  transformNewParamsObject,
   transformObject,
   transformSourceObject,
 } from "@/lib/utils";
@@ -19,16 +21,9 @@ import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { FancyMultiSelect } from "../ui/multiselect";
 import { Input } from "../ui/input";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTrigger,
-} from "../ui/dialog";
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
 import CustomDatasetGuide from "../custom-dataset-guide";
+import newBodyParams from "../../data/new_body_params.json";
+import axios from "axios";
 
 const ElNinoCommonFilter = ({
   params,
@@ -38,13 +33,36 @@ const ElNinoCommonFilter = ({
   setSelected,
   filterType,
 }: FilterProps) => {
+  const [newParams, setNewParams] = useState<any>(newBodyParams);
+  const [selectedMonths, setSelectedMonths] = useState([]);
+
   useEffect(() => {
     const districtsData = params?.district.filter(
       (e: District) => e.country === filterData.countryValue
     );
     handleChange("districtList", districtsData);
   }, [filterData.countryValue]);
-  const [selectedMonths, setSelectedMonths] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response: any = await axios.get(NEW_BODY_PARAMS_URL, {
+          params: {
+            ...(filterData?.countryValue
+              ? { geo: filterData?.countryValue }
+              : {}),
+            // ...(filterData?.districtValue
+            //   ? { district: filterData?.districtValue }
+            //   : {}),
+            // ...(filterData?.source ? { source: filterData?.source } : {}),
+          },
+        });
+        setNewParams(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [filterData.countryValue]);
 
   return (
     <div className="flex flex-col gap-2">
@@ -78,7 +96,7 @@ const ElNinoCommonFilter = ({
         <Combobox
           name="districtValue"
           label={"District"}
-          array={transformDistrictParams(filterData?.districtList)}
+          array={transformNewParamsObject(newParams?.district)}
           state={{
             value: filterData.districtValue,
             setValue: handleChange,
@@ -99,7 +117,7 @@ const ElNinoCommonFilter = ({
           selected={selected}
           setSelected={setSelected}
           setState={handleChange}
-          array={transformObject(ElNinoToolDataIndicators).filter(
+          array={transformNewParamsObject(newParams?.indic).filter(
             (e) => !filterData.dataVariable?.includes(e.value)
           )}
           ScrollAreaHeight={22}
@@ -148,7 +166,7 @@ const ElNinoCommonFilter = ({
           label={"Source"}
           array={[
             { value: "customDataset", label: "CUSTOM DATASET" },
-            ...transformSourceObject(params?.source),
+            ...transformSourceObject(newParams?.source),
           ]}
           state={{
             value: filterData.source,
@@ -169,7 +187,7 @@ const ElNinoCommonFilter = ({
           <Combobox
             name="fromYear"
             label={"Year"}
-            array={elNinoYearsList().filter(
+            array={elNinoYearsList(newParams?.minDate.slice(0, 4)).filter(
               (e) => parseInt(e.value) + 30 < new Date().getFullYear()
             )}
             state={{
@@ -190,7 +208,7 @@ const ElNinoCommonFilter = ({
           <Combobox
             name="toYear"
             label={"Year"}
-            array={elNinoYearsList().filter(
+            array={elNinoYearsList(newParams?.minDate.slice(0, 4)).filter(
               (e) => parseInt(e.value) - parseInt(filterData.fromYear) >= 30
             )}
             state={{
