@@ -10,6 +10,7 @@ import {
   containsCropAnalysis,
   isIdle,
   transformDistrictParams,
+  transformMultiNewParamsObject,
   transformNewParamsObject,
   transformObject,
   transformSourceObject,
@@ -34,6 +35,7 @@ const ElNinoCommonFilter = ({
   filterType,
 }: FilterProps) => {
   const [newParams, setNewParams] = useState<any>(newBodyParams);
+  const [newDistricts, setNewDistricts] = useState(newBodyParams.district);
   const [selectedMonths, setSelectedMonths] = useState([]);
 
   useEffect(() => {
@@ -51,13 +53,14 @@ const ElNinoCommonFilter = ({
             ...(filterData?.countryValue
               ? { geo: filterData?.countryValue }
               : {}),
-            // ...(filterData?.districtValue
-            //   ? { district: filterData?.districtValue }
-            //   : {}),
+            ...(filterData?.districtValue
+              ? { district: filterData?.districtValue }
+              : {}),
             // ...(filterData?.source ? { source: filterData?.source } : {}),
           },
         });
-        setNewParams(response.data);
+        setNewDistricts(response?.data?.district);
+        setNewParams(response?.data);
       } catch (error) {
         console.log(error);
       }
@@ -117,7 +120,7 @@ const ElNinoCommonFilter = ({
           selected={selected}
           setSelected={setSelected}
           setState={handleChange}
-          array={transformNewParamsObject(newParams?.indic).filter(
+          array={transformMultiNewParamsObject(newParams?.indic).filter(
             (e) => !filterData.dataVariable?.includes(e.value)
           )}
           ScrollAreaHeight={22}

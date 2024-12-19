@@ -29,6 +29,12 @@ export const transformSourceObject = (object: any) =>
 
 export const transformNewParamsObject = (object: any) =>
   Array.from(Object.entries(object), ([key, value]) => ({
+    value: `${key}+${value}`,
+    label: value,
+  }));
+
+export const transformMultiNewParamsObject = (object: any) =>
+  Array.from(Object.entries(object), ([key, value]) => ({
     value: key,
     label: value,
   }));
