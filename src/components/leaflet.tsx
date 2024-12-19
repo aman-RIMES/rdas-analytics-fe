@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MapContainer, GeoJSON, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { countries, mapDataType } from "@/constants";
+import { countries, geoJsonStructure, mapDataType } from "@/constants";
 import "@/leaflet.css";
 import { formatTitle } from "@/lib/utils";
-import { useEffect } from "react";
 
 const Leaflet = ({
   geoJsonData,
@@ -26,23 +25,18 @@ const Leaflet = ({
 
   const onEachDistrict = (district: any, layer: any) => {
     const districtCode =
-      country === "PAK"
-        ? district?.properties?.ADM2_PCODE
-        : district?.properties?.SA_Code;
+      district?.properties[geoJsonStructure[country]?.district_code] || "";
     const districtName =
-      country === "PAK"
-        ? district?.properties?.ADM2_EN
-        : district?.properties?.District;
+      district?.properties[geoJsonStructure[country]?.district_name] || "";
     const provinceName =
-      country === "PAK"
-        ? district?.properties?.ADM1_EN
-        : district?.properties?.Province;
+      district?.properties[geoJsonStructure[country]?.province_name] || "";
+
     const value =
       mapType === mapDataType.normal
-        ? district?.properties[mapFilter.dataVariable][mapType][
+        ? district?.properties[mapFilter.dataVariable]?.normal[
             mapFilter.chosenMonth - 1
           ]
-        : district?.properties[mapFilter.dataVariable][mapType][
+        : district?.properties[mapFilter.dataVariable]?.anomaly[
             mapFilter.chosenMonth - 1
           ][chosenYear];
     layer.bindPopup(`
@@ -154,7 +148,7 @@ const Leaflet = ({
           //@ts-ignore
           center={subjectCountry?.coordinates}
           zoom={preferredZoomScale ? preferredZoomScale : subjectCountry?.zoom}
-          scrollWheelZoom={false}
+          scrollWheelZoom={true}
           style={{
             zIndex: 1,
           }}

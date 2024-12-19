@@ -38,12 +38,12 @@ const ElNinoCommonFilter = ({
   const [newDistricts, setNewDistricts] = useState(newBodyParams.district);
   const [selectedMonths, setSelectedMonths] = useState([]);
 
-  useEffect(() => {
-    const districtsData = params?.district.filter(
-      (e: District) => e.country === filterData.countryValue
-    );
-    handleChange("districtList", districtsData);
-  }, [filterData.countryValue]);
+  // useEffect(() => {
+  //   const districtsData = params?.district.filter(
+  //     (e: District) => e.country === filterData.countryValue
+  //   );
+  //   handleChange("districtList", districtsData);
+  // }, [filterData.countryValue]);
 
   useEffect(() => {
     (async () => {
@@ -53,9 +53,9 @@ const ElNinoCommonFilter = ({
             ...(filterData?.countryValue
               ? { geo: filterData?.countryValue }
               : {}),
-            ...(filterData?.districtValue
-              ? { district: filterData?.districtValue }
-              : {}),
+            // ...(filterData?.districtValue
+            //   ? { district: filterData?.districtValue }
+            //   : {}),
             // ...(filterData?.source ? { source: filterData?.source } : {}),
           },
         });
@@ -190,7 +190,7 @@ const ElNinoCommonFilter = ({
           <Combobox
             name="fromYear"
             label={"Year"}
-            array={elNinoYearsList(newParams?.minDate.slice(0, 4)).filter(
+            array={elNinoYearsList().filter(
               (e) => parseInt(e.value) + 30 < new Date().getFullYear()
             )}
             state={{
@@ -211,7 +211,7 @@ const ElNinoCommonFilter = ({
           <Combobox
             name="toYear"
             label={"Year"}
-            array={elNinoYearsList(newParams?.minDate.slice(0, 4)).filter(
+            array={elNinoYearsList().filter(
               (e) => parseInt(e.value) - parseInt(filterData.fromYear) >= 30
             )}
             state={{

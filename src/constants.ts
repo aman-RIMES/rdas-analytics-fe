@@ -408,6 +408,34 @@ export const countries = [
   },
 ];
 
+export const geoJsonStructure = {
+  LKA: {
+    districtCode: "GID_1",
+    districtName: "NAME_1",
+    provinceName: "TYPE_1",
+  },
+  IND: {
+    districtCode: "GID_2",
+    districtName: "NAME_2",
+    provinceName: "NAME_1",
+  },
+  BGD: {
+    district_code: "admin2Pcod",
+    district_name: "admin2Name",
+    province_name: "admin1Name",
+  },
+  PAK: {
+    district_code: "ADM2_PCODE",
+    district_name: "ADM2_EN",
+    province_name: "ADM1_EN",
+  },
+  NPL: {
+    district_code: "SA_Code",
+    district_name: "District",
+    province_name: "Province",
+  },
+};
+
 export const Indicators = {
   cotton_production: "Crop Production - Cotton",
   crop_price_monthly: "Crop-wise price monthly, yearly",
