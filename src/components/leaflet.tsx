@@ -23,8 +23,6 @@ const Leaflet = ({
     // dashArray: 5,
   };
 
-  let count = 0;
-
   const onEachDistrict = (district: any, layer: any) => {
     const districtCode =
       district?.properties[geoJsonStructure[country]?.district_code] || "";
@@ -32,9 +30,6 @@ const Leaflet = ({
       district?.properties[geoJsonStructure[country]?.district_name] || "";
     const provinceName =
       district?.properties[geoJsonStructure[country]?.province_name] || "";
-
-    count++;
-    console.log(count, districtName, provinceName);
 
     const value =
       mapType === mapDataType.normal
