@@ -18,7 +18,7 @@ export function NavMenubar() {
             : "text-foreground/50",
           "transition-colors hover:text-foreground/80 text-md font-medium text-white hover:bg-yellow-300 rounded-sm px-3 py-[6px]"
         )}
-        to="https://rdas.rimes.int"
+        to="//rdas.rimes.int"
       >
         Home
       </NavLink>
@@ -35,7 +35,7 @@ export function NavMenubar() {
               Crop Calendar Suitability to Observed Climate
             </MenubarItem>
           </NavLink>
-          <a href="https://care-lc.rimes.int/sasia/" target="_blank">
+          <a href="//care-lc.rimes.int/sasia/" target="_blank">
             <MenubarItem className="font-medium text-md ">
               Land Use & Land Cover Change
             </MenubarItem>
@@ -54,7 +54,7 @@ export function NavMenubar() {
             {/* <MenubarSeparator className="bg-yellow-300" /> */}
           </NavLink>
           <a
-            href="https://np-moald-staging.rimes.int/livestock-regional"
+            href="//np-moald-staging.rimes.int/livestock-regional"
             target="_blank"
           >
             <MenubarItem className="font-medium text-md ">TempS</MenubarItem>
