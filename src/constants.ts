@@ -436,6 +436,12 @@ export const geoJsonStructure = {
   },
 };
 
+export const routeDefinitions = {
+  "/crop-tools": "Crop Calendar Suitability to Observed Climate",
+  "/predictive-tools": "El Nino Impacts Prediction",
+  "/elnino-analytics": "El Nino and Local Climate",
+};
+
 export const Indicators = {
   cotton_production: "Crop Production - Cotton",
   crop_price_monthly: "Crop-wise price monthly, yearly",

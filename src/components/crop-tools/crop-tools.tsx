@@ -149,7 +149,7 @@ const CropTools = () => {
             </div>
 
             <p className="text-xl font-bold text-green-800 text-center my-3">
-              Crop Suitability Calendar
+              Crop Stages and Water and Temperature Requirements
             </p>
 
             <Table className="">

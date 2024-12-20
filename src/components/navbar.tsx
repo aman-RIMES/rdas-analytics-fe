@@ -14,6 +14,7 @@ import {
 import { Sidebar } from "./sidebar";
 import { ScrollArea } from "./ui/scroll-area";
 import { NavMenubar } from "./menuBar";
+import { routeDefinitions } from "@/constants";
 export default function NavBar() {
   const location = useLocation();
   return (
@@ -71,6 +72,13 @@ export default function NavBar() {
             </nav>
           </div>
         </div>
+        {(location.pathname === "/crop-tools" ||
+          location.pathname === "/predictive-tools" ||
+          location.pathname === "/elnino-analytics") && (
+          <div className="text-black font-medium text-lg bg-yellow-300 px-5 py-[3px] rounded-sm ml-[-330px] hidden lg:flex">
+            {routeDefinitions[location.pathname]}
+          </div>
+        )}
         <div className="flex">
           <nav className="flex items-center gap-1 md:gap-3">
             <a
