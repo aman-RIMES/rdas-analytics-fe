@@ -35,11 +35,11 @@ export function NavMenubar() {
               Crop Calendar Suitability to Observed Climate
             </MenubarItem>
           </NavLink>
-          <a href="//care-lc.rimes.int/sasia/" target="_blank">
+          <NavLink to="/land-use">
             <MenubarItem className="font-medium text-md ">
               Land Use & Land Cover Change
             </MenubarItem>
-          </a>
+          </NavLink>
 
           {/* <MenubarSeparator /> */}
         </MenubarContent>

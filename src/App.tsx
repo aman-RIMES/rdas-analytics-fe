@@ -9,6 +9,7 @@ import ClimateAnalytics from "./components/climate-tools/climate-analytics-tools
 import ClimatePredictiveTools from "./components/climate-tools/climate-predictive-tools/climate-predictive-tools";
 import Test from "./components/test";
 import CropTools from "./components/crop-tools/crop-tools";
+import LandUse from "./components/analytics-tools/land-use";
 function App() {
   const router = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ function App() {
         {
           path: "/elnino-analytics",
           element: <ElNinoAnalytics />,
+        },
+        {
+          path: "/land-use",
+          element: <LandUse />,
         },
         {
           path: "/predictive-tools/",

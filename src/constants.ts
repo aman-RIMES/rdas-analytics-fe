@@ -440,6 +440,7 @@ export const routeDefinitions = {
   "/crop-tools": "Crop Calendar Suitability to Observed Climate",
   "/predictive-tools": "El Nino Impacts Prediction",
   "/elnino-analytics": "El Nino and Local Climate",
+  "/land-use": "Land Use & Land Cover Change",
 };
 
 export const Indicators = {

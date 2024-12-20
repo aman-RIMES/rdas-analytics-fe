@@ -72,9 +72,7 @@ export default function NavBar() {
             </nav>
           </div>
         </div>
-        {(location.pathname === "/crop-tools" ||
-          location.pathname === "/predictive-tools" ||
-          location.pathname === "/elnino-analytics") && (
+        {location.pathname !== "/" && (
           <div className="text-black font-medium text-lg bg-yellow-300 px-5 py-[3px] rounded-sm ml-[-330px] hidden lg:flex">
             {routeDefinitions[location.pathname]}
           </div>
