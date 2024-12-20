@@ -10,6 +10,7 @@ import ClimatePredictiveTools from "./components/climate-tools/climate-predictiv
 import Test from "./components/test";
 import CropTools from "./components/crop-tools/crop-tools";
 import LandUse from "./components/analytics-tools/land-use";
+import TempS from "./components/analytics-tools/temps";
 function App() {
   const router = createBrowserRouter([
     {
@@ -36,6 +37,10 @@ function App() {
         {
           path: "/land-use",
           element: <LandUse />,
+        },
+        {
+          path: "/temps",
+          element: <TempS />,
         },
         {
           path: "/predictive-tools/",

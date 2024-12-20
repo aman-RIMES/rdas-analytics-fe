@@ -10,7 +10,7 @@ import { NavLink } from "react-router-dom";
 
 export function NavMenubar() {
   return (
-    <Menubar className="bg-transparent border-0">
+    <Menubar className="bg-transparent border-0 ">
       <NavLink
         className={cn(
           location.pathname === "/predictive-tools"
@@ -24,19 +24,19 @@ export function NavMenubar() {
       </NavLink>
       <MenubarMenu>
         <MenubarTrigger className="">Analytics</MenubarTrigger>
-        <MenubarContent className="bg-green-800 text-white">
+        <MenubarContent className="bg-green-700 text-white border-0 p-2">
           <NavLink to="/elnino-analytics">
-            <MenubarItem className="font-medium text-md ">
+            <MenubarItem className="font-medium text-sm ">
               El Nino and Local Climate
             </MenubarItem>
           </NavLink>
           <NavLink to="/crop-tools">
-            <MenubarItem className="font-medium text-md ">
+            <MenubarItem className="font-medium text-sm ">
               Crop Calendar Suitability to Observed Climate
             </MenubarItem>
           </NavLink>
           <NavLink to="/land-use">
-            <MenubarItem className="font-medium text-md ">
+            <MenubarItem className="font-medium text-sm ">
               Land Use & Land Cover Change
             </MenubarItem>
           </NavLink>
@@ -46,19 +46,16 @@ export function NavMenubar() {
       </MenubarMenu>
       <MenubarMenu>
         <MenubarTrigger className="">Predictive Tools</MenubarTrigger>
-        <MenubarContent className="bg-green-800 text-white">
+        <MenubarContent className="bg-green-700 text-white border-0 p-2">
           <NavLink to="/predictive-tools">
-            <MenubarItem className="font-medium text-md ">
+            <MenubarItem className="font-medium text-sm ">
               El Nino Impacts Prediction
             </MenubarItem>
             {/* <MenubarSeparator className="bg-yellow-300" /> */}
           </NavLink>
-          <a
-            href="//np-moald-staging.rimes.int/livestock-regional"
-            target="_blank"
-          >
-            <MenubarItem className="font-medium text-md ">TempS</MenubarItem>
-          </a>
+          <NavLink to="/temps">
+            <MenubarItem className="font-medium text-sm ">TempS</MenubarItem>
+          </NavLink>
         </MenubarContent>
       </MenubarMenu>
     </Menubar>

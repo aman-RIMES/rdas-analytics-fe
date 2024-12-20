@@ -441,6 +441,7 @@ export const routeDefinitions = {
   "/predictive-tools": "El Nino Impacts Prediction",
   "/elnino-analytics": "El Nino and Local Climate",
   "/land-use": "Land Use & Land Cover Change",
+  "/temps": "TempS",
 };
 
 export const Indicators = {
