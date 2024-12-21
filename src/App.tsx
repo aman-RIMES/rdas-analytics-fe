@@ -35,11 +35,11 @@ function App() {
           element: <ElNinoAnalytics />,
         },
         {
-          path: "/land-use",
+          path: "/analytics-land",
           element: <LandUse />,
         },
         {
-          path: "/temps",
+          path: "/predictive-temps",
           element: <TempS />,
         },
         {
@@ -47,7 +47,7 @@ function App() {
           element: <PredictiveTools />,
         },
         {
-          path: "/crop-tools/",
+          path: "/analytics-crop/",
           element: <CropTools />,
         },
         {

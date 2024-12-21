@@ -13,7 +13,7 @@ import {
 } from "./ui/sheet";
 import { Sidebar } from "./sidebar";
 import { ScrollArea } from "./ui/scroll-area";
-import { NavMenubar } from "./menuBar";
+import { NavMenubar } from "./navMenuBar";
 import { routeDefinitions } from "@/constants";
 export default function NavBar() {
   const location = useLocation();
