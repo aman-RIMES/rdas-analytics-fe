@@ -472,7 +472,7 @@ export const Indicators = {
 };
 
 export const ElNinoToolDataIndicators = {
-  rainfall: "Cummulative Rainfall",
+  rainfall: "Rainfall",
   // normal_rainfall: "Normal Rainfall",
   // rainfall_anomaly: "Rainfall Anomaly",
   // rainfall_deviation: "Deviation from Normal Rainfall",
@@ -480,7 +480,10 @@ export const ElNinoToolDataIndicators = {
   // rainfall_cummulative_seasonal: "Rainfall cumulative seasonal, Year wise",
   // rainfall_max_monthly: "Rainfall max monthly year wise",
   // rainfall_min_monthly: "Rainfall min monthly, year wise",
-  temperature: "Temperature",
+  // temperature: "Temperature",
+  tavg: "Average temperature",
+  tmin: "Minimum temperature",
+  tmax: "Maximum temperature",
   // temperature_max_monthly: "Temperature max monthly, year wise",
   // temperature_min_monthly: "Temperature min monthly, year wise",
   // temperature_avg_monthly: "Average/ mean temperature monthly, year wise",
