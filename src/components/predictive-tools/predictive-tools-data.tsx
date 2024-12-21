@@ -58,7 +58,7 @@ const PredictiveToolsData = ({
       elNinoCategory: "moderate",
       predictiveVariable: "rainfall",
     });
-  const [predictiveEvaluation, setPredictiveEvaluation] = useState<any>({});
+  const [predictiveEvaluation, setPredictiveEvaluation] = useState<any>([]);
   const [predictiveTableData, setPredictiveTableData] = useState<any>({});
 
   const handlePredictiveFilterChange = (name: string, value: string | []) => {
@@ -220,10 +220,10 @@ const PredictiveToolsData = ({
                   highcharts={Highcharts}
                   options={
                     predictiveEvaluation?.find((el) => el.category === "weak")
-                      .chart
+                      ?.chart
                       ? predictiveEvaluation?.find(
                           (el) => el.category === "weak"
-                        ).chart
+                        )?.chart
                       : sampleCharts?.predictive_chart
                   }
                 />
@@ -260,10 +260,10 @@ const PredictiveToolsData = ({
                 highcharts={Highcharts}
                 options={
                   predictiveEvaluation?.find((el) => el.category === "moderate")
-                    .chart
+                    ?.chart
                     ? predictiveEvaluation?.find(
                         (el) => el.category === "moderate"
-                      ).chart
+                      )?.chart
                     : sampleCharts?.predictive_chart
                 }
                 containerProps={{ style: { height: "400px" } }}
@@ -297,10 +297,10 @@ const PredictiveToolsData = ({
                 highcharts={Highcharts}
                 options={
                   predictiveEvaluation?.find((el) => el.category === "strong")
-                    .chart
+                    ?.chart
                     ? predictiveEvaluation?.find(
                         (el) => el.category === "strong"
-                      ).chart
+                      )?.chart
                     : sampleCharts?.predictive_chart
                 }
                 containerProps={{ style: { height: "400px" } }}
@@ -335,10 +335,10 @@ const PredictiveToolsData = ({
                 options={
                   predictiveEvaluation?.find(
                     (el) => el.category === "very_strong"
-                  ).chart
+                  )?.chart
                     ? predictiveEvaluation?.find(
                         (el) => el.category === "very_strong"
-                      ).chart
+                      )?.chart
                     : sampleCharts?.predictive_chart
                 }
                 containerProps={{ style: { height: "400px" } }}
