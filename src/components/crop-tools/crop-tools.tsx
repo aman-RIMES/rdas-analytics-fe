@@ -90,7 +90,9 @@ const CropTools = () => {
     });
     formData.append(
       `source`,
-      filterData.source === "customDataset" ? filterData.customDataset : `ERA5`
+      filterData.source === "customDataset"
+        ? filterData.customDataset
+        : filterData.source
     );
 
     setCropAnalysisStatus(requestStatus.isLoading);

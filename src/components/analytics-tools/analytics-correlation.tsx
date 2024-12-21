@@ -95,7 +95,9 @@ const AnalyticsCorrelation = ({
     });
     formData.append(
       `source`,
-      filterData.source === "customDataset" ? filterData.customDataset : `ERA5`
+      filterData.source === "customDataset"
+        ? filterData.customDataset
+        : filterData.source
     );
 
     setCorrelationStatus(requestStatus.isLoading);
@@ -105,7 +107,7 @@ const AnalyticsCorrelation = ({
         `${BASE_URL}/el_nino_correlation`,
         typeOfAnalysis === analysisType.climate
           ? {
-              source: "ERA5",
+              source: `${filterData.source}`,
               indic: `${filterData.dataVariable.join(",")}`,
               period: filterData.periodValue,
               district: filterData.districtValue,
