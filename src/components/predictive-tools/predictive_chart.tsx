@@ -29,7 +29,7 @@ const PredictiveChart = ({
         isError(regressionModelStatus)) && (
         <div className="absolute inset-0 flex justify-center items-center z-10 bg-white bg-opacity-70 ">
           {isIdle(regressionModelStatus) ? (
-            <p className="text-2xl font-bold text-green-800">
+            <p className="text-xl font-bold text-green-800">
               {IDLE_PREDICTIVE_CHART_MESSAGE}
             </p>
           ) : isError(regressionModelStatus) ? (

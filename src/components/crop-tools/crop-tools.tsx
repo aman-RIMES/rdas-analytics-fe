@@ -236,7 +236,7 @@ const CropTools = () => {
               isError(cropAnalysisStatus)) && (
               <div className="absolute inset-0 flex justify-center items-center z-10 bg-white bg-opacity-70 ">
                 {isIdle(cropAnalysisStatus) ? (
-                  <p className="text-2xl font-bold text-green-800">
+                  <p className="text-xl font-bold text-green-800">
                     {IDLE_ANALYTICS_CHART_MESSAGE}
                   </p>
                 ) : isError(cropAnalysisStatus) ? (
@@ -267,7 +267,7 @@ const CropTools = () => {
               isError(cropAnalysisStatus)) && (
               <div className="absolute inset-0 flex justify-center items-center z-10 bg-white bg-opacity-70 ">
                 {isIdle(cropAnalysisStatus) ? (
-                  <p className="text-2xl font-bold text-green-800">
+                  <p className="text-xl font-bold text-green-800">
                     {IDLE_ANALYTICS_CHART_MESSAGE}
                   </p>
                 ) : isError(cropAnalysisStatus) ? (
@@ -344,7 +344,7 @@ const CropTools = () => {
                   isError(cropAnalysisStatus)) && (
                   <div className="absolute inset-0 flex justify-center items-center z-10 bg-white bg-opacity-70 ">
                     {isIdle(cropAnalysisStatus) ? (
-                      <p className="text-2xl font-bold text-green-800">
+                      <p className="text-xl font-bold text-green-800">
                         {IDLE_ANALYTICS_CHART_MESSAGE}
                       </p>
                     ) : isError(cropAnalysisStatus) ? (
@@ -376,7 +376,7 @@ const CropTools = () => {
                   isError(cropAnalysisStatus)) && (
                   <div className="absolute inset-0 flex justify-center items-center z-10 bg-white bg-opacity-70 ">
                     {isIdle(cropAnalysisStatus) ? (
-                      <p className="text-2xl font-bold text-green-800">
+                      <p className="text-xl font-bold text-green-800">
                         {IDLE_ANALYTICS_CHART_MESSAGE}
                       </p>
                     ) : isError(cropAnalysisStatus) ? (
@@ -408,7 +408,7 @@ const CropTools = () => {
               isError(cropAnalysisStatus)) && (
               <div className="absolute inset-0 flex justify-center items-center z-10 bg-white bg-opacity-70 ">
                 {isIdle(cropAnalysisStatus) ? (
-                  <p className="text-2xl font-bold text-green-800">
+                  <p className="text-xl font-bold text-green-800">
                     {IDLE_ANALYTICS_CHART_MESSAGE}
                   </p>
                 ) : isError(cropAnalysisStatus) ? (
