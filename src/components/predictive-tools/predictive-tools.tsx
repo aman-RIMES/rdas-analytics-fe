@@ -31,6 +31,7 @@ const PredictiveTools = () => {
     fromYear: "",
     toYear: "",
     modelType: "linear",
+    eventStatus: "",
     months: [],
   });
 
@@ -45,7 +46,7 @@ const PredictiveTools = () => {
       filterData.source !== "" &&
       filterData.countryValue !== "" &&
       filterData.districtValue !== "" &&
-      filterData.modelType !== "" &&
+      filterData.eventStatus !== "" &&
       filterData.toYear !== "" &&
       filterData.fromYear !== ""
     );
@@ -86,7 +87,7 @@ const PredictiveTools = () => {
       crop: filterData.cropValue,
       start: `${filterData.fromYear}-01-01`,
       end: `${filterData.toYear}-01-01`,
-      model: filterData.modelType,
+      status: filterData.eventStatus,
     };
     const formData = new FormData();
     Object.keys(requestBody).map((key) => {

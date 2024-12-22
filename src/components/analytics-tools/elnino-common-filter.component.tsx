@@ -278,33 +278,29 @@ const ElNinoCommonFilter = ({
           />
         </div>
       )}
-      {/* <div className="grid gap-4 mb-6 md:grid-cols-2 grid-cols-1 justify-center">
-        {filterType === "predictive" && (
-          <div>
-            <div className="flex ">
-              <Label className=" text-xs font-semibold">
-                Predictive model type
-              </Label>
-              <HelpHoverCard
-                title={" Predictive model type"}
-                content={` The model type you would like to generate for the prediction (Linear or Logistic). `}
-              />
-            </div>
-            <Combobox
-              name="modelType"
-              label={"Predictive model"}
-              array={[
-                { value: "linear", label: "Linear" },
-                { value: "logistic", label: "Logistic" },
-              ]}
-              state={{
-                value: filterData.modelType,
-                setValue: handleChange,
-              }}
+      {filterType === "predictive" && (
+        <div>
+          <div className="flex ">
+            <Label className=" text-xs font-semibold">Event Status</Label>
+            <HelpHoverCard
+              title={" Event Status"}
+              content={` The current status of the event you want to predict. `}
             />
           </div>
-        )}
-      </div> */}
+          <Combobox
+            name="eventStatus"
+            label={"Event Status"}
+            array={[
+              { value: "persisting", label: "Persisting" },
+              { value: "upcoming", label: "Upcoming" },
+            ]}
+            state={{
+              value: filterData.eventStatus,
+              setValue: handleChange,
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };
