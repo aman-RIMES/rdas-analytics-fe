@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Leaflet from "../leaflet";
 import MapLegend from "../map-legend";
+import OpenLayersMap from "../openlayers";
 import {
   countries,
   DYNAMIC_MAP_ERROR_MESSAGE,
@@ -91,13 +92,13 @@ const DynamicMap = ({
                   {(isLoading(dynamicMapStatus) ||
                     isIdle(dynamicMapStatus) ||
                     isError(dynamicMapStatus)) && (
-                    <Leaflet
+                    <OpenLayersMap
                       country={mapFormData.countryValue || "NPL"}
                       geoJsonData={dynamicMapData}
                     />
                   )}
                   {isFinished(dynamicMapStatus) && (
-                    <Leaflet
+                    <OpenLayersMap
                       country={mapFormData.countryValue || "NPL"}
                       geoJsonData={dynamicMapData}
                       mapType={"normal"}
@@ -107,13 +108,6 @@ const DynamicMap = ({
                       mapFilter={mapFilter}
                     />
                   )}
-                  <MapLegend
-                    mapType={mapDataType.normal}
-                    variable={mapFilter.dataVariable}
-                  />
-                  <p className="text-center text-xs">
-                    Normal Rainfall {getMetricUnit()}
-                  </p>
                 </div>
 
                 <div className="w-full z-10 mt-2">
@@ -160,6 +154,7 @@ const DynamicMap = ({
                     </div>
                   </div>
                 </div>
+
               </div>
 
               {!isFinished(dynamicMapStatus) && (
@@ -209,13 +204,13 @@ const DynamicMap = ({
                       {(isLoading(dynamicMapStatus) ||
                         isIdle(dynamicMapStatus) ||
                         isError(dynamicMapStatus)) && (
-                        <Leaflet
+                        <OpenLayersMap
                           country={mapFormData.countryValue || "PAK"}
                           geoJsonData={dynamicMapData}
                         />
                       )}
                       {isFinished(dynamicMapStatus) && (
-                        <Leaflet
+                        <OpenLayersMap
                           country={mapFormData.countryValue || "PAK"}
                           geoJsonData={dynamicMapData}
                           mapType={"anomaly"}
@@ -225,15 +220,6 @@ const DynamicMap = ({
                           mapFilter={mapFilter}
                         />
                       )}
-                      {/* )} */}
-                      <MapLegend
-                        mapType={mapDataType.anomaly}
-                        variable={mapFilter.dataVariable}
-                      />
-                      <p className="text-center text-xs">
-                        {formatTitle(mapFilter.dataVariable)} Anomaly{" "}
-                        {getMetricUnit()}
-                      </p>
                     </div>
                   )}
                 </div>
@@ -307,13 +293,13 @@ const DynamicMap = ({
                       {(isLoading(dynamicMapStatus) ||
                         isIdle(dynamicMapStatus) ||
                         isError(dynamicMapStatus)) && (
-                        <Leaflet
+                        <OpenLayersMap
                           country={mapFormData.countryValue || "BGD"}
                           geoJsonData={dynamicMapData}
                         />
                       )}
                       {isFinished(dynamicMapStatus) && (
-                        <Leaflet
+                        <OpenLayersMap
                           country={mapFormData.countryValue || "BGD"}
                           geoJsonData={dynamicMapData}
                           mapType={"anomaly"}
@@ -323,14 +309,6 @@ const DynamicMap = ({
                         />
                       )}
 
-                      <MapLegend
-                        mapType={mapDataType.anomaly}
-                        variable={mapFilter.dataVariable}
-                      />
-                      <p className="text-center text-xs">
-                        {formatTitle(mapFilter.dataVariable)} Anomaly{" "}
-                        {getMetricUnit()}
-                      </p>
                     </div>
                   )}
                 </div>

@@ -361,7 +361,7 @@ export const countries = [
     name: "NPL",
     value: "NPL+Nepal",
     label: "Nepal",
-    coordinates: [28.3949, 84.124],
+    coordinates: [27.3949, 84.124],
     zoom: 6,
   },
   {
