@@ -1,5 +1,11 @@
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highmaps";
+import ExportingModule from 'highcharts/modules/exporting';
+import ExportDataModule from 'highcharts/modules/export-data';
+import OfflineExportingModule from 'highcharts/modules/offline-exporting';
+ExportingModule(Highcharts);
+ExportDataModule(Highcharts);
+OfflineExportingModule(Highcharts);
 import { AlertCircle, FullscreenIcon } from "lucide-react";
 import Leaflet from "../leaflet";
 import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
@@ -52,12 +58,20 @@ const AnalyticsData = ({
     setChosenMonth(value);
   };
 
+  const getChartConfig = (baseOptions: any) => ({
+    ...baseOptions,
+    exporting: {
+      enabled: true,
+      fallbackToExportServer: false,
+    }
+  });
+
   return (
     <div className="">
       <div className="p-2 ">
         <div className="grid grid-cols-2 gap-5">
           <div className="relative z-0">
-            <div className="absolute inset-0 z-20 max-h-10 flex justify-end items-start">
+            <div className="absolute inset-0 z-20 max-h-6 mr-10 flex justify-end items-start">
               <Dialog>
                 <DialogTrigger className="p-2">
                   <FullscreenIcon className="h-7 w-7 mt-1 text-green-700" />
@@ -68,11 +82,11 @@ const AnalyticsData = ({
                       <HighchartsReact
                         containerProps={{ style: { height: "600px " } }}
                         highcharts={Highcharts}
-                        options={
+                        options={getChartConfig(
                           isIdle(dynamicChartStatus)
                             ? sampleCharts?.analytics_yearly
                             : timeSeriesChartData[0]
-                        }
+                        )}
                       />
                     </DialogDescription>
                   </DialogHeader>
@@ -82,11 +96,11 @@ const AnalyticsData = ({
             <HighchartsReact
               containerProps={{ style: { height: "312px " } }}
               highcharts={Highcharts}
-              options={
+              options={getChartConfig(
                 timeSeriesChartData[0]
                   ? timeSeriesChartData[0]
                   : sampleCharts?.analytics_yearly
-              }
+              )}
             />
 
             {!isFinished(dynamicChartStatus) && (
@@ -113,7 +127,7 @@ const AnalyticsData = ({
           </div>
 
           <div className="relative z-0">
-            <div className="absolute inset-0 z-20 max-h-10 flex justify-end items-start">
+            <div className="absolute inset-0 z-20 max-h-6 mr-12 flex justify-end items-start">
               <Dialog>
                 <DialogTrigger className="p-2">
                   <FullscreenIcon className="h-7 w-7 mt-1 text-green-700" />
@@ -124,11 +138,11 @@ const AnalyticsData = ({
                       <HighchartsReact
                         containerProps={{ style: { height: "600px " } }}
                         highcharts={Highcharts}
-                        options={
+                        options={getChartConfig(
                           isIdle(dynamicChartStatus)
                             ? sampleCharts?.analytics_monthly
                             : timeSeriesChartData[chosenMonth]
-                        }
+                        )}
                       />
                     </DialogDescription>
                   </DialogHeader>
@@ -141,11 +155,11 @@ const AnalyticsData = ({
                 <HighchartsReact
                   containerProps={{ style: { height: "275px " } }}
                   highcharts={Highcharts}
-                  options={
+                  options={getChartConfig(
                     timeSeriesChartData[chosenMonth]
                       ? timeSeriesChartData[chosenMonth]
                       : sampleCharts?.analytics_monthly
-                  }
+                  )}
                 />
               </div>
 
