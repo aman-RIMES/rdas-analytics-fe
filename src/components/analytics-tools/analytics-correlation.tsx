@@ -90,7 +90,7 @@ const AnalyticsCorrelation = ({
       country: filterData.countryValue,
     };
     const formData = new FormData();
-    Object.keys(requestBody).map((key) => {
+    Object.keys(requestBody)?.map((key) => {
       formData.append(key, requestBody[key]);
     });
     formData.append(
@@ -138,7 +138,7 @@ const AnalyticsCorrelation = ({
             <Combobox
               name="correlationVariable"
               label={"Data Variable"}
-              array={transformObject(ElNinoToolDataIndicators)}
+              array={transformObject(ElNinoToolDataIndicators).filter(e => filterData.dataVariable.includes(e.value))}
               state={{
                 value: correlationFilter.correlationVariable,
                 setValue: handleChange,
@@ -181,7 +181,7 @@ const AnalyticsCorrelation = ({
       <div className="px-2">
         <div className="grid gap-4 md:grid-cols-4 grid-cols-1 ">
           {isFinished(correlationStatus)
-            ? correlationChartData[correlationFilter.correlationVariable].map(
+            ? correlationChartData[correlationFilter.correlationVariable]?.map(
                 (chartData, index) => (
                   <div className="relative z-0">
                     <div key={index}>
@@ -230,28 +230,6 @@ const AnalyticsCorrelation = ({
               ))}
         </div>
 
-        {/* <Accordion type="single" collapsible>
-          <AccordionItem value="item-1">
-            <AccordionTrigger className="flex justify-center text-md gap-2 text-green-700">
-              Correlation Plot
-            </AccordionTrigger>
-            <AccordionContent>
-              <div className="grid gap-4 my-8 md:grid-cols-4 grid-cols-1 justify-center">
-                {correlationChartData[
-                  correlationFilter.correlationVariable
-                ].map((chartData, index) => (
-                  <div key={index}>
-                    <HighchartsReact
-                      highcharts={Highcharts}
-                      options={chartData.plot}
-                    />
-                  </div>
-                ))}
-                <CorrelationPlotLegend />
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion> */}
       </div>
     </div>
   );

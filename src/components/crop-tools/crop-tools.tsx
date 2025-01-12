@@ -44,6 +44,7 @@ const CropTools = () => {
     cropValue: "",
     source: "",
     customDataset: null,
+    customCalendar: null,
     districtList: [],
     countryValue: "",
     districtValue: "",
@@ -78,11 +79,10 @@ const CropTools = () => {
   const generateCropAnalysis = async () => {
     const requestBody = {
       area: `${filterData.districtValue}`,
-      crop: filterData.cropValue,
       start: `${
         new Date().getFullYear() - parseInt(filterData.analysisTimeline)
       }-01-01`,
-      end: `${new Date().getFullYear()}-01-01`,
+      end: `${new Date().getFullYear() - 1}-01-01`,
     };
     const formData = new FormData();
     Object.keys(requestBody).map((key) => {
@@ -93,6 +93,12 @@ const CropTools = () => {
       filterData.source === "customDataset"
         ? filterData.customDataset
         : filterData.source
+    );
+    formData.append(
+      `crop`,
+      filterData.cropValue === "customCalendar"
+        ? filterData.customCalendar
+        : filterData.cropValue
     );
 
     setCropAnalysisStatus(requestStatus.isLoading);

@@ -66,17 +66,20 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
 
       <div className="">
         <div className="flex ">
-          <Label className=" text-xs font-semibold text-black">Crop </Label>
+          <Label className=" text-xs font-semibold text-black">Crop Calendar</Label>
           <HelpHoverCard
-            title={" Crop "}
+            title={" Crop Calendar"}
             content={` The specific crop you want to use for the current
               analysis. `}
           />
         </div>
         <Combobox
           name="cropValue"
-          label={"Crop"}
-          array={transformCropArray(params?.crop)}
+          label={"Crop Calendar"}
+          array={[
+            { value: "customCalendar", label: "CUSTOM CALENDAR" },
+            ...transformCropArray(params?.crop),
+          ]}
           state={{
             value: filterData.cropValue,
             setValue: handleChange,
@@ -157,6 +160,33 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
                 handleChange("customDataset", e.target.files[0]);
               }}
               id="customDataset"
+              type="file"
+              accept=".csv"
+              // value={fileName}
+            />
+          </div>
+        </>
+      )}
+
+      {filterData.cropValue === "customCalendar" && (
+        <>
+          <div>
+            <div className="flex">
+              <Label className=" text-xs font-semibold text-black">
+                Custom Calendar 
+              </Label>
+              <HelpHoverCard
+                title={" Custom Crop Calendar "}
+                content={` The custom Crop Calendar that you want to upload and use for the current
+              analysis. You can upload CSV files only`}
+              />
+              <CustomDatasetGuide title="View Template Guide" />
+            </div>
+            <Input
+              onChange={(e) => {
+                handleChange("customCalendar", e.target.files[0]);
+              }}
+              id="customCalendar"
               type="file"
               accept=".csv"
               // value={fileName}
