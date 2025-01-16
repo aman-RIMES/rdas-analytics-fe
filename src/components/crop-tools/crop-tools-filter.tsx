@@ -12,6 +12,7 @@ import { District, FilterProps } from "@/types";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { Input } from "../ui/input";
 import CustomDatasetGuide from "../custom-dataset-guide";
+import CustomCalendarGuide from "../custom-crop-calendar";
 
 const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
   useEffect(() => {
@@ -66,7 +67,9 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
 
       <div className="">
         <div className="flex ">
-          <Label className=" text-xs font-semibold text-black">Crop Calendar</Label>
+          <Label className=" text-xs font-semibold text-black">
+            Crop Calendar
+          </Label>
           <HelpHoverCard
             title={" Crop Calendar"}
             content={` The specific crop you want to use for the current
@@ -173,14 +176,14 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
           <div>
             <div className="flex">
               <Label className=" text-xs font-semibold text-black">
-                Custom Calendar 
+                Custom Calendar
               </Label>
               <HelpHoverCard
                 title={" Custom Crop Calendar "}
                 content={` The custom Crop Calendar that you want to upload and use for the current
               analysis. You can upload CSV files only`}
               />
-              <CustomDatasetGuide title="View Template Guide" />
+              <CustomCalendarGuide title="View Template Guide" />
             </div>
             <Input
               onChange={(e) => {
