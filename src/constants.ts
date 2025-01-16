@@ -304,11 +304,11 @@ export const croppingTimeline = [
 ];
 
 export const croppingStageBackground = [
-  "bg-cyan-300",
-  "bg-pink-300",
-  "bg-yellow-300",
-  "bg-green-300",
-  "bg-purple-300",
+  { color: "bg-cyan-300", image: "src/assets/stage1.png" },
+  { color: "bg-pink-300", image: "src/assets/stage2.png" },
+  { color: "bg-yellow-300", image: "src/assets/stage3.png" },
+  { color: "bg-green-300", image: "src/assets/stage4.png" },
+  { color: "bg-purple-300", image: "src/assets/stage5.png" },
 ];
 
 export const sampleCroppingResponse = {

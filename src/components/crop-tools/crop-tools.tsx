@@ -177,6 +177,31 @@ const CropTools = () => {
                 <TableRow>
                   {cropAnalysisData?.crop_calendar?.map(
                     (calendar, monthIndex) => (
+                      <TableCell key={monthIndex}>
+                        <>
+                          <div className="flex flex-row justify-center gap-16">
+                            {calendar.stages.map((stage, stageIndex) => (
+                              <div className=" m-[-15px]">
+                                <img
+                                  className="
+                                w-[70px] h-[140px]"
+                                  src={
+                                    croppingStageBackground[stage?.number - 1]
+                                      .image
+                                  }
+                                  alt=""
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        </>
+                      </TableCell>
+                    )
+                  )}
+                </TableRow>
+                <TableRow>
+                  {cropAnalysisData?.crop_calendar?.map(
+                    (calendar, monthIndex) => (
                       <TableCell
                         key={monthIndex}
                         className="text-xs text-center p-[2px] "
@@ -186,8 +211,9 @@ const CropTools = () => {
                             {calendar.stages.map((stage, stageIndex) => (
                               <div
                                 className={cn(
-                                  "text-xs w-full px-[-10] py-3",
+                                  "text-xs w-full px-[-8] py-1 flex items-center justify-center",
                                   croppingStageBackground[stage?.number - 1]
+                                    .color
                                 )}
                               >
                                 <p className="font-bold text-lg">
@@ -215,6 +241,7 @@ const CropTools = () => {
                                 className={cn(
                                   "text-xs w-full px-[-10]  py-5",
                                   croppingStageBackground[stage?.number - 1]
+                                    .color
                                 )}
                               >
                                 <p className="font-medium text-sm">
