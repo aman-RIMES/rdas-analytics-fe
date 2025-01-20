@@ -8,24 +8,14 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { FilterData, MapFormData } from "@/types";
-import {
-  getAllDistrictsOfCountry,
-  isError,
-  isFinished,
-  isIdle,
-  isLoading,
-} from "@/lib/utils";
-import { Button } from "../ui/button";
+import { FilterData } from "@/types";
+import { isFinished } from "@/lib/utils";
 import AnalyticsCorrelation from "./analytics-correlation";
-import DescriptiveAnalysis from "./analytics-descriptive-analysis";
 import AnalyticsData from "./analytics-data";
 import bodyParams from "../../data/body_params.json";
 import ElNinoCommonFilter from "./elnino-common-filter.component";
 import SubmitButton from "../submit-button";
 import DynamicMap from "./dynamic-map";
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { AlertCircle } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import CustomDatasetGuide from "../custom-dataset-guide";
 
@@ -33,33 +23,11 @@ const ElNinoAnalytics = () => {
   const navigate = useNavigate();
 
   const [params, setParams] = useState<any>(bodyParams);
+  const [selected, setSelected] = useState<[]>([]);
+  const [loadAnalysisData, setLoadAnalysisData] = useState(false);
   const [dynamicChartStatus, setDynamicChartStatus] = useState<requestStatus>(
     requestStatus.idle
   );
-  const [dynamiMapStatus, setDynamiMapStatus] = useState<requestStatus>(
-    requestStatus.idle
-  );
-  const [firstAnomlayMapStatus, setFirstAnomalyMapStatus] =
-    useState<requestStatus>(requestStatus.idle);
-  const [secondAnomlayMapStatus, setSecondAnomalyMapStatus] =
-    useState<requestStatus>(requestStatus.idle);
-  const [timeSeriesChartData, setTimeSeriesChartData] = useState<any>({});
-  const [dynamicMapData, setDynamicMapData] = useState<any>({});
-  const [selected, setSelected] = useState<[]>([]);
-  const [mapFormData, setMapFormData] = useState<MapFormData>({
-    fromYear: "",
-    toYear: "",
-    countryValue: "",
-  });
-
-  const yearList = [];
-  for (
-    let i: any = parseInt(mapFormData.fromYear);
-    i <= parseInt(mapFormData.toYear);
-    i++
-  ) {
-    yearList.push({ value: i.toString(), label: i.toString() });
-  }
 
   const [filterData, setFilterData] = useState<FilterData>({
     dataVariable: [],
@@ -69,8 +37,6 @@ const ElNinoAnalytics = () => {
     countryValue: "",
     districtValue: "",
     districtList: [],
-    anomalyYear1: "1",
-    anomalyYear2: "2",
     fromYear: "",
     toYear: "",
   });
@@ -101,83 +67,10 @@ const ElNinoAnalytics = () => {
     })();
   }, []);
 
-  //TODO: Control the reloading of the maps from the analytics-data component
-  useEffect(() => {
-    reloadAnomalyMap(setFirstAnomalyMapStatus);
-  }, [filterData.anomalyYear1]);
-  useEffect(() => {
-    reloadAnomalyMap(setSecondAnomalyMapStatus);
-  }, [filterData.anomalyYear2]);
-
-  const generateDynamicChart = async () => {
-    const requestBody = {
-      indic: `${filterData.dataVariable.join(",")}`,
-      area: [`${filterData.districtValue}`],
-      crop: filterData.cropValue,
-      start: `${filterData.fromYear}-01-01`,
-      end: `${filterData.toYear}-01-01`,
-      country: filterData.countryValue,
-    };
-    const formData = new FormData();
-    Object.keys(requestBody).map((key) => {
-      formData.append(key, requestBody[key]);
-    });
-    formData.append(
-      `source`,
-      filterData.source === "customDataset"
-        ? filterData.customDataset
-        : filterData.source
-    );
-
-    setDynamicChartStatus(requestStatus.isLoading);
-    setDynamiMapStatus(requestStatus.isLoading);
-    setTimeSeriesChartData({});
-    setDynamicMapData({});
-    handleChange("anomalyYear1", "1");
-    handleChange("anomalyYear2", "2");
-    try {
-      const response = await axios.post(
-        `${BASE_URL}/el_nino_time_series_chart`,
-        formData
-      );
-
-      setTimeSeriesChartData(response.data);
-      setDynamicChartStatus(requestStatus.isFinished);
-      setMapFormData({
-        fromYear: filterData.fromYear,
-        toYear: filterData.toYear,
-        countryValue: filterData.countryValue,
-      });
-    } catch (error) {
-      setDynamicChartStatus(requestStatus.isError);
-      return;
-    }
-
-    try {
-      setDynamiMapStatus(requestStatus.isLoading);
-      const geoJson = await axios.post(`${BASE_URL}/el_nino_map`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      setDynamicMapData(geoJson.data);
-      setDynamiMapStatus(requestStatus.isFinished);
-      setFirstAnomalyMapStatus(requestStatus.isFinished);
-      setSecondAnomalyMapStatus(requestStatus.isFinished);
-    } catch (error) {
-      setDynamiMapStatus(requestStatus.isError);
-    }
-  };
-
-  const reloadAnomalyMap = async (setStatus) => {
-    try {
-      setStatus(requestStatus.isLoading);
-      setTimeout(() => {
-        setStatus(requestStatus.isFinished);
-      }, 0);
-    } catch (error) {
-      setDynamiMapStatus(requestStatus.isError);
-    }
+  const generateAnalysis = async () => {
+    setLoadAnalysisData(true);
+    // Reset after short delay
+    setTimeout(() => setLoadAnalysisData(false), 100);
   };
 
   return (
@@ -207,7 +100,7 @@ const ElNinoAnalytics = () => {
                   <div className="w-full h-full">
                     <SubmitButton
                       verifyFilters={verifyFilters()}
-                      submitFunction={generateDynamicChart}
+                      submitFunction={generateAnalysis}
                       loadingStatus={dynamicChartStatus}
                     />
 
@@ -234,15 +127,8 @@ const ElNinoAnalytics = () => {
               <div className="">
                 <div>
                   <DynamicMap
-                    mapFormData={mapFormData}
                     filterData={filterData}
-                    dynamicMapData={dynamicMapData}
-                    dynamicMapStatus={dynamiMapStatus}
-                    yearList={yearList}
-                    firstAnomalyMapStatus={firstAnomlayMapStatus}
-                    secondAnomalyMapStatus={secondAnomlayMapStatus}
-                    handleChange={handleChange}
-                    setDynamicMapStatus
+                    loadAnalysisData={loadAnalysisData}
                   />
                 </div>
               </div>
@@ -273,14 +159,9 @@ const ElNinoAnalytics = () => {
                     <div className="">
                       <AnalyticsData
                         filterData={filterData}
-                        timeSeriesChartData={timeSeriesChartData}
-                        dynamicMapData={dynamicMapData}
+                        loadAnalysisData={loadAnalysisData}
+                        setDynamicChartStatus={setDynamicChartStatus}
                         dynamicChartStatus={dynamicChartStatus}
-                        dynamiMapStatus={dynamiMapStatus}
-                        firstAnomalyMapStatus={firstAnomlayMapStatus}
-                        secondAnomalyMapStatus={secondAnomlayMapStatus}
-                        handleChange={handleChange}
-                        mapFormData={mapFormData}
                       />
                     </div>
                   </TabsContent>

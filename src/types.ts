@@ -115,15 +115,11 @@ export interface FilterProps {
 }
 
 export interface AnalyticsDataProps {
-  filterData: FilterData;
-  timeSeriesChartData: any;
-  dynamicMapData: any;
-  dynamicChartStatus: requestStatus;
-  dynamiMapStatus: requestStatus;
-  firstAnomalyMapStatus?: requestStatus;
-  secondAnomalyMapStatus?: requestStatus;
+  filterData?: FilterData;
+  dynamicChartStatus?: requestStatus;
   handleChange?: (name, value) => void;
-  mapFormData?: MapFormData;
+  loadAnalysisData?: boolean;
+  setDynamicChartStatus?: (status: requestStatus) => void;
 }
 
 export interface PredictiveDataProps {

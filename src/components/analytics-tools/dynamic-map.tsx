@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
-import Leaflet from "../leaflet";
-import MapLegend from "../map-legend";
+import { useEffect, useState } from "react";
 import OpenLayersMap from "../openlayers";
 import {
+  BASE_URL,
   countries,
   DYNAMIC_MAP_ERROR_MESSAGE,
-  ElNinoCategories,
   ElNinoToolDataIndicators,
-  ElNinoYears,
   IDLE_ANALYTICS_CHART_MESSAGE,
-  mapDataType,
   monthsList,
   requestStatus,
 } from "@/constants";
@@ -24,48 +20,208 @@ import {
 import { Label } from "@radix-ui/react-dropdown-menu";
 import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
-import { MapFilterData } from "@/types";
+import { MapFilterData, MapFormData } from "@/types";
 import { grid } from "ldrs";
 import ErrorMessage from "../ui/error-message";
 import Loading from "../ui/loading";
+import axios from "axios";
 grid.register("l-grid");
 
-const DynamicMap = ({
-  mapFormData,
-  filterData,
-  dynamicMapData,
-  yearList,
-  firstAnomalyMapStatus,
-  secondAnomalyMapStatus,
-  handleChange,
-  dynamicMapStatus,
-  setDynamicMapStatus,
-}) => {
+const DynamicMap = ({ filterData, loadAnalysisData }) => {
   const [mapFilter, setMapFilter] = useState<MapFilterData>({
     dataVariable: "rainfall",
     chosenMonth: "1",
   });
-
-  const [mapLoadingStatus, setMapLoadingStatus] = useState(
-    requestStatus.isFinished
+  const [anomalyYear, setAnomalyYear] = useState<any>({
+    firstAnomalyMap: "",
+    secondAnomalyMap: "",
+  });
+  const [previousFormData, setPreviousFormData] = useState<any>({});
+  const [mapFormData, setMapFormData] = useState<MapFormData>({
+    fromYear: "",
+    toYear: "",
+    countryValue: "",
+  });
+  const yearList = [];
+  for (
+    let i: any = parseInt(mapFormData.fromYear);
+    i <= parseInt(mapFormData.toYear);
+    i++
+  ) {
+    yearList.push({ value: i.toString(), label: i.toString() });
+  }
+  const [geoJsonData, setGeoJsonData] = useState<any>({});
+  const [firstAnomalyMapData, setFirstAnomalyMapData] = useState<any>({});
+  const [secondAnomalyMapData, setSecondAnomalyMapData] = useState<any>({});
+  const [normalMapData, setNormalMapData] = useState<any>({});
+  const [geoJsonStatus, setGeoJsonStatus] = useState<requestStatus>(
+    requestStatus.idle
   );
+  const [normalMapStatus, setNormalMapStatus] = useState<requestStatus>(
+    requestStatus.idle
+  );
+  const [firstAnomalyMapStatus, setFirstAnomalyMapStatus] =
+    useState<requestStatus>(requestStatus.idle);
+  const [secondAnomalyMapStatus, setSecondAnomalyMapStatus] =
+    useState<requestStatus>(requestStatus.idle);
 
   const handleMapFilterChange = (name: string, value: string) => {
     setMapFilter((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleAnomalyYearChange = (name: string, value: string) => {
+    setAnomalyYear((prev) => ({ ...prev, [name]: value }));
+  };
+
   useEffect(() => {
-    reloadAnomalyMap();
+    fetchNormalMapData(previousFormData);
+    fetchAnomalyMapData(
+      previousFormData,
+      setFirstAnomalyMapData,
+      setFirstAnomalyMapStatus,
+      parseInt(anomalyYear.firstAnomalyMap) || parseInt(mapFormData.fromYear)
+    );
+    fetchAnomalyMapData(
+      previousFormData,
+      setSecondAnomalyMapData,
+      setSecondAnomalyMapStatus,
+      parseInt(anomalyYear.secondAnomalyMap) || parseInt(mapFormData.fromYear)
+    );
   }, [mapFilter]);
 
-  const reloadAnomalyMap = async () => {
+  useEffect(() => {
+    if (anomalyYear.firstAnomalyMap) {
+      fetchAnomalyMapData(
+        previousFormData,
+        setFirstAnomalyMapData,
+        setFirstAnomalyMapStatus,
+        parseInt(anomalyYear.firstAnomalyMap)
+      );
+    }
+  }, [anomalyYear.firstAnomalyMap]);
+
+  useEffect(() => {
+    if (anomalyYear.secondAnomalyMap) {
+      fetchAnomalyMapData(
+        previousFormData,
+        setSecondAnomalyMapData,
+        setSecondAnomalyMapStatus,
+        parseInt(anomalyYear.secondAnomalyMap)
+      );
+    }
+  }, [anomalyYear.secondAnomalyMap]);
+
+  useEffect(() => {
+    setMapFormData({
+      fromYear: filterData.fromYear,
+      toYear: filterData.toYear,
+      countryValue: filterData.countryValue,
+    });
+
+    (async () => {
+      if (loadAnalysisData) {
+        const requestBody = {
+          indic: `${filterData.dataVariable.join(",")}`,
+          area: [`${filterData.districtValue}`],
+          crop: filterData.cropValue,
+          start: `${filterData.fromYear}-01-01`,
+          end: `${filterData.toYear}-01-01`,
+          country: filterData.countryValue,
+          months: 1,
+          year: filterData.fromYear,
+        };
+        const formData = new FormData();
+        Object.keys(requestBody).map((key) => {
+          formData.append(key, requestBody[key]);
+        });
+        formData.append(
+          `source`,
+          filterData.source === "customDataset"
+            ? filterData.customDataset
+            : filterData.source
+        );
+        setPreviousFormData(formData);
+
+        fetchGeoJson();
+        fetchNormalMapData(formData);
+        fetchAnomalyMapData(
+          formData,
+          setFirstAnomalyMapData,
+          setFirstAnomalyMapStatus,
+          filterData.fromYear
+        );
+        fetchAnomalyMapData(
+          formData,
+          setSecondAnomalyMapData,
+          setSecondAnomalyMapStatus,
+          filterData.fromYear
+        );
+      }
+    })();
+  }, [loadAnalysisData]);
+
+  const fetchGeoJson = async () => {
     try {
-      setMapLoadingStatus(requestStatus.isLoading);
-      setTimeout(() => {
-        setMapLoadingStatus(requestStatus.isFinished);
-      }, 0);
+      setGeoJsonStatus(requestStatus.isLoading);
+      const geoJson = await axios.post(
+        `${BASE_URL}/el_nino_map_geojson`,
+        { country: filterData.countryValue },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setGeoJsonData(geoJson.data);
+      setGeoJsonStatus(requestStatus.isFinished);
     } catch (error) {
-      setMapLoadingStatus(requestStatus.isError);
+      setGeoJsonStatus(requestStatus.isError);
+    }
+  };
+
+  const fetchNormalMapData = async (formData) => {
+    formData.set(`months`, mapFilter.chosenMonth);
+    try {
+      setNormalMapStatus(requestStatus.isLoading);
+      const response = await axios.post(
+        `${BASE_URL}/el_nino_map_normal`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setNormalMapData(response.data);
+      setNormalMapStatus(requestStatus.isFinished);
+    } catch (error) {
+      setNormalMapStatus(requestStatus.isError);
+    }
+  };
+
+  const fetchAnomalyMapData = async (
+    formData,
+    setAnomalyMapData,
+    setStatus,
+    year
+  ) => {
+    formData.set(`months`, mapFilter.chosenMonth);
+    formData.set(`year`, year);
+    try {
+      setStatus(requestStatus.isLoading);
+      const response = await axios.post(
+        `${BASE_URL}/el_nino_map_anomaly`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setAnomalyMapData(response.data);
+      setStatus(requestStatus.isFinished);
+    } catch (error) {
+      setStatus(requestStatus.isError);
     }
   };
 
@@ -75,288 +231,284 @@ const DynamicMap = ({
 
   return (
     <div className="rounded-lg bg-white p-1 pb-2 shadow-md">
-      {isFinished(mapLoadingStatus) && (
-        <>
-          <div className="grid xl:grid-cols-3 grid-cols-1">
-            <div className="relative z-0">
-              <div className="p-1 ">
-                <p className="text-sm mb-2 font-medium flex justify-center">
-                  Normal {formatTitle(mapFilter.dataVariable)} {getMetricUnit()}{" "}
-                  for{" "}
-                  {
-                    countries?.find((e) => e.value === mapFormData.countryValue)
-                      ?.label
-                  }{" "}
-                </p>
-                <div className="flex flex-col ">
-                  {(isLoading(dynamicMapStatus) ||
-                    isIdle(dynamicMapStatus) ||
-                    isError(dynamicMapStatus)) && (
-                    <OpenLayersMap
-                      country={mapFormData.countryValue || "NPL"}
-                      geoJsonData={dynamicMapData}
-                    />
-                  )}
-                  {isFinished(dynamicMapStatus) && (
-                    <OpenLayersMap
-                      country={mapFormData.countryValue || "NPL"}
-                      geoJsonData={dynamicMapData}
-                      mapType={"normal"}
-                      chosenYear={filterData.anomalyYear1}
-                      chosenDistrict={filterData.districtValue}
-                      preferredZoomScale={6}
-                      mapFilter={mapFilter}
-                    />
-                  )}
-                </div>
-
-                <div className="w-full z-10 mt-2">
-                  <div className="grid grid-cols-2 gap-5 ">
-                    <div className="">
-                      <div className="flex gap-2 ">
-                        <Label className="text-xs font-semibold">
-                          Data Variable
-                        </Label>
-                        <HelpHoverCard
-                          title={"Data Variable"}
-                          content={` The Data Variable you would like to compare against each El Nino category. `}
-                        />
-                      </div>
-                      <Combobox
-                        name="dataVariable"
-                        label={"Data Variable"}
-                        array={transformObject(ElNinoToolDataIndicators)}
-                        state={{
-                          value: mapFilter.dataVariable,
-                          setValue: handleMapFilterChange,
-                        }}
-                      />
-                    </div>
-
-                    <div className="">
-                      <div className="flex gap-2 ">
-                        <Label className="text-xs font-semibold">Month</Label>
-                        <HelpHoverCard
-                          title={"Months"}
-                          content={`The month used to compare against the El Nino
-              variable.`}
-                        />
-                      </div>
-                      <Combobox
-                        name="chosenMonth"
-                        label={"Month"}
-                        array={monthsList}
-                        state={{
-                          value: mapFilter.chosenMonth,
-                          setValue: handleMapFilterChange,
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-              {!isFinished(dynamicMapStatus) && (
-                <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
-                  {isIdle(dynamicMapStatus) ? (
-                    <p className="text-xl font-bold text-green-800">
-                      {IDLE_ANALYTICS_CHART_MESSAGE}
-                    </p>
-                  ) : isError(dynamicMapStatus) ? (
-                    <ErrorMessage errorMessage={DYNAMIC_MAP_ERROR_MESSAGE} />
-                  ) : (
-                    <Loading
-                      animation={
-                        // @ts-ignore
-                        <l-grid color="green" stroke={8} size="60"></l-grid>
-                      }
-                    />
-                  )}
-                </div>
+      <div className="grid xl:grid-cols-3 grid-cols-1">
+        <div className="relative z-0">
+          <div className="p-1 ">
+            <p className="text-sm mb-2 font-medium flex justify-center">
+              Normal {formatTitle(mapFilter.dataVariable)} {getMetricUnit()} for{" "}
+              {
+                countries?.find((e) => e.value === mapFormData.countryValue)
+                  ?.label
+              }{" "}
+            </p>
+            <div className="flex flex-col ">
+              {isFinished(normalMapStatus) && isFinished(geoJsonStatus) ? (
+                <OpenLayersMap
+                  country={mapFormData.countryValue || "NPL"}
+                  geoJsonData={geoJsonData}
+                  mapData={normalMapData}
+                  mapType={"normal"}
+                  chosenYear={filterData.anomalyYear1}
+                  chosenDistrict={filterData.districtValue}
+                  preferredZoomScale={6}
+                  mapFilter={mapFilter}
+                />
+              ) : (
+                <OpenLayersMap
+                  country={mapFormData.countryValue || "NPL"}
+                  geoJsonData={geoJsonData}
+                  mapData={normalMapData}
+                  mapType={"normal"}
+                  chosenYear={filterData.anomalyYear1}
+                  // chosenDistrict={filterData.districtValue}
+                  preferredZoomScale={6}
+                  mapFilter={mapFilter}
+                />
               )}
             </div>
 
-            <div className="relative z-0">
-              <div className="p-1">
-                <p className="text-sm mb-2 font-medium flex justify-center">
-                  {formatTitle(mapFilter.dataVariable)} Anomaly{" "}
-                  {getMetricUnit()} for{" "}
-                  {
-                    countries.find((e) => e.value === mapFormData?.countryValue)
-                      ?.label
-                  }{" "}
-                  {
-                    yearList.find((e) => e.value === filterData?.anomalyYear1)
-                      ?.label
-                  }
-                </p>
-
-                <div className="w-full">
-                  {isLoading(firstAnomalyMapStatus) && (
-                    <div className=" mb-[217px] flex flex-col items-center justify-center mt-40">
-                      {/* @ts-ignore */}
-                      <l-loader color="green" size="50"></l-loader>
-                    </div>
-                  )}
-                  {isFinished(firstAnomalyMapStatus) && (
-                    <div className="flex flex-col">
-                      {(isLoading(dynamicMapStatus) ||
-                        isIdle(dynamicMapStatus) ||
-                        isError(dynamicMapStatus)) && (
-                        <OpenLayersMap
-                          country={mapFormData.countryValue || "PAK"}
-                          geoJsonData={dynamicMapData}
-                        />
-                      )}
-                      {isFinished(dynamicMapStatus) && (
-                        <OpenLayersMap
-                          country={mapFormData.countryValue || "PAK"}
-                          geoJsonData={dynamicMapData}
-                          mapType={"anomaly"}
-                          chosenYear={filterData.anomalyYear1}
-                          chosenDistrict={filterData.districtValue}
-                          preferredZoomScale={6}
-                          mapFilter={mapFilter}
-                        />
-                      )}
-                    </div>
-                  )}
-                </div>
-
-                <div className="w-full z-10 mt-2">
+            <div className="w-full z-10 mt-2">
+              <div className="grid grid-cols-2 gap-5 ">
+                <div className="">
                   <div className="flex gap-2 ">
                     <Label className="text-xs font-semibold">
-                      {" "}
-                      Anomaly Year{" "}
+                      Data Variable
                     </Label>
                     <HelpHoverCard
-                      title={" Anomaly Year "}
-                      content={` The year of anomaly that you would like to view `}
+                      title={"Data Variable"}
+                      content={` The Data Variable you would like to compare against each El Nino category. `}
                     />
                   </div>
                   <Combobox
-                    name="anomalyYear1"
-                    label={"Year"}
-                    array={yearList}
+                    name="dataVariable"
+                    label={"Data Variable"}
+                    array={transformObject(ElNinoToolDataIndicators).filter(
+                      (e) => filterData.dataVariable.includes(e.value)
+                    )}
                     state={{
-                      value: filterData.anomalyYear1,
-                      setValue: handleChange,
+                      value: mapFilter.dataVariable,
+                      setValue: handleMapFilterChange,
                     }}
                   />
                 </div>
-              </div>
-              {!isFinished(dynamicMapStatus) && (
-                <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
-                  {isIdle(dynamicMapStatus) ? (
-                    <p className="text-xl font-bold text-green-800">
-                      {IDLE_ANALYTICS_CHART_MESSAGE}
-                    </p>
-                  ) : isError(dynamicMapStatus) ? (
-                    <ErrorMessage errorMessage={DYNAMIC_MAP_ERROR_MESSAGE} />
-                  ) : (
-                    <Loading
-                      animation={
-                        // @ts-ignore
-                        <l-grid color="green" stroke={8} size="60"></l-grid>
-                      }
-                    />
-                  )}
-                </div>
-              )}
-            </div>
 
-            <div className="relative z-0">
-              <div className="p-1">
-                <p className="text-sm mb-2 font-medium flex justify-center">
-                  {formatTitle(mapFilter.dataVariable)} Anomaly{" "}
-                  {getMetricUnit()} for{" "}
-                  {
-                    countries.find((e) => e.value === mapFormData?.countryValue)
-                      ?.label
-                  }{" "}
-                  {
-                    yearList.find((e) => e.value === filterData?.anomalyYear2)
-                      ?.label
-                  }
-                </p>
-
-                <div className="w-full">
-                  {isLoading(secondAnomalyMapStatus) && (
-                    <div className="mb-[217px] flex flex-col items-center justify-center mt-40">
-                      {/* @ts-ignore */}
-                      <l-loader color="green" size="50"></l-loader>
-                    </div>
-                  )}
-                  {isFinished(secondAnomalyMapStatus) && (
-                    <div className="flex flex-col">
-                      {(isLoading(dynamicMapStatus) ||
-                        isIdle(dynamicMapStatus) ||
-                        isError(dynamicMapStatus)) && (
-                        <OpenLayersMap
-                          country={mapFormData.countryValue || "BGD"}
-                          geoJsonData={dynamicMapData}
-                        />
-                      )}
-                      {isFinished(dynamicMapStatus) && (
-                        <OpenLayersMap
-                          country={mapFormData.countryValue || "BGD"}
-                          geoJsonData={dynamicMapData}
-                          mapType={"anomaly"}
-                          chosenYear={filterData.anomalyYear2}
-                          chosenDistrict={filterData.districtValue}
-                          mapFilter={mapFilter}
-                        />
-                      )}
-
-                    </div>
-                  )}
-                </div>
-
-                <div className="w-full z-10 mt-2">
+                <div className="">
                   <div className="flex gap-2 ">
-                    <Label className=" text-xs font-semibold">
-                      {" "}
-                      Anomaly Year{" "}
-                    </Label>
+                    <Label className="text-xs font-semibold">Month</Label>
                     <HelpHoverCard
-                      title={" Anomaly Year "}
-                      content={` The year of anomaly that you would like to view `}
+                      title={"Months"}
+                      content={`The month used to compare against the El Nino
+              variable.`}
                     />
                   </div>
                   <Combobox
-                    name="anomalyYear2"
-                    label={"Year"}
-                    array={yearList}
+                    name="chosenMonth"
+                    label={"Month"}
+                    array={monthsList}
                     state={{
-                      value: filterData.anomalyYear2,
-                      setValue: handleChange,
+                      value: mapFilter.chosenMonth,
+                      setValue: handleMapFilterChange,
                     }}
                   />
                 </div>
               </div>
-              {!isFinished(dynamicMapStatus) && (
-                <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
-                  {isIdle(dynamicMapStatus) ? (
-                    <p className="text-xl font-bold text-green-800">
-                      {IDLE_ANALYTICS_CHART_MESSAGE}
-                    </p>
-                  ) : isError(dynamicMapStatus) ? (
-                    <ErrorMessage errorMessage={DYNAMIC_MAP_ERROR_MESSAGE} />
-                  ) : (
-                    <Loading
-                      animation={
-                        // @ts-ignore
-                        <l-grid color="green" stroke={8} size="60"></l-grid>
-                      }
-                    />
-                  )}
-                </div>
-              )}
             </div>
           </div>
-        </>
-      )}
+
+          {(!isFinished(geoJsonStatus) || !isFinished(normalMapStatus)) && (
+            <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
+              {(isIdle(geoJsonStatus) || isIdle(normalMapStatus)) && (
+                <p className="text-xl font-bold text-green-800">
+                  {IDLE_ANALYTICS_CHART_MESSAGE}
+                </p>
+              )}
+              {(isError(geoJsonStatus) || isError(normalMapStatus)) && (
+                <ErrorMessage errorMessage={DYNAMIC_MAP_ERROR_MESSAGE} />
+              )}
+
+              {(isLoading(geoJsonStatus) || isLoading(normalMapStatus)) && (
+                <Loading
+                  animation={
+                    // @ts-ignore
+                    <l-grid color="green" stroke={8} size="60"></l-grid>
+                  }
+                />
+              )}
+            </div>
+          )}
+        </div>
+
+        <div className="relative z-0">
+          <div className="p-1">
+            <p className="text-sm mb-2 font-medium flex justify-center">
+              {formatTitle(mapFilter.dataVariable)} Anomaly {getMetricUnit()}{" "}
+              for{" "}
+              {
+                countries.find((e) => e.value === mapFormData?.countryValue)
+                  ?.label
+              }{" "}
+              {
+                yearList.find((e) => e.value === filterData?.anomalyYear1)
+                  ?.label
+              }
+            </p>
+
+            <div className="w-full">
+              {isFinished(geoJsonStatus) &&
+              isFinished(firstAnomalyMapStatus) ? (
+                <OpenLayersMap
+                  country={mapFormData.countryValue || "PAK"}
+                  geoJsonData={geoJsonData}
+                  mapData={firstAnomalyMapData}
+                  mapType={"anomaly"}
+                  chosenYear={filterData.anomalyYear1}
+                  chosenDistrict={filterData.districtValue}
+                  preferredZoomScale={6}
+                  mapFilter={mapFilter}
+                />
+              ) : (
+                <OpenLayersMap
+                  country={mapFormData.countryValue || "PAK"}
+                  geoJsonData={geoJsonData}
+                  mapData={firstAnomalyMapData}
+                  mapType={"anomaly"}
+                  chosenYear={filterData.anomalyYear1}
+                  // chosenDistrict={filterData.districtValue}
+                  preferredZoomScale={6}
+                  mapFilter={mapFilter}
+                />
+              )}
+            </div>
+
+            <div className="w-full z-10 mt-2">
+              <div className="flex gap-2 ">
+                <Label className="text-xs font-semibold"> Anomaly Year </Label>
+                <HelpHoverCard
+                  title={" Anomaly Year "}
+                  content={` The year of anomaly that you would like to view `}
+                />
+              </div>
+              <Combobox
+                name="firstAnomalyMap"
+                label={"Year"}
+                array={yearList}
+                state={{
+                  value: anomalyYear.firstAnomalyMap,
+                  setValue: handleAnomalyYearChange,
+                }}
+              />
+            </div>
+          </div>
+          {(!isFinished(geoJsonStatus) ||
+            !isFinished(firstAnomalyMapStatus)) && (
+            <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
+              {(isIdle(geoJsonStatus) || isIdle(firstAnomalyMapStatus)) && (
+                <p className="text-xl font-bold text-green-800">
+                  {IDLE_ANALYTICS_CHART_MESSAGE}
+                </p>
+              )}
+              {(isError(geoJsonStatus) || isError(firstAnomalyMapStatus)) && (
+                <ErrorMessage errorMessage={DYNAMIC_MAP_ERROR_MESSAGE} />
+              )}
+
+              {(isLoading(geoJsonStatus) ||
+                isLoading(firstAnomalyMapStatus)) && (
+                <Loading
+                  animation={
+                    // @ts-ignore
+                    <l-grid color="green" stroke={8} size="60"></l-grid>
+                  }
+                />
+              )}
+            </div>
+          )}
+        </div>
+
+        <div className="relative z-0">
+          <div className="p-1">
+            <p className="text-sm mb-2 font-medium flex justify-center">
+              {formatTitle(mapFilter.dataVariable)} Anomaly {getMetricUnit()}{" "}
+              for{" "}
+              {
+                countries.find((e) => e.value === mapFormData?.countryValue)
+                  ?.label
+              }{" "}
+              {
+                yearList.find((e) => e.value === filterData?.anomalyYear2)
+                  ?.label
+              }
+            </p>
+
+            {isFinished(geoJsonStatus) && isFinished(secondAnomalyMapStatus) ? (
+              <div className="w-full">
+                <OpenLayersMap
+                  country={mapFormData.countryValue || "BGD"}
+                  geoJsonData={geoJsonData}
+                  mapData={secondAnomalyMapData}
+                  mapType={"anomaly"}
+                  chosenYear={filterData.anomalyYear2}
+                  chosenDistrict={filterData.districtValue}
+                  mapFilter={mapFilter}
+                />
+              </div>
+            ) : (
+              <div className="w-full">
+                <OpenLayersMap
+                  country={mapFormData.countryValue || "BGD"}
+                  geoJsonData={geoJsonData}
+                  mapData={secondAnomalyMapData}
+                  mapType={"anomaly"}
+                  chosenYear={filterData.anomalyYear2}
+                  // chosenDistrict={filterData.districtValue}
+                  mapFilter={mapFilter}
+                />
+              </div>
+            )}
+
+            <div className="w-full z-10 mt-2">
+              <div className="flex gap-2 ">
+                <Label className=" text-xs font-semibold"> Anomaly Year </Label>
+                <HelpHoverCard
+                  title={" Anomaly Year "}
+                  content={` The year of anomaly that you would like to view `}
+                />
+              </div>
+              <Combobox
+                name="secondAnomalyMap"
+                label={"Year"}
+                array={yearList}
+                state={{
+                  value: anomalyYear.secondAnomalyMap,
+                  setValue: handleAnomalyYearChange,
+                }}
+              />
+            </div>
+          </div>
+          {(!isFinished(geoJsonStatus) ||
+            !isFinished(secondAnomalyMapStatus)) && (
+            <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
+              {(isIdle(geoJsonStatus) || isIdle(secondAnomalyMapStatus)) && (
+                <p className="text-xl font-bold text-green-800">
+                  {IDLE_ANALYTICS_CHART_MESSAGE}
+                </p>
+              )}
+              {(isError(geoJsonStatus) || isError(secondAnomalyMapStatus)) && (
+                <ErrorMessage errorMessage={DYNAMIC_MAP_ERROR_MESSAGE} />
+              )}
+
+              {(isLoading(geoJsonStatus) ||
+                isLoading(secondAnomalyMapStatus)) && (
+                <Loading
+                  animation={
+                    // @ts-ignore
+                    <l-grid color="green" stroke={8} size="60"></l-grid>
+                  }
+                />
+              )}
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

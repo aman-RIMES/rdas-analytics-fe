@@ -1,24 +1,22 @@
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highmaps";
-import ExportingModule from 'highcharts/modules/exporting';
-import ExportDataModule from 'highcharts/modules/export-data';
-import OfflineExportingModule from 'highcharts/modules/offline-exporting';
+import ExportingModule from "highcharts/modules/exporting";
+import ExportDataModule from "highcharts/modules/export-data";
+import OfflineExportingModule from "highcharts/modules/offline-exporting";
 ExportingModule(Highcharts);
 ExportDataModule(Highcharts);
 OfflineExportingModule(Highcharts);
-import { AlertCircle, FullscreenIcon } from "lucide-react";
-import Leaflet from "../leaflet";
-import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
-import { isError, isFinished, isIdle, isLoading } from "@/lib/utils";
+import { isError, isFinished, isIdle } from "@/lib/utils";
 import { AnalyticsDataProps } from "@/types";
 import { grid, reuleaux } from "ldrs";
-import { Label } from "@radix-ui/react-dropdown-menu";
-import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
-import MapLegend from "../map-legend";
-import { IDLE_ANALYTICS_CHART_MESSAGE, monthsList } from "@/constants";
-import { useState } from "react";
-import DynamicMap from "./dynamic-map";
+import {
+  BASE_URL,
+  IDLE_ANALYTICS_CHART_MESSAGE,
+  monthsList,
+  requestStatus,
+} from "@/constants";
+import { useEffect, useState } from "react";
 reuleaux.register("l-reuleaux");
 grid.register("l-loader");
 import sampleCharts from "../../data/sample_charts.json";
@@ -27,33 +25,21 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
 import Loading from "../ui/loading";
 import ErrorMessage from "../ui/error-message";
+import { FullscreenIcon } from "lucide-react";
+import axios from "axios";
 
 const AnalyticsData = ({
   filterData,
-  timeSeriesChartData,
-  dynamicMapData,
+  loadAnalysisData,
   dynamicChartStatus,
-  dynamiMapStatus,
-  firstAnomalyMapStatus,
-  secondAnomalyMapStatus,
-  handleChange,
-  mapFormData,
+  setDynamicChartStatus,
 }: AnalyticsDataProps) => {
-  const yearList = [];
-  for (
-    let i: any = parseInt(mapFormData.fromYear);
-    i <= parseInt(mapFormData.toYear);
-    i++
-  ) {
-    yearList.push({ value: i.toString(), label: i.toString() });
-  }
-
   const [chosenMonth, setChosenMonth] = useState("1");
+  const [timeSeriesChartData, setTimeSeriesChartData] = useState<any>({});
   const handleMonthChange = (name: string, value: string) => {
     setChosenMonth(value);
   };
@@ -63,8 +49,48 @@ const AnalyticsData = ({
     exporting: {
       enabled: true,
       fallbackToExportServer: false,
-    }
+    },
   });
+
+  useEffect(() => {
+    (async () => {
+      if (loadAnalysisData) {
+        const requestBody = {
+          indic: `${filterData.dataVariable.join(",")}`,
+          area: [`${filterData.districtValue}`],
+          crop: filterData.cropValue,
+          start: `${filterData.fromYear}-01-01`,
+          end: `${filterData.toYear}-01-01`,
+          country: filterData.countryValue,
+        };
+        const formData = new FormData();
+        Object.keys(requestBody).map((key) => {
+          formData.append(key, requestBody[key]);
+        });
+        formData.append(
+          `source`,
+          filterData.source === "customDataset"
+            ? filterData.customDataset
+            : filterData.source
+        );
+        setDynamicChartStatus(requestStatus.isLoading);
+        setTimeSeriesChartData({});
+
+        try {
+          const response = await axios.post(
+            `${BASE_URL}/el_nino_time_series_chart`,
+            formData
+          );
+
+          setTimeSeriesChartData(response.data);
+          setDynamicChartStatus(requestStatus.isFinished);
+        } catch (error) {
+          setDynamicChartStatus(requestStatus.isError);
+          return;
+        }
+      }
+    })();
+  }, [loadAnalysisData]);
 
   return (
     <div className="">
