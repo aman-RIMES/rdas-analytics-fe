@@ -222,8 +222,8 @@ const OpenLayersMap = ({
     geoJsonData,
     country,
     mapType,
+    mapData,
     chosenYear,
-    chosenDistrict,
     preferredZoomScale,
     mapFilter,
   ]);

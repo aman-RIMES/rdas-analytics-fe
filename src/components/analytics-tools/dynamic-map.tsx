@@ -3,28 +3,18 @@ import OpenLayersMap from "../openlayers";
 import {
   BASE_URL,
   countries,
-  DYNAMIC_MAP_ERROR_MESSAGE,
   ElNinoToolDataIndicators,
-  IDLE_ANALYTICS_CHART_MESSAGE,
   monthsList,
   requestStatus,
 } from "@/constants";
-import {
-  formatTitle,
-  isError,
-  isFinished,
-  isIdle,
-  isLoading,
-  transformObject,
-} from "@/lib/utils";
+import { formatTitle, transformObject } from "@/lib/utils";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
 import { MapFilterData, MapFormData } from "@/types";
 import { grid } from "ldrs";
-import ErrorMessage from "../ui/error-message";
-import Loading from "../ui/loading";
 import axios from "axios";
+import MapOverlay from "./map-overlay";
 grid.register("l-grid");
 
 const DynamicMap = ({ filterData, loadAnalysisData }) => {
@@ -242,29 +232,16 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
               }{" "}
             </p>
             <div className="flex flex-col ">
-              {isFinished(normalMapStatus) && isFinished(geoJsonStatus) ? (
-                <OpenLayersMap
-                  country={mapFormData.countryValue || "NPL"}
-                  geoJsonData={geoJsonData}
-                  mapData={normalMapData}
-                  mapType={"normal"}
-                  chosenYear={filterData.anomalyYear1}
-                  chosenDistrict={filterData.districtValue}
-                  preferredZoomScale={6}
-                  mapFilter={mapFilter}
-                />
-              ) : (
-                <OpenLayersMap
-                  country={mapFormData.countryValue || "NPL"}
-                  geoJsonData={geoJsonData}
-                  mapData={normalMapData}
-                  mapType={"normal"}
-                  chosenYear={filterData.anomalyYear1}
-                  // chosenDistrict={filterData.districtValue}
-                  preferredZoomScale={6}
-                  mapFilter={mapFilter}
-                />
-              )}
+              <OpenLayersMap
+                country={mapFormData.countryValue || "NPL"}
+                geoJsonData={geoJsonData}
+                mapData={normalMapData}
+                mapType={"normal"}
+                chosenYear={filterData.anomalyYear1}
+                chosenDistrict={filterData.districtValue}
+                preferredZoomScale={6}
+                mapFilter={mapFilter}
+              />
             </div>
 
             <div className="w-full z-10 mt-2">
@@ -314,28 +291,10 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
               </div>
             </div>
           </div>
-
-          {(!isFinished(geoJsonStatus) || !isFinished(normalMapStatus)) && (
-            <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
-              {(isIdle(geoJsonStatus) || isIdle(normalMapStatus)) && (
-                <p className="text-xl font-bold text-green-800">
-                  {IDLE_ANALYTICS_CHART_MESSAGE}
-                </p>
-              )}
-              {(isError(geoJsonStatus) || isError(normalMapStatus)) && (
-                <ErrorMessage errorMessage={DYNAMIC_MAP_ERROR_MESSAGE} />
-              )}
-
-              {(isLoading(geoJsonStatus) || isLoading(normalMapStatus)) && (
-                <Loading
-                  animation={
-                    // @ts-ignore
-                    <l-grid color="green" stroke={8} size="60"></l-grid>
-                  }
-                />
-              )}
-            </div>
-          )}
+          <MapOverlay
+            geoJsonStatus={geoJsonStatus}
+            anomalyMapStatus={normalMapStatus}
+          />
         </div>
 
         <div className="relative z-0">
@@ -354,30 +313,16 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
             </p>
 
             <div className="w-full">
-              {isFinished(geoJsonStatus) &&
-              isFinished(firstAnomalyMapStatus) ? (
-                <OpenLayersMap
-                  country={mapFormData.countryValue || "PAK"}
-                  geoJsonData={geoJsonData}
-                  mapData={firstAnomalyMapData}
-                  mapType={"anomaly"}
-                  chosenYear={filterData.anomalyYear1}
-                  chosenDistrict={filterData.districtValue}
-                  preferredZoomScale={6}
-                  mapFilter={mapFilter}
-                />
-              ) : (
-                <OpenLayersMap
-                  country={mapFormData.countryValue || "PAK"}
-                  geoJsonData={geoJsonData}
-                  mapData={firstAnomalyMapData}
-                  mapType={"anomaly"}
-                  chosenYear={filterData.anomalyYear1}
-                  // chosenDistrict={filterData.districtValue}
-                  preferredZoomScale={6}
-                  mapFilter={mapFilter}
-                />
-              )}
+              <OpenLayersMap
+                country={mapFormData.countryValue || "PAK"}
+                geoJsonData={geoJsonData}
+                mapData={firstAnomalyMapData}
+                mapType={"anomaly"}
+                chosenYear={filterData.anomalyYear1}
+                chosenDistrict={filterData.districtValue}
+                preferredZoomScale={6}
+                mapFilter={mapFilter}
+              />
             </div>
 
             <div className="w-full z-10 mt-2">
@@ -399,29 +344,10 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
               />
             </div>
           </div>
-          {(!isFinished(geoJsonStatus) ||
-            !isFinished(firstAnomalyMapStatus)) && (
-            <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
-              {(isIdle(geoJsonStatus) || isIdle(firstAnomalyMapStatus)) && (
-                <p className="text-xl font-bold text-green-800">
-                  {IDLE_ANALYTICS_CHART_MESSAGE}
-                </p>
-              )}
-              {(isError(geoJsonStatus) || isError(firstAnomalyMapStatus)) && (
-                <ErrorMessage errorMessage={DYNAMIC_MAP_ERROR_MESSAGE} />
-              )}
-
-              {(isLoading(geoJsonStatus) ||
-                isLoading(firstAnomalyMapStatus)) && (
-                <Loading
-                  animation={
-                    // @ts-ignore
-                    <l-grid color="green" stroke={8} size="60"></l-grid>
-                  }
-                />
-              )}
-            </div>
-          )}
+          <MapOverlay
+            geoJsonStatus={geoJsonStatus}
+            anomalyMapStatus={firstAnomalyMapStatus}
+          />
         </div>
 
         <div className="relative z-0">
@@ -439,31 +365,17 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
               }
             </p>
 
-            {isFinished(geoJsonStatus) && isFinished(secondAnomalyMapStatus) ? (
-              <div className="w-full">
-                <OpenLayersMap
-                  country={mapFormData.countryValue || "BGD"}
-                  geoJsonData={geoJsonData}
-                  mapData={secondAnomalyMapData}
-                  mapType={"anomaly"}
-                  chosenYear={filterData.anomalyYear2}
-                  chosenDistrict={filterData.districtValue}
-                  mapFilter={mapFilter}
-                />
-              </div>
-            ) : (
-              <div className="w-full">
-                <OpenLayersMap
-                  country={mapFormData.countryValue || "BGD"}
-                  geoJsonData={geoJsonData}
-                  mapData={secondAnomalyMapData}
-                  mapType={"anomaly"}
-                  chosenYear={filterData.anomalyYear2}
-                  // chosenDistrict={filterData.districtValue}
-                  mapFilter={mapFilter}
-                />
-              </div>
-            )}
+            <div className="w-full">
+              <OpenLayersMap
+                country={mapFormData.countryValue || "BGD"}
+                geoJsonData={geoJsonData}
+                mapData={secondAnomalyMapData}
+                mapType={"anomaly"}
+                chosenYear={filterData.anomalyYear2}
+                chosenDistrict={filterData.districtValue}
+                mapFilter={mapFilter}
+              />
+            </div>
 
             <div className="w-full z-10 mt-2">
               <div className="flex gap-2 ">
@@ -484,29 +396,10 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
               />
             </div>
           </div>
-          {(!isFinished(geoJsonStatus) ||
-            !isFinished(secondAnomalyMapStatus)) && (
-            <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
-              {(isIdle(geoJsonStatus) || isIdle(secondAnomalyMapStatus)) && (
-                <p className="text-xl font-bold text-green-800">
-                  {IDLE_ANALYTICS_CHART_MESSAGE}
-                </p>
-              )}
-              {(isError(geoJsonStatus) || isError(secondAnomalyMapStatus)) && (
-                <ErrorMessage errorMessage={DYNAMIC_MAP_ERROR_MESSAGE} />
-              )}
-
-              {(isLoading(geoJsonStatus) ||
-                isLoading(secondAnomalyMapStatus)) && (
-                <Loading
-                  animation={
-                    // @ts-ignore
-                    <l-grid color="green" stroke={8} size="60"></l-grid>
-                  }
-                />
-              )}
-            </div>
-          )}
+          <MapOverlay
+            geoJsonStatus={geoJsonStatus}
+            anomalyMapStatus={secondAnomalyMapStatus}
+          />
         </div>
       </div>
     </div>
