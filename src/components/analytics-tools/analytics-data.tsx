@@ -15,6 +15,7 @@ import {
   IDLE_ANALYTICS_CHART_MESSAGE,
   monthsList,
   requestStatus,
+  toolType,
 } from "@/constants";
 import { useEffect, useState } from "react";
 reuleaux.register("l-reuleaux");
@@ -43,6 +44,11 @@ const AnalyticsData = ({
   const handleMonthChange = (name: string, value: string) => {
     setChosenMonth(value);
   };
+
+  const climatePattern =
+    location.pathname === "/lanina-analytics"
+      ? toolType.lanina
+      : toolType.elnino;
 
   const getChartConfig = (baseOptions: any) => ({
     ...baseOptions,
@@ -78,7 +84,7 @@ const AnalyticsData = ({
 
         try {
           const response = await axios.post(
-            `${BASE_URL}/el_nino_time_series_chart`,
+            `${BASE_URL}/${climatePattern}time_series_chart`,
             formData
           );
 

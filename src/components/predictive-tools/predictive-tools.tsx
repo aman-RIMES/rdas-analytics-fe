@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import { formatDate, getAllDistrictsOfCountry, isFinished } from "@/lib/utils";
-import { Button } from "../ui/button";
 import axios from "axios";
 import { FilterData } from "@/types";
-import { BASE_URL, predictiveModelDataType, requestStatus } from "@/constants";
+import { BASE_URL, requestStatus, toolType } from "@/constants";
 import bodyParams from "../../data/body_params.json";
 import { useLocation } from "react-router-dom";
 import PredictiveToolsData from "./predictive-tools-data";
@@ -38,6 +36,11 @@ const PredictiveTools = () => {
   const handleChange = (name: string, value: string | []) => {
     setFilterData((prev: any) => ({ ...prev, [name]: value }));
   };
+
+  const climatePattern =
+    location.pathname === "/lanina-predictive-tools"
+      ? toolType.lanina
+      : toolType.elnino;
 
   const verifyFilters = () => {
     return (
@@ -103,7 +106,7 @@ const PredictiveTools = () => {
     setRegressionModelStatus(requestStatus.isLoading);
     try {
       const response = await axios.post(
-        `${BASE_URL}/el_nino_prediction_model`,
+        `${BASE_URL}/${climatePattern}prediction_model`,
         formData,
         {
           headers: {
@@ -163,6 +166,7 @@ const PredictiveTools = () => {
               modelType={filterData.modelType}
               filterData={filterData}
               handleChange={handleChange}
+              climatePattern={climatePattern}
             />
           </div>
         </div>

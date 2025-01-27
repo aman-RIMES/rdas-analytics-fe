@@ -19,6 +19,11 @@ export enum requestStatus {
   isError = "ERROR",
 }
 
+export enum toolType {
+  elnino = "el_nino_",
+  lanina = "la_nina_",
+}
+
 export enum predictiveModelDataType {
   linear = "linear",
   logistic = "logistic",
@@ -439,7 +444,9 @@ export const geoJsonStructure = {
 export const routeDefinitions = {
   "/analytics-crop": "Crop Calendar Suitability to Observed Climate",
   "/predictive-tools": "El Nino Impacts Prediction",
+  "/lanina-predictive-tools": "La Nina Impacts Prediction",
   "/elnino-analytics": "El Nino and Local Climate",
+  "/lanina-analytics": "La Nina and Local Climate",
   "/analytics-land": "Land Use & Land Cover Change",
   "/predictive-temps": "TempS",
 };

@@ -32,7 +32,11 @@ function App() {
         },
         {
           path: "/elnino-analytics",
-          element: <ElNinoAnalytics />,
+          element: <ElNinoAnalytics key={"elnino"} />,
+        },
+        {
+          path: "/lanina-analytics",
+          element: <ElNinoAnalytics key={"lanina"} />,
         },
         {
           path: "/analytics-land",
@@ -44,7 +48,11 @@ function App() {
         },
         {
           path: "/predictive-tools/",
-          element: <PredictiveTools />,
+          element: <PredictiveTools key={"elnino"} />,
+        },
+        {
+          path: "/lanina-predictive-tools/",
+          element: <PredictiveTools key={"lanina"} />,
         },
         {
           path: "/analytics-crop/",

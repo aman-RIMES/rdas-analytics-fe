@@ -1,19 +1,8 @@
 import { useEffect, useState } from "react";
 import Combobox from "../ui/combobox";
-import {
-  transformObject,
-  formatDate,
-  isLoading,
-  isError,
-  isFinished,
-  getAllDistrictsOfCountry,
-  isIdle,
-} from "@/lib/utils";
-import { AlertCircle } from "lucide-react";
+import { transformObject, isError, isFinished, isIdle } from "@/lib/utils";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highmaps";
-import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
-import { Button } from "../ui/button";
 import axios from "axios";
 import {
   analysisType,
@@ -22,17 +11,11 @@ import {
   IDLE_ANALYTICS_CHART_MESSAGE,
   monthsList,
   requestStatus,
+  toolType,
 } from "@/constants";
-import { CorrelationFilterData, FilterProps } from "@/types";
+import { FilterProps } from "@/types";
 import { quantum } from "ldrs";
-import CorrelationPlotLegend from "../correlation-plot-legend";
 quantum.register("l-quantum");
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import HelpHoverCard from "../help-hover-card";
 import { FancyMultiSelect } from "../ui/multiselect";
@@ -59,6 +42,11 @@ const AnalyticsCorrelation = ({
   const handleChange = (name: string, value: string) => {
     setCorrelationFilter((prev: any) => ({ ...prev, [name]: value }));
   };
+
+  const climatePattern =
+    location.pathname === "/lanina-analytics"
+      ? toolType.lanina
+      : toolType.elnino;
 
   const verifyFilters = () => {
     return (
@@ -104,7 +92,7 @@ const AnalyticsCorrelation = ({
     setCorrelationChartData({});
     try {
       const correlationData = await axios.post(
-        `${BASE_URL}/el_nino_correlation`,
+        `${BASE_URL}/${climatePattern}correlation`,
         typeOfAnalysis === analysisType.climate
           ? {
               source: `${filterData.source}`,
@@ -138,7 +126,9 @@ const AnalyticsCorrelation = ({
             <Combobox
               name="correlationVariable"
               label={"Data Variable"}
-              array={transformObject(ElNinoToolDataIndicators).filter(e => filterData.dataVariable.includes(e.value))}
+              array={transformObject(ElNinoToolDataIndicators).filter((e) =>
+                filterData.dataVariable.includes(e.value)
+              )}
               state={{
                 value: correlationFilter.correlationVariable,
                 setValue: handleChange,
@@ -229,7 +219,6 @@ const AnalyticsCorrelation = ({
                 </div>
               ))}
         </div>
-
       </div>
     </div>
   );

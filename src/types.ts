@@ -1,5 +1,5 @@
 import { LatLngExpression } from "leaflet";
-import { analysisType, requestStatus } from "./constants";
+import { analysisType, requestStatus, toolType } from "./constants";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface AnalysisTopics {
@@ -129,6 +129,7 @@ export interface PredictiveDataProps {
   modelType: string;
   elNinoCategory?: string;
   filterData?: FilterData;
+  climatePattern?: toolType;
   handleChange?: (name, value) => void;
 }
 

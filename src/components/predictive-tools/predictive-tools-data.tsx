@@ -8,15 +8,11 @@ import {
   transformPredictionTableData,
 } from "@/lib/utils";
 
-import {
-  PredictiveDataProps,
-  PredictiveEvaluation,
-  PredictiveFilterData,
-} from "@/types";
+import { PredictiveDataProps, PredictiveFilterData } from "@/types";
 import {
   ElNinoToolDataIndicators,
-  ElNinoCategories,
   IDLE_PREDICTIVE_CHART_MESSAGE,
+  toolType,
 } from "@/constants";
 import { helix } from "ldrs";
 import { Label } from "@radix-ui/react-dropdown-menu";
@@ -46,8 +42,8 @@ import PredictiveChart from "./predictive_chart";
 const PredictiveToolsData = ({
   regressionModelData,
   regressionModelStatus,
-  modelType,
   filterData,
+  climatePattern,
 }: PredictiveDataProps) => {
   const [predictiveFilterData, setPredictiveFilterData] =
     useState<PredictiveFilterData>({
@@ -195,11 +191,13 @@ const PredictiveToolsData = ({
             regressionModelStatus={regressionModelStatus}
             chartNumber={2}
           />
-          <PredictiveChart
-            predictiveEvaluation={predictiveEvaluation}
-            regressionModelStatus={regressionModelStatus}
-            chartNumber={3}
-          />
+          {climatePattern === toolType.elnino && (
+            <PredictiveChart
+              predictiveEvaluation={predictiveEvaluation}
+              regressionModelStatus={regressionModelStatus}
+              chartNumber={3}
+            />
+          )}
         </div>
       </div>
     </>

@@ -23,7 +23,8 @@ export function NavMenubar() {
         <MenubarTrigger
           className={cn(
             (location.pathname.startsWith("/analytics-") ||
-              location.pathname === "/elnino-analytics") &&
+              location.pathname === "/elnino-analytics" ||
+              location.pathname === "/lanina-analytics") &&
               "data-[state=closed]:bg-yellow-300 data-[state=closed]:text-black"
           )}
         >
@@ -33,6 +34,11 @@ export function NavMenubar() {
           <NavLink to="/elnino-analytics">
             <MenubarItem className="font-medium text-sm ">
               El Nino and Local Climate
+            </MenubarItem>
+          </NavLink>
+          <NavLink to="/lanina-analytics">
+            <MenubarItem className="font-medium text-sm ">
+              La Nina and Local Climate
             </MenubarItem>
           </NavLink>
           <NavLink to="/analytics-crop">
@@ -53,7 +59,8 @@ export function NavMenubar() {
         <MenubarTrigger
           className={cn(
             (location.pathname.startsWith("/predictive-") ||
-              location.pathname === "/predictive-tools") &&
+              location.pathname === "/predictive-tools" ||
+              location.pathname === "/lanina-predictive-tools") &&
               "data-[state=closed]:bg-yellow-300 data-[state=closed]:text-black"
           )}
         >
@@ -63,6 +70,11 @@ export function NavMenubar() {
           <NavLink to="/predictive-tools">
             <MenubarItem className="font-medium text-sm ">
               El Nino Impacts Prediction
+            </MenubarItem>
+          </NavLink>
+          <NavLink to="/lanina-predictive-tools">
+            <MenubarItem className="font-medium text-sm ">
+              La Nina Impacts Prediction
             </MenubarItem>
             {/* <MenubarSeparator className="bg-yellow-300" /> */}
           </NavLink>

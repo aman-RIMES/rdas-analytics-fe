@@ -6,6 +6,7 @@ import {
   ElNinoToolDataIndicators,
   monthsList,
   requestStatus,
+  toolType,
 } from "@/constants";
 import { formatTitle, transformObject } from "@/lib/utils";
 import { Label } from "@radix-ui/react-dropdown-menu";
@@ -15,9 +16,15 @@ import { MapFilterData, MapFormData } from "@/types";
 import { grid } from "ldrs";
 import axios from "axios";
 import MapOverlay from "./map-overlay";
+import { useLocation } from "react-router-dom";
 grid.register("l-grid");
 
 const DynamicMap = ({ filterData, loadAnalysisData }) => {
+  const location = useLocation();
+  const climatePattern =
+    location.pathname === "/lanina-analytics"
+      ? toolType.lanina
+      : toolType.elnino;
   const [mapFilter, setMapFilter] = useState<MapFilterData>({
     dataVariable: "rainfall",
     chosenMonth: "1",
@@ -154,7 +161,7 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
     try {
       setGeoJsonStatus(requestStatus.isLoading);
       const geoJson = await axios.post(
-        `${BASE_URL}/el_nino_map_geojson`,
+        `${BASE_URL}/${climatePattern}map_geojson`,
         { country: filterData.countryValue },
         {
           headers: {
@@ -174,7 +181,7 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
     try {
       setNormalMapStatus(requestStatus.isLoading);
       const response = await axios.post(
-        `${BASE_URL}/el_nino_map_normal`,
+        `${BASE_URL}/${climatePattern}map_normal`,
         formData,
         {
           headers: {
@@ -200,7 +207,7 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
     try {
       setStatus(requestStatus.isLoading);
       const response = await axios.post(
-        `${BASE_URL}/el_nino_map_anomaly`,
+        `${BASE_URL}/${climatePattern}map_anomaly`,
         formData,
         {
           headers: {
