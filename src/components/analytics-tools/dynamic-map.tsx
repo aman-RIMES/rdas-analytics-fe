@@ -84,7 +84,7 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
       setSecondAnomalyMapStatus,
       parseInt(anomalyYear.secondAnomalyMap) || parseInt(mapFormData.fromYear)
     );
-  }, [mapFilter]);
+  }, [mapFilter.chosenMonth]);
 
   useEffect(() => {
     if (anomalyYear.firstAnomalyMap) {
