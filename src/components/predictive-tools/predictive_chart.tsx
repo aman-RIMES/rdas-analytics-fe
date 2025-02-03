@@ -10,6 +10,7 @@ const PredictiveChart = ({
   predictiveEvaluation,
   regressionModelStatus,
   chartNumber,
+  climatePattern,
 }) => {
   return (
     <div className="relative z-0">
@@ -19,7 +20,7 @@ const PredictiveChart = ({
           options={
             predictiveEvaluation?.charts
               ? predictiveEvaluation?.charts[chartNumber]
-              : sampleCharts?.scatter_chart
+              : sampleCharts?.scatter_chart[climatePattern]
           }
           containerProps={{ style: { height: "385px" } }}
         />

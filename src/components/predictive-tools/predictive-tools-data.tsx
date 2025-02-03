@@ -180,22 +180,26 @@ const PredictiveToolsData = ({
             predictiveEvaluation={predictiveEvaluation}
             regressionModelStatus={regressionModelStatus}
             chartNumber={0}
+            climatePattern={climatePattern}
           />
           <PredictiveChart
             predictiveEvaluation={predictiveEvaluation}
             regressionModelStatus={regressionModelStatus}
             chartNumber={1}
+            climatePattern={climatePattern}
           />
           <PredictiveChart
             predictiveEvaluation={predictiveEvaluation}
             regressionModelStatus={regressionModelStatus}
             chartNumber={2}
+            climatePattern={climatePattern}
           />
           {climatePattern === toolType.elnino && (
             <PredictiveChart
               predictiveEvaluation={predictiveEvaluation}
               regressionModelStatus={regressionModelStatus}
               chartNumber={3}
+              climatePattern={climatePattern}
             />
           )}
         </div>
