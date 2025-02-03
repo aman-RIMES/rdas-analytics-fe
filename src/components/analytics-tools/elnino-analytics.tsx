@@ -4,6 +4,7 @@ import {
   BASE_URL,
   BODY_PARAMS_URL,
   requestStatus,
+  toolType,
 } from "@/constants";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -21,6 +22,9 @@ import CustomDatasetGuide from "../custom-dataset-guide";
 
 const ElNinoAnalytics = () => {
   const navigate = useNavigate();
+
+  const label =
+    location.pathname === "/lanina-analytics" ? "La Nina" : "El Nino";
 
   const [params, setParams] = useState<any>(bodyParams);
   const [selected, setSelected] = useState<[]>([]);
@@ -144,7 +148,7 @@ const ElNinoAnalytics = () => {
                       className="w-full text-green-600"
                       value="charts"
                     >
-                      Normal vs Monthly Averaged during El Nino Years
+                      Normal vs Monthly Averaged during {label} Years
                     </TabsTrigger>
                     <TabsTrigger
                       className="w-full text-green-600"

@@ -116,7 +116,7 @@ const AnalyticsData = ({
                         highcharts={Highcharts}
                         options={getChartConfig(
                           isIdle(dynamicChartStatus)
-                            ? sampleCharts?.analytics_yearly
+                            ? sampleCharts?.analytics_yearly[climatePattern]
                             : timeSeriesChartData[0]
                         )}
                       />
@@ -131,7 +131,7 @@ const AnalyticsData = ({
               options={getChartConfig(
                 timeSeriesChartData[0]
                   ? timeSeriesChartData[0]
-                  : sampleCharts?.analytics_yearly
+                  : sampleCharts?.analytics_yearly[climatePattern]
               )}
             />
 
@@ -172,7 +172,7 @@ const AnalyticsData = ({
                         highcharts={Highcharts}
                         options={getChartConfig(
                           isIdle(dynamicChartStatus)
-                            ? sampleCharts?.analytics_monthly
+                            ? sampleCharts?.analytics_monthly[climatePattern]
                             : timeSeriesChartData[chosenMonth]
                         )}
                       />
@@ -190,7 +190,7 @@ const AnalyticsData = ({
                   options={getChartConfig(
                     timeSeriesChartData[chosenMonth]
                       ? timeSeriesChartData[chosenMonth]
-                      : sampleCharts?.analytics_monthly
+                      : sampleCharts?.analytics_monthly[climatePattern]
                   )}
                 />
               </div>

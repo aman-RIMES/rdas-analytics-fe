@@ -190,7 +190,7 @@ const AnalyticsCorrelation = ({
                     <HighchartsReact
                       containerProps={{ style: { height: "250px" } }}
                       highcharts={Highcharts}
-                      options={sampleCharts.scatter_chart}
+                      options={sampleCharts?.scatter_chart[climatePattern]}
                     />
                   </div>
 
