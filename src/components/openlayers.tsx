@@ -51,15 +51,21 @@ const OpenLayersMap = ({
         const styleFunction = (feature: any) => {
           const districtCode =
             feature.get(geoJsonStructure[country]?.district_code) || "";
-          let value;
-          try {
+          let value = 0;
+
+          if (mapFilter?.dataVariable === "rainfall") {
             value =
               mapType === mapDataType.normal
                 ? mapData?.find((e) => e.code === districtCode)?.mean_rainfall
                 : mapData?.find((e) => e.code === districtCode)
                     ?.rainfall_anomaly;
-          } catch (error) {
-            value = 0; // Default value if data structure is invalid
+          } else {
+            value =
+              mapType === mapDataType.normal
+                ? mapData?.find((e) => e.code === districtCode)
+                    ?.mean_temperature
+                : mapData?.find((e) => e.code === districtCode)
+                    ?.temperature_anomaly;
           }
 
           let fillColor = "#fff";
@@ -86,7 +92,7 @@ const OpenLayersMap = ({
             else if (value < 600) fillColor = "#15803d";
             else if (value < 900) fillColor = "#166534";
             else if (value < 1100) fillColor = "#14532d";
-          } else if (mapFilter?.dataVariable === "temperature") {
+          } else if (mapFilter?.dataVariable === "tavg") {
             if (value < -40) fillColor = "#1e3a8a";
             else if (value < -25) fillColor = "#1e40af";
             else if (value < -20) fillColor = "#1d4ed8";
@@ -183,11 +189,22 @@ const OpenLayersMap = ({
               feature.get(geoJsonStructure[country]?.district_code) || "";
             const provinceName =
               feature.get(geoJsonStructure[country]?.province_name) || "";
-            const value =
-              mapType === mapDataType.normal
-                ? mapData?.find((e) => e.code === districtCode)?.mean_rainfall
-                : mapData?.find((e) => e.code === districtCode)
-                    ?.rainfall_anomaly;
+            let value = "0";
+
+            if (mapFilter?.dataVariable === "rainfall") {
+              value =
+                mapType === mapDataType.normal
+                  ? mapData?.find((e) => e.code === districtCode)?.mean_rainfall
+                  : mapData?.find((e) => e.code === districtCode)
+                      ?.rainfall_anomaly;
+            } else {
+              value =
+                mapType === mapDataType.normal
+                  ? mapData?.find((e) => e.code === districtCode)
+                      ?.mean_temperature
+                  : mapData?.find((e) => e.code === districtCode)
+                      ?.temperature_anomaly;
+            }
 
             const coordinate = evt.coordinate;
             popup.setPosition(coordinate);
