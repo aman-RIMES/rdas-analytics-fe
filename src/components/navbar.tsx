@@ -86,7 +86,7 @@ export default function NavBar() {
               </div>
             </a>
             {/* <ThemeToggle /> */}
-            <AvatarMenu />
+            {/* <AvatarMenu /> */}
           </nav>
         </div>
       </div>
