@@ -1,4 +1,3 @@
-import { LatLngExpression } from "leaflet";
 import { analysisType, requestStatus, toolType } from "./constants";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -68,7 +67,7 @@ export interface District {
 export interface Country {
   value: string;
   label: string;
-  coordinates: LatLngExpression;
+  coordinates: any;
   zoom: number;
 }
 
