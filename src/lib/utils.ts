@@ -136,3 +136,7 @@ export const transformPredictionTableData = (predictiveTableData: object) => {
   }
   return newArray;
 };
+
+export const getMetricUnit = (indicator) => {
+  return indicator === "rainfall" ? "(mm)" : "(°C)";
+};

@@ -8,7 +8,7 @@ import {
   requestStatus,
   toolType,
 } from "@/constants";
-import { formatTitle, transformObject } from "@/lib/utils";
+import { formatTitle, getMetricUnit, transformObject } from "@/lib/utils";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
@@ -26,7 +26,7 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
       ? toolType.lanina
       : toolType.elnino;
   const [mapFilter, setMapFilter] = useState<MapFilterData>({
-    dataVariable: "rainfall",
+    dataVariable: "",
     chosenMonth: "1",
   });
   const [anomalyYear, setAnomalyYear] = useState<any>({
@@ -71,20 +71,22 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
   };
 
   useEffect(() => {
-    fetchNormalMapData(previousFormData);
-    fetchAnomalyMapData(
-      previousFormData,
-      setFirstAnomalyMapData,
-      setFirstAnomalyMapStatus,
-      parseInt(anomalyYear.firstAnomalyMap) || parseInt(mapFormData.fromYear)
-    );
-    fetchAnomalyMapData(
-      previousFormData,
-      setSecondAnomalyMapData,
-      setSecondAnomalyMapStatus,
-      parseInt(anomalyYear.secondAnomalyMap) || parseInt(mapFormData.fromYear)
-    );
-  }, [mapFilter.chosenMonth]);
+    if (!loadAnalysisData) {
+      fetchNormalMapData(previousFormData);
+      fetchAnomalyMapData(
+        previousFormData,
+        setFirstAnomalyMapData,
+        setFirstAnomalyMapStatus,
+        parseInt(anomalyYear.firstAnomalyMap) || parseInt(mapFormData.fromYear)
+      );
+      fetchAnomalyMapData(
+        previousFormData,
+        setSecondAnomalyMapData,
+        setSecondAnomalyMapStatus,
+        parseInt(anomalyYear.secondAnomalyMap) || parseInt(mapFormData.fromYear)
+      );
+    }
+  }, [mapFilter]);
 
   useEffect(() => {
     if (anomalyYear.firstAnomalyMap) {
@@ -118,7 +120,7 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
     (async () => {
       if (loadAnalysisData) {
         const requestBody = {
-          indic: `${filterData.dataVariable.join(",")}`,
+          indic: `${filterData.dataVariable[0]}`,
           area: [`${filterData.districtValue}`],
           crop: filterData.cropValue,
           start: `${filterData.fromYear}-01-01`,
@@ -137,6 +139,7 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
             ? filterData.customDataset
             : filterData.source
         );
+        handleMapFilterChange("dataVariable", filterData.dataVariable[0]);
         setPreviousFormData(formData);
 
         fetchGeoJson();
@@ -178,6 +181,7 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
 
   const fetchNormalMapData = async (formData) => {
     formData.set(`months`, mapFilter.chosenMonth);
+    formData.set(`indic`, mapFilter.dataVariable || filterData.dataVariable[0]);
     try {
       setNormalMapStatus(requestStatus.isLoading);
       const response = await axios.post(
@@ -203,6 +207,7 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
     year
   ) => {
     formData.set(`months`, mapFilter.chosenMonth);
+    formData.set(`indic`, mapFilter.dataVariable || filterData.dataVariable[0]);
     formData.set(`year`, year);
     try {
       setStatus(requestStatus.isLoading);
@@ -222,17 +227,14 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
     }
   };
 
-  const getMetricUnit = () => {
-    return mapFilter.dataVariable === "rainfall" ? "(mm)" : "(°C)";
-  };
-
   return (
     <div className="rounded-lg bg-white p-1 pb-2 shadow-md">
       <div className="grid xl:grid-cols-3 grid-cols-1">
         <div className="relative z-0">
           <div className="p-1 ">
             <p className="text-sm mb-2 font-medium flex justify-center">
-              Normal {formatTitle(mapFilter.dataVariable)} {getMetricUnit()} for{" "}
+              Normal {formatTitle(mapFilter.dataVariable || "rainfall")}{" "}
+              {getMetricUnit(mapFilter.dataVariable)} for{" "}
               {
                 countries?.find((e) => e.value === mapFormData.countryValue)
                   ?.label
@@ -307,8 +309,8 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
         <div className="relative z-0">
           <div className="p-1">
             <p className="text-sm mb-2 font-medium flex justify-center">
-              {formatTitle(mapFilter.dataVariable)} Anomaly {getMetricUnit()}{" "}
-              for{" "}
+              {formatTitle(mapFilter.dataVariable || "rainfall")} Anomaly{" "}
+              {getMetricUnit(mapFilter.dataVariable)} for{" "}
               {
                 countries.find((e) => e.value === mapFormData?.countryValue)
                   ?.label
@@ -360,8 +362,8 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
         <div className="relative z-0">
           <div className="p-1">
             <p className="text-sm mb-2 font-medium flex justify-center">
-              {formatTitle(mapFilter.dataVariable)} Anomaly {getMetricUnit()}{" "}
-              for{" "}
+              {formatTitle(mapFilter.dataVariable || "rainfall")} Anomaly{" "}
+              {getMetricUnit(mapFilter.dataVariable)} for{" "}
               {
                 countries.find((e) => e.value === mapFormData?.countryValue)
                   ?.label
