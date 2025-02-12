@@ -35,15 +35,7 @@ const ElNinoCommonFilter = ({
   filterType,
 }: FilterProps) => {
   const [newParams, setNewParams] = useState<any>(newBodyParams);
-  const [newDistricts, setNewDistricts] = useState(newBodyParams.district);
   const [selectedMonths, setSelectedMonths] = useState([]);
-
-  // useEffect(() => {
-  //   const districtsData = params?.district.filter(
-  //     (e: District) => e.country === filterData.countryValue
-  //   );
-  //   handleChange("districtList", districtsData);
-  // }, [filterData.countryValue]);
 
   useEffect(() => {
     (async () => {
@@ -59,7 +51,6 @@ const ElNinoCommonFilter = ({
             // ...(filterData?.source ? { source: filterData?.source } : {}),
           },
         });
-        setNewDistricts(response?.data?.district);
         setNewParams(response?.data);
       } catch (error) {
         console.log(error);

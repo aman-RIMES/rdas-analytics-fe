@@ -1,25 +1,42 @@
-import { useEffect } from "react";
-import { countries, croppingTimeline } from "@/constants";
+import { useEffect, useState } from "react";
+import { countries, croppingTimeline, NEW_BODY_PARAMS_URL } from "@/constants";
 import {
   transformCropArray,
-  transformDistrictParams,
-  transformObject,
+  transformNewParamsObject,
   transformSourceObject,
 } from "@/lib/utils";
 import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
-import { District, FilterProps } from "@/types";
+import { FilterProps } from "@/types";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { Input } from "../ui/input";
 import CustomDatasetGuide from "../custom-dataset-guide";
 import CustomCalendarGuide from "../custom-crop-calendar";
+import newBodyParams from "../../data/new_body_params.json";
+import axios from "axios";
 
 const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
+  const [newParams, setNewParams] = useState<any>(newBodyParams);
+
   useEffect(() => {
-    const districtsData = params?.district.filter(
-      (e: District) => e.country === filterData.countryValue
-    );
-    handleChange("districtList", districtsData);
+    (async () => {
+      try {
+        const response: any = await axios.get(NEW_BODY_PARAMS_URL, {
+          params: {
+            ...(filterData?.countryValue
+              ? { geo: filterData?.countryValue }
+              : {}),
+            // ...(filterData?.districtValue
+            //   ? { district: filterData?.districtValue }
+            //   : {}),
+            // ...(filterData?.source ? { source: filterData?.source } : {}),
+          },
+        });
+        setNewParams(response?.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   }, [filterData.countryValue]);
 
   return (
@@ -57,7 +74,7 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
         <Combobox
           name="districtValue"
           label={"District"}
-          array={transformDistrictParams(filterData?.districtList)}
+          array={transformNewParamsObject(newParams?.district)}
           state={{
             value: filterData.districtValue,
             setValue: handleChange,
@@ -113,7 +130,7 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
           label={"Source"}
           array={[
             { value: "customDataset", label: "CUSTOM DATASET" },
-            ...transformSourceObject(params?.source),
+            ...transformSourceObject(newParams?.source),
           ]}
           state={{
             value: filterData.source,
