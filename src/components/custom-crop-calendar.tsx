@@ -40,6 +40,81 @@ const CustomCalendarGuide = ({ title, className = "" }) => {
                 >
                   Download Here
                 </a>
+
+                <p className="mt-5 text-lg text-black">
+                  2. Populate data in the CSV file.
+                </p>
+                <ul className="text-black text-base mt-2 ml-8 list-disc">
+                  <li>
+                    The first row serves as the field to assign the name of the
+                    crop associated with the custom cropping calendar.
+                    <ul className="list-disc">
+                      <li className="ml-5">
+                        Do not remove the # symbol before the crop name.
+                      </li>
+                    </ul>
+                  </li>
+                  <li>Do not replace or remove any column headers in row 2.</li>
+                  <li>
+                    Populate the values for each column for each cropping stage.
+                    <ul className="list-disc">
+                      <li className="ml-5">
+                        Use number equivalents for months, use commas to
+                        separate months for any cropping stage that involves
+                        multiple months.
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+                <br />
+
+                <div className="flex flex-col items-center justify-center m-10 mb-5 mt-5">
+                  <img
+                    className="h-50px"
+                    src="src/assets/custom-calendar-guide.png"
+                    alt=""
+                  />
+                </div>
+
+                <p className="mt-5  text-black text-lg">
+                  3. Set the Parameters of the custom calendar.
+                </p>
+
+                <ul className="text-black text-base mt-2 ml-5 list-disc ml-8">
+                  <li>
+                    Country and District - Select which area the uploaded
+                    cropping calendar is associated with
+                  </li>
+                  <li>Crop Calendar - select ‘Custom Calendar’</li>
+
+                  <li>
+                    Data Source - Select the data source to use for climate data
+                  </li>
+                  <li>
+                    Analysis Timeline - select the year span for the historical
+                    climate data.
+                  </li>
+                </ul>
+
+                <div className="flex flex-col items-center justify-center m-10 mb-5 mt-5">
+                  <img src="src/assets/crop-filter-form.png" alt="" />
+                </div>
+
+                <p className="mt-5 text-lg text-black">
+                  4. Choose the file for upload - Select the populated CSV file.
+                </p>
+
+                <div className="flex flex-col items-center justify-center  my-5 ">
+                  <img src="src/assets/calendar-upload-field.png" alt="" />
+                </div>
+
+                <p className="mt-5 text-lg text-black">
+                  5. Start Analysis - Click the button to begin the analysis
+                </p>
+
+                <div className="flex flex-col items-center justify-center my-5 ">
+                  <img src="src/assets/start-crop-analysis-button.png" alt="" />
+                </div>
               </div>
             </ScrollArea>
           </DialogDescription>
