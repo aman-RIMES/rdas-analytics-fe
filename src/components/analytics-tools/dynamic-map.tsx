@@ -143,18 +143,20 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
         setPreviousFormData(formData);
 
         fetchGeoJson();
-        fetchNormalMapData(formData);
+        fetchNormalMapData(formData, true);
         fetchAnomalyMapData(
           formData,
           setFirstAnomalyMapData,
           setFirstAnomalyMapStatus,
-          filterData.fromYear
+          filterData.fromYear,
+          true
         );
         fetchAnomalyMapData(
           formData,
           setSecondAnomalyMapData,
           setSecondAnomalyMapStatus,
-          filterData.fromYear
+          filterData.fromYear,
+          true
         );
       }
     })();
@@ -179,9 +181,12 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
     }
   };
 
-  const fetchNormalMapData = async (formData) => {
+  const fetchNormalMapData = async (formData, isFirstAnalysis = false) => {
     formData.set(`months`, mapFilter.chosenMonth);
-    formData.set(`indic`, mapFilter.dataVariable || filterData.dataVariable[0]);
+    formData.set(
+      `indic`,
+      isFirstAnalysis ? filterData.dataVariable[0] : mapFilter.dataVariable
+    );
     try {
       setNormalMapStatus(requestStatus.isLoading);
       const response = await axios.post(
@@ -204,10 +209,14 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
     formData,
     setAnomalyMapData,
     setStatus,
-    year
+    year,
+    isFirstAnalysis = false
   ) => {
     formData.set(`months`, mapFilter.chosenMonth);
-    formData.set(`indic`, mapFilter.dataVariable || filterData.dataVariable[0]);
+    formData.set(
+      `indic`,
+      isFirstAnalysis ? filterData.dataVariable[0] : mapFilter.dataVariable
+    );
     formData.set(`year`, year);
     try {
       setStatus(requestStatus.isLoading);
