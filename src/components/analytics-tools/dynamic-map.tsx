@@ -391,6 +391,7 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
                 mapType={"anomaly"}
                 chosenYear={filterData.anomalyYear2}
                 chosenDistrict={filterData.districtValue}
+                preferredZoomScale={6}
                 mapFilter={mapFilter}
               />
             </div>
