@@ -415,14 +415,14 @@ export const countries = [
 
 export const geoJsonStructure = {
   LKA: {
-    districtCode: "GID_1",
-    districtName: "NAME_1",
-    provinceName: "TYPE_1",
+    district_code: "GID_1",
+    district_name: "NAME_1",
+    province_name: "TYPE_1",
   },
   IND: {
-    districtCode: "GID_2",
-    districtName: "NAME_2",
-    provinceName: "NAME_1",
+    district_code: "GID_2",
+    district_name: "NAME_2",
+    province_name: "NAME_1",
   },
   BGD: {
     district_code: "admin2Pcod",
@@ -430,14 +430,24 @@ export const geoJsonStructure = {
     province_name: "admin1Name",
   },
   PAK: {
-    district_code: "ADM2_PCODE",
-    district_name: "ADM2_EN",
-    province_name: "ADM1_EN",
+    district_code: "ADM2_CODE",
+    district_name: "DISTRICT",
+    province_name: "ADM1_PROVI",
   },
   NPL: {
     district_code: "SA_Code",
     district_name: "District",
     province_name: "Province",
+  },
+  AFG: {
+    district_code: "GID_2",
+    district_name: "NAME_2",
+    province_name: "NAME_1",
+  },
+  BTN: {
+    district_code: "GID_1",
+    district_name: "NAME_1",
+    province_name: "TYPE_1",
   },
 };
 
