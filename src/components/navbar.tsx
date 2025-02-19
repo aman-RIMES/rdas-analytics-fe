@@ -19,7 +19,7 @@ export default function NavBar() {
   const location = useLocation();
   return (
     <div className="">
-      <div className="px-4 md:px-10 flex justify-between md:justify-between h-12 items-center bg-green-900  ">
+      <div className="px-4 md:px-10 flex justify-between md:justify-between h-12 items-center bg-[#0B6623]  ">
         <div className="flex items-center gap-3">
           <div className="flex lg:hidden">
             <Sheet>

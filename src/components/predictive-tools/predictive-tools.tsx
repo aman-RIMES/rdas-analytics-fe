@@ -129,7 +129,7 @@ const PredictiveTools = () => {
         <div className="grid grid-cols-1 lg:grid-cols-6 gap-3 ">
           <div className="col-span-1">
             <div className=" border-grey-600 rounded-lg h-[88vh]">
-              <div className="bg-green-800 flex justify-between items-center text-white text-md p-1 rounded-t-lg font-medium ">
+              <div className="bg-[#0B6623] flex justify-between items-center text-white text-md p-1 rounded-t-lg font-medium ">
                 <p className="ml-2 text-sm"> Parameters</p>
                 <CustomDatasetGuide
                   title="Use Custom Dataset"

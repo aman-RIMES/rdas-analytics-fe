@@ -84,7 +84,7 @@ const ElNinoAnalytics = () => {
           <div className="grid grid-cols-6 gap-3 ">
             <div className="col-span-1 w-full h-full bg-gray-100 rounded-b-lg">
               <div className="   ">
-                <div className="bg-green-800 flex justify-between items-center   text-white text-md p-1 rounded-t-lg font-medium">
+                <div className="bg-[#0B6623] flex justify-between items-center   text-white text-md p-1 rounded-t-lg font-medium">
                   <p className="ml-2 text-sm"> Parameters</p>
                   <CustomDatasetGuide
                     title="Use Custom Dataset"

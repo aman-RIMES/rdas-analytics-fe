@@ -19,7 +19,7 @@ const SubmitButton = ({
         <Button
           className={cn(
             `h-[${height}px]`,
-            "w-full bg-green-800 text-white hover:text-gray-800 hover:bg-yellow-300",
+            "w-full bg-[#0B6623] text-white hover:text-gray-800 hover:bg-yellow-300",
             className
           )}
           disabled={!verifyFilters || isLoading(loadingStatus)}
