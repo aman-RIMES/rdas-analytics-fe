@@ -79,7 +79,9 @@ export function NavMenubar() {
             {/* <MenubarSeparator className="bg-yellow-300" /> */}
           </NavLink>
           <NavLink to="/predictive-temps">
-            <MenubarItem className="font-medium text-sm ">TempS</MenubarItem>
+            <MenubarItem className="font-medium text-sm ">
+              Temperature Sensitivity Alert System (TEMPs)
+            </MenubarItem>
           </NavLink>
         </MenubarContent>
       </MenubarMenu>
