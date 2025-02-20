@@ -19,22 +19,34 @@ const PredictiveTools = () => {
     useState<requestStatus>(requestStatus.idle);
   const [regressionModelData, setRegressionModelData] = useState<any>({});
   const [selected, setSelected] = useState<any>([]);
-  const [filterData, setFilterData] = useState<FilterData>({
-    dataVariable: [],
-    cropValue: "",
-    source: "",
-    countryValue: "",
-    districtValue: "",
-    districtList: [],
-    fromYear: "",
-    toYear: "",
-    modelType: "linear",
-    eventStatus: "",
-    months: [],
+  const [filterData, setFilterData] = useState<FilterData>(() => {
+    const storedFilterData = localStorage.getItem("predictiveFilterData");
+    return storedFilterData
+      ? JSON.parse(storedFilterData)
+      : {
+          dataVariable: [],
+          cropValue: "",
+          source: "",
+          countryValue: "",
+          districtValue: "",
+          districtList: [],
+          fromYear: "",
+          toYear: "",
+          modelType: "linear",
+          eventStatus: "",
+          months: [],
+        };
   });
 
   const handleChange = (name: string, value: string | []) => {
-    setFilterData((prev: any) => ({ ...prev, [name]: value }));
+    setFilterData((prev: any) => {
+      const updatedFilterData = { ...prev, [name]: value };
+      localStorage.setItem(
+        "predictiveFilterData",
+        JSON.stringify(updatedFilterData)
+      );
+      return updatedFilterData;
+    });
   };
 
   const climatePattern =
@@ -56,6 +68,23 @@ const PredictiveTools = () => {
   };
 
   useEffect(() => {
+    (async () => {
+      try {
+        const response: any = await axios.get(`${BASE_URL}/body_params`);
+        setParams(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+
+    const storedFilterData = localStorage.getItem("predictiveFilterData");
+    if (storedFilterData) {
+      const parsedFilterData = JSON.parse(storedFilterData);
+      setFilterData(parsedFilterData);
+    }
+  }, []);
+
+  useEffect(() => {
     data?.fromYear ? handleChange("fromYear", data?.fromYear) : null;
     data?.toYear ? handleChange("toYear", data?.toYear) : null;
     data?.countryValue
@@ -69,17 +98,6 @@ const PredictiveTools = () => {
       ? handleChange("dataVariable", data?.dataVariable)
       : null;
     data?.selected ? setSelected(data?.selected) : null;
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response: any = await axios.get(`${BASE_URL}/body_params`);
-        setParams(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
   }, []);
 
   const generateRegressionModel = async () => {

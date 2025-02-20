@@ -40,19 +40,28 @@ const CropTools = () => {
     requestStatus.idle
   );
   const [cropAnalysisData, setCropAnalysisData] = useState<any>({});
-  const [filterData, setFilterData] = useState<FilterData>({
-    cropValue: "",
-    source: "",
-    customDataset: null,
-    customCalendar: null,
-    districtList: [],
-    countryValue: "",
-    districtValue: "",
-    analysisTimeline: "",
+  const [filterData, setFilterData] = useState<FilterData>(() => {
+    const storedFilterData = localStorage.getItem("cropFilterData");
+    return storedFilterData
+      ? JSON.parse(storedFilterData)
+      : {
+          cropValue: "",
+          source: "",
+          customDataset: null,
+          customCalendar: null,
+          districtList: [],
+          countryValue: "",
+          districtValue: "",
+          analysisTimeline: "",
+        };
   });
 
   const handleChange = (name: string, value: string | []) => {
-    setFilterData((prev: any) => ({ ...prev, [name]: value }));
+    setFilterData((prev: any) => {
+      const updatedFilterData = { ...prev, [name]: value };
+      localStorage.setItem("cropFilterData", JSON.stringify(updatedFilterData));
+      return updatedFilterData;
+    });
   };
 
   const verifyFilters = () => {
@@ -74,6 +83,12 @@ const CropTools = () => {
         console.log(error);
       }
     })();
+
+    const storedFilterData = localStorage.getItem("cropFilterData");
+    if (storedFilterData) {
+      const parsedFilterData = JSON.parse(storedFilterData);
+      setFilterData(parsedFilterData);
+    }
   }, []);
 
   const generateCropAnalysis = async () => {

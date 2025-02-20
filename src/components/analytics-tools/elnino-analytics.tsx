@@ -33,20 +33,32 @@ const ElNinoAnalytics = () => {
     requestStatus.idle
   );
 
-  const [filterData, setFilterData] = useState<FilterData>({
-    dataVariable: [],
-    cropValue: "",
-    source: "",
-    customDataset: null,
-    countryValue: "",
-    districtValue: "",
-    districtList: [],
-    fromYear: "",
-    toYear: "",
+  const [filterData, setFilterData] = useState<FilterData>(() => {
+    const storedFilterData = localStorage.getItem("analyticsFilterData");
+    return storedFilterData
+      ? JSON.parse(storedFilterData)
+      : {
+          dataVariable: [],
+          cropValue: "",
+          source: "",
+          customDataset: null,
+          countryValue: "",
+          districtValue: "",
+          districtList: [],
+          fromYear: "",
+          toYear: "",
+        };
   });
 
   const handleChange = (name: string, value: string | []) => {
-    setFilterData((prev: any) => ({ ...prev, [name]: value }));
+    setFilterData((prev: any) => {
+      const updatedFilterData = { ...prev, [name]: value };
+      localStorage.setItem(
+        "analyticsFilterData",
+        JSON.stringify(updatedFilterData)
+      );
+      return updatedFilterData;
+    });
   };
 
   const verifyFilters = () => {
@@ -69,6 +81,12 @@ const ElNinoAnalytics = () => {
         console.log(error);
       }
     })();
+
+    const storedFilterData = localStorage.getItem("analyticsFilterData");
+    if (storedFilterData) {
+      const parsedFilterData = JSON.parse(storedFilterData);
+      setFilterData(parsedFilterData);
+    }
   }, []);
 
   const generateAnalysis = async () => {
