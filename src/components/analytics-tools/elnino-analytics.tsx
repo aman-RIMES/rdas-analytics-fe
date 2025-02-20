@@ -131,12 +131,17 @@ const ElNinoAnalytics = () => {
                       label="Move to Prediction"
                       verifyFilters={isFinished(dynamicChartStatus)}
                       submitFunction={() =>
-                        navigate("/predictive-tools", {
-                          state: {
-                            ...filterData,
-                            selected,
-                          },
-                        })
+                        navigate(
+                          location.pathname === "/lanina-analytics"
+                            ? "/lanina-predictive-tools"
+                            : "/predictive-tools",
+                          {
+                            state: {
+                              ...filterData,
+                              selected,
+                            },
+                          }
+                        )
                       }
                       loadingStatus={dynamicChartStatus}
                     />
