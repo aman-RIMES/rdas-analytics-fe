@@ -458,7 +458,7 @@ export const routeDefinitions = {
   "/elnino-analytics": "El Nino and Local Climate",
   "/lanina-analytics": "La Nina and Local Climate",
   "/analytics-land": "Land Use & Land Cover Change",
-  "/predictive-temps": "TempS",
+  "/predictive-temps": "Temperature Sensitivity Alert System (TEMPs)",
 };
 
 export const Indicators = {
