@@ -2,7 +2,7 @@ import Iframe from "react-iframe";
 
 const LandUse = () => {
   return (
-    <div className=" h-screen w-screen">
+    <div className=" h-screen ">
       <Iframe
         url="https://care-lc.rimes.int/sasia/?nav=0"
         width="100%"
