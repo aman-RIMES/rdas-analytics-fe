@@ -42,6 +42,7 @@ const ElNinoAnalytics = () => {
           cropValue: "",
           source: "",
           customDataset: null,
+          multipleDataset: {},
           countryValue: "",
           districtValue: "",
           districtList: [],

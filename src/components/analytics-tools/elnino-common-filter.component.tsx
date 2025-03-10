@@ -25,6 +25,7 @@ import { Input } from "../ui/input";
 import CustomDatasetGuide from "../custom-dataset-guide";
 import newBodyParams from "../../data/new_body_params.json";
 import axios from "axios";
+import MultipleDatasetsDialog from "../multiple-datasets-dialog";
 
 const ElNinoCommonFilter = ({
   params,
@@ -159,6 +160,7 @@ const ElNinoCommonFilter = ({
           name="source"
           label={"Source"}
           array={[
+            { value: "multipleDatasets", label: "SELECT MULTIPLE DATASETS" },
             { value: "customDataset", label: "CUSTOM DATASET" },
             ...transformSourceObject(newParams?.source),
           ]}
@@ -168,6 +170,14 @@ const ElNinoCommonFilter = ({
           }}
         />
       </div>
+
+      {filterData.source === "multipleDatasets" && (
+        <MultipleDatasetsDialog
+          newParams={newParams}
+          filterData={filterData}
+          handleChange={handleChange}
+        />
+      )}
 
       <div className="grid grid-cols-2 gap-3">
         <div>

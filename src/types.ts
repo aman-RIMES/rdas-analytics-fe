@@ -78,6 +78,7 @@ export interface FilterData {
   independentVariables?: string[];
   source?: string;
   customDataset?: any;
+  multipleDataset?: any;
   customCalendar?: any;
   districtValue?: string;
   countryValue: string;
