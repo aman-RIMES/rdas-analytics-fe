@@ -160,7 +160,7 @@ const OpenLayersMap = ({
               subjectCountry.coordinates[0],
             ])
           : fromLonLat([0, 0]),
-        zoom: preferredZoomScale || subjectCountry?.zoom || 2,
+        zoom: subjectCountry?.zoom || preferredZoomScale || 2,
       }),
     });
 
