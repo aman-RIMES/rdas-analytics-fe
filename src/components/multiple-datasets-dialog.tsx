@@ -12,6 +12,7 @@ import SubmitButton from "./submit-button";
 import HelpHoverCard from "./help-hover-card";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import Combobox from "./ui/combobox";
+import { ElNinoToolDataIndicators } from "@/constants";
 
 const MultipleDatasetsDialog = ({ newParams, filterData, handleChange }) => {
   const handleMultipleDatasetChange = (name, value) => {
@@ -45,7 +46,7 @@ const MultipleDatasetsDialog = ({ newParams, filterData, handleChange }) => {
                     <div className="flex-col items-center justify-center ">
                       <div className="flex ">
                         <Label className="text-black text-xs font-semibold mb-1">
-                          {formatTitle(item)} Datset
+                          {formatTitle(ElNinoToolDataIndicators[item])} Datset
                         </Label>
                       </div>
                       <Combobox
