@@ -128,6 +128,10 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
           country: filterData.countryValue,
           months: 1,
           year: filterData.fromYear,
+          multipleSources:
+            filterData.source === "multipleSources"
+              ? JSON.stringify(filterData.multipleSources)
+              : "",
         };
         const formData = new FormData();
         Object.keys(requestBody).map((key) => {

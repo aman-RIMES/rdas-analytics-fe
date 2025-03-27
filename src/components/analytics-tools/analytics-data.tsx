@@ -68,6 +68,10 @@ const AnalyticsData = ({
           start: `${filterData.fromYear}-01-01`,
           end: `${filterData.toYear}-01-01`,
           country: filterData.countryValue,
+          multipleSources:
+            filterData.source === "multipleSources"
+              ? JSON.stringify(filterData.multipleSources)
+              : "",
         };
         const formData = new FormData();
         Object.keys(requestBody).map((key) => {

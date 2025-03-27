@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTrigger,
 } from "./ui/dialog";
@@ -13,24 +14,38 @@ import HelpHoverCard from "./help-hover-card";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import Combobox from "./ui/combobox";
 import { ElNinoToolDataIndicators } from "@/constants";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 const MultipleDatasetsDialog = ({ newParams, filterData, handleChange }) => {
-  const handleMultipleDatasetChange = (name, value) => {
-    filterData.multipleDataset[name] = value;
+  const [inputValues, setInputValues] = useState({});
+
+  const handleInputChange = (datavariable: string, value: string) => {
+    setInputValues((prevValues) => ({
+      ...prevValues,
+      [datavariable]: value,
+    }));
   };
+
+  useEffect(() => {
+    handleChange("multipleSources", inputValues);
+  }, [inputValues]);
+
+  const verifyFilters =
+    Object.keys(inputValues).length === filterData.dataVariable?.length;
+
   return (
     <>
       <Dialog>
         <DialogTrigger className="ml-1">
           <SubmitButton
             className=" border border-slate-300 text-black bg-transparent hover:text-gray-800 hover:border-slate-300 hover:bg-gray-200"
-            label="Choose Multiple Datasets"
+            label="Choose Multiple Sources"
             verifyFilters={true}
             submitFunction={() => console.log()}
           />
         </DialogTrigger>
         {/* <DialogContent className="lg:w-[50%]"> */}
-        <DialogContent className="px-24 top-[25%] lg:w-[30%]">
+        <DialogContent className="px-24 top-[35%] lg:w-[30%]">
           <DialogHeader>
             <DialogDescription>
               {/* <ScrollArea className="h-[400px]"> */}
@@ -57,8 +72,8 @@ const MultipleDatasetsDialog = ({ newParams, filterData, handleChange }) => {
                           ...transformSourceObject(newParams?.source),
                         ]}
                         state={{
-                          value: filterData?.multipleDataset?.[item],
-                          setValue: handleMultipleDatasetChange,
+                          value: inputValues[item] || "",
+                          setValue: handleInputChange,
                         }}
                       />
                     </div>
@@ -66,12 +81,16 @@ const MultipleDatasetsDialog = ({ newParams, filterData, handleChange }) => {
                 ))}
               </div>
 
-              <SubmitButton
-                className={"my-8"}
-                label="Submit"
-                verifyFilters={true}
-                submitFunction={() => console.log()}
-              />
+              <DialogClose className="w-full">
+                <SubmitButton
+                  className={"my-8"}
+                  label="Submit"
+                  verifyFilters={verifyFilters}
+                  submitFunction={() =>
+                    handleChange("allRequiredSourcesChosen", true)
+                  }
+                />
+              </DialogClose>
 
               {/* </ScrollArea> */}
             </DialogDescription>

@@ -164,7 +164,7 @@ const ElNinoCommonFilter = ({
           name="source"
           label={"Source"}
           array={[
-            { value: "multipleDatasets", label: "SELECT MULTIPLE DATASETS" },
+            { value: "multipleSources", label: "SELECT MULTIPLE SOURCES" },
             { value: "customDataset", label: "CUSTOM DATASET" },
             ...transformSourceObject(newParams?.source),
           ]}
@@ -175,7 +175,7 @@ const ElNinoCommonFilter = ({
         />
       </div>
 
-      {filterData.source === "multipleDatasets" && (
+      {filterData.source === "multipleSources" && (
         <MultipleDatasetsDialog
           newParams={newParams}
           filterData={filterData}
