@@ -204,7 +204,10 @@ const CropToolsFilter = ({ filterData, handleChange }: FilterProps) => {
         <Combobox
           name="season"
           label={"Season"}
-          array={cropParams ? transformCropArray(cropParams?.season) : []}
+          array={[
+            { value: "none", label: "NONE" },
+            ...(cropParams ? transformCropArray(cropParams?.season) : []),
+          ]}
           state={{
             value: filterData.season,
             setValue: handleChange,

@@ -176,10 +176,12 @@ const CropTools = () => {
               </Popover>
             </div>
 
-            <p className="text-xl font-bold text-green-800 text-center my-3">
+            <p className="text-lg font-bold text-green-800 text-center my-3">
               {dictionary.crop[analysisSubject?.crop] || "Crop"} Stages and
-              Water and Temperature Requirements{" "}
-              {dictionary.district[analysisSubject?.location]}
+              Water and Temperature Requirements{""}
+              {` in ${
+                dictionary.district[analysisSubject?.location] || "location"
+              }`}
             </p>
 
             <Table className="">
