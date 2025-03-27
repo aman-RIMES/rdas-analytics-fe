@@ -194,6 +194,26 @@ const CropToolsFilter = ({ filterData, handleChange }: FilterProps) => {
 
       <div>
         <div className="flex ">
+          <Label className=" text-xs font-semibold text-black">Season </Label>
+          <HelpHoverCard
+            title={" Season "}
+            content={` The season of that you want to use for the current
+              analysis. `}
+          />
+        </div>
+        <Combobox
+          name="season"
+          label={"Season"}
+          array={cropParams ? transformCropArray(cropParams?.season) : []}
+          state={{
+            value: filterData.season,
+            setValue: handleChange,
+          }}
+        />
+      </div>
+
+      <div>
+        <div className="flex ">
           <Label className=" text-xs font-semibold text-black">
             Analysis Timeline{" "}
           </Label>

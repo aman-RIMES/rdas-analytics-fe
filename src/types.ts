@@ -96,6 +96,7 @@ export interface FilterData {
   anomalyYear2?: string;
   months?: [];
   analysisTimeline?: "";
+  season?: "";
   eventStatus?: string;
 }
 
