@@ -1,13 +1,11 @@
 import Highcharts from "highcharts/highmaps";
 import HighchartsReact from "highcharts-react-official";
 import sampleCharts from "../../data/sample_charts.json";
-import bodyParams from "../../data/body_params.json";
 import { useEffect, useState } from "react";
 import { FilterData } from "@/types";
 import axios from "axios";
 import {
   BASE_URL,
-  BODY_PARAMS_URL,
   croppingStageBackground,
   IDLE_ANALYTICS_CHART_MESSAGE,
   requestStatus,
@@ -35,7 +33,6 @@ import { hourglass } from "ldrs";
 hourglass.register("l-hourglass");
 
 const CropTools = () => {
-  const [params, setParams] = useState<any>(bodyParams);
   const [cropAnalysisStatus, setCropAnalysisStatus] = useState(
     requestStatus.idle
   );
@@ -79,15 +76,6 @@ const CropTools = () => {
   };
 
   useEffect(() => {
-    (async () => {
-      try {
-        const response: any = await axios.get(BODY_PARAMS_URL);
-        setParams(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-
     const storedFilterData = localStorage.getItem("cropFilterData");
     if (storedFilterData) {
       const parsedFilterData = JSON.parse(storedFilterData);
@@ -161,7 +149,6 @@ const CropTools = () => {
                 </PopoverTrigger>
                 <PopoverContent>
                   <CropToolsFilter
-                    params={params}
                     filterData={filterData}
                     handleChange={handleChange}
                   />

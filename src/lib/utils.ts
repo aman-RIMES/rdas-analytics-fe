@@ -62,7 +62,7 @@ export const transformTehsilArray = (array: Array<object>) =>
   array.map((e: any) => ({ value: e.tehsil_id, label: e.tehsil }));
 
 export const transformCropArray = (array: Array<object>) =>
-  array.map((e: any) => ({ value: `${e.uuid}+${e.name}`, label: e.name }));
+  array?.map((e: any) => ({ value: `${e.uuid}+${e.name}`, label: e.name }));
 
 export const getAverage = (array: any) =>
   array.reduce((a: any, b: any) => a + b) / array.length;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   countries,
+  CROP_PARAMS_URL,
   croppingTimeline,
   NEW_BODY_PARAMS_URL,
   NEW_BODY_PARAMS_URL_LEVEL_1,
@@ -20,9 +21,10 @@ import CustomCalendarGuide from "../custom-crop-calendar";
 import newBodyParams from "../../data/new_body_params.json";
 import axios from "axios";
 
-const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
+const CropToolsFilter = ({ filterData, handleChange }: FilterProps) => {
   const [newParams, setNewParams] = useState<any>(newBodyParams);
   const [provinceList, setProvinceList] = useState<any>({});
+  const [cropParams, setCropParams] = useState<any>(null);
 
   useEffect(() => {
     (async () => {
@@ -49,8 +51,11 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
             },
           }
         );
+
+        const crop_results: any = await axios.get(CROP_PARAMS_URL, {});
         setNewParams(level_1_result?.data);
         setProvinceList(level_2_result?.data?.district);
+        setCropParams(crop_results?.data);
       } catch (error) {
         console.log(error);
       }
@@ -146,7 +151,7 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
           label={"Crop Calendar"}
           array={[
             { value: "customCalendar", label: "CUSTOM CALENDAR" },
-            ...transformCropArray(params?.crop),
+            ...(cropParams ? transformCropArray(cropParams?.crop) : []),
           ]}
           state={{
             value: filterData.cropValue,

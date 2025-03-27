@@ -6,6 +6,7 @@ export const BASE_URL = "https://analytics-api.rimes.int";
 export const BODY_PARAMS_URL = `${BASE_URL}/body_params`;
 export const NEW_BODY_PARAMS_URL = `https://apis.rimes.int/data/get-available-metadata?level=2&period=monthly`;
 export const NEW_BODY_PARAMS_URL_LEVEL_1 = `https://apis.rimes.int/data/get-available-metadata?level=1&period=monthly`;
+export const CROP_PARAMS_URL = `https://api.clima-planned.rimes.int/lt_crop_suitability/filters`;
 
 export const IDLE_PREDICTIVE_CHART_MESSAGE =
   "Please Generate A Predictive Model";
