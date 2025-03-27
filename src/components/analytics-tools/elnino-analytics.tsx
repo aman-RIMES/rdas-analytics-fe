@@ -1,11 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  analysisType,
-  BASE_URL,
-  BODY_PARAMS_URL,
-  requestStatus,
-  toolType,
-} from "@/constants";
+import { analysisType, requestStatus, toolType } from "@/constants";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -13,7 +7,6 @@ import { FilterData } from "@/types";
 import { isFinished } from "@/lib/utils";
 import AnalyticsCorrelation from "./analytics-correlation";
 import AnalyticsData from "./analytics-data";
-import bodyParams from "../../data/body_params.json";
 import ElNinoCommonFilter from "./elnino-common-filter.component";
 import SubmitButton from "../submit-button";
 import DynamicMap from "./dynamic-map";
@@ -26,7 +19,6 @@ const ElNinoAnalytics = () => {
   const label =
     location.pathname === "/lanina-analytics" ? "La Nina" : "El Nino";
 
-  const [params, setParams] = useState<any>(bodyParams);
   const [selected, setSelected] = useState<[]>([]);
   const [loadAnalysisData, setLoadAnalysisData] = useState(false);
   const [dynamicChartStatus, setDynamicChartStatus] = useState<requestStatus>(
@@ -74,15 +66,6 @@ const ElNinoAnalytics = () => {
   };
 
   useEffect(() => {
-    (async () => {
-      try {
-        const response: any = await axios.get(BODY_PARAMS_URL);
-        setParams(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-
     const storedFilterData = localStorage.getItem("analyticsFilterData");
     if (storedFilterData) {
       const parsedFilterData = JSON.parse(storedFilterData);
@@ -112,7 +95,6 @@ const ElNinoAnalytics = () => {
                 </div>
                 <div className=" p-2 flex flex-col gap-5 justify-between">
                   <ElNinoCommonFilter
-                    params={params}
                     filterData={filterData}
                     handleChange={handleChange}
                     selected={selected}
@@ -197,7 +179,6 @@ const ElNinoAnalytics = () => {
                     <>
                       <AnalyticsCorrelation
                         filterData={filterData}
-                        params={params}
                         typeOfAnalysis={analysisType.elnino}
                       />
                     </>

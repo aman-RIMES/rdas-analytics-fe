@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   countries,
+  CROP_PARAMS_URL,
   ElNinoToolDataIndicators,
   elNinoYearsList,
   monthsList,
@@ -28,7 +29,6 @@ import axios from "axios";
 import MultipleDatasetsDialog from "../multiple-datasets-dialog";
 
 const ElNinoCommonFilter = ({
-  params,
   filterData,
   handleChange,
   selected,
@@ -37,6 +37,7 @@ const ElNinoCommonFilter = ({
 }: FilterProps) => {
   const [newParams, setNewParams] = useState<any>(newBodyParams);
   const [selectedMonths, setSelectedMonths] = useState([]);
+  const [cropParams, setCropParams] = useState<any>(null);
 
   useEffect(() => {
     (async () => {
@@ -52,6 +53,9 @@ const ElNinoCommonFilter = ({
             // ...(filterData?.source ? { source: filterData?.source } : {}),
           },
         });
+
+        const crop_results: any = await axios.get(CROP_PARAMS_URL, {});
+        setCropParams(crop_results?.data);
         setNewParams(response?.data);
       } catch (error) {
         console.log(error);
@@ -131,7 +135,7 @@ const ElNinoCommonFilter = ({
           <Combobox
             name="cropValue"
             label={"Crop"}
-            array={transformObject(params?.crop)}
+            array={transformObject(cropParams?.crop)}
             state={{
               value: filterData.cropValue,
               setValue: handleChange,

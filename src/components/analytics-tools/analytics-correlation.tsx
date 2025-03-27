@@ -24,11 +24,7 @@ import sampleCharts from "../../data/sample_charts.json";
 import ErrorMessage from "../ui/error-message";
 import Loading from "../ui/loading";
 
-const AnalyticsCorrelation = ({
-  filterData,
-  params,
-  typeOfAnalysis,
-}: FilterProps) => {
+const AnalyticsCorrelation = ({ filterData, typeOfAnalysis }: FilterProps) => {
   const [correlationFilter, setCorrelationFilter] = useState({
     correlationVariable: filterData?.dataVariable[0],
     chosenMonths: [],

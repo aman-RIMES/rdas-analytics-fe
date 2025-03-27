@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { FilterData } from "@/types";
 import { BASE_URL, requestStatus, toolType } from "@/constants";
-import bodyParams from "../../data/body_params.json";
 import { useLocation } from "react-router-dom";
 import PredictiveToolsData from "./predictive-tools-data";
 import ElNinoCommonFilter from "../analytics-tools/elnino-common-filter.component";
@@ -13,7 +12,6 @@ import CustomDatasetGuide from "../custom-dataset-guide";
 const PredictiveTools = () => {
   const location = useLocation();
   const data = location.state;
-  const [params, setParams] = useState<any>(bodyParams);
   const [predictiveDataType, setPredictiveDataType] = useState("");
   const [regressionModelStatus, setRegressionModelStatus] =
     useState<requestStatus>(requestStatus.idle);
@@ -68,15 +66,6 @@ const PredictiveTools = () => {
   };
 
   useEffect(() => {
-    (async () => {
-      try {
-        const response: any = await axios.get(`${BASE_URL}/body_params`);
-        setParams(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-
     const storedFilterData = localStorage.getItem("predictiveFilterData");
     if (storedFilterData) {
       const parsedFilterData = JSON.parse(storedFilterData);
@@ -156,7 +145,6 @@ const PredictiveTools = () => {
               </div>
               <div className="bg-gray-100 p-2 rounded-b-lg flex flex-col gap-5 shadow-lg h-full">
                 <ElNinoCommonFilter
-                  params={params}
                   filterData={filterData}
                   handleChange={handleChange}
                   selected={selected}
