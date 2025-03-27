@@ -31,6 +31,7 @@ import { ScrollArea } from "../ui/scroll-area";
 highchartsVariwide(Highcharts);
 import { hourglass } from "ldrs";
 hourglass.register("l-hourglass");
+import dictionary from "../../data/dictionary.json";
 
 const CropTools = () => {
   const [cropAnalysisStatus, setCropAnalysisStatus] = useState(
@@ -53,6 +54,10 @@ const CropTools = () => {
           analysisTimeline: "",
           season: "",
         };
+  });
+  const [analysisSubject, setAnalysisSubject] = useState<any>({
+    crop: "",
+    location: "",
   });
 
   const handleChange = (name: string, value: string | []) => {
@@ -124,6 +129,11 @@ const CropTools = () => {
         }
       );
       setCropAnalysisData(response.data);
+      setAnalysisSubject({
+        crop: filterData.cropValue,
+        location:
+          filterData.districtValue !== "none" ? filterData.districtValue : "",
+      });
       setCropAnalysisStatus(requestStatus.isFinished);
     } catch (error) {
       console.log(error);
@@ -167,7 +177,9 @@ const CropTools = () => {
             </div>
 
             <p className="text-xl font-bold text-green-800 text-center my-3">
-              Crop Stages and Water and Temperature Requirements
+              {dictionary.crop[analysisSubject?.crop] || "Crop"} Stages and
+              Water and Temperature Requirements{" "}
+              {dictionary.district[analysisSubject?.location]}
             </p>
 
             <Table className="">
