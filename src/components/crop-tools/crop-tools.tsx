@@ -51,6 +51,7 @@ const CropTools = () => {
           customCalendar: null,
           districtList: [],
           countryValue: "",
+          provinceValue: "",
           districtValue: "",
           analysisTimeline: "",
         };
@@ -69,7 +70,10 @@ const CropTools = () => {
       filterData.source !== "" &&
       filterData.analysisTimeline !== "" &&
       filterData.cropValue !== "" &&
-      filterData.districtValue !== "" &&
+      ((filterData.districtValue !== "" &&
+        filterData.districtValue !== "none") ||
+        (filterData.provinceValue !== "" &&
+          filterData.provinceValue !== "none")) &&
       filterData.countryValue !== ""
     );
   };
@@ -93,7 +97,12 @@ const CropTools = () => {
 
   const generateCropAnalysis = async () => {
     const requestBody = {
-      area: `${filterData.districtValue}`,
+      area: `${
+        filterData.districtValue !== "none" ? filterData.districtValue : ""
+      }`,
+      province: `${
+        filterData.provinceValue !== "none" ? filterData.provinceValue : ""
+      }`,
       start: `${
         new Date().getFullYear() - parseInt(filterData.analysisTimeline)
       }-01-01`,

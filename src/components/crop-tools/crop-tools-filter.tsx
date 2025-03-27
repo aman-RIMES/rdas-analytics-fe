@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { countries, croppingTimeline, NEW_BODY_PARAMS_URL } from "@/constants";
+import {
+  countries,
+  croppingTimeline,
+  NEW_BODY_PARAMS_URL,
+  NEW_BODY_PARAMS_URL_LEVEL_1,
+} from "@/constants";
 import {
   transformCropArray,
   transformNewParamsObject,
@@ -17,11 +22,12 @@ import axios from "axios";
 
 const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
   const [newParams, setNewParams] = useState<any>(newBodyParams);
+  const [provinceList, setProvinceList] = useState<any>({});
 
   useEffect(() => {
     (async () => {
       try {
-        const response: any = await axios.get(NEW_BODY_PARAMS_URL, {
+        const level_1_result: any = await axios.get(NEW_BODY_PARAMS_URL, {
           params: {
             ...(filterData?.countryValue
               ? { geo: filterData?.countryValue }
@@ -32,7 +38,19 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
             // ...(filterData?.source ? { source: filterData?.source } : {}),
           },
         });
-        setNewParams(response?.data);
+
+        const level_2_result: any = await axios.get(
+          NEW_BODY_PARAMS_URL_LEVEL_1,
+          {
+            params: {
+              ...(filterData?.countryValue
+                ? { geo: filterData?.countryValue }
+                : {}),
+            },
+          }
+        );
+        setNewParams(level_1_result?.data);
+        setProvinceList(level_2_result?.data?.district);
       } catch (error) {
         console.log(error);
       }
@@ -59,6 +77,33 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
           }}
         />
       </div>
+
+      <div>
+        <div className="flex ">
+          <Label className=" text-xs font-semibold text-black">
+            {" "}
+            Province{" "}
+          </Label>
+          <HelpHoverCard
+            title={" Province "}
+            content={`  The specific province of the chosen country to be used for the
+                analysis. `}
+          />
+        </div>
+        <Combobox
+          name="provinceValue"
+          label={"Province"}
+          array={[
+            { value: "none", label: "None" },
+            ...transformNewParamsObject(provinceList),
+          ]}
+          state={{
+            value: filterData.provinceValue,
+            setValue: handleChange,
+          }}
+        />
+      </div>
+
       <div>
         <div className="flex ">
           <Label className=" text-xs font-semibold text-black">
@@ -74,7 +119,10 @@ const CropToolsFilter = ({ params, filterData, handleChange }: FilterProps) => {
         <Combobox
           name="districtValue"
           label={"District"}
-          array={transformNewParamsObject(newParams?.district)}
+          array={[
+            { value: "none", label: "None" },
+            ...transformNewParamsObject(newParams?.district),
+          ]}
           state={{
             value: filterData.districtValue,
             setValue: handleChange,
