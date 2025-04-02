@@ -7,6 +7,7 @@ export const BODY_PARAMS_URL = `${BASE_URL}/body_params`;
 export const NEW_BODY_PARAMS_URL = `https://apis.rimes.int/data/get-available-metadata?level=2&period=monthly`;
 export const NEW_BODY_PARAMS_URL_LEVEL_1 = `https://apis.rimes.int/data/get-available-metadata?level=1&period=monthly`;
 export const CROP_PARAMS_URL = `https://analytics-api.rimes.int/cropping_calendar/filters`;
+export const CROP_ADMIN_LOGIN_URL = `https://analytics-api.rimes.int/admin/login/?next=/admin/`;
 
 export const IDLE_PREDICTIVE_CHART_MESSAGE =
   "Please Generate A Predictive Model";

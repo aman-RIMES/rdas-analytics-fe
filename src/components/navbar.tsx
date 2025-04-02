@@ -2,7 +2,12 @@ import { cn } from "@/lib/utils";
 import { Icons } from "@/components/ui/icons";
 import { NavLink, useLocation } from "react-router-dom";
 import AvatarMenu from "./avatar-menu";
-import { AlignJustify, ChevronDown, HelpCircle } from "lucide-react";
+import {
+  AlignJustify,
+  ChevronDown,
+  HelpCircle,
+  UserCircle,
+} from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -14,7 +19,7 @@ import {
 import { Sidebar } from "./sidebar";
 import { ScrollArea } from "./ui/scroll-area";
 import { NavMenubar } from "./navMenuBar";
-import { routeDefinitions } from "@/constants";
+import { CROP_ADMIN_LOGIN_URL, routeDefinitions } from "@/constants";
 export default function NavBar() {
   const location = useLocation();
   return (
@@ -83,6 +88,12 @@ export default function NavBar() {
               <div className="flex gap-1 justify-center items-center py-1 px-3 rounded-sm text-white hover:bg-yellow-300 hover:text-black">
                 <HelpCircle className="h-[18px] w-[18px] " />
                 <p className="">Help</p>
+              </div>
+            </a>
+            <a rel="noreferrer" href={CROP_ADMIN_LOGIN_URL} target="_blank">
+              <div className="flex gap-1 justify-center items-center py-1 px-3 rounded-sm text-white hover:bg-yellow-300 hover:text-black">
+                <UserCircle className="h-[18px] w-[18px] " />
+                <p className="">Login</p>
               </div>
             </a>
             {/* <ThemeToggle /> */}
