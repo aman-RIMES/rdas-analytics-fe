@@ -73,10 +73,7 @@ const CropTools = () => {
       filterData.source !== "" &&
       filterData.analysisTimeline !== "" &&
       filterData.cropValue !== "" &&
-      ((filterData.districtValue !== "" &&
-        filterData.districtValue !== "none") ||
-        (filterData.provinceValue !== "" &&
-          filterData.provinceValue !== "none")) &&
+      (filterData.districtValue !== "" || filterData.provinceValue !== "") &&
       filterData.countryValue !== ""
     );
   };
@@ -91,9 +88,10 @@ const CropTools = () => {
 
   const generateCropAnalysis = async () => {
     const requestBody = {
-      area: filterData.districtValue !== "none" ? filterData.districtValue : "",
-      province:
-        filterData.provinceValue !== "none" ? filterData.provinceValue : "",
+      area: filterData.provinceValue
+        ? filterData.provinceValue
+        : filterData.districtValue,
+      country: filterData.countryValue,
       season: filterData.season,
       start: `${
         new Date().getFullYear() - parseInt(filterData.analysisTimeline)

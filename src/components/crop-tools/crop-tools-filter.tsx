@@ -99,7 +99,7 @@ const CropToolsFilter = ({ filterData, handleChange }: FilterProps) => {
           name="provinceValue"
           label={"Province"}
           array={[
-            { value: "none", label: "NONE" },
+            { value: "", label: "NONE" },
             ...transformNewParamsObject(provinceList),
           ]}
           state={{
@@ -125,7 +125,7 @@ const CropToolsFilter = ({ filterData, handleChange }: FilterProps) => {
           name="districtValue"
           label={"District"}
           array={[
-            { value: "none", label: "NONE" },
+            { value: "", label: "NONE" },
             ...transformNewParamsObject(newParams?.district),
           ]}
           state={{
@@ -205,7 +205,7 @@ const CropToolsFilter = ({ filterData, handleChange }: FilterProps) => {
           name="season"
           label={"Season"}
           array={[
-            { value: "none", label: "NONE" },
+            { value: "", label: "NONE" },
             ...(cropParams ? transformCropArray(cropParams?.season) : []),
           ]}
           state={{
