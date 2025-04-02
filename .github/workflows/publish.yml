@@ -43,7 +43,7 @@ jobs:
 
       - name: deploy
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} ". redeploy_rdas.sh"
+          ssh -oStrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -p ${{ secrets.SSH_PORT }} ". redeploy_rdas.sh"
 
       - name: cleanup
         run: rm -rf ~/.ssh
