@@ -79,6 +79,7 @@ export interface FilterData {
   source?: string;
   customDataset?: any;
   multipleSources?: any;
+  multipleCustomDatasets?: any;
   allRequiredSourcesChosen?: boolean;
   customCalendar?: any;
   districtValue?: string;

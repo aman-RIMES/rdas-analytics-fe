@@ -14,13 +14,23 @@ import HelpHoverCard from "./help-hover-card";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import Combobox from "./ui/combobox";
 import { ElNinoToolDataIndicators } from "@/constants";
-import { DialogClose } from "@radix-ui/react-dialog";
+import { DialogClose, DialogTitle } from "@radix-ui/react-dialog";
+import CustomDatasetGuide from "./custom-dataset-guide";
+import { Input } from "./ui/input";
 
 const MultipleDatasetsDialog = ({ newParams, filterData, handleChange }) => {
   const [inputValues, setInputValues] = useState({});
+  const [customUploads, setCustomUploads] = useState({});
 
-  const handleInputChange = (datavariable: string, value: string) => {
+  const handleInputChange = (datavariable: string, value: any) => {
     setInputValues((prevValues) => ({
+      ...prevValues,
+      [datavariable]: value,
+    }));
+  };
+
+  const handleUploadChange = (datavariable: string, value: any) => {
+    setCustomUploads((prevValues) => ({
       ...prevValues,
       [datavariable]: value,
     }));
@@ -28,7 +38,8 @@ const MultipleDatasetsDialog = ({ newParams, filterData, handleChange }) => {
 
   useEffect(() => {
     handleChange("multipleSources", inputValues);
-  }, [inputValues]);
+    handleChange("multipleCustomDatasets", customUploads);
+  }, [inputValues, customUploads]);
 
   const verifyFilters =
     Object.keys(inputValues).length === filterData.dataVariable?.length;
@@ -45,19 +56,20 @@ const MultipleDatasetsDialog = ({ newParams, filterData, handleChange }) => {
           />
         </DialogTrigger>
         {/* <DialogContent className="lg:w-[50%]"> */}
-        <DialogContent className="px-24 top-[35%] lg:w-[30%]">
+        <DialogContent className="px-24 top-[40%] lg:w-[30%]">
+          <DialogTitle></DialogTitle>
           <DialogHeader>
             <DialogDescription>
               {/* <ScrollArea className="h-[400px]"> */}
               <div>
-                <p className="text-lg text-center my-3 text-black">
+                <p className="text-xl text-center my-3 text-black font-medium">
                   Choose multiple dataset sources
                 </p>
               </div>
 
               <div className="flex flex-col gap-5 mt-8">
                 {filterData.dataVariable?.map((item, index) => (
-                  <div className="flex-col items-center justify-center ">
+                  <div className="flex-col items-center justify-center my-2">
                     <div className="flex-col items-center justify-center ">
                       <div className="flex ">
                         <Label className="text-black text-xs font-semibold mb-1">
@@ -77,6 +89,42 @@ const MultipleDatasetsDialog = ({ newParams, filterData, handleChange }) => {
                         }}
                       />
                     </div>
+
+                    {inputValues[item] === "customDataset" && (
+                      <div className="mt-2">
+                        <div className="flex ">
+                          <Label className=" text-xs font-semibold">
+                            Upload CSV
+                          </Label>
+                          <HelpHoverCard
+                            title={" Custom Dataset "}
+                            content={` The custom dataset that you want to upload and use for the current
+    analysis. You can upload CSV files only`}
+                          />
+
+                          <CustomDatasetGuide title="View Template Guide" />
+                        </div>
+                        <Input
+                          onChange={(e) => {
+                            handleUploadChange(item, e.target.files[0]);
+                          }}
+                          id="customDataset"
+                          type="file"
+                          accept=".csv"
+                          title=" "
+                          // value={fileName}
+                        />
+
+                        {customUploads[item] ? (
+                          <p className="mt-1 text-sm text-black text-center">
+                            {<strong>{customUploads[item].name}</strong>} has
+                            been chosen
+                          </p>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>

@@ -35,6 +35,7 @@ const ElNinoAnalytics = () => {
           source: "",
           customDataset: null,
           multipleSources: {},
+          multipleCustomDatasets: {},
           allRequiredSourcesChosen: false,
           countryValue: "",
           districtValue: "",
