@@ -79,52 +79,13 @@ const MultipleDatasetsDialog = ({ newParams, filterData, handleChange }) => {
                       <Combobox
                         name={item}
                         label={"Source"}
-                        array={[
-                          { value: "customDataset", label: "CUSTOM DATASET" },
-                          ...transformSourceObject(newParams?.source),
-                        ]}
+                        array={[...transformSourceObject(newParams?.source)]}
                         state={{
                           value: inputValues[item] || "",
                           setValue: handleInputChange,
                         }}
                       />
                     </div>
-
-                    {inputValues[item] === "customDataset" && (
-                      <div className="mt-2">
-                        <div className="flex ">
-                          <Label className=" text-xs font-semibold">
-                            Upload CSV
-                          </Label>
-                          <HelpHoverCard
-                            title={" Custom Dataset "}
-                            content={` The custom dataset that you want to upload and use for the current
-    analysis. You can upload CSV files only`}
-                          />
-
-                          <CustomDatasetGuide title="View Template Guide" />
-                        </div>
-                        <Input
-                          onChange={(e) => {
-                            handleUploadChange(item, e.target.files[0]);
-                          }}
-                          id="customDataset"
-                          type="file"
-                          accept=".csv"
-                          title=" "
-                          // value={fileName}
-                        />
-
-                        {customUploads[item] ? (
-                          <p className="mt-1 text-sm text-black text-center">
-                            {<strong>{customUploads[item].name}</strong>} has
-                            been chosen
-                          </p>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    )}
                   </div>
                 ))}
               </div>
