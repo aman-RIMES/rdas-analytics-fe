@@ -164,9 +164,9 @@ const ElNinoCommonFilter = ({
           name="source"
           label={"Source"}
           array={[
-            { value: "multipleSources", label: "SELECT MULTIPLE SOURCES" },
-            { value: "customDataset", label: "CUSTOM DATASET" },
             ...transformSourceObject(newParams?.source),
+            { value: "customDataset", label: "CUSTOM DATASET" },
+            { value: "multipleSources", label: "SELECT MULTIPLE SOURCES" },
           ]}
           state={{
             value: filterData.source,

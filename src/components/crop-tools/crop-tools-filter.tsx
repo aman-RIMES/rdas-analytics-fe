@@ -150,8 +150,8 @@ const CropToolsFilter = ({ filterData, handleChange }: FilterProps) => {
           name="cropValue"
           label={"Crop Calendar"}
           array={[
-            { value: "customCalendar", label: "CUSTOM CALENDAR" },
             ...(cropParams ? transformCropArray(cropParams?.crop) : []),
+            { value: "customCalendar", label: "CUSTOM CALENDAR" },
           ]}
           state={{
             value: filterData.cropValue,
@@ -182,8 +182,8 @@ const CropToolsFilter = ({ filterData, handleChange }: FilterProps) => {
           name="source"
           label={"Source"}
           array={[
-            { value: "customDataset", label: "CUSTOM DATASET" },
             ...transformSourceObject(newParams?.source),
+            { value: "customDataset", label: "CUSTOM DATASET" },
           ]}
           state={{
             value: filterData.source,
