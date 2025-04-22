@@ -6,7 +6,6 @@ import { FilterData } from "@/types";
 import axios from "axios";
 import {
   BASE_URL,
-  croppingStageBackground,
   IDLE_ANALYTICS_CHART_MESSAGE,
   requestStatus,
 } from "@/constants";
@@ -15,23 +14,17 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import SubmitButton from "../submit-button";
 import { PopoverClose } from "@radix-ui/react-popover";
 import { ChevronDown } from "lucide-react";
-import { cn, formatTitle, isError, isIdle, isLoading } from "@/lib/utils";
+import { isError, isIdle, isLoading } from "@/lib/utils";
 import ErrorMessage from "../ui/error-message";
 import Loading from "../ui/loading";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../ui/table";
 import highchartsVariwide from "highcharts/modules/variwide";
 import { ScrollArea } from "../ui/scroll-area";
 highchartsVariwide(Highcharts);
 import { hourglass } from "ldrs";
 hourglass.register("l-hourglass");
-import dictionary from "../../data/dictionary.json";
+import DownloadPdf from "../dowload-pdf";
+import CropCalendar from "./crop-calendar";
+import CropToolsAnalysisText from "./crop-tool-analysis-text";
 
 const CropTools = () => {
   const [cropAnalysisStatus, setCropAnalysisStatus] = useState(
@@ -144,7 +137,7 @@ const CropTools = () => {
       <div className="p-2">
         <div className="grid grid-cols-1 lg:grid-cols-7 gap-3">
           <div className="col-span-4 w-full  bg-white rounded-lg h-[45vh] p-1 relative z-0">
-            <div className="absolute inset-0 z-20 max-h-10 flex justify-start items-start">
+            <div className="absolute inset-0 z-30 max-h-10 max-w-60 flex justify-start items-start">
               <Popover>
                 <PopoverTrigger className="p-2">
                   <div className="border-2 bg-white border-green-800 text-green-800 text-lg px-2 py-1 min-w-[190px]  rounded-md hover:bg-green-800 hover:text-white flex flex-row justify-between items-center">
@@ -174,117 +167,17 @@ const CropTools = () => {
               </Popover>
             </div>
 
-            <p className="text-lg font-bold text-green-800 text-center my-3">
-              {dictionary.crop[analysisSubject?.crop] || "Crop"} Stages and
-              Water and Temperature Requirements{""}
-              {` in ${
-                dictionary.district[analysisSubject?.location] || "location"
-              }`}
-            </p>
+            <CropCalendar
+              cropAnalysisData={cropAnalysisData}
+              analysisSubject={analysisSubject}
+            />
 
-            <Table className="">
-              <TableHeader>
-                <TableRow>
-                  {cropAnalysisData?.crop_calendar?.map((element: any) => (
-                    <TableHead className=" text-white text-md font-medium text-center p-[2px]">
-                      <div className="bg-green-800 py-2 rounded-sm">
-                        {element.month}
-                      </div>
-                    </TableHead>
-                  ))}
-                </TableRow>
-              </TableHeader>
-
-              <TableBody>
-                <TableRow>
-                  {cropAnalysisData?.crop_calendar?.map(
-                    (calendar, monthIndex) => (
-                      <TableCell key={monthIndex}>
-                        <>
-                          <div className="flex flex-row justify-center gap-16">
-                            {calendar.stages.map((stage, stageIndex) => (
-                              <div className=" m-[-15px]">
-                                <img
-                                  className="
-                                w-[70px] h-[140px]"
-                                  src={
-                                    croppingStageBackground[stage?.number - 1]
-                                      .image
-                                  }
-                                  alt=""
-                                />
-                              </div>
-                            ))}
-                          </div>
-                        </>
-                      </TableCell>
-                    )
-                  )}
-                </TableRow>
-                <TableRow>
-                  {cropAnalysisData?.crop_calendar?.map(
-                    (calendar, monthIndex) => (
-                      <TableCell
-                        key={monthIndex}
-                        className="text-xs text-center p-[2px] "
-                      >
-                        <>
-                          <div className="flex flex-row">
-                            {calendar.stages.map((stage, stageIndex) => (
-                              <div
-                                className={cn(
-                                  "text-xs w-full px-[-8] py-1 flex items-center justify-center",
-                                  croppingStageBackground[stage?.number - 1]
-                                    .color
-                                )}
-                              >
-                                <p className="font-bold text-lg">
-                                  {stage?.name}
-                                </p>
-                              </div>
-                            ))}
-                          </div>
-                        </>
-                      </TableCell>
-                    )
-                  )}
-                </TableRow>
-                <TableRow>
-                  {cropAnalysisData?.crop_calendar?.map(
-                    (calendar, monthIndex) => (
-                      <TableCell
-                        key={monthIndex}
-                        className="text-xs text-center p-[2px] "
-                      >
-                        <>
-                          <div className="flex flex-row">
-                            {calendar.stages.map((stage, stageIndex) => (
-                              <div
-                                className={cn(
-                                  "text-xs w-full px-[-10]  py-5",
-                                  croppingStageBackground[stage?.number - 1]
-                                    .color
-                                )}
-                              >
-                                <p className="font-medium text-sm">
-                                  Max Temp: {stage?.tmax_req}
-                                </p>
-                                <p className="font-medium text-sm">
-                                  Min Temp: {stage?.tmin_req}
-                                </p>
-                                <p className="font-medium text-sm">
-                                  Water: {stage?.water_req}
-                                </p>
-                              </div>
-                            ))}
-                          </div>
-                        </>
-                      </TableCell>
-                    )
-                  )}
-                </TableRow>
-              </TableBody>
-            </Table>
+            <div className="absolute inset-0 z-10 max-h-12 mr-3 flex justify-end items-end ">
+              <DownloadPdf
+                cropAnalysisData={cropAnalysisData}
+                analysisSubject={analysisSubject}
+              />
+            </div>
 
             {(isIdle(cropAnalysisStatus) ||
               isLoading(cropAnalysisStatus) ||
@@ -347,51 +240,9 @@ const CropTools = () => {
                   </div>
 
                   <ScrollArea className="h-[400px] p-2">
-                    <div className="w-[520px]">
-                      <p className="p-2" style={{ whiteSpace: "break-spaces" }}>
-                        {cropAnalysisData?.analysis ||
-                          sampleCharts?.crop_analysis}
-                      </p>
-                    </div>
-
-                    {cropAnalysisData?.analysis_per_stage && (
-                      <div className="w-[500px]">
-                        <Table className="mt-2">
-                          <TableHeader>
-                            <TableRow>
-                              {Object.keys(
-                                cropAnalysisData?.analysis_per_stage[0]
-                              )
-                                .filter((key) => key !== "number")
-                                ?.map((key: any) => (
-                                  <TableHead className="text-black text-md font-medium text-center">
-                                    <div>{formatTitle(key)}</div>
-                                  </TableHead>
-                                ))}
-                            </TableRow>
-                          </TableHeader>
-
-                          <TableBody>
-                            {cropAnalysisData?.analysis_per_stage?.map(
-                              (element: any, index) => (
-                                <TableRow>
-                                  {Object.keys(element)
-                                    .filter((key) => key !== "number")
-                                    ?.map((e: any) => (
-                                      <TableCell
-                                        key={index}
-                                        className="text-sm text-center p-[4px] "
-                                      >
-                                        {element[e]}
-                                      </TableCell>
-                                    ))}
-                                </TableRow>
-                              )
-                            )}
-                          </TableBody>
-                        </Table>
-                      </div>
-                    )}
+                    <CropToolsAnalysisText
+                      cropAnalysisData={cropAnalysisData}
+                    />
                   </ScrollArea>
                 </div>
                 {(isIdle(cropAnalysisStatus) ||
