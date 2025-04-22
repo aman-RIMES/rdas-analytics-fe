@@ -8,7 +8,10 @@ import { DownloadIcon } from "lucide-react";
 
 const DownloadPdf = ({ cropAnalysisData, analysisSubject }) => {
   const contentRef = useRef(null);
-  const reactToPrintFn = useReactToPrint({ contentRef });
+  const reactToPrintFn = useReactToPrint({
+    contentRef,
+    documentTitle: "Crop Calendar Suitability Report",
+  });
 
   const getPageMargins = () => {
     return `@page { margin: 32px 49px 32px 49px !important; }`;
@@ -26,13 +29,6 @@ const DownloadPdf = ({ cropAnalysisData, analysisSubject }) => {
         </div>
       </button>
       <div className="printContent" ref={contentRef}>
-        <style type="text/css" media="print">
-          {
-            "\
-  @page { size: landscape; }\
-"
-          }
-        </style>
         <style>{getPageMargins()}</style>
 
         <p className="text-center text-3xl my-8 font-bold text-green-800">
@@ -44,26 +40,28 @@ const DownloadPdf = ({ cropAnalysisData, analysisSubject }) => {
             cropAnalysisData={cropAnalysisData}
             analysisSubject={analysisSubject}
           />
-          <HighchartsReact
-            highcharts={Highcharts}
-            options={{
-              ...cropAnalysisData?.chart?.rainfall,
-              exporting: { scale: 2 },
-              chart: { width: 1000, height: 500 },
-            }}
-            containerProps={{ style: { height: "100%", width: "100%" } }}
-          />
+          <div className="mt-10">
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={{
+                ...cropAnalysisData?.chart?.rainfall,
+                exporting: { scale: 2 },
+                chart: { width: 700, height: 400 },
+              }}
+              containerProps={{ style: { height: "100%", width: "100%" } }}
+            />
+          </div>
 
           <HighchartsReact
             highcharts={Highcharts}
             options={{
               ...cropAnalysisData?.chart?.temperature,
               exporting: { scale: 2 },
-              chart: { width: 1000, height: 500 },
+              chart: { width: 700, height: 400 },
             }}
           />
 
-          <div className="mt-48 mb-14">
+          <div className="mt-12 mb-14">
             <p className="ml-2 text-4xl  text-green-800 font-bold"> Analysis</p>
 
             <CropToolsAnalysisText

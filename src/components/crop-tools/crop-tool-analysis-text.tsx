@@ -30,7 +30,12 @@ const CropToolsAnalysisText = ({ cropAnalysisData, isPrint = false }) => {
                 {Object.keys(cropAnalysisData?.analysis_per_stage[0])
                   .filter((key) => key !== "number")
                   ?.map((key: any) => (
-                    <TableHead className="text-black text-md font-medium text-center">
+                    <TableHead
+                      className={cn(
+                        "text-black text-md font-medium text-center",
+                        isPrint && "text-[13px] p-[-16px]"
+                      )}
+                    >
                       <div>{formatTitle(key)}</div>
                     </TableHead>
                   ))}
@@ -46,7 +51,10 @@ const CropToolsAnalysisText = ({ cropAnalysisData, isPrint = false }) => {
                       ?.map((e: any) => (
                         <TableCell
                           key={index}
-                          className="text-md text-center p-[4px] "
+                          className={cn(
+                            "text-md text-center p-[4px]",
+                            isPrint && "text-[13px] p-[-16px]"
+                          )}
                         >
                           {element[e]}
                         </TableCell>
