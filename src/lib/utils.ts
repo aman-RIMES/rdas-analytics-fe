@@ -36,7 +36,7 @@ export const transformNewParamsObject = (object: any) =>
 export const transformMultiNewParamsObject = (object: any) =>
   Array.from(Object.entries(object), ([key, value]) => ({
     value: key,
-    label: value,
+    label: value || "NULL",
   }));
 
 export const isLoading = (status: requestStatus | undefined) =>
