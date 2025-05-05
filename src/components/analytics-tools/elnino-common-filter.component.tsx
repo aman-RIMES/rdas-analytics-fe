@@ -37,7 +37,6 @@ const ElNinoCommonFilter = ({
 }: FilterProps) => {
   const [newParams, setNewParams] = useState<any>(newBodyParams);
   const [selectedMonths, setSelectedMonths] = useState([]);
-  // const [cropParams, setCropParams] = useState<any>(null);
 
   useEffect(() => {
     (async () => {
@@ -54,8 +53,6 @@ const ElNinoCommonFilter = ({
           },
         });
 
-        // const crop_results: any = await axios.get(CROP_PARAMS_URL, {});
-        // setCropParams(crop_results?.data);
         setNewParams(response?.data);
       } catch (error) {
         console.log(error);
@@ -117,32 +114,16 @@ const ElNinoCommonFilter = ({
           setSelected={setSelected}
           setState={handleChange}
           array={transformMultiNewParamsObject(newParams?.indic).filter(
-            (e) => !filterData.dataVariable?.includes(e.value)
+            (e) =>
+              !filterData.dataVariable?.includes(e.value) &&
+              e.value !== "sfcWind" &&
+              e.value !== "rsds" &&
+              e.value !== "sfcWindDir" &&
+              e.value !== "hurs"
           )}
           ScrollAreaHeight={22}
         />
       </div>
-      {/* {containsCropAnalysis(filterData.dataVariable) && (
-        <div className="mt-2">
-          <div className="flex ">
-            <Label className=" text-xs font-semibold">Crop </Label>
-            <HelpHoverCard
-              title={" Crop "}
-              content={` The specific crop you want to use for the current
-              analysis. `}
-            />
-          </div>
-          <Combobox
-            name="cropValue"
-            label={"Crop"}
-            array={transformObject(cropParams?.crop)}
-            state={{
-              value: filterData.cropValue,
-              setValue: handleChange,
-            }}
-          />
-        </div>
-      )} */}
       <div>
         <div className="flex ">
           <Label className=" text-xs font-semibold">Data Source </Label>
@@ -226,14 +207,6 @@ const ElNinoCommonFilter = ({
           />
         </div>
       </div>
-
-      {/* TODO: Delete if not needed */}
-      {/* <div className="flex items-center gap-1  mt-1">
-        <InfoCircledIcon className="h-4 w-4" />
-        <p className="text-sm">
-          Please choose a minimum of 30 years timeframe.
-        </p>
-      </div> */}
 
       {filterData.source === "customDataset" && (
         <>
