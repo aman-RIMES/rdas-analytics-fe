@@ -125,21 +125,12 @@ const PredictiveToolsData = ({
                                     key={index}
                                     className="text-xs text-center"
                                   >
-                                    <HoverCard>
-                                      <HoverCardTrigger>
-                                        {element === 0 &&
-                                        index > 0 &&
-                                        predictiveFilterData.predictiveVariable ===
-                                          "rainfall"
-                                          ? "No Rainfall"
-                                          : element}
-                                      </HoverCardTrigger>
-                                      <HoverCardContent className="flex flex-col">
-                                        <p className="text-sm ">
-                                          This means that ...{" "}
-                                        </p>
-                                      </HoverCardContent>
-                                    </HoverCard>
+                                    {element === 0 &&
+                                    index > 0 &&
+                                    predictiveFilterData.predictiveVariable ===
+                                      "rainfall"
+                                      ? "No Rainfall"
+                                      : element}
                                   </TableCell>
                                 ))}
                               </TableRow>
