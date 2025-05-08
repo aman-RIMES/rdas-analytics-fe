@@ -1,252 +1,274 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import Combobox from "../ui/combobox";
-import metadata from "@/data/metadata.json";
 import {
-  formatDate,
-  transformDistrictArray,
-  transformObject,
-  transformProvinceArray,
+  countries,
+  CROP_PARAMS_URL,
+  ElNinoToolDataIndicators,
+  elNinoYearsList,
+  monthsList,
+  NEW_BODY_PARAMS_URL,
+  NEW_BODY_PARAMS_URL_LEVEL_1,
+} from "@/constants";
+import {
+  containsCropAnalysis,
+  isIdle,
   transformCropArray,
-  transformTehsilArray,
+  transformDistrictParams,
+  transformMultiNewParamsObject,
+  transformNewParamsObject,
+  transformObject,
+  transformSourceObject,
 } from "@/lib/utils";
-import { Label } from "@radix-ui/react-dropdown-menu";
-import axios from "axios";
-import { FancyMultiSelect } from "../ui/multiselect";
-import { Crop, GDDFilterProps } from "@/types";
 import HelpHoverCard from "../help-hover-card";
-import { yearsList } from "@/constants";
-import DatePicker from "../datepicker";
-import { DatePickerWithRange } from "../date-range-picker";
+import Combobox from "../ui/combobox";
+import { District, FilterProps } from "@/types";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
+import { Label } from "@radix-ui/react-dropdown-menu";
+import { FancyMultiSelect } from "../ui/multiselect";
+import { Input } from "../ui/input";
+import CustomDatasetGuide from "../custom-dataset-guide";
+import newBodyParams from "../../data/new_body_params.json";
+import axios from "axios";
+import MultipleDatasetsDialog from "../multiple-datasets-dialog";
 
-const GDDToolsFilter = ({ filterData, handleChange }: GDDFilterProps) => {
-  const [crops, setCrops] = useState<Crop[]>([]);
-  const [tehsils, setTehsils] = useState([{}]);
-  const [districts, setDistricts] = useState([{}]);
-  const [provinces, setProvinces] = useState([{}]);
-  const [years, setYears] = useState(yearsList);
-  const [selected, setSelected] = useState([]);
-
-  const min = crops.find(
-    (e) => e?.crop_id == parseInt(filterData.cropValue)
-  )?.min_period_days;
-  const max = crops.find(
-    (e) => e?.crop_id == parseInt(filterData.cropValue)
-  )?.max_period_days;
-
-  useEffect(() => {
-    const chosenYear = formatDate(filterData.dateRange?.from).slice(0, 4);
-    setYears(yearsList.filter((e) => e.label !== chosenYear));
-  }, [filterData.dateRange]);
+const GddToolsFilter = ({
+  filterData,
+  handleChange,
+  selected,
+  setSelected,
+  filterType,
+}: FilterProps) => {
+  const [newParams, setNewParams] = useState<any>(newBodyParams);
+  const [provinceList, setProvinceList] = useState<any>({});
+  const [cropParams, setCropParams] = useState<any>(null);
 
   useEffect(() => {
     (async () => {
       try {
-        const cropsList = await axios.get("http://203.156.108.67:1480/crops");
-        setCrops(cropsList.data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
+        const level_1_result: any = await axios.get(NEW_BODY_PARAMS_URL, {
+          params: {
+            ...(filterData?.countryValue
+              ? { geo: filterData?.countryValue }
+              : {}),
+            // ...(filterData?.districtValue
+            //   ? { district: filterData?.districtValue }
+            //   : {}),
+            // ...(filterData?.source ? { source: filterData?.source } : {}),
+          },
+        });
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const provinceList: any = await axios.get(
-          "http://203.156.108.67:14800/pakistan/provinces"
+        const level_2_result: any = await axios.get(
+          NEW_BODY_PARAMS_URL_LEVEL_1,
+          {
+            params: {
+              ...(filterData?.countryValue
+                ? { geo: filterData?.countryValue }
+                : {}),
+            },
+          }
         );
-        setProvinces(provinceList.data);
+
+        const crop_results: any = await axios.get(CROP_PARAMS_URL, {});
+        setNewParams(level_1_result?.data);
+        setProvinceList(level_2_result?.data?.district);
+        setCropParams(crop_results?.data);
       } catch (error) {
         console.log(error);
       }
     })();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      if (filterData.provinceValue !== "") {
-        try {
-          const districtList: any = await axios.get(
-            `http://203.156.108.67:14800/pakistan/get_districts_by_province/${filterData.provinceValue}`
-          );
-          setDistricts(districtList.data);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    })();
-  }, [filterData.provinceValue]);
-
-  useEffect(() => {
-    (async () => {
-      if (filterData.districtValue !== "") {
-        try {
-          const tehsilList: any = await axios.get(
-            `http://203.156.108.67:14800/pakistan/get_tehsil_by_district_id/${filterData.districtValue}`
-          );
-          setTehsils(tehsilList.data);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    })();
-  }, [filterData.districtValue]);
+  }, [filterData.countryValue]);
 
   return (
-    <div>
-      <div className="grid gap-4 mb-6 md:grid-cols-2 xl:grid-cols-4 grid-cols-1 justify-center">
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> Country </Label>
-            <HelpHoverCard
-              title={" Country "}
-              content={` The country of chosen location that you'd like to analyze. `}
-            />
-          </div>
-          <Combobox
-            name="countryValue"
-            label={"Country"}
-            array={transformObject(metadata.country)}
-            state={{
-              value: filterData.countryValue,
-              setValue: handleChange,
-            }}
+    <div className="flex flex-col gap-2">
+      <div>
+        <div className="flex ">
+          <Label className=" text-xs font-semibold"> Country </Label>
+          <HelpHoverCard
+            title={" Country "}
+            content={` The country of chosen location that you'd like to analyze. `}
           />
         </div>
+        <Combobox
+          name="countryValue"
+          label={"Country"}
+          array={countries}
+          state={{
+            value: filterData.countryValue,
+            setValue: handleChange,
+          }}
+        />
+      </div>
 
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> Province </Label>
-            <HelpHoverCard
-              title={" Province "}
-              content={`  The Province of the chosen country to be used for the
+      <div>
+        <div className="flex ">
+          <Label className=" text-xs font-semibold text-black">
+            {" "}
+            Province{" "}
+          </Label>
+          <HelpHoverCard
+            title={" Province "}
+            content={`  The specific province of the chosen country to be used for the
+                analysis. `}
+          />
+        </div>
+        <Combobox
+          name="provinceValue"
+          label={"Province"}
+          array={[
+            { value: "", label: "NONE" },
+            ...transformNewParamsObject(provinceList),
+          ]}
+          state={{
+            value: filterData.provinceValue,
+            setValue: handleChange,
+          }}
+        />
+      </div>
+
+      <div>
+        <div className="flex ">
+          <Label className=" text-xs font-semibold"> District </Label>
+          <HelpHoverCard
+            title={" District "}
+            content={`  The specific district of the chosen country to be used for the
               analysis. `}
-            />
-          </div>
-          <Combobox
-            name="provinceValue"
-            label={"Province"}
-            array={transformProvinceArray(provinces)}
-            state={{
-              value: filterData.provinceValue,
-              setValue: handleChange,
-            }}
           />
         </div>
+        <Combobox
+          name="districtValue"
+          label={"District"}
+          array={transformNewParamsObject(newParams?.district)}
+          state={{
+            value: filterData.districtValue,
+            setValue: handleChange,
+          }}
+        />
+      </div>
 
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> District </Label>
-            <HelpHoverCard
-              title={" District "}
-              content={`  The district of the chosen country to be used for the
+      <div className="">
+        <div className="flex ">
+          <Label className=" text-xs font-semibold text-black">Crop</Label>
+          <HelpHoverCard
+            title={" Crop Calendar"}
+            content={` The specific crop you want to use for the current
               analysis. `}
+          />
+        </div>
+        <Combobox
+          name="cropValue"
+          label={"Crop Calendar"}
+          array={[
+            ...(cropParams ? transformCropArray(cropParams?.crop) : []),
+            // { value: "customCalendar", label: "CUSTOM CALENDAR" },
+          ]}
+          state={{
+            value: filterData.cropValue,
+            setValue: handleChange,
+          }}
+        />
+      </div>
+
+      <div>
+        <div className="flex ">
+          <Label className=" text-xs font-semibold">Data Source </Label>
+          <HelpHoverCard
+            title={" Source "}
+            content={` The source of dataset that you want to use for the current
+              analysis. `}
+          />
+
+          <a
+            className="text-green-600 text-xs font-semibold ml-2 text-decoration-line: underline"
+            href={"http://203.156.108.67:1681/en/new-page"}
+            target="_blank"
+          >
+            Dataset Guide
+          </a>
+        </div>
+        <Combobox
+          name="source"
+          label={"Source"}
+          array={[
+            ...transformSourceObject(newParams?.source),
+            { value: "customDataset", label: "CUSTOM DATASET" },
+          ]}
+          state={{
+            value: filterData.source,
+            setValue: handleChange,
+          }}
+        />
+      </div>
+
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <div className="flex ">
+            <Label className=" text-xs font-semibold"> From Year </Label>
+            <HelpHoverCard
+              title={" From Year "}
+              content={` The beginning year for your analysis timeframe `}
             />
           </div>
           <Combobox
-            name="districtValue"
-            label={"District"}
-            array={transformDistrictArray(districts)}
+            name="fromYear"
+            label={"Year"}
+            array={elNinoYearsList().filter(
+              (e) => parseInt(e.value) + 30 < new Date().getFullYear()
+            )}
             state={{
-              value: filterData.districtValue,
+              value: filterData.fromYear,
               setValue: handleChange,
             }}
           />
         </div>
 
         <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> Tehsil </Label>
+          <div className="flex gap-1 ">
+            <Label className=" text-xs font-semibold"> To Year </Label>
             <HelpHoverCard
-              title={" Tehsil "}
-              content={`  The specific Tehsil of the chosen district to be used for the
-              detailed analysis. `}
+              title={" To Year "}
+              content={` The ending year for your analysis timeframe `}
             />
           </div>
           <Combobox
-            name="tehsilValue"
-            label={"Tehsil"}
-            array={transformTehsilArray(tehsils)}
+            name="toYear"
+            label={"Year"}
+            array={elNinoYearsList().filter(
+              (e) => parseInt(e.value) - parseInt(filterData.fromYear) >= 30
+            )}
             state={{
-              value: filterData.tehsilValue,
+              value: filterData.toYear,
               setValue: handleChange,
             }}
           />
         </div>
       </div>
 
-      <div className="grid gap-4 mb-6 md:grid-cols-2 xl:grid-cols-4 grid-cols-1 justify-center">
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> Crop </Label>
-            <HelpHoverCard
-              title={" Crop "}
-              content={`  The type of crop you want to analyze. `}
-            />
-          </div>
-          <Combobox
-            name="cropValue"
-            label={"Crop"}
-            array={transformCropArray(crops)}
-            state={{
-              value: filterData.cropValue,
-              setValue: handleChange,
-            }}
-          />
-        </div>
-        <div>
+      {filterData.source === "customDataset" && (
+        <>
           <div>
-            <div className="flex gap-2 ">
-              <Label className="font-semibold">
-                Planting & Harvesting Date
-              </Label>
+            <div className="flex ">
+              <Label className=" text-xs font-semibold">Upload CSV</Label>
               <HelpHoverCard
-                title={"Start date"}
-                content={`The start date of the date range, you'd like to be analyzed.`}
+                title={" Custom Dataset "}
+                content={` The custom dataset that you want to upload and use for the current
+              analysis. You can upload CSV files only`}
               />
-            </div>
-            <DatePickerWithRange
-              name="dateRange"
-              disabledStatus={filterData.cropValue == ""}
-              date={filterData.dateRange}
-              setDate={handleChange}
-              min={min}
-              max={max}
-            />
-          </div>
-          {filterData.cropValue !== "" && (
-            <div className="flex gap-2 mt-2">
-              <InfoCircledIcon className="h-4 w-4" />
-              <p className="text-xs">
-                Please choose a date range between of {min} - {max} days
-              </p>
-            </div>
-          )}
-        </div>
 
-        <div>
-          <div className="flex gap-2 ">
-            <Label className="mb-2 font-semibold"> Years </Label>
-            <HelpHoverCard
-              title={" Years "}
-              content={` The list of years you would like to view individual analysis for. `}
+              <CustomDatasetGuide title="View Template Guide" />
+            </div>
+            <Input
+              onChange={(e) => {
+                handleChange("customDataset", e.target.files[0]);
+              }}
+              id="customDataset"
+              type="file"
+              accept=".csv"
+              // value={fileName}
             />
           </div>
-          <FancyMultiSelect
-            name="yearsValue"
-            selected={selected}
-            setSelected={setSelected}
-            placeholder={"Select Years"}
-            setState={handleChange}
-            array={years}
-          />
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };
 
-export default GDDToolsFilter;
+export default GddToolsFilter;

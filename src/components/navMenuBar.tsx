@@ -76,7 +76,11 @@ export function NavMenubar() {
             <MenubarItem className="font-medium text-sm ">
               La Nina Impacts Prediction
             </MenubarItem>
-            {/* <MenubarSeparator className="bg-yellow-300" /> */}
+          </NavLink>
+          <NavLink to="/gdd-predictive-tools">
+            <MenubarItem className="font-medium text-sm ">
+              Growing Degree Days
+            </MenubarItem>
           </NavLink>
           <NavLink to="/predictive-temps">
             <MenubarItem className="font-medium text-sm ">

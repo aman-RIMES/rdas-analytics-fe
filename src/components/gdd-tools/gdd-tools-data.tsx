@@ -1,125 +1,175 @@
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { AlertCircle } from "lucide-react";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highmaps";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import { GDDDataProps } from "@/types";
-import { isError, isFinished, isLoading } from "@/lib/utils";
-import { infinity } from "ldrs";
-infinity.register("l-infinity");
+import ExportingModule from "highcharts/modules/exporting";
+import ExportDataModule from "highcharts/modules/export-data";
+import OfflineExportingModule from "highcharts/modules/offline-exporting";
+ExportingModule(Highcharts);
+ExportDataModule(Highcharts);
+OfflineExportingModule(Highcharts);
+import { isError, isFinished, isIdle, isLoading } from "@/lib/utils";
+import { AnalyticsDataProps } from "@/types";
+import { grid, reuleaux } from "ldrs";
+import Combobox from "../ui/combobox";
+import {
+  BASE_URL,
+  IDLE_ANALYTICS_CHART_MESSAGE,
+  monthsList,
+  requestStatus,
+  toolType,
+} from "@/constants";
+import { useEffect, useState } from "react";
+reuleaux.register("l-reuleaux");
+grid.register("l-loader");
+import sampleCharts from "../../data/sample_charts.json";
+import Loading from "../ui/loading";
+import ErrorMessage from "../ui/error-message";
+import { FullscreenIcon } from "lucide-react";
+import axios from "axios";
+import CropToolsAnalysisText from "../crop-tools/crop-tool-analysis-text";
+import { ScrollArea } from "../ui/scroll-area";
 
-const GDDToolsData = ({ gddData, gddStatus }: GDDDataProps) => {
+const GddToolsData = ({
+  filterData,
+  loadAnalysisData,
+  dynamicChartStatus,
+  setDynamicChartStatus,
+}: AnalyticsDataProps) => {
+  const [chosenMonth, setChosenMonth] = useState("1");
+  const [timeSeriesChartData, setTimeSeriesChartData] = useState<any>({});
+  const handleMonthChange = (name: string, value: string) => {
+    setChosenMonth(value);
+  };
+
+  const climatePattern =
+    location.pathname === "/lanina-analytics"
+      ? toolType.lanina
+      : toolType.elnino;
+
+  const getChartConfig = (baseOptions: any) => ({
+    ...baseOptions,
+    exporting: {
+      enabled: true,
+      fallbackToExportServer: false,
+    },
+  });
+
+  useEffect(() => {
+    (async () => {
+      if (loadAnalysisData) {
+        const requestBody = {
+          indic: `${filterData.dataVariable.join(",")}`,
+          area: [`${filterData.districtValue}`],
+          crop: filterData.cropValue,
+          start: `${filterData.fromYear}-01-01`,
+          end: `${filterData.toYear}-01-01`,
+          country: filterData.countryValue,
+          multipleSources:
+            filterData.source === "multipleSources"
+              ? JSON.stringify(filterData.multipleSources)
+              : "",
+        };
+        const formData = new FormData();
+        Object.keys(requestBody).map((key) => {
+          formData.append(key, requestBody[key]);
+        });
+        formData.append(
+          `source`,
+          filterData.source === "customDataset"
+            ? filterData.customDataset
+            : filterData.source
+        );
+        setDynamicChartStatus(requestStatus.isLoading);
+        setTimeSeriesChartData({});
+
+        try {
+          const response = await axios.post(
+            `${BASE_URL}/${climatePattern}time_series_chart`,
+            formData
+          );
+
+          setTimeSeriesChartData(response.data);
+          setDynamicChartStatus(requestStatus.isFinished);
+        } catch (error) {
+          setDynamicChartStatus(requestStatus.isError);
+          return;
+        }
+      }
+    })();
+  }, [loadAnalysisData]);
+
   return (
-    <>
-      {isError(gddStatus) && (
-        <div className="flex justify-center my-20">
-          <Alert className="lg:w-3/4" variant="destructive">
-            <AlertCircle className="h-5 w-5 mt-1" />
-            <AlertTitle className="text-lg">API Error !</AlertTitle>
-            <AlertDescription className="text-md">
-              Failed to analyze the given filters. This could be due to missing
-              datasets. Try changing your filters and start the analysis again.
-            </AlertDescription>
-          </Alert>
-        </div>
-      )}
+    <div className="">
+      <div className="p-2 ">
+        <div className="col-span-4 w-full rounded-lg h-[38.5vh]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+            <div className="relative z-0 bg-white rounded-lg h-[39vh]">
+              <div className="">
+                <div className="bg-green-800 text-white text-md p-1 rounded-t-lg font-medium">
+                  <p className="ml-2"> Analysis</p>
+                </div>
 
-      {isLoading(gddStatus) && (
-        <div className="my-20  flex justify-center bg-transparent">
-          <div className="flex items-center justify-center gap-8 lg:w-2/4 border-lime-700 border rounded-xl p-5">
-            {/* @ts-ignore */}
-            <l-infinity color="green" size="35"></l-infinity>
-            <p className="text-2xl text-lime-700 font-medium">
-              Analyzing GDD Data
-            </p>
-          </div>
-        </div>
-      )}
-
-      {isFinished(gddStatus) && (
-        <>
-          <div className="mb-10 mt-10 flex flex-col gap-7 sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
-            <div className="p-2 rounded-lg bg-white shadow-lg">
-              <HighchartsReact
-                highcharts={Highcharts}
-                options={gddData.gdd_chart}
-              />
+                <ScrollArea className="h-[353px] p-2">
+                  <p className="p-2" style={{ whiteSpace: "break-spaces" }}>
+                    {sampleCharts?.crop_recommendation}
+                  </p>
+                </ScrollArea>
+              </div>
+              {(isIdle(dynamicChartStatus) ||
+                isLoading(dynamicChartStatus) ||
+                isError(dynamicChartStatus)) && (
+                <div className="absolute inset-0 flex justify-center items-center z-10 bg-white bg-opacity-70 ">
+                  {isIdle(dynamicChartStatus) ? (
+                    <p className="text-xl font-bold text-green-800">
+                      {IDLE_ANALYTICS_CHART_MESSAGE}
+                    </p>
+                  ) : isError(dynamicChartStatus) ? (
+                    <ErrorMessage />
+                  ) : (
+                    <Loading
+                      animation={
+                        <l-hourglass color="green" size="60"></l-hourglass>
+                      }
+                    />
+                  )}
+                </div>
+              )}
+            </div>
+            <div className="bg-white rounded-lg h-[39vh] relative z-0">
+              <div className="bg-green-800 text-white text-md p-1 rounded-t-lg font-medium">
+                <p className="ml-2"> Recommendation</p>
+              </div>
+              <div>
+                <ScrollArea className="h-[353px] p-2">
+                  <p className="p-2" style={{ whiteSpace: "break-spaces" }}>
+                    {sampleCharts?.crop_recommendation}
+                  </p>
+                </ScrollArea>
+              </div>
+              {(isIdle(dynamicChartStatus) ||
+                isLoading(dynamicChartStatus) ||
+                isError(dynamicChartStatus)) && (
+                <div className="absolute inset-0 flex justify-center items-center z-10 bg-white bg-opacity-70 ">
+                  {isIdle(dynamicChartStatus) ? (
+                    <p className="text-xl font-bold text-green-800">
+                      {IDLE_ANALYTICS_CHART_MESSAGE}
+                    </p>
+                  ) : isError(dynamicChartStatus) ? (
+                    <ErrorMessage />
+                  ) : (
+                    <Loading
+                      animation={
+                        <l-hourglass color="green" size="60"></l-hourglass>
+                      }
+                    />
+                  )}
+                </div>
+              )}
             </div>
           </div>
-
-          <div className="mt-10 sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
-            <Tabs defaultValue={gddData.temp_charts[0].title.text}>
-              <div className="flex justify-center">
-                <TabsList className="py-8 px-10 border bg-green-800">
-                  {gddData.temp_charts.map((chartOption: any) => (
-                    <TabsTrigger
-                      className="text-lg text-white data-[state=active]:bg-yellow-400"
-                      key={Math.random()}
-                      value={chartOption.title.text}
-                    >
-                      {chartOption.title.text.split(" ").splice(-1)}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-              </div>
-              <div className="mt-10">
-                {gddData.temp_charts.map((chartOption: any) => (
-                  <TabsContent
-                    key={Math.random()}
-                    value={chartOption.title.text}
-                  >
-                    <div className="p-2 rounded-lg bg-white shadow-lg">
-                      <HighchartsReact
-                        highcharts={Highcharts}
-                        options={chartOption}
-                      />
-                    </div>
-                  </TabsContent>
-                ))}
-              </div>
-            </Tabs>
-          </div>
-
-          <div className="mt-20 sm:p-10 p-4 rounded-lg bg-gray-50 shadow-lg">
-            <Tabs defaultValue={gddData.ndvi_images[0].year}>
-              <div className="flex justify-center">
-                <TabsList className="py-8 px-10 border bg-green-800">
-                  {gddData.ndvi_images.map((element: any) => (
-                    <TabsTrigger
-                      className="text-lg text-white data-[state=active]:bg-yellow-400"
-                      key={Math.random()}
-                      value={element.year}
-                    >
-                      {element.year}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-              </div>
-              <div className="mt-10">
-                {gddData.ndvi_images.map((element: any) => (
-                  <TabsContent key={Math.random()} value={element.year}>
-                    <div className="flex flex-col items-center justify-center mt-5">
-                      <p className="text-xl font-semibold">
-                        NDVI Image for the year {element.year}
-                      </p>
-                      <div className="my-10">
-                        <img
-                          className="rounded-md object-cover"
-                          src={`data:image/png;base64,${
-                            element.image.split(",")[1]
-                          }`}
-                        />
-                      </div>
-                    </div>
-                  </TabsContent>
-                ))}
-              </div>
-            </Tabs>
-          </div>
-        </>
-      )}
-    </>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default GDDToolsData;
+export default GddToolsData;

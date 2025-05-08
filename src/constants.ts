@@ -474,6 +474,7 @@ export const routeDefinitions = {
   "/lanina-analytics": "La Nina and Local Climate",
   "/analytics-land": "Land Use & Land Cover Change",
   "/predictive-temps": "Temperature Sensitivity Alert System (TEMPs)",
+  "/gdd-predictive-tools": "Growing Degree Days",
 };
 
 export const Indicators = {
