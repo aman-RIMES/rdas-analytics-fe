@@ -100,9 +100,9 @@ const GddToolsData = ({
   return (
     <div className="">
       <div className="p-2 ">
-        <div className="col-span-4 w-full rounded-lg h-[38.5vh]">
+        <div className="col-span-4 w-full rounded-lg h-[45vh]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-            <div className="relative z-0 bg-white rounded-lg h-[39vh]">
+            <div className="relative z-0 bg-white rounded-lg h-[43vh]">
               <div className="">
                 <div className="bg-green-800 text-white text-md p-1 rounded-t-lg font-medium">
                   <p className="ml-2"> Analysis</p>
@@ -134,7 +134,7 @@ const GddToolsData = ({
                 </div>
               )}
             </div>
-            <div className="bg-white rounded-lg h-[39vh] relative z-0">
+            <div className="bg-white rounded-lg h-[43vh] relative z-0">
               <div className="bg-green-800 text-white text-md p-1 rounded-t-lg font-medium">
                 <p className="ml-2"> Recommendation</p>
               </div>

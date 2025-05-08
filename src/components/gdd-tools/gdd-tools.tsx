@@ -188,10 +188,10 @@ const GddPredictiveTools = () => {
               </div>
             </div>
 
-            <div className="col-span-5 w-full h-full bg-white rounded-lg">
+            <div className="col-span-5 w-full h-full  rounded-lg">
               <div className="">
                 <div>
-                  <div className="grid grid-cols-2 gap-5">
+                  <div className="flex flex-col gap-3">
                     <div className="relative z-0">
                       <div className="p-5 mt-5">
                         <Table>
@@ -281,7 +281,7 @@ const GddPredictiveTools = () => {
                       <div className="flex flex-col">
                         <div className="rounded-lg bg-white p-1 ">
                           <HighchartsReact
-                            containerProps={{ style: { height: "500px " } }}
+                            containerProps={{ style: { height: "450px " } }}
                             highcharts={Highcharts}
                             options={
                               sampleCharts?.analytics_monthly[toolType.elnino]
@@ -313,21 +313,6 @@ const GddPredictiveTools = () => {
                       )}
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-full border-500 rounded-lg">
-            <div className="w-full">
-              <div className="rounded-lg">
-                <div className="">
-                  <GddToolsData
-                    filterData={filterData}
-                    loadAnalysisData={loadAnalysisData}
-                    setDynamicChartStatus={setDynamicChartStatus}
-                    dynamicChartStatus={dynamicChartStatus}
-                  />
                 </div>
               </div>
             </div>
