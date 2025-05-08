@@ -198,50 +198,6 @@ const GddToolsFilter = ({
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <div className="flex ">
-            <Label className=" text-xs font-semibold"> From Year </Label>
-            <HelpHoverCard
-              title={" From Year "}
-              content={` The beginning year for your analysis timeframe `}
-            />
-          </div>
-          <Combobox
-            name="fromYear"
-            label={"Year"}
-            array={elNinoYearsList().filter(
-              (e) => parseInt(e.value) + 30 < new Date().getFullYear()
-            )}
-            state={{
-              value: filterData.fromYear,
-              setValue: handleChange,
-            }}
-          />
-        </div>
-
-        <div>
-          <div className="flex gap-1 ">
-            <Label className=" text-xs font-semibold"> To Year </Label>
-            <HelpHoverCard
-              title={" To Year "}
-              content={` The ending year for your analysis timeframe `}
-            />
-          </div>
-          <Combobox
-            name="toYear"
-            label={"Year"}
-            array={elNinoYearsList().filter(
-              (e) => parseInt(e.value) - parseInt(filterData.fromYear) >= 30
-            )}
-            state={{
-              value: filterData.toYear,
-              setValue: handleChange,
-            }}
-          />
-        </div>
-      </div>
-
       {filterData.source === "customDataset" && (
         <>
           <div>
