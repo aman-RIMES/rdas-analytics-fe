@@ -2,41 +2,24 @@ import { useEffect, useState } from "react";
 import {
   countries,
   CROP_PARAMS_URL,
-  ElNinoToolDataIndicators,
-  elNinoYearsList,
-  monthsList,
   NEW_BODY_PARAMS_URL,
   NEW_BODY_PARAMS_URL_LEVEL_1,
 } from "@/constants";
 import {
-  containsCropAnalysis,
-  isIdle,
-  transformCropArray,
-  transformDistrictParams,
-  transformMultiNewParamsObject,
+  transformGDDCropArray,
   transformNewParamsObject,
-  transformObject,
   transformSourceObject,
 } from "@/lib/utils";
 import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
-import { District, FilterProps } from "@/types";
-import { InfoCircledIcon } from "@radix-ui/react-icons";
+import { FilterProps } from "@/types";
 import { Label } from "@radix-ui/react-dropdown-menu";
-import { FancyMultiSelect } from "../ui/multiselect";
 import { Input } from "../ui/input";
 import CustomDatasetGuide from "../custom-dataset-guide";
 import newBodyParams from "../../data/new_body_params.json";
 import axios from "axios";
-import MultipleDatasetsDialog from "../multiple-datasets-dialog";
 
-const GddToolsFilter = ({
-  filterData,
-  handleChange,
-  selected,
-  setSelected,
-  filterType,
-}: FilterProps) => {
+const GddToolsFilter = ({ filterData, handleChange }: FilterProps) => {
   const [newParams, setNewParams] = useState<any>(newBodyParams);
   const [provinceList, setProvinceList] = useState<any>({});
   const [cropParams, setCropParams] = useState<any>(null);
@@ -136,7 +119,10 @@ const GddToolsFilter = ({
         <Combobox
           name="districtValue"
           label={"District"}
-          array={transformNewParamsObject(newParams?.district)}
+          array={[
+            { value: "", label: "NONE" },
+            ...transformNewParamsObject(newParams?.district),
+          ]}
           state={{
             value: filterData.districtValue,
             setValue: handleChange,
@@ -157,7 +143,7 @@ const GddToolsFilter = ({
           name="cropValue"
           label={"Crop Calendar"}
           array={[
-            ...(cropParams ? transformCropArray(cropParams?.crop) : []),
+            ...(cropParams ? transformGDDCropArray(cropParams?.crop_gdd) : []),
             // { value: "customCalendar", label: "CUSTOM CALENDAR" },
           ]}
           state={{

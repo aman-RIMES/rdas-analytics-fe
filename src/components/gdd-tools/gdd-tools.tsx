@@ -1,18 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  analysisType,
+  BASE_URL,
   IDLE_ANALYTICS_CHART_MESSAGE,
-  monthsList,
   requestStatus,
-  toolType,
 } from "@/constants";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FilterData } from "@/types";
 import { isError, isFinished, isIdle } from "@/lib/utils";
 import SubmitButton from "../submit-button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import CustomDatasetGuide from "../custom-dataset-guide";
 import GddToolsData from "./gdd-tools-data";
 import GddToolsFilter from "./gdd-tools-filter";
@@ -26,50 +22,37 @@ import {
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { FullscreenIcon } from "lucide-react";
-import Combobox from "../ui/combobox";
 import ErrorMessage from "../ui/error-message";
 import Loading from "../ui/loading";
 import sampleCharts from "../../data/sample_charts.json";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "../ui/table";
+import { ScrollArea } from "../ui/scroll-area";
 
 const GddPredictiveTools = () => {
-  const navigate = useNavigate();
-
-  const label =
-    location.pathname === "/lanina-analytics" ? "La Nina" : "El Nino";
-
   const [selected, setSelected] = useState<[]>([]);
-  const [loadAnalysisData, setLoadAnalysisData] = useState(false);
-  const [dynamicChartStatus, setDynamicChartStatus] = useState<requestStatus>(
+  const [GDDAnalysisStatus, setGDDAnalysisStatus] = useState<requestStatus>(
     requestStatus.idle
   );
-
+  const [GDDAnalysisData, setGDDAnalysisData] = useState<any>({});
   const [filterData, setFilterData] = useState<FilterData>(() => {
     const storedFilterData = localStorage.getItem("analyticsFilterData");
     return storedFilterData
       ? JSON.parse(storedFilterData)
       : {
-          dataVariable: [],
           cropValue: "",
           source: "",
           customDataset: null,
-          multipleSources: {},
-          multipleCustomDatasets: {},
           allRequiredSourcesChosen: false,
           countryValue: "",
           districtValue: "",
           districtList: [],
-          fromYear: "",
-          toYear: "",
         };
   });
 
@@ -86,11 +69,9 @@ const GddPredictiveTools = () => {
 
   const verifyFilters = () => {
     return (
-      filterData.dataVariable.length > 0 &&
       filterData.source !== "" &&
-      filterData.fromYear !== "" &&
-      filterData.toYear !== "" &&
-      filterData.districtValue !== "" &&
+      filterData.cropValue !== "" &&
+      (filterData.districtValue !== "" || filterData.provinceValue !== "") &&
       filterData.countryValue !== ""
     );
   };
@@ -103,56 +84,43 @@ const GddPredictiveTools = () => {
     }
   }, []);
 
-  const generateAnalysis = async () => {
-    setLoadAnalysisData(true);
-    // Reset after short delay
-    setTimeout(() => setLoadAnalysisData(false), 100);
+  const generateGDDAnalysis = async () => {
+    const requestBody = {
+      area: filterData.provinceValue
+        ? filterData.provinceValue
+        : filterData.districtValue,
+      country: filterData.countryValue,
+      crop: filterData.cropValue,
+    };
+    const formData = new FormData();
+    Object.keys(requestBody).map((key) => {
+      formData.append(key, requestBody[key]);
+    });
+    formData.append(
+      `source`,
+      filterData.source === "customDataset"
+        ? filterData.customDataset
+        : filterData.source
+    );
+
+    setGDDAnalysisStatus(requestStatus.isLoading);
+    try {
+      const response = await axios.post(`${BASE_URL}/gdd_2`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      setGDDAnalysisData(response.data);
+      setGDDAnalysisStatus(requestStatus.isFinished);
+    } catch (error) {
+      console.log(error);
+      setGDDAnalysisStatus(requestStatus.isError);
+    }
   };
 
-  const invoices = [
-    {
-      invoice: "Planting Date",
-      paymentStatus: "567",
-      totalAmount: "09 November",
-      paymentMethod: "100%",
-    },
-    {
-      invoice: "Germination",
-      paymentStatus: "567",
-      totalAmount: "09 November",
-      paymentMethod: "95%",
-    },
-    {
-      invoice: "Tillering",
-      paymentStatus: "567",
-      totalAmount: "09 November",
-      paymentMethod: "100%",
-    },
-    {
-      invoice: "Stem Elongation",
-      paymentStatus: "335",
-      totalAmount: "09 November",
-      paymentMethod: "100%",
-    },
-    {
-      invoice: "Booting",
-      paymentStatus: "2247",
-      totalAmount: "09 November",
-      paymentMethod: "95%",
-    },
-    {
-      invoice: "Heading",
-      paymentStatus: "2247",
-      totalAmount: "09 November",
-      paymentMethod: "100%",
-    },
-    {
-      invoice: "Flowering",
-      paymentStatus: "335",
-      totalAmount: "09 November",
-      paymentMethod: "100%",
-    },
-  ];
+  const GddTableData = GDDAnalysisData?.table
+    ? GDDAnalysisData?.table
+    : sampleCharts?.gdd_table;
 
   return (
     <>
@@ -172,16 +140,13 @@ const GddPredictiveTools = () => {
                   <GddToolsFilter
                     filterData={filterData}
                     handleChange={handleChange}
-                    selected={selected}
-                    setSelected={setSelected}
-                    filterType="analytics"
                   />
 
                   <div className="w-full h-full">
                     <SubmitButton
                       verifyFilters={verifyFilters()}
-                      submitFunction={generateAnalysis}
-                      loadingStatus={dynamicChartStatus}
+                      submitFunction={generateGDDAnalysis}
+                      loadingStatus={GDDAnalysisStatus}
                     />
                   </div>
                 </div>
@@ -193,49 +158,55 @@ const GddPredictiveTools = () => {
                 <div>
                   <div className="flex flex-col gap-3">
                     <div className="relative z-0">
-                      <div className="p-5 mt-5">
+                      <div className="p-5 mt-2 bg-white rounded-lg">
                         <Table>
-                          <TableHeader>
-                            <TableRow className="text-black">
-                              <TableHead className="text-md text-center">
-                                Stage
-                              </TableHead>
-                              <TableHead className="text-md text-center">
-                                GDD Threshold
-                              </TableHead>
-                              <TableHead className="text-md text-center">
-                                Predicted Date
-                              </TableHead>
-                              <TableHead className="text-md text-center">
-                                Probability
-                              </TableHead>
-                            </TableRow>
-                          </TableHeader>
-                          <TableBody>
-                            {invoices.map((invoice) => (
-                              <TableRow
-                                className="text-xs text-center"
-                                key={invoice.invoice}
-                              >
-                                <TableCell className="font-medium">
-                                  {invoice.invoice}
-                                </TableCell>
-                                <TableCell>{invoice.paymentStatus}</TableCell>
-                                <TableCell>{invoice.totalAmount}</TableCell>
-                                <TableCell>{invoice.paymentMethod}</TableCell>
+                          <ScrollArea className="h-[380px]">
+                            <TableHeader>
+                              <TableRow>
+                                <TableHead className="text-black text-md text-center">
+                                  Stage
+                                </TableHead>
+                                <TableHead className="text-black  text-md text-center">
+                                  GDD Threshold
+                                </TableHead>
+                                <TableHead className="text-black  text-md text-center">
+                                  Predicted Date
+                                </TableHead>
+                                <TableHead className="text-black  text-md text-center">
+                                  Probability
+                                </TableHead>
                               </TableRow>
-                            ))}
-                          </TableBody>
+                            </TableHeader>
+                            <TableBody>
+                              {GddTableData.map((invoice, index) => (
+                                <TableRow
+                                  className="text-md text-center"
+                                  key={index}
+                                >
+                                  <TableCell className="font-medium">
+                                    {invoice.Stage}
+                                  </TableCell>
+                                  <TableCell>
+                                    {invoice["GDD Threshold"]}
+                                  </TableCell>
+                                  <TableCell>
+                                    {invoice["Predicted Date"]}
+                                  </TableCell>
+                                  <TableCell>{invoice.Probability}</TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </ScrollArea>
                         </Table>
                       </div>
 
-                      {!isFinished(dynamicChartStatus) && (
+                      {!isFinished(GDDAnalysisStatus) && (
                         <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
-                          {isIdle(dynamicChartStatus) ? (
+                          {isIdle(GDDAnalysisStatus) ? (
                             <p className="text-xl font-bold text-green-800">
                               {IDLE_ANALYTICS_CHART_MESSAGE}
                             </p>
-                          ) : isError(dynamicChartStatus) ? (
+                          ) : isError(GDDAnalysisStatus) ? (
                             <ErrorMessage />
                           ) : (
                             <Loading
@@ -267,9 +238,9 @@ const GddPredictiveTools = () => {
                                   }}
                                   highcharts={Highcharts}
                                   options={
-                                    sampleCharts?.analytics_monthly[
-                                      toolType.elnino
-                                    ]
+                                    GDDAnalysisData?.chart
+                                      ? GDDAnalysisData?.chart
+                                      : sampleCharts?.gdd_chart
                                   }
                                 />
                               </DialogDescription>
@@ -284,19 +255,21 @@ const GddPredictiveTools = () => {
                             containerProps={{ style: { height: "450px " } }}
                             highcharts={Highcharts}
                             options={
-                              sampleCharts?.analytics_monthly[toolType.elnino]
+                              GDDAnalysisData?.chart
+                                ? GDDAnalysisData?.chart
+                                : sampleCharts?.gdd_chart
                             }
                           />
                         </div>
                       </div>
 
-                      {!isFinished(dynamicChartStatus) && (
+                      {!isFinished(GDDAnalysisStatus) && (
                         <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
-                          {isIdle(dynamicChartStatus) ? (
+                          {isIdle(GDDAnalysisStatus) ? (
                             <p className="text-xl font-bold text-green-800">
                               {IDLE_ANALYTICS_CHART_MESSAGE}
                             </p>
-                          ) : isError(dynamicChartStatus) ? (
+                          ) : isError(GDDAnalysisStatus) ? (
                             <ErrorMessage />
                           ) : (
                             <Loading
