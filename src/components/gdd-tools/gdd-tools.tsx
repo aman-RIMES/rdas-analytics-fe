@@ -52,6 +52,7 @@ const GddPredictiveTools = () => {
           allRequiredSourcesChosen: false,
           countryValue: "",
           districtValue: "",
+          yearValue: new Date().getFullYear().toString(),
           districtList: [],
         };
   });
@@ -72,7 +73,8 @@ const GddPredictiveTools = () => {
       filterData.source !== "" &&
       filterData.cropValue !== "" &&
       (filterData.districtValue !== "" || filterData.provinceValue !== "") &&
-      filterData.countryValue !== ""
+      filterData.countryValue !== "" &&
+      filterData.yearValue !== ""
     );
   };
 
@@ -91,6 +93,7 @@ const GddPredictiveTools = () => {
         : filterData.districtValue,
       country: filterData.countryValue,
       crop: filterData.cropValue,
+      year: filterData.yearValue,
     };
     const formData = new FormData();
     Object.keys(requestBody).map((key) => {

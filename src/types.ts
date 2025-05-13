@@ -92,6 +92,7 @@ export interface FilterData {
   tehsilValue?: string;
   cropValue?: string;
   yearsValue?: YearsList[];
+  yearValue?: string;
   fromYear?: string;
   toYear?: string;
   anomalyYear1?: string;
