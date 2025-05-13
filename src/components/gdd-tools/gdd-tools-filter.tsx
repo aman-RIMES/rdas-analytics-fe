@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   countries,
   CROP_PARAMS_URL,
+  gddYearsList,
   NEW_BODY_PARAMS_URL,
   NEW_BODY_PARAMS_URL_LEVEL_1,
 } from "@/constants";
@@ -182,6 +183,27 @@ const GddToolsFilter = ({ filterData, handleChange }: FilterProps) => {
             setValue: handleChange,
           }}
         />
+      </div>
+
+      <div>
+        <div>
+          <div className="flex gap-1 ">
+            <Label className=" text-xs font-semibold">Year </Label>
+            <HelpHoverCard
+              title={" To Year "}
+              content={` The ending year for your analysis timeframe `}
+            />
+          </div>
+          <Combobox
+            name="yearValue"
+            label={"Year"}
+            array={gddYearsList()}
+            state={{
+              value: filterData.yearValue,
+              setValue: handleChange,
+            }}
+          />
+        </div>
       </div>
 
       {filterData.source === "customDataset" && (
