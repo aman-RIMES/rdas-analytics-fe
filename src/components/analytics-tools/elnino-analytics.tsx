@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { analysisType, requestStatus, toolType } from "@/constants";
+import { requestStatus, toolType } from "@/constants";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -179,10 +179,7 @@ const ElNinoAnalytics = () => {
                   </TabsContent>
                   <TabsContent value="correlation">
                     <>
-                      <AnalyticsCorrelation
-                        filterData={filterData}
-                        typeOfAnalysis={analysisType.elnino}
-                      />
+                      <AnalyticsCorrelation filterData={filterData} />
                     </>
                   </TabsContent>
                 </div>

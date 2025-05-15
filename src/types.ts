@@ -1,4 +1,4 @@
-import { analysisType, requestStatus, toolType } from "./constants";
+import { requestStatus, toolType } from "./constants";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface AnalysisTopics {
@@ -116,7 +116,6 @@ export interface FilterProps {
   params?: any;
   filterType?: string;
   toolType?: string;
-  typeOfAnalysis?: analysisType;
 }
 
 export interface AnalyticsDataProps {
