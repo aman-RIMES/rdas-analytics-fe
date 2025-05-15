@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   BASE_URL,
+  filterType,
   IDLE_ANALYTICS_CHART_MESSAGE,
   requestStatus,
 } from "@/constants";
@@ -142,6 +143,7 @@ const GddPredictiveTools = () => {
                 <div className=" p-2 flex flex-col gap-5 justify-between">
                   <GddToolsFilter
                     filterData={filterData}
+                    toolType={filterType.gdd}
                     handleChange={handleChange}
                   />
 

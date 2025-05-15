@@ -8,6 +8,7 @@ import GDDPredictiveTools from "./components/gdd-tools/gdd-tools";
 import CropTools from "./components/crop-tools/crop-tools";
 import LandUse from "./components/analytics-tools/land-use";
 import TempS from "./components/analytics-tools/temps";
+import RainfallAnomalyTools from "./components/rainfall-anomaly-tools/rainfall-anomaly";
 function App() {
   const router = createBrowserRouter([
     {
@@ -44,8 +45,12 @@ function App() {
           element: <CropTools />,
         },
         {
-          path: "/gdd-predictive-tools/",
+          path: "predictive-gdd-tools/",
           element: <GDDPredictiveTools />,
+        },
+        {
+          path: "/analytics-rainfall-anomaly",
+          element: <RainfallAnomalyTools />,
         },
       ],
     },

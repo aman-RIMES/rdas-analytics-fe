@@ -27,6 +27,11 @@ export enum toolType {
   lanina = "la_nina_",
 }
 
+export enum filterType {
+  gdd = "gdd",
+  rainfallAnomaly = "rainfallAnomaly",
+}
+
 export enum predictiveModelDataType {
   linear = "linear",
   logistic = "logistic",
@@ -383,7 +388,8 @@ export const routeDefinitions = {
   "/lanina-analytics": "La Nina and Local Climate",
   "/analytics-land": "Land Use & Land Cover Change",
   "/predictive-temps": "Temperature Sensitivity Alert System (TEMPs)",
-  "/gdd-predictive-tools": "Growing Degree Days",
+  "/predictive-gdd-tools": "Growing Degree Days",
+  "/analytics-rainfall-anomaly": "Rainfall Anomaly",
 };
 
 export const Indicators = {

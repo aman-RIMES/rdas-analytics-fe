@@ -41,6 +41,11 @@ export function NavMenubar() {
               La Nina and Local Climate
             </MenubarItem>
           </NavLink>
+          <NavLink to="/analytics-rainfall-anomaly">
+            <MenubarItem className="font-medium text-sm ">
+              Rainfall Anomaly
+            </MenubarItem>
+          </NavLink>
           <NavLink to="/analytics-crop">
             <MenubarItem className="font-medium text-sm ">
               Crop Calendar Suitability to Observed Climate
@@ -77,7 +82,7 @@ export function NavMenubar() {
               La Nina Impacts Prediction
             </MenubarItem>
           </NavLink>
-          <NavLink to="/gdd-predictive-tools">
+          <NavLink to="/predictive-gdd-tools">
             <MenubarItem className="font-medium text-sm ">
               Growing Degree Days
             </MenubarItem>

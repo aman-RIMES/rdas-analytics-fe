@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import {
   countries,
   CROP_PARAMS_URL,
+  elNinoYearsList,
+  filterType,
   gddYearsList,
   NEW_BODY_PARAMS_URL,
   NEW_BODY_PARAMS_URL_LEVEL_1,
@@ -20,7 +22,11 @@ import CustomDatasetGuide from "../custom-dataset-guide";
 import newBodyParams from "../../data/new_body_params.json";
 import axios from "axios";
 
-const GddToolsFilter = ({ filterData, handleChange }: FilterProps) => {
+const GddToolsFilter = ({
+  filterData,
+  toolType,
+  handleChange,
+}: FilterProps) => {
   const [newParams, setNewParams] = useState<any>(newBodyParams);
   const [provinceList, setProvinceList] = useState<any>({});
   const [cropParams, setCropParams] = useState<any>(null);
@@ -131,28 +137,32 @@ const GddToolsFilter = ({ filterData, handleChange }: FilterProps) => {
         />
       </div>
 
-      <div className="">
-        <div className="flex ">
-          <Label className=" text-xs font-semibold text-black">Crop</Label>
-          <HelpHoverCard
-            title={" Crop Calendar"}
-            content={` The specific crop you want to use for the current
+      {toolType === filterType.gdd && (
+        <div className="">
+          <div className="flex ">
+            <Label className=" text-xs font-semibold text-black">Crop</Label>
+            <HelpHoverCard
+              title={" Crop Calendar"}
+              content={` The specific crop you want to use for the current
               analysis. `}
+            />
+          </div>
+          <Combobox
+            name="cropValue"
+            label={"Crop Calendar"}
+            array={[
+              ...(cropParams
+                ? transformGDDCropArray(cropParams?.crop_gdd)
+                : []),
+              // { value: "customCalendar", label: "CUSTOM CALENDAR" },
+            ]}
+            state={{
+              value: filterData.cropValue,
+              setValue: handleChange,
+            }}
           />
         </div>
-        <Combobox
-          name="cropValue"
-          label={"Crop Calendar"}
-          array={[
-            ...(cropParams ? transformGDDCropArray(cropParams?.crop_gdd) : []),
-            // { value: "customCalendar", label: "CUSTOM CALENDAR" },
-          ]}
-          state={{
-            value: filterData.cropValue,
-            setValue: handleChange,
-          }}
-        />
-      </div>
+      )}
 
       <div>
         <div className="flex ">
@@ -197,7 +207,9 @@ const GddToolsFilter = ({ filterData, handleChange }: FilterProps) => {
           <Combobox
             name="yearValue"
             label={"Year"}
-            array={gddYearsList()}
+            array={
+              toolType === filterType.gdd ? gddYearsList() : elNinoYearsList()
+            }
             state={{
               value: filterData.yearValue,
               setValue: handleChange,

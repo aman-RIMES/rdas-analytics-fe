@@ -115,6 +115,7 @@ export interface FilterProps {
   setSelected?: any;
   params?: any;
   filterType?: string;
+  toolType?: string;
   typeOfAnalysis?: analysisType;
 }
 
