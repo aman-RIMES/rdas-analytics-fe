@@ -1,7 +1,13 @@
 import { IDLE_ANALYTICS_CHART_MESSAGE } from "@/constants";
 import { isError, isFinished, isIdle } from "@/lib/utils";
-import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import Highcharts from "highcharts/highmaps";
+import ExportingModule from "highcharts/modules/exporting";
+import ExportDataModule from "highcharts/modules/export-data";
+import OfflineExportingModule from "highcharts/modules/offline-exporting";
+ExportingModule(Highcharts);
+ExportDataModule(Highcharts);
+OfflineExportingModule(Highcharts);
 import ErrorMessage from "../ui/error-message";
 import Loading from "../ui/loading";
 import sampleCharts from "../../data/sample_charts.json";
@@ -15,7 +21,10 @@ function RainfallAnomalyChart({ chartData, AnalysisStatus, chartHeight }: any) {
             <HighchartsReact
               containerProps={{ style: { height: chartHeight } }}
               highcharts={Highcharts}
-              options={chartData ? chartData : sampleCharts?.gdd_chart}
+              options={{
+                ...(chartData ? chartData : sampleCharts?.gdd_chart),
+                legend: { enabled: true },
+              }}
             />
           </div>
         </div>
