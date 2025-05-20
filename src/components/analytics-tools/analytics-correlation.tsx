@@ -5,7 +5,6 @@ import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highmaps";
 import axios from "axios";
 import {
-  analysisType,
   BASE_URL,
   ElNinoToolDataIndicators,
   IDLE_ANALYTICS_CHART_MESSAGE,
@@ -24,7 +23,7 @@ import sampleCharts from "../../data/sample_charts.json";
 import ErrorMessage from "../ui/error-message";
 import Loading from "../ui/loading";
 
-const AnalyticsCorrelation = ({ filterData, typeOfAnalysis }: FilterProps) => {
+const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
   const [correlationFilter, setCorrelationFilter] = useState({
     correlationVariable: filterData?.dataVariable[0],
     chosenMonths: [],
@@ -89,16 +88,7 @@ const AnalyticsCorrelation = ({ filterData, typeOfAnalysis }: FilterProps) => {
     try {
       const correlationData = await axios.post(
         `${BASE_URL}/${climatePattern}correlation`,
-        typeOfAnalysis === analysisType.climate
-          ? {
-              source: `${filterData.source}`,
-              indic: `${filterData.dataVariable.join(",")}`,
-              period: filterData.periodValue,
-              district: filterData.districtValue,
-              start: `${filterData.fromYear}-01-01`,
-              end: `${filterData.toYear}-01-01`,
-            }
-          : formData
+        formData
       );
       setCorrelationChartData(correlationData.data);
       setCorrelationStatus(requestStatus.isFinished);
