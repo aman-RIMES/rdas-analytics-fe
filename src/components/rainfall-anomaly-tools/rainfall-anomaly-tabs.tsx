@@ -4,6 +4,7 @@ import RainfallAnomalyChart from "./rainfall-anomaly-charts";
 function RainfallAnomlayTabs({
   firstChartData,
   secondChartData,
+  sampleChart,
   rainfallAnomalyStatus,
   chartHeight = "380px",
 }) {
@@ -35,6 +36,7 @@ function RainfallAnomlayTabs({
                   chartHeight={chartHeight}
                   chartData={firstChartData}
                   AnalysisStatus={rainfallAnomalyStatus}
+                  sampleChart={sampleChart}
                 />
               </div>
             </TabsContent>
@@ -44,6 +46,7 @@ function RainfallAnomlayTabs({
                   chartHeight={chartHeight}
                   chartData={secondChartData}
                   AnalysisStatus={rainfallAnomalyStatus}
+                  sampleChart={sampleChart}
                 />
               </>
             </TabsContent>

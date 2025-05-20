@@ -10,9 +10,13 @@ ExportDataModule(Highcharts);
 OfflineExportingModule(Highcharts);
 import ErrorMessage from "../ui/error-message";
 import Loading from "../ui/loading";
-import sampleCharts from "../../data/sample_charts.json";
 
-function RainfallAnomalyChart({ chartData, AnalysisStatus, chartHeight }: any) {
+function RainfallAnomalyChart({
+  chartData,
+  AnalysisStatus,
+  chartHeight,
+  sampleChart,
+}: any) {
   return (
     <>
       <div className="relative z-0 ">
@@ -22,7 +26,7 @@ function RainfallAnomalyChart({ chartData, AnalysisStatus, chartHeight }: any) {
               containerProps={{ style: { height: chartHeight } }}
               highcharts={Highcharts}
               options={{
-                ...(chartData ? chartData : sampleCharts?.gdd_chart),
+                ...(chartData ? chartData : sampleChart),
                 legend: { enabled: true },
               }}
             />

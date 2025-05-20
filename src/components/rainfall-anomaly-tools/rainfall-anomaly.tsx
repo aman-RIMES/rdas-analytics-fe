@@ -203,6 +203,7 @@ const RainfallAnomalyTools = () => {
                     secondChartData={
                       rainfallAnomalyData?.yearly_rainy_day_chart
                     }
+                    sampleChart={sampleCharts?.yearly_rainfall_chart}
                     rainfallAnomalyStatus={rainfallAnomalyStatus}
                   />
 
@@ -213,6 +214,7 @@ const RainfallAnomalyTools = () => {
                     secondChartData={
                       rainfallAnomalyData?.seasonal_rainy_day_chart
                     }
+                    sampleChart={sampleCharts?.seasonal_rainfall_chart}
                     rainfallAnomalyStatus={rainfallAnomalyStatus}
                   />
 
@@ -222,6 +224,7 @@ const RainfallAnomalyTools = () => {
                     secondChartData={
                       rainfallAnomalyData?.monthly_rainy_day_chart
                     }
+                    sampleChart={sampleCharts?.monthly_rainfall_chart}
                     rainfallAnomalyStatus={rainfallAnomalyStatus}
                   />
 
@@ -258,7 +261,7 @@ const RainfallAnomalyTools = () => {
                                 ? rainfallAnomalyData?.pentad_rainfall_charts[
                                     parseInt(chosenMonth) - 1
                                   ]
-                                : sampleCharts?.gdd_chart
+                                : sampleCharts?.pentad_rainfall_charts
                             }
                             AnalysisStatus={rainfallAnomalyStatus}
                           />
@@ -273,7 +276,7 @@ const RainfallAnomalyTools = () => {
                                 ? rainfallAnomalyData?.pentad_rainy_day_charts[
                                     parseInt(chosenMonth) - 1
                                   ]
-                                : sampleCharts?.gdd_chart
+                                : sampleCharts?.pentad_rainfall_charts
                             }
                             AnalysisStatus={rainfallAnomalyStatus}
                           />
