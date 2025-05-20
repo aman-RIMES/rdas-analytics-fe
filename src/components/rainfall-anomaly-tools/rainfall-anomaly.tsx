@@ -141,12 +141,12 @@ const RainfallAnomalyTools = () => {
                       Analysis
                     </p>
                     <div className="flex flex-col gap-2 ">
-                      <p className="bg-green-700 text-white text-sm py-1 px-2 rounded font-medium flex">
+                      <p className="bg-green-700 text-white text-sm py-1 px-2 rounded-md font-medium flex">
                         {" "}
                         Number of Anomalous Pentads:
                       </p>
                       {/* <div className="flex flex-wrap gap-2 "> */}
-                      <p className="border border-green-700 text-black text-md py-1 px-2 rounded font-bold text-center">
+                      <p className="border border-green-700 text-black text-md py-1 px-2 rounded-md font-bold text-center">
                         {rainfallAnomalyData &&
                           rainfallAnomalyData?.anomalous_pentads}
                       </p>
@@ -154,7 +154,7 @@ const RainfallAnomalyTools = () => {
                     </div>
 
                     <div className="flex flex-col gap-2">
-                      <p className="bg-green-700 text-white text-sm py-1 px-2 rounded font-medium flex">
+                      <p className="bg-green-700 text-white text-sm py-1 px-2 rounded-md font-medium flex">
                         Anomalous Seasons:
                       </p>
                       <div className="flex flex-wrap gap-2 ">
@@ -162,7 +162,7 @@ const RainfallAnomalyTools = () => {
                           rainfallAnomalyData?.anomalous_seasons?.map(
                             (season: string, index: number) => (
                               <p
-                                className="border border-green-700 text-black text-xs py-1 px-2 rounded font-medium"
+                                className="border border-green-700 text-black text-xs py-1 px-2 rounded-md font-medium"
                                 key={index}
                               >
                                 {season}
@@ -172,7 +172,7 @@ const RainfallAnomalyTools = () => {
                       </div>
                     </div>
                     <div className="flex flex-col gap-2">
-                      <p className="bg-green-700 text-white text-sm py-1 px-2 rounded font-medium flex">
+                      <p className="bg-green-700 text-white text-sm py-1 px-2 rounded-md font-medium flex">
                         {" "}
                         Anomalous Months:
                       </p>
@@ -181,7 +181,7 @@ const RainfallAnomalyTools = () => {
                           rainfallAnomalyData?.anomalous_months?.map(
                             (season: string, index: number) => (
                               <p
-                                className="border border-green-700 text-black text-xs py-1 px-2 rounded font-medium"
+                                className="border border-green-700 text-black text-xs py-1 px-2 rounded-md font-medium"
                                 key={index}
                               >
                                 {season}
