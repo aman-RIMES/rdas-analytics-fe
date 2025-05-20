@@ -137,20 +137,17 @@ const RainfallAnomalyTools = () => {
               {isFinished(rainfallAnomalyStatus) && (
                 <div className="p-1">
                   <div className="p-3 mt-5 border-2 border-green-800 rounded-lg flex flex-col gap-3">
-                    <p className="text-lg font-semibold text-green-900 text-center underline">
+                    <p className="text-xl font-semibold text-green-900 text-center underline">
                       Analysis
                     </p>
                     <div className="flex flex-col gap-2 ">
                       <p className="bg-green-700 text-white text-sm py-1 px-2 rounded-md font-medium flex">
                         {" "}
-                        Number of Anomalous Pentads:
+                        Year:
                       </p>
-                      {/* <div className="flex flex-wrap gap-2 "> */}
                       <p className="border border-green-700 text-black text-md py-1 px-2 rounded-md font-bold text-center">
-                        {rainfallAnomalyData &&
-                          rainfallAnomalyData?.anomalous_pentads}
+                        {rainfallAnomalyData && rainfallAnomalyData?.year}
                       </p>
-                      {/* </div> */}
                     </div>
 
                     <div className="flex flex-col gap-2">
@@ -189,6 +186,17 @@ const RainfallAnomalyTools = () => {
                             )
                           )}
                       </div>
+                    </div>
+
+                    <div className="flex flex-col gap-2 ">
+                      <p className="bg-green-700 text-white text-sm py-1 px-2 rounded-md font-medium flex">
+                        {" "}
+                        Number of Anomalous Pentads:
+                      </p>
+                      <p className="border border-green-700 text-black text-md py-1 px-2 rounded-md font-bold text-center">
+                        {rainfallAnomalyData &&
+                          rainfallAnomalyData?.anomalous_pentads}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -235,19 +243,13 @@ const RainfallAnomalyTools = () => {
                           className="w-full text-green-600"
                           value="charts"
                         >
-                          {rainfallAnomalyData?.seasonal_rainfall_chart
-                            ? rainfallAnomalyData?.seasonal_rainfall_chart
-                                ?.title?.text
-                            : "Rainfall Chart"}
+                          Rainfall by Pentad (mm)
                         </TabsTrigger>
                         <TabsTrigger
                           className="w-full text-green-600"
                           value="correlation"
                         >
-                          {rainfallAnomalyData?.seasonal_rainfall_chart
-                            ? rainfallAnomalyData?.seasonal_rainfall_chart
-                                ?.title?.text
-                            : "Rainy Day Chart"}
+                          Rainy Days by Pentad (mm)
                         </TabsTrigger>
                       </div>
                     </TabsList>
