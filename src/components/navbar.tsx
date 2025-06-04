@@ -72,7 +72,11 @@ export default function NavBar() {
         )}
         <div className="flex">
           <nav className="flex items-center gap-1 md:gap-3">
-            <a rel="noreferrer" href="//203.156.108.75:11155/" target="_blank">
+            <a
+              rel="noreferrer"
+              href="http://203.156.108.75:11155/"
+              target="_blank"
+            >
               <div className="flex gap-1 justify-center items-center py-1 px-3 rounded-sm text-white hover:bg-yellow-300 hover:text-black">
                 <HelpCircle className="h-[18px] w-[18px] " />
                 <p className="">Help</p>
