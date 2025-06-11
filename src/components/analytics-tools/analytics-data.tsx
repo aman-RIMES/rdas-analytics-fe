@@ -207,7 +207,7 @@ const AnalyticsData = ({
                       value: chosenMonth,
                       setValue: handleMonthChange,
                     }}
-                    height="10"
+                    // height="10"
                   />
                 </div>
               </div>

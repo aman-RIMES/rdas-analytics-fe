@@ -132,10 +132,10 @@ const PredictiveTools = () => {
 
   return (
     <>
-      <div className="p-2">
-        <div className="grid grid-cols-1 lg:grid-cols-6 gap-3 ">
-          <div className="col-span-1">
-            <div className=" border-grey-600 rounded-lg h-[88vh]">
+      <div className="p-2 h-screen flex flex-col">
+        <div className="grid grid-cols-1 lg:grid-cols-6 gap-3 flex-grow">
+          <div className="col-span-1 flex flex-col">
+            <div className=" border-grey-600 rounded-lg flex-grow flex flex-col">
               <div className="bg-[#0B6623] flex justify-between items-center text-white text-md p-1 rounded-t-lg font-medium ">
                 <p className="ml-2 text-sm"> Parameters</p>
                 <CustomDatasetGuide
@@ -143,7 +143,7 @@ const PredictiveTools = () => {
                   className="mr-2 text-sm text-yellow-300 text-decoration-line: underline"
                 />
               </div>
-              <div className="bg-gray-100 p-2 rounded-b-lg flex flex-col gap-5 shadow-lg h-full">
+              <div className="bg-gray-100 p-2 rounded-b-lg flex flex-col gap-5 shadow-lg flex-grow">
                 <ElNinoCommonFilter
                   filterData={filterData}
                   handleChange={handleChange}
@@ -164,7 +164,7 @@ const PredictiveTools = () => {
             </div>
           </div>
 
-          <div className="col-span-5">
+          <div className="col-span-5 flex-grow flex flex-col">
             <PredictiveToolsData
               regressionModelStatus={regressionModelStatus}
               regressionModelData={regressionModelData}

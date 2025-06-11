@@ -128,11 +128,11 @@ const GddPredictiveTools = () => {
 
   return (
     <>
-      <div className="p-2">
-        <div className=" flex flex-col gap-2">
-          <div className="grid grid-cols-6 gap-3 ">
-            <div className="col-span-1 w-full h-full bg-gray-100 rounded-b-lg">
-              <div className="   ">
+      <div className="p-2 h-screen flex flex-col">
+        <div className=" flex flex-col gap-2 flex-grow">
+          <div className="grid grid-cols-6 gap-3 flex-grow">
+            <div className="col-span-1 w-full h-full bg-gray-100 rounded-b-lg flex flex-col">
+              <div className="flex-grow flex flex-col">
                 <div className="bg-[#0B6623] flex justify-between items-center   text-white text-md p-1 rounded-t-lg font-medium">
                   <p className="ml-2 text-sm"> Parameters</p>
                   <CustomDatasetGuide
@@ -140,7 +140,7 @@ const GddPredictiveTools = () => {
                     className="mr-2 text-sm text-yellow-300 text-decoration-line: underline"
                   />
                 </div>
-                <div className=" p-2 flex flex-col gap-5 justify-between">
+                <div className=" p-2 flex flex-col gap-5 justify-between flex-grow">
                   <GddToolsFilter
                     filterData={filterData}
                     toolType={filterType.gdd}
@@ -158,14 +158,14 @@ const GddPredictiveTools = () => {
               </div>
             </div>
 
-            <div className="col-span-5 w-full h-full  rounded-lg">
-              <div className="">
-                <div>
-                  <div className="flex flex-col gap-3">
-                    <div className="relative z-0">
-                      <div className="p-5 mt-2 bg-white rounded-lg">
-                        <Table>
-                          <ScrollArea className="h-[380px]">
+            <div className="col-span-5 w-full h-full flex flex-col rounded-lg">
+              <div className="flex-grow flex flex-col">
+                <div className="flex-grow flex flex-col">
+                  <div className="flex flex-col gap-3 flex-grow">
+                    <div className="relative z-0 flex-grow flex flex-col">
+                      <div className="p-5 mt-2 bg-white rounded-lg flex-grow flex flex-col">
+                        <Table className="flex-grow">
+                          <ScrollArea className="h-[380px] flex-grow">
                             <TableHeader>
                               <TableRow>
                                 <TableHead className="text-black text-md text-center">
@@ -228,7 +228,7 @@ const GddPredictiveTools = () => {
                       )}
                     </div>
 
-                    <div className="relative z-0">
+                    <div className="relative z-0 flex-grow flex flex-col">
                       <div className="absolute inset-0 z-20 max-h-6 mr-12 flex justify-end items-start">
                         <Dialog>
                           <DialogTrigger className="p-2">
@@ -239,7 +239,7 @@ const GddPredictiveTools = () => {
                               <DialogDescription>
                                 <HighchartsReact
                                   containerProps={{
-                                    style: { height: "600px " },
+                                    style: { height: "screen" },
                                   }}
                                   highcharts={Highcharts}
                                   options={
@@ -254,10 +254,10 @@ const GddPredictiveTools = () => {
                         </Dialog>
                       </div>
 
-                      <div className="flex flex-col">
-                        <div className="rounded-lg bg-white p-1 ">
+                      <div className="flex flex-col flex-grow">
+                        <div className="rounded-lg bg-white p-1 flex-grow">
                           <HighchartsReact
-                            containerProps={{ style: { height: "450px " } }}
+                            containerProps={{ style: { height: "100%" } }}
                             highcharts={Highcharts}
                             options={
                               GDDAnalysisData?.chart

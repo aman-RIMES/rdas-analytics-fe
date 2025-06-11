@@ -89,11 +89,11 @@ const ElNinoAnalytics = () => {
 
   return (
     <>
-      <div className="p-2">
-        <div className=" flex flex-col gap-2">
-          <div className="grid grid-cols-6 gap-3 ">
-            <div className="col-span-1 w-full h-full bg-gray-100 rounded-b-lg">
-              <div className="   ">
+      <div className="p-2 h-screen flex flex-col">
+        <div className=" flex flex-col gap-2 flex-grow">
+          <div className="grid grid-cols-6 gap-3 flex-grow">
+            <div className="col-span-1 w-full h-full bg-gray-100 rounded-b-lg flex flex-col">
+              <div className="flex-grow flex flex-col">
                 <div className="bg-[#0B6623] flex justify-between items-center   text-white text-md p-1 rounded-t-lg font-medium">
                   <p className="ml-2 text-sm"> Parameters</p>
                   <CustomDatasetGuide
@@ -101,7 +101,7 @@ const ElNinoAnalytics = () => {
                     className="mr-2 text-sm text-yellow-300 text-decoration-line: underline"
                   />
                 </div>
-                <div className=" p-2 flex flex-col gap-5 justify-between">
+                <div className=" p-2 flex flex-col gap-5 justify-between flex-grow">
                   <ElNinoCommonFilter
                     filterData={filterData}
                     handleChange={handleChange}
@@ -141,9 +141,9 @@ const ElNinoAnalytics = () => {
               </div>
             </div>
 
-            <div className="col-span-5 w-full h-full bg-white rounded-lg">
-              <div className="">
-                <div>
+            <div className="col-span-5 w-full h-full bg-white rounded-lg flex flex-col">
+              <div className="flex-grow flex flex-col">
+                <div className="flex-grow">
                   <DynamicMap
                     filterData={filterData}
                     loadAnalysisData={loadAnalysisData}
@@ -153,9 +153,12 @@ const ElNinoAnalytics = () => {
             </div>
           </div>
 
-          <div className="w-full border-500 rounded-lg">
-            <div className="w-full">
-              <Tabs defaultValue="charts" className="w-full ">
+          <div className="w-full border-500 rounded-lg flex-grow flex flex-col">
+            <div className="w-full flex-grow flex flex-col">
+              <Tabs
+                defaultValue="charts"
+                className="w-full flex-grow flex flex-col"
+              >
                 <TabsList className="w-full">
                   <div className="flex  justify-between w-full">
                     <TabsTrigger
@@ -178,9 +181,12 @@ const ElNinoAnalytics = () => {
                     )}
                   </div>
                 </TabsList>
-                <div className="bg-white rounded-lg">
-                  <TabsContent value="charts">
-                    <div className="">
+                <div className="bg-white rounded-lg flex-grow flex flex-col">
+                  <TabsContent
+                    value="charts"
+                    className="flex-grow flex flex-col"
+                  >
+                    <div className="flex-grow">
                       <AnalyticsData
                         filterData={filterData}
                         loadAnalysisData={loadAnalysisData}
@@ -190,7 +196,10 @@ const ElNinoAnalytics = () => {
                     </div>
                   </TabsContent>
                   {location.pathname !== "/analytics-mjo" && (
-                    <TabsContent value="correlation">
+                    <TabsContent
+                      value="correlation"
+                      className="flex-grow flex flex-col"
+                    >
                       <>
                         <AnalyticsCorrelation filterData={filterData} />
                       </>
