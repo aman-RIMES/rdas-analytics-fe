@@ -24,6 +24,8 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
   const climatePattern =
     location.pathname === "/lanina-analytics"
       ? toolType.lanina
+      : location.pathname === "/analytics-mjo"
+      ? toolType.mjo
       : toolType.elnino;
   const [mapFilter, setMapFilter] = useState<MapFilterData>({
     dataVariable: "",

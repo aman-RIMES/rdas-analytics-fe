@@ -41,6 +41,11 @@ export function NavMenubar() {
               La Nina and Local Climate
             </MenubarItem>
           </NavLink>
+          <NavLink to="/analytics-mjo">
+            <MenubarItem className="font-medium text-sm ">
+              MJO and Local Climate
+            </MenubarItem>
+          </NavLink>
           <NavLink to="/analytics-rainfall-anomaly">
             <MenubarItem className="font-medium text-sm ">
               Rainfall Anomaly

@@ -1,5 +1,6 @@
 import HighchartsReact from "highcharts-react-official";
-import Highcharts from "highcharts/highmaps";
+// import Highcharts from "highcharts/highmaps";
+import Highcharts from "highcharts/highstock";
 import ExportingModule from "highcharts/modules/exporting";
 import ExportDataModule from "highcharts/modules/export-data";
 import OfflineExportingModule from "highcharts/modules/offline-exporting";
@@ -48,6 +49,8 @@ const AnalyticsData = ({
   const climatePattern =
     location.pathname === "/lanina-analytics"
       ? toolType.lanina
+      : location.pathname === "/analytics-mjo"
+      ? toolType.mjo
       : toolType.elnino;
 
   const getChartConfig = (baseOptions: any) => ({

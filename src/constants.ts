@@ -25,6 +25,7 @@ export enum requestStatus {
 export enum toolType {
   elnino = "el_nino_",
   lanina = "la_nina_",
+  mjo = "mjo_",
 }
 
 export enum filterType {
@@ -190,6 +191,7 @@ export const routeDefinitions = {
   "/predictive-tools": "El Nino Impacts Prediction",
   "/lanina-predictive-tools": "La Nina Impacts Prediction",
   "/elnino-analytics": "El Nino and Local Climate",
+  "/analytics-mjo": "MJO and Local Climate",
   "/lanina-analytics": "La Nina and Local Climate",
   "/analytics-land": "Land Use & Land Cover Change",
   "/predictive-temps": "Temperature Sensitivity Alert System (TEMPs)",

@@ -25,6 +25,10 @@ function App() {
           element: <ElNinoAnalytics key={"lanina"} />,
         },
         {
+          path: "/analytics-mjo",
+          element: <ElNinoAnalytics key={"mjo"} />,
+        },
+        {
           path: "/analytics-land",
           element: <LandUse />,
         },
