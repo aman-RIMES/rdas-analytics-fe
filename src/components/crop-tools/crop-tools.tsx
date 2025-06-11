@@ -134,9 +134,9 @@ const CropTools = () => {
 
   return (
     <>
-      <div className="p-2">
-        <div className="grid grid-cols-1 lg:grid-cols-7 gap-3">
-          <div className="col-span-4 w-full  bg-white rounded-lg h-[45vh] p-1 relative z-0">
+      <div className="p-2 h-screen flex flex-col">
+        <div className="grid grid-cols-1 lg:grid-cols-7 gap-3 flex-grow">
+          <div className="col-span-4 w-full  bg-white rounded-lg flex-grow p-1 relative z-0 flex flex-col">
             <div className="absolute inset-0 z-30 max-h-10 max-w-60 flex justify-start items-start">
               <Popover>
                 <PopoverTrigger className="p-2">
@@ -200,7 +200,7 @@ const CropTools = () => {
             )}
           </div>
 
-          <div className="col-span-3 w-full  bg-white rounded-lg h-[45vh] p-1 relative z-0">
+          <div className="col-span-3 w-full  bg-white rounded-lg flex-grow p-1 relative z-0 flex flex-col">
             <HighchartsReact
               highcharts={Highcharts}
               options={
@@ -208,7 +208,7 @@ const CropTools = () => {
                   ? cropAnalysisData?.chart?.rainfall
                   : sampleCharts?.crop_rainfall
               }
-              containerProps={{ style: { height: "425px" } }}
+              containerProps={{ style: { height: "100%" } }}
             />
             {(isIdle(cropAnalysisStatus) ||
               isLoading(cropAnalysisStatus) ||
@@ -231,15 +231,15 @@ const CropTools = () => {
             )}
           </div>
 
-          <div className="col-span-4 w-full  rounded-lg h-[45vh]">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-              <div className="relative z-0 bg-white rounded-lg min-h-[45vh]">
-                <div className="">
+          <div className="col-span-4 w-full  rounded-lg flex-grow flex flex-col">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 flex-grow">
+              <div className="relative z-0 bg-white rounded-lg flex-grow flex flex-col">
+                <div className="flex-grow flex flex-col">
                   <div className="bg-green-800 text-white text-md p-1 rounded-t-lg font-medium">
                     <p className="ml-2"> Analysis</p>
                   </div>
 
-                  <ScrollArea className="h-[400px] p-2">
+                  <ScrollArea className="h-[400px] p-2 flex-grow">
                     <CropToolsAnalysisText
                       cropAnalysisData={cropAnalysisData}
                     />
@@ -265,12 +265,12 @@ const CropTools = () => {
                   </div>
                 )}
               </div>
-              <div className="bg-white rounded-lg min-h-[45vh] relative z-0">
+              <div className="bg-white rounded-lg flex-grow relative z-0 flex flex-col">
                 <div className="bg-green-800 text-white text-md p-1 rounded-t-lg font-medium">
                   <p className="ml-2"> Recommendation</p>
                 </div>
-                <div>
-                  <ScrollArea className="h-[400px] p-2">
+                <div className="flex-grow">
+                  <ScrollArea className="h-[400px] p-2 flex-grow">
                     <p className="p-2" style={{ whiteSpace: "break-spaces" }}>
                       {cropAnalysisData?.recommendation ||
                         sampleCharts?.crop_recommendation}
@@ -299,7 +299,7 @@ const CropTools = () => {
               </div>
             </div>
           </div>
-          <div className="col-span-3 w-full  bg-white rounded-lg h-[45vh] p-1 relative z-0">
+          <div className="col-span-3 w-full  bg-white rounded-lg flex-grow p-1 relative z-0 flex flex-col">
             <HighchartsReact
               highcharts={Highcharts}
               options={
@@ -307,7 +307,7 @@ const CropTools = () => {
                   ? cropAnalysisData?.chart?.temperature
                   : sampleCharts?.crop_temperature
               }
-              containerProps={{ style: { height: "425px" } }}
+              containerProps={{ style: { height: "100%" } }}
             />
             {(isIdle(cropAnalysisStatus) ||
               isLoading(cropAnalysisStatus) ||

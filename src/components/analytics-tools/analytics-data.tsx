@@ -1,12 +1,13 @@
 import HighchartsReact from "highcharts-react-official";
-import Highcharts from "highcharts/highmaps";
+// import Highcharts from "highcharts/highmaps";
+import Highcharts from "highcharts/highstock";
 import ExportingModule from "highcharts/modules/exporting";
 import ExportDataModule from "highcharts/modules/export-data";
 import OfflineExportingModule from "highcharts/modules/offline-exporting";
 ExportingModule(Highcharts);
 ExportDataModule(Highcharts);
 OfflineExportingModule(Highcharts);
-import { isError, isFinished, isIdle } from "@/lib/utils";
+import { getAnalyticsToolType, isError, isFinished, isIdle } from "@/lib/utils";
 import { AnalyticsDataProps } from "@/types";
 import { grid, reuleaux } from "ldrs";
 import Combobox from "../ui/combobox";
@@ -45,10 +46,7 @@ const AnalyticsData = ({
     setChosenMonth(value);
   };
 
-  const climatePattern =
-    location.pathname === "/lanina-analytics"
-      ? toolType.lanina
-      : toolType.elnino;
+  const climatePattern = getAnalyticsToolType(location.pathname);
 
   const getChartConfig = (baseOptions: any) => ({
     ...baseOptions,
@@ -209,7 +207,7 @@ const AnalyticsData = ({
                       value: chosenMonth,
                       setValue: handleMonthChange,
                     }}
-                    height="10"
+                    // height="10"
                   />
                 </div>
               </div>

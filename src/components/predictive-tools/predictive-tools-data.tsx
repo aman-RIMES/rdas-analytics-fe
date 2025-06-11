@@ -71,9 +71,9 @@ const PredictiveToolsData = ({
 
   return (
     <>
-      <div className="flex flex-col gap-2">
-        <div className="grid grid-cols-3 gap-2">
-          <div className="relative z-0 bg-white shadow-lg rounded-lg col-span-2">
+      <div className="flex flex-col  gap-2 h-full">
+        <div className="grid grid-cols-3 gap-2 flex-grow">
+          <div className="relative z-0 bg-white shadow-lg rounded-lg col-span-2 flex flex-col">
             <div className="my-1 flex flex-row gap-5 justify-center">
               <div className="w-1/3">
                 <div className="flex">
@@ -95,14 +95,14 @@ const PredictiveToolsData = ({
               </div>
             </div>
 
-            <div className="p-1">
+            <div className="p-1 flex-grow flex flex-col">
               {isFinished(regressionModelStatus) && predictiveEvaluation && (
                 <>
-                  <div className="mt-2">
+                  <div className="mt-2 flex-grow flex flex-col">
                     <p className="text-center font-medium text-md ">
                       Table of Prediction
                     </p>
-                    <ScrollArea>
+                    <ScrollArea className="h-full flex-grow">
                       <Table className="mt-3">
                         <TableHeader>
                           <TableRow>

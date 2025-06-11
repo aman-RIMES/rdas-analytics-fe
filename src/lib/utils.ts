@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { requestStatus } from "@/constants";
+import { requestStatus, toolType } from "@/constants";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -145,4 +145,15 @@ export const transformPredictionTableData = (predictiveTableData: object) => {
 
 export const getMetricUnit = (indicator) => {
   return indicator === "rainfall" ? "(mm)" : "(°C)";
+};
+
+export const getAnalyticsToolType = (path) => {
+  const climatePattern =
+    path === "/lanina-analytics"
+      ? toolType.lanina
+      : path === "/analytics-mjo"
+      ? toolType.mjo
+      : toolType.elnino;
+
+  return climatePattern;
 };
