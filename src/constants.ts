@@ -1,13 +1,12 @@
-import { Icons } from "./components/ui/icons";
-
-// export const BASE_URL = "http://203.156.108.75:11150";
 // export const BASE_URL = "https://analytics-api.rimes.int";
 export const BASE_URL = "http://203.156.108.75:11170/";
 export const BODY_PARAMS_URL = `${BASE_URL}/body_params`;
 export const NEW_BODY_PARAMS_URL = `https://apis.rimes.int/data/get-available-metadata?level=2&period=monthly`;
 export const NEW_BODY_PARAMS_URL_LEVEL_1 = `https://apis.rimes.int/data/get-available-metadata?level=1&period=monthly`;
-export const CROP_PARAMS_URL = `https://analytics-api.rimes.int/cropping_calendar/filters`;
-export const CROP_ADMIN_LOGIN_URL = `https://analytics-api.rimes.int/admin/login/?next=/admin/`;
+// export const CROP_PARAMS_URL = `https://analytics-api.rimes.int/cropping_calendar/filters`;
+// export const CROP_ADMIN_LOGIN_URL = `https://analytics-api.rimes.int/admin/login/?next=/admin/`;
+export const CROP_PARAMS_URL = `http://203.156.108.75:11170/cropping_calendar/filters`;
+export const CROP_ADMIN_LOGIN_URL = `http://203.156.108.75:11170/admin/login/?next=/admin/`;
 
 export const IDLE_PREDICTIVE_CHART_MESSAGE =
   "Please Generate A Predictive Model";

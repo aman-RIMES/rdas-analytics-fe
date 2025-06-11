@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FilterData } from "@/types";
-import { isFinished } from "@/lib/utils";
+import { getAnalyticsToolType, isFinished } from "@/lib/utils";
 import AnalyticsCorrelation from "./analytics-correlation";
 import AnalyticsData from "./analytics-data";
 import ElNinoCommonFilter from "./elnino-common-filter.component";
@@ -17,7 +17,11 @@ const ElNinoAnalytics = () => {
   const navigate = useNavigate();
 
   const label =
-    location.pathname === "/lanina-analytics" ? "La Nina" : "El Nino";
+    location.pathname === "/lanina-analytics"
+      ? "La Nina"
+      : location.pathname === "/analytics-mjo"
+      ? "MJO"
+      : "El Nino";
 
   const [selected, setSelected] = useState<[]>([]);
   const [loadAnalysisData, setLoadAnalysisData] = useState(false);
@@ -58,7 +62,9 @@ const ElNinoAnalytics = () => {
 
   const verifyFilters = () => {
     return (
-      filterData.dataVariable.length > 0 &&
+      (getAnalyticsToolType(location.pathname) !== toolType.mjo
+        ? filterData.dataVariable.length > 0
+        : true) &&
       filterData.source !== "" &&
       filterData.fromYear !== "" &&
       filterData.toYear !== "" &&
@@ -156,14 +162,20 @@ const ElNinoAnalytics = () => {
                       className="w-full text-green-600"
                       value="charts"
                     >
-                      Normal vs Monthly Averaged during {label} Years
+                      {label === "MJO" ? (
+                        <p> Normal vs Daily Averages during MJO Years </p>
+                      ) : (
+                        <p> Normal vs Monthly Averages during {label} Years </p>
+                      )}
                     </TabsTrigger>
-                    <TabsTrigger
-                      className="w-full text-green-600"
-                      value="correlation"
-                    >
-                      Pearson Correlation Plot | Matrix
-                    </TabsTrigger>
+                    {location.pathname !== "/analytics-mjo" && (
+                      <TabsTrigger
+                        className="w-full text-green-600"
+                        value="correlation"
+                      >
+                        Pearson Correlation Plot | Matrix
+                      </TabsTrigger>
+                    )}
                   </div>
                 </TabsList>
                 <div className="bg-white rounded-lg">
@@ -177,11 +189,13 @@ const ElNinoAnalytics = () => {
                       />
                     </div>
                   </TabsContent>
-                  <TabsContent value="correlation">
-                    <>
-                      <AnalyticsCorrelation filterData={filterData} />
-                    </>
-                  </TabsContent>
+                  {location.pathname !== "/analytics-mjo" && (
+                    <TabsContent value="correlation">
+                      <>
+                        <AnalyticsCorrelation filterData={filterData} />
+                      </>
+                    </TabsContent>
+                  )}
                 </div>
               </Tabs>
             </div>

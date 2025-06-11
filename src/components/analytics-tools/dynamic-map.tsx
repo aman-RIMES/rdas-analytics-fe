@@ -8,7 +8,12 @@ import {
   requestStatus,
   toolType,
 } from "@/constants";
-import { formatTitle, getMetricUnit, transformObject } from "@/lib/utils";
+import {
+  formatTitle,
+  getAnalyticsToolType,
+  getMetricUnit,
+  transformObject,
+} from "@/lib/utils";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import HelpHoverCard from "../help-hover-card";
 import Combobox from "../ui/combobox";
@@ -21,12 +26,7 @@ grid.register("l-grid");
 
 const DynamicMap = ({ filterData, loadAnalysisData }) => {
   const location = useLocation();
-  const climatePattern =
-    location.pathname === "/lanina-analytics"
-      ? toolType.lanina
-      : location.pathname === "/analytics-mjo"
-      ? toolType.mjo
-      : toolType.elnino;
+  const climatePattern = getAnalyticsToolType(location.pathname);
   const [mapFilter, setMapFilter] = useState<MapFilterData>({
     dataVariable: "",
     chosenMonth: "1",
