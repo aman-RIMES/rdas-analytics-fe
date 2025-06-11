@@ -99,31 +99,35 @@ const ElNinoCommonFilter = ({
           }}
         />
       </div>
-      <div>
-        <div className="flex">
-          <Label className=" text-xs font-semibold">Data</Label>
-          <HelpHoverCard
-            title={"Data"}
-            content={`Data used to compare against an El Nino
+
+      {location.pathname !== "/analytics-mjo" && (
+        <div>
+          <div className="flex">
+            <Label className=" text-xs font-semibold">Data</Label>
+            <HelpHoverCard
+              title={"Data"}
+              content={`Data used to compare against an El Nino
               variable.`}
+            />
+          </div>
+          <FancyMultiSelect
+            name="dataVariable"
+            selected={selected}
+            setSelected={setSelected}
+            setState={handleChange}
+            array={transformMultiNewParamsObject(newParams?.indic).filter(
+              (e) =>
+                !filterData.dataVariable?.includes(e.value) &&
+                e.value !== "sfcWind" &&
+                e.value !== "rsds" &&
+                e.value !== "sfcWindDir" &&
+                e.value !== "hurs"
+            )}
+            ScrollAreaHeight={22}
           />
         </div>
-        <FancyMultiSelect
-          name="dataVariable"
-          selected={selected}
-          setSelected={setSelected}
-          setState={handleChange}
-          array={transformMultiNewParamsObject(newParams?.indic).filter(
-            (e) =>
-              !filterData.dataVariable?.includes(e.value) &&
-              e.value !== "sfcWind" &&
-              e.value !== "rsds" &&
-              e.value !== "sfcWindDir" &&
-              e.value !== "hurs"
-          )}
-          ScrollAreaHeight={22}
-        />
-      </div>
+      )}
+
       <div>
         <div className="flex ">
           <Label className=" text-xs font-semibold">Data Source </Label>
@@ -176,9 +180,9 @@ const ElNinoCommonFilter = ({
           <Combobox
             name="fromYear"
             label={"Year"}
-            array={elNinoYearsList().filter(
-              (e) => parseInt(e.value) + 30 < new Date().getFullYear()
-            )}
+            array={elNinoYearsList(
+              location.pathname === "/analytics-mjo" ? 1974 : 1950
+            ).filter((e) => parseInt(e.value) + 30 < new Date().getFullYear())}
             state={{
               value: filterData.fromYear,
               setValue: handleChange,
