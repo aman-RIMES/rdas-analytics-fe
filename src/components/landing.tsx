@@ -1,6 +1,11 @@
 import { Grid } from "lucide-react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  zeroRightClassName,
+  fullWidthClassName,
+  noScrollbarsClassName,
+} from "react-remove-scroll-bar";
 
 const Landing = () => {
   const navigate = useNavigate();
@@ -19,6 +24,11 @@ const Landing = () => {
       route: "/analytics-crop",
       name: "Crop Calendar Suitability",
       image: "src/assets/calendar.png",
+    },
+    {
+      route: "/analytics-mjo",
+      name: "MJO and Local Climate",
+      image: "src/assets/mjo.png",
     },
 
     {
@@ -58,28 +68,40 @@ const Landing = () => {
 
   return (
     <>
-      <div className="h-screen w-full flex justify-center items-center">
-        <div className="flex flex-row justify-center flex-wrap items-center ">
-          <div className="grid grid-cols-1 md:grid-cols-2 ">
-            {analyticsTools.map((tool, index) => (
-              <GridItem tool={tool} />
-            ))}
-          </div>
-          <div className="inline-block h-[700px] min-h-[1em] w-0.5 self-stretch bg-green-500 mx-5 "></div>
-          <div className="grid grid-cols-1 md:grid-cols-2 ">
-            {predictiveTools.map((tool, index) => (
-              <GridItem tool={tool} />
-            ))}
+      <div className="h-screen w-full flex flex-col justify-between bg-[radial-gradient(circle_at_center,#bbf7d0,#fff)]">
+        <div className=" flex justify-center items-center mt-14">
+          <div className="flex flex-row justify-center flex-wrap  ">
+            <div className="flex flex-col items-center gap-5">
+              <p className="text-4xl text-green-800 font-medium">
+                Analytics Tools
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 ">
+                {analyticsTools.map((tool, index) => (
+                  <GridItem tool={tool} />
+                ))}
+              </div>
+            </div>
+            <div className="inline-block h-[700px] min-h-[1em] w-0.5 self-stretch bg-green-500 mx-5 mt-7"></div>
+            <div className="flex flex-col items-center gap-5">
+              <p className="text-4xl text-green-800 font-medium">
+                Predictive Tools
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 ">
+                {predictiveTools.map((tool, index) => (
+                  <GridItem tool={tool} />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="flex justify-center items-center gap-20">
-        <div className="w-[80px] ">
-          <img src="src/assets/RIMES.png" alt="" />
-        </div>
-        <div className="w-[150px] ">
-          <img src="src/assets/WB.png" alt="" />
+        <div className="flex justify-center items-center gap-20 mb-3">
+          <div className="w-[80px] ">
+            <img src="src/assets/RIMES.png" alt="" />
+          </div>
+          <div className="w-[150px] ">
+            <img src="src/assets/WB.png" alt="" />
+          </div>
         </div>
       </div>
     </>
@@ -90,7 +112,7 @@ export const GridItem = ({ tool }) => {
   const navigate = useNavigate();
   return (
     <div
-      className="p-5 px-10 bg-white rounded-xl max-w-[350px] shadow-md shadow-green-700 hover:shadow-lg hover:shadow-yellow-400 m-5 flex flex-col items-center justify-center  cursor-pointer"
+      className="p-5 px-10 bg-green-50 rounded-xl max-w-[350px] shadow-md shadow-green-700 hover:shadow-lg hover:shadow-yellow-400 m-5 flex flex-col items-center justify-center  cursor-pointer"
       onClick={() => navigate(tool.route)}
     >
       <div className="w-[80px] ">
