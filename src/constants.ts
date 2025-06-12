@@ -1,5 +1,5 @@
 // export const BASE_URL = "https://analytics-api.rimes.int";
-export const BASE_URL = "http://203.156.108.75:11170/";
+export const BASE_URL = "http://203.156.108.75:11170";
 export const BODY_PARAMS_URL = `${BASE_URL}/body_params`;
 export const NEW_BODY_PARAMS_URL = `https://apis.rimes.int/data/get-available-metadata?level=2&period=monthly`;
 export const NEW_BODY_PARAMS_URL_LEVEL_1 = `https://apis.rimes.int/data/get-available-metadata?level=1&period=monthly`;

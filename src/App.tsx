@@ -9,6 +9,7 @@ import CropTools from "./components/crop-tools/crop-tools";
 import LandUse from "./components/analytics-tools/land-use";
 import TempS from "./components/analytics-tools/temps";
 import RainfallAnomalyTools from "./components/rainfall-anomaly-tools/rainfall-anomaly";
+import Landing from "./components/landing";
 function App() {
   const router = createBrowserRouter([
     {
@@ -16,6 +17,10 @@ function App() {
       element: <Home />,
       errorElement: <NotFoundPage />,
       children: [
+        {
+          path: "/",
+          element: <Landing />,
+        },
         {
           path: "/elnino-analytics",
           element: <ElNinoAnalytics key={"elnino"} />,

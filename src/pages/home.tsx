@@ -7,7 +7,7 @@ import { Outlet } from "react-router-dom";
 
 const Home = () => {
   return (
-    <div className="h-screen w-screen flex flex-col overflow-scroll bg-green-50">
+    <div className="h-screen w-screen flex flex-col overflow-auto bg-green-50">
       <NavBar />
       <Outlet />
     </div>
