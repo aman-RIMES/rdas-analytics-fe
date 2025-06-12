@@ -112,7 +112,7 @@ export const GridItem = ({ tool }) => {
   const navigate = useNavigate();
   return (
     <div
-      className="p-5 px-10 bg-green-50 rounded-xl max-w-[350px] shadow-md shadow-green-700 hover:shadow-lg hover:shadow-yellow-400 m-5 flex flex-col items-center justify-center  cursor-pointer"
+      className="p-5 px-10 bg-green-50 rounded-xl max-w-[350px] shadow-md shadow-green-700 hover:shadow-lg hover:shadow-yellow-200 m-5 flex flex-col items-center justify-center  cursor-pointer duration-500 hover:scale-125"
       onClick={() => navigate(tool.route)}
     >
       <div className="w-[80px] ">
