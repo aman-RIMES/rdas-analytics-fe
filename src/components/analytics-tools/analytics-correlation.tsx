@@ -6,6 +6,7 @@ import {
   isFinished,
   isIdle,
   getAnalyticsToolType,
+  cn,
 } from "@/lib/utils";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highmaps";
@@ -113,9 +114,13 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
             <Combobox
               name="correlationVariable"
               label={"Data Variable"}
-              array={transformObject(ElNinoToolDataIndicators).filter((e) =>
-                filterData.dataVariable.includes(e.value)
-              )}
+              array={
+                climatePattern !== toolType.mjo
+                  ? transformObject(ElNinoToolDataIndicators).filter((e) =>
+                      filterData.dataVariable.includes(e.value)
+                    )
+                  : [{ value: "rainfall", label: "Rainfall" }]
+              }
               state={{
                 value: correlationFilter.correlationVariable,
                 setValue: handleChange,
@@ -148,7 +153,11 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
             <SubmitButton
               label={"Generate Correlation"}
               submitFunction={generateCorrelationMap}
-              verifyFilters={correlationFilter.chosenMonths.length > 0}
+              verifyFilters={
+                correlationFilter.chosenMonths.length > 0 &&
+                correlationFilter.correlationVariable !== "" &&
+                isFinished(correlationStatus)
+              }
               height={30}
             />
           </div>
@@ -156,7 +165,14 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
       </div>
 
       <div className="px-2">
-        <div className="grid gap-4 md:grid-cols-4 grid-cols-1 ">
+        <div
+          className={cn(
+            "grid gap-4 grid-cols-1",
+            climatePattern === toolType.mjo
+              ? "md:grid-cols-3"
+              : "md:grid-cols-4"
+          )}
+        >
           {isFinished(correlationStatus)
             ? correlationChartData[correlationFilter.correlationVariable]?.map(
                 (chartData, index) => (
@@ -171,40 +187,42 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
                   </div>
                 )
               )
-            : [0, 1, 2, 3].map((i) => (
-                <div className="relative">
-                  <div key={i}>
-                    <HighchartsReact
-                      containerProps={{ style: { height: "250px" } }}
-                      highcharts={Highcharts}
-                      options={sampleCharts?.scatter_chart[climatePattern]}
-                    />
-                  </div>
-
-                  {!isFinished(correlationStatus) && (
-                    <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
-                      {isIdle(correlationStatus) ? (
-                        <p className="text-xl font-bold text-green-800">
-                          {IDLE_ANALYTICS_CHART_MESSAGE}
-                        </p>
-                      ) : isError(correlationStatus) ? (
-                        <ErrorMessage />
-                      ) : (
-                        <Loading
-                          animation={
-                            <l-quantum
-                              color="green"
-                              // @ts-ignore
-                              stroke={8}
-                              size="50"
-                            ></l-quantum>
-                          }
-                        />
-                      )}
+            : (climatePattern === toolType.mjo ? [0, 1, 2] : [0, 1, 2, 3]).map(
+                (i) => (
+                  <div className="relative">
+                    <div key={i}>
+                      <HighchartsReact
+                        containerProps={{ style: { height: "250px" } }}
+                        highcharts={Highcharts}
+                        options={sampleCharts?.scatter_chart[climatePattern]}
+                      />
                     </div>
-                  )}
-                </div>
-              ))}
+
+                    {!isFinished(correlationStatus) && (
+                      <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
+                        {isIdle(correlationStatus) ? (
+                          <p className="text-xl font-bold text-green-800">
+                            {IDLE_ANALYTICS_CHART_MESSAGE}
+                          </p>
+                        ) : isError(correlationStatus) ? (
+                          <ErrorMessage />
+                        ) : (
+                          <Loading
+                            animation={
+                              <l-quantum
+                                color="green"
+                                // @ts-ignore
+                                stroke={8}
+                                size="50"
+                              ></l-quantum>
+                            }
+                          />
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )
+              )}
         </div>
       </div>
     </div>
