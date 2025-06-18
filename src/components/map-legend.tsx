@@ -1,33 +1,28 @@
-import { mapDataType } from "@/constants";
-import { cn } from "@/lib/utils";
+import { mapDataType, toolType } from "@/constants";
+import { cn, getAnalyticsToolType } from "@/lib/utils";
 import { DividerVerticalIcon } from "@radix-ui/react-icons";
-import React from "react";
 
 const MapLegend = ({ mapType, variable }) => {
-  const normal_rainfall_increments = [
-    0, 150, 300, 450, 600, 750, 900, 1050, 1200,
-  ];
-  const anomaly_rainfall_increments = [
-    -600, -450, -300, -150, 0, 150, 300, 450, 600,
-  ];
-  const normal_temperature_increments = [
-    -50, -40, -30, -20, -10, 0, 10, 20, 30, 40, 50,
-  ];
-  const anomaly_temperature_increments = [
-    -15, -12, -9, -6, -3, 0, 3, 6, 9, 12, 15,
-  ];
+  const climatePattern = getAnalyticsToolType(location.pathname);
 
-  let legend_increments: any = () => {
-    if (mapType === mapDataType.normal) {
-      return variable === "rainfall"
-        ? normal_rainfall_increments
-        : normal_temperature_increments;
-    } else {
-      return variable === "rainfall"
-        ? anomaly_rainfall_increments
-        : anomaly_temperature_increments;
-    }
+  const increments = {
+    normal: {
+      rainfall: [0, 150, 300, 450, 600, 750, 900, 1050, 1200],
+      tavg: [-50, -40, -30, -20, -10, 0, 10, 20, 30, 40, 50],
+      mjo: [0, 3, 6, 9, 12, 15, 18, 21, 24],
+    },
+    anomaly: {
+      rainfall: [-600, -450, -300, -150, 0, 150, 300, 450, 600],
+      tavg: [-15, -12, -9, -6, -3, 0, 3, 6, 9, 12, 15],
+      mjo: [-200, -160, -120, -80, -40, 0, 40, 80, 120, 160, 200],
+    },
   };
+
+  let legend_increments: any = () =>
+    climatePattern === toolType.mjo
+      ? increments[mapType].mjo
+      : increments[mapType][variable];
+
   return (
     <div className="flex flex-col items-center justify-center px-2 mt-2">
       {mapType === mapDataType.normal ? (

@@ -12,9 +12,8 @@ import { Style, Fill, Stroke } from "ol/style";
 import Overlay from "ol/Overlay";
 import "ol/ol.css";
 import { countries, geoJsonStructure, mapDataType } from "@/constants";
-import { formatTitle } from "@/lib/utils";
+import { formatTitle, getAnalyticsToolType, getFillColor } from "@/lib/utils";
 import MapLegend from "./map-legend";
-import { format } from "path";
 
 const OpenLayersMap = ({
   geoJsonData,
@@ -31,6 +30,7 @@ const OpenLayersMap = ({
   const popupElement = useRef<any>();
 
   const subjectCountry = countries.find((e) => e.name === country);
+  const climatePattern = getAnalyticsToolType(location.pathname);
 
   useEffect(() => {
     if (!mapElement.current) return;
@@ -68,48 +68,7 @@ const OpenLayersMap = ({
                     ?.temperature_anomaly;
           }
 
-          let fillColor = "#fff";
-
-          if (mapFilter?.dataVariable === "rainfall") {
-            if (value < -1100) fillColor = "#450A0A";
-            else if (value < -900) fillColor = "#7F1D1D";
-            else if (value < -600) fillColor = "#991B1B";
-            else if (value < -300) fillColor = "#B91C1C";
-            else if (value < -150) fillColor = "#DC2626";
-            else if (value < -100) fillColor = "#EF4444";
-            else if (value < -75) fillColor = "#f87171";
-            else if (value < -50) fillColor = "#fca5a5";
-            else if (value < -25) fillColor = "#fecaca";
-            else if (value < 0) fillColor = "#fee2e2";
-            else if (value === 0) fillColor = "#fff";
-            else if (value < 25) fillColor = "#dcfce7";
-            else if (value < 50) fillColor = "#bbf7d0";
-            else if (value < 75) fillColor = "#86efac";
-            else if (value < 100) fillColor = "#4ade80";
-            else if (value < 150) fillColor = "#22c55e";
-            else if (value < 300) fillColor = "#16a34a";
-            else if (value < 450) fillColor = "#16a34a";
-            else if (value < 600) fillColor = "#15803d";
-            else if (value < 900) fillColor = "#166534";
-            else if (value < 1100) fillColor = "#14532d";
-          } else if (mapFilter?.dataVariable === "tavg") {
-            if (value < -40) fillColor = "#1e3a8a";
-            else if (value < -25) fillColor = "#1e40af";
-            else if (value < -20) fillColor = "#1d4ed8";
-            else if (value < -15) fillColor = "#2563eb";
-            else if (value < -10) fillColor = "#3b82f6";
-            else if (value < -5) fillColor = "#60a5fa";
-            else if (value < 0) fillColor = "#93c5fd";
-            else if (value === 0) fillColor = "#fff";
-            else if (value < 2.5) fillColor = "#fde68a";
-            else if (value < 5) fillColor = "#fcd34d";
-            else if (value < 10) fillColor = "#fbbf24";
-            else if (value < 15) fillColor = "#f59e0b";
-            else if (value < 20) fillColor = "#d97706";
-            else if (value < 25) fillColor = "#b45309";
-            else if (value < 30) fillColor = "#92400e";
-            else if (value < 50) fillColor = "#78350f";
-          }
+          let fillColor = getFillColor(mapFilter, value, climatePattern);
 
           return new Style({
             fill: new Fill({
