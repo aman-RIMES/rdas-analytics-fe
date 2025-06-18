@@ -144,7 +144,7 @@ export const transformPredictionTableData = (predictiveTableData: object) => {
 };
 
 export const getMetricUnit = (indicator) => {
-  return indicator === "rainfall" ? "(mm)" : "(°C)";
+  return indicator === "tavg" ? "(°C)" : "(mm)";
 };
 
 export const getAnalyticsToolType = (path) => {

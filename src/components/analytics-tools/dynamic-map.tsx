@@ -9,6 +9,7 @@ import {
   toolType,
 } from "@/constants";
 import {
+  cn,
   formatTitle,
   getAnalyticsToolType,
   getMetricUnit,
@@ -269,29 +270,38 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
             </div>
 
             <div className="w-full z-10 mt-2">
-              <div className="grid grid-cols-2 gap-5 ">
-                <div className="">
-                  <div className="flex gap-2 ">
-                    <Label className="text-xs font-semibold">
-                      Data Variable
-                    </Label>
-                    <HelpHoverCard
-                      title={"Data Variable"}
-                      content={` The Data Variable you would like to compare against each El Nino category. `}
+              <div
+                className={cn(
+                  climatePattern === toolType.mjo
+                    ? "grid-cols-1"
+                    : "grid-cols-2",
+                  "grid gap-5 "
+                )}
+              >
+                {climatePattern !== toolType.mjo && (
+                  <div className="">
+                    <div className="flex gap-2 ">
+                      <Label className="text-xs font-semibold">
+                        Data Variable
+                      </Label>
+                      <HelpHoverCard
+                        title={"Data Variable"}
+                        content={` The Data Variable you would like to compare against each El Nino category. `}
+                      />
+                    </div>
+                    <Combobox
+                      name="dataVariable"
+                      label={"Data Variable"}
+                      array={transformObject(ElNinoToolDataIndicators).filter(
+                        (e) => filterData.dataVariable.includes(e.value)
+                      )}
+                      state={{
+                        value: mapFilter.dataVariable,
+                        setValue: handleMapFilterChange,
+                      }}
                     />
                   </div>
-                  <Combobox
-                    name="dataVariable"
-                    label={"Data Variable"}
-                    array={transformObject(ElNinoToolDataIndicators).filter(
-                      (e) => filterData.dataVariable.includes(e.value)
-                    )}
-                    state={{
-                      value: mapFilter.dataVariable,
-                      setValue: handleMapFilterChange,
-                    }}
-                  />
-                </div>
+                )}
 
                 <div className="">
                   <div className="flex gap-2 ">

@@ -117,25 +117,27 @@ const ElNinoAnalytics = () => {
                       loadingStatus={dynamicChartStatus}
                     />
 
-                    <SubmitButton
-                      className="mt-2 border border-green-600 text-green-800 bg-transparent hover:text-gray-800 hover:border-yellow-300"
-                      label="Move to Prediction"
-                      verifyFilters={isFinished(dynamicChartStatus)}
-                      submitFunction={() =>
-                        navigate(
-                          location.pathname === "/lanina-analytics"
-                            ? "/lanina-predictive-tools"
-                            : "/predictive-tools",
-                          {
-                            state: {
-                              ...filterData,
-                              selected,
-                            },
-                          }
-                        )
-                      }
-                      loadingStatus={dynamicChartStatus}
-                    />
+                    {label !== "MJO" && (
+                      <SubmitButton
+                        className="mt-2 border border-green-600 text-green-800 bg-transparent hover:text-gray-800 hover:border-yellow-300"
+                        label="Move to Prediction"
+                        verifyFilters={isFinished(dynamicChartStatus)}
+                        submitFunction={() =>
+                          navigate(
+                            location.pathname === "/lanina-analytics"
+                              ? "/lanina-predictive-tools"
+                              : "/predictive-tools",
+                            {
+                              state: {
+                                ...filterData,
+                                selected,
+                              },
+                            }
+                          )
+                        }
+                        loadingStatus={dynamicChartStatus}
+                      />
+                    )}
                   </div>
                 </div>
               </div>

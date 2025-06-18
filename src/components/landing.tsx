@@ -1,11 +1,6 @@
 import { Grid } from "lucide-react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  zeroRightClassName,
-  fullWidthClassName,
-  noScrollbarsClassName,
-} from "react-remove-scroll-bar";
 
 const Landing = () => {
   const navigate = useNavigate();
