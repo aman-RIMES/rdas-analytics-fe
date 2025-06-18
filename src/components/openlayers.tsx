@@ -11,7 +11,12 @@ import { fromLonLat } from "ol/proj";
 import { Style, Fill, Stroke } from "ol/style";
 import Overlay from "ol/Overlay";
 import "ol/ol.css";
-import { countries, geoJsonStructure, mapDataType } from "@/constants";
+import {
+  countries,
+  geoJsonStructure,
+  mapDataType,
+  toolType,
+} from "@/constants";
 import { formatTitle, getAnalyticsToolType, getFillColor } from "@/lib/utils";
 import MapLegend from "./map-legend";
 
@@ -53,7 +58,10 @@ const OpenLayersMap = ({
             feature.get(geoJsonStructure[country]?.district_code) || "";
           let value = 0;
 
-          if (mapFilter?.dataVariable === "rainfall") {
+          if (
+            mapFilter?.dataVariable === "rainfall" ||
+            climatePattern === toolType.mjo
+          ) {
             value =
               mapType === mapDataType.normal
                 ? mapData?.find((e) => e.code === districtCode)?.mean_rainfall
@@ -150,7 +158,10 @@ const OpenLayersMap = ({
               feature.get(geoJsonStructure[country]?.province_name) || "";
             let value = "0";
 
-            if (mapFilter?.dataVariable === "rainfall") {
+            if (
+              mapFilter?.dataVariable === "rainfall" ||
+              climatePattern === toolType.mjo
+            ) {
               value =
                 mapType === mapDataType.normal
                   ? mapData?.find((e) => e.code === districtCode)?.mean_rainfall
