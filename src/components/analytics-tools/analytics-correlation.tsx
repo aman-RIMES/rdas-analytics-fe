@@ -49,7 +49,9 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
 
   const verifyFilters = () => {
     return (
-      filterData.dataVariable.length > 0 &&
+      (climatePattern !== toolType.mjo
+        ? filterData.dataVariable.length > 0
+        : true) &&
       filterData.source !== "" &&
       filterData.fromYear !== "" &&
       filterData.toYear !== "" &&
@@ -66,7 +68,10 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
 
   const generateCorrelationMap = async () => {
     const requestBody = {
-      indic: `${filterData.dataVariable.join(",")}`,
+      indic:
+        climatePattern !== toolType.mjo
+          ? ` ${filterData.dataVariable.join(",")}`
+          : `rainfall`,
       months: `${correlationFilter.chosenMonths.join(",")}`,
       area: [`${filterData.districtValue}`],
       crop: filterData.cropValue,
