@@ -286,7 +286,7 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
                       </Label>
                       <HelpHoverCard
                         title={"Data Variable"}
-                        content={` The Data Variable you would like to compare against each El Nino category. `}
+                        content={` The Data Variable you would like to compare against each El Niño category. `}
                       />
                     </div>
                     <Combobox
@@ -308,7 +308,7 @@ const DynamicMap = ({ filterData, loadAnalysisData }) => {
                     <Label className="text-xs font-semibold">Month</Label>
                     <HelpHoverCard
                       title={"Months"}
-                      content={`The month used to compare against the El Nino
+                      content={`The month used to compare against the El Niño
               variable.`}
                     />
                   </div>

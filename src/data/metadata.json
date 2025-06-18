@@ -987,7 +987,7 @@
   "indic": {
     "rainfall": "Rainfall",
     "normal_rainfall": "Normal Rainfall",
-    "el_nino": "El Nino Events",
+    "el_nino": "El Niño Events",
     "temperature": "Temperature"
   },
   "period": {

@@ -106,7 +106,7 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
               <Label className="text-xs font-semibold">Data Variable</Label>
               <HelpHoverCard
                 title={"Data Variable"}
-                content={` The Data Variable you would like to compare against each El Nino category. `}
+                content={` The Data Variable you would like to compare against each El Niño category. `}
               />
             </div>
             <Combobox
@@ -128,7 +128,7 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
               <Label className="text-xs font-semibold">Months</Label>
               <HelpHoverCard
                 title={"Months"}
-                content={`The month used to compare against the El Nino
+                content={`The month used to compare against the El Niño
               variable.`}
               />
             </div>

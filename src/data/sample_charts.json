@@ -2,7 +2,7 @@
   "scatter_chart": {
     "la_nina_": {
       "title": {
-        "text": "Correlation between Weak La Nina and Accumulated Rainfall",
+        "text": "Correlation between Weak La Niña and Accumulated Rainfall",
         "style": {
           "fontSize": "0.875rem",
           "fontWeight": "bold"
@@ -16,7 +16,7 @@
       },
       "xAxis": {
         "title": {
-          "text": "La Nina (ONI)",
+          "text": "La Niña (ONI)",
           "style": {
             "fontSize": "0.75rem",
             "fontWeight": "bold"
@@ -41,7 +41,7 @@
         }
       },
       "caption": {
-        "text": "<i>Pearson correlation coefficient: 0.31</i><br><br>The value 0.31 indicates Weak La Nina has a weak positive correlation with Accumulated Rainfall in ARGHAKHANCHI. \n                    This is based on analysis of Accumulated Rainfall behavior in ARGHAKHANCHI from 1980 to 2012 where Weak La Nina was recorded.",
+        "text": "<i>Pearson correlation coefficient: 0.31</i><br><br>The value 0.31 indicates Weak La Niña has a weak positive correlation with Accumulated Rainfall in ARGHAKHANCHI. \n                    This is based on analysis of Accumulated Rainfall behavior in ARGHAKHANCHI from 1980 to 2012 where Weak La Niña was recorded.",
         "align": "center",
         "style": {
           "color": "black",
@@ -344,7 +344,7 @@
     },
     "el_nino_": {
       "title": {
-        "text": "Correlation between Weak El Nino and Cummulative Rainfall",
+        "text": "Correlation between Weak El Niño and Cummulative Rainfall",
         "style": {
           "fontSize": "0.875rem",
           "fontWeight": "bold"
@@ -352,7 +352,7 @@
       },
       "xAxis": {
         "title": {
-          "text": "El Nino (ONI index)",
+          "text": "El Niño (ONI index)",
           "style": {
             "fontSize": "0.75rem",
             "fontWeight": "bold"
@@ -377,7 +377,7 @@
         }
       },
       "caption": {
-        "text": "<i>Pearson correlation coefficient: -0.09</i><br><br>The value -0.09 indicates Weak El Nino has a very weak negative correlation with Cummulative Rainfall in ARGHAKHANCHI. \n                    This is based on analysis of Cummulative Rainfall behavior in ARGHAKHANCHI from 1982 to 2013 where Weak El Nino was recorded.",
+        "text": "<i>Pearson correlation coefficient: -0.09</i><br><br>The value -0.09 indicates Weak El Niño has a very weak negative correlation with Cummulative Rainfall in ARGHAKHANCHI. \n                    This is based on analysis of Cummulative Rainfall behavior in ARGHAKHANCHI from 1982 to 2013 where Weak El Niño was recorded.",
         "align": "center",
         "style": {
           "color": "black",
@@ -675,7 +675,7 @@
   },
   "qq_plot": {
     "title": {
-      "text": "Quantile-Quantile Plot - Weak El Nino, Cummulative Rainfall",
+      "text": "Quantile-Quantile Plot - Weak El Niño, Cummulative Rainfall",
       "style": {
         "fontSize": "0.875rem",
         "fontWeight": "bold"
@@ -811,7 +811,7 @@
   },
   "histogram": {
     "title": {
-      "text": "Histogram of Model - Weak El Nino, Cummulative Rainfall",
+      "text": "Histogram of Model - Weak El Niño, Cummulative Rainfall",
       "style": {
         "fontSize": "0.875rem",
         "fontWeight": "bold"
@@ -894,7 +894,7 @@
   "analytics_yearly": {
     "la_nina_": {
       "title": {
-        "text": "Normal vs Monthly Averages during La Nina Years",
+        "text": "Normal vs Monthly Averages during La Niña Years",
         "style": {
           "fontSize": "0.875rem",
           "fontWeight": "bold"
@@ -933,7 +933,7 @@
         }
       },
       "caption": {
-        "text": "La Nina Events are defined as 5 consecutive overlapping 3-month periods at or below the -0.5 anomaly.\n    For an event to be categorized as weak, moderate, strong or very strong it must have equaled or exceeded the threshold of the highest category for at least 3 consecutive overlapping 3-month periods.\n    The threshold is further broken down into the following: \n    Weak (with a -0.5 to -0.9), \n    Moderate (-1.0 to -1.4), \n    Strong (-1.5 to -1.9), and \n    Very Strong (≤ -2.0) events.\n    ",
+        "text": "La Niña Events are defined as 5 consecutive overlapping 3-month periods at or below the -0.5 anomaly.\n    For an event to be categorized as weak, moderate, strong or very strong it must have equaled or exceeded the threshold of the highest category for at least 3 consecutive overlapping 3-month periods.\n    The threshold is further broken down into the following: \n    Weak (with a -0.5 to -0.9), \n    Moderate (-1.0 to -1.4), \n    Strong (-1.5 to -1.9), and \n    Very Strong (≤ -2.0) events.\n    ",
         "align": "center",
         "style": {
           "fontSize": "0.75rem"
@@ -980,7 +980,7 @@
         {
           "type": "column",
           "yAxis": "temperature",
-          "name": "Avg Temperature in Weak La Nina",
+          "name": "Avg Temperature in Weak La Niña",
           "data": [
             10.231399999999999,
             12.846874999999999,
@@ -1006,7 +1006,7 @@
         {
           "type": "column",
           "yAxis": "temperature",
-          "name": "Avg Temperature in Moderate La Nina",
+          "name": "Avg Temperature in Moderate La Niña",
           "data": [
             9.135133333333334,
             11.568800000000001,
@@ -1032,7 +1032,7 @@
         {
           "type": "column",
           "yAxis": "temperature",
-          "name": "Avg Temperature in Strong La Nina",
+          "name": "Avg Temperature in Strong La Niña",
           "data": [
             9.675425, 11.400974999999999, 15.610425, 19.044725, 19.749175,
             21.038075, 21.102975, 21.044099999999997, 20.11974,
@@ -1049,7 +1049,7 @@
         {
           "type": "column",
           "yAxis": "temperature",
-          "name": "Avg Temperature in Very Strong La Nina",
+          "name": "Avg Temperature in Very Strong La Niña",
           "data": [
             null,
             null,
@@ -1076,7 +1076,7 @@
     },
     "el_nino_": {
       "title": {
-        "text": "Normal vs Monthly Averages during El Nino Years",
+        "text": "Normal vs Monthly Averages during El Niño Years",
         "style": {
           "fontSize": "0.875rem",
           "fontWeight": "bold"
@@ -1115,7 +1115,7 @@
         }
       },
       "caption": {
-        "text": "El Nino Events are defined as 5 consecutive overlapping 3-month periods at or above the +0.5 anomaly.\n    For an event to be categorized as weak, moderate, strong or very strong it must have equaled or exceeded the threshold of the highest category for at least 3 consecutive overlapping 3-month periods.\n    The threshold is further broken down into the following: \n    Weak (with a 0.5 to 0.9), \n    Moderate (1.0 to 1.4), \n    Strong (1.5 to 1.9), and \n    Very Strong (≥ 2.0) events.\n    ",
+        "text": "El Niño Events are defined as 5 consecutive overlapping 3-month periods at or above the +0.5 anomaly.\n    For an event to be categorized as weak, moderate, strong or very strong it must have equaled or exceeded the threshold of the highest category for at least 3 consecutive overlapping 3-month periods.\n    The threshold is further broken down into the following: \n    Weak (with a 0.5 to 0.9), \n    Moderate (1.0 to 1.4), \n    Strong (1.5 to 1.9), and \n    Very Strong (≥ 2.0) events.\n    ",
         "align": "center",
         "style": {
           "fontSize": "0.75rem"
@@ -1163,7 +1163,7 @@
         {
           "type": "column",
           "yAxis": "temperature",
-          "name": "Avg Temperature in Weak El Nino",
+          "name": "Avg Temperature in Weak El Niño",
           "data": [
             16.055950000000003, 18.300024999999998, 22.705033333333333,
             25.89235, 25.74785, 27.3598, 26.7881, 26.7563, 25.9049, 23.48555,
@@ -1180,7 +1180,7 @@
         {
           "type": "column",
           "yAxis": "temperature",
-          "name": "Avg Temperature in Moderate El Nino",
+          "name": "Avg Temperature in Moderate El Niño",
           "data": [
             15.564400000000001,
             18.1019,
@@ -1206,7 +1206,7 @@
         {
           "type": "column",
           "yAxis": "temperature",
-          "name": "Avg Temperature in Strong El Nino",
+          "name": "Avg Temperature in Strong El Niño",
           "data": [
             15.6256, 16.5767, 24.0586, 27.8452, 25.2085, 26.8429, 26.6107,
             26.7221, 25.4342, 23.5864, 19.2478, 16.5197
@@ -1222,7 +1222,7 @@
         {
           "type": "column",
           "yAxis": "temperature",
-          "name": "Avg Temperature in Very Strong El Nino",
+          "name": "Avg Temperature in Very Strong El Niño",
           "data": [
             15.42555, 19.045099999999998, 22.563233333333333,
             25.369866666666667, 26.5976, 26.697366666666664, 26.74425,
@@ -1482,7 +1482,7 @@
   "analytics_monthly": {
     "la_nina_": {
       "title": {
-        "text": "Average Temperature during La Nina Years - March",
+        "text": "Average Temperature during La Niña Years - March",
         "style": {
           "fontSize": "0.875rem",
           "fontWeight": "bold"
@@ -1605,7 +1605,7 @@
         {
           "type": "column",
           "yAxis": "temperature",
-          "name": "Avg Temperature in Weak La Nina",
+          "name": "Avg Temperature in Weak La Niña",
           "data": [
             {
               "x": 3,
@@ -1635,7 +1635,7 @@
         {
           "type": "column",
           "yAxis": "temperature",
-          "name": "Avg Temperature in Moderate La Nina",
+          "name": "Avg Temperature in Moderate La Niña",
           "data": [
             {
               "x": 0,
@@ -1661,7 +1661,7 @@
         {
           "type": "column",
           "yAxis": "temperature",
-          "name": "Avg Temperature in Strong La Nina",
+          "name": "Avg Temperature in Strong La Niña",
           "data": [
             {
               "x": 1,
@@ -1691,7 +1691,7 @@
         {
           "type": "column",
           "yAxis": "temperature",
-          "name": "Avg Temperature in Very Strong La Nina",
+          "name": "Avg Temperature in Very Strong La Niña",
           "data": [],
           "color": "#006600",
           "threshold": null,
@@ -1705,7 +1705,7 @@
     },
     "el_nino_": {
       "title": {
-        "text": "Average Temperature during El Nino Years - February",
+        "text": "Average Temperature during El Niño Years - February",
         "style": {
           "fontSize": "0.875rem",
           "fontWeight": "bold"
@@ -1823,7 +1823,7 @@
         {
           "type": "column",
           "yAxis": "temperature",
-          "name": "Avg Temperature in Weak El Nino",
+          "name": "Avg Temperature in Weak El Niño",
           "data": [
             {
               "x": 4,
@@ -1853,7 +1853,7 @@
         {
           "type": "column",
           "yAxis": "temperature",
-          "name": "Avg Temperature in Moderate El Nino",
+          "name": "Avg Temperature in Moderate El Niño",
           "data": [
             {
               "x": 1,
@@ -1879,7 +1879,7 @@
         {
           "type": "column",
           "yAxis": "temperature",
-          "name": "Avg Temperature in Strong El Nino",
+          "name": "Avg Temperature in Strong El Niño",
           "data": [
             {
               "x": 0,
@@ -1897,7 +1897,7 @@
         {
           "type": "column",
           "yAxis": "temperature",
-          "name": "Avg Temperature in Very Strong El Nino",
+          "name": "Avg Temperature in Very Strong El Niño",
           "data": [
             {
               "x": 2,

@@ -18,10 +18,10 @@ const ElNinoAnalytics = () => {
 
   const label =
     location.pathname === "/lanina-analytics"
-      ? "La Nina"
+      ? "La Niña"
       : location.pathname === "/analytics-mjo"
       ? "MJO"
-      : "El Nino";
+      : "El Niño";
 
   const [selected, setSelected] = useState<[]>([]);
   const [loadAnalysisData, setLoadAnalysisData] = useState(false);
