@@ -165,8 +165,6 @@ export interface PredictiveFilterData {
 
 export interface PredictiveEvaluation {
   chart: {};
-  qq_plot: {};
-  histogram: {};
   intercept: ``;
   coefficients: [];
   "shapiro-wilk": any;

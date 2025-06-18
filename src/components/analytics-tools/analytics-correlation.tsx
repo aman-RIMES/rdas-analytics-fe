@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import Combobox from "../ui/combobox";
-import { transformObject, isError, isFinished, isIdle } from "@/lib/utils";
+import {
+  transformObject,
+  isError,
+  isFinished,
+  isIdle,
+  getAnalyticsToolType,
+} from "@/lib/utils";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highmaps";
 import axios from "axios";
@@ -38,10 +44,7 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
     setCorrelationFilter((prev: any) => ({ ...prev, [name]: value }));
   };
 
-  const climatePattern =
-    location.pathname === "/lanina-analytics"
-      ? toolType.lanina
-      : toolType.elnino;
+  const climatePattern = getAnalyticsToolType(location.pathname);
 
   const verifyFilters = () => {
     return (
@@ -55,8 +58,6 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
   };
 
   useEffect(() => {
-    console.log(verifyFilters());
-
     if (verifyFilters()) {
       generateCorrelationMap();
     }
@@ -98,8 +99,8 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
   };
 
   return (
-    <div className=" rounded-lg">
-      <div className="flex justify-center">
+    <div className="relative rounded-lg">
+      <div className="flex justify-center relative z-40">
         <div className="grid w-2/3 gap-4 lg:grid-cols-4 grid-cols-1 mb-1 mt-2">
           <div className="">
             <div className="flex ">
@@ -139,8 +140,8 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
               setSelected={setSelected}
               setState={handleChange}
               array={monthsList}
-              ScrollAreaHeight="200"
               orientation="horizontal"
+              ScrollAreaHeight="180"
             />
           </div>
           <div className="lg:mt-[17px] ">

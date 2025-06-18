@@ -173,14 +173,12 @@ const ElNinoAnalytics = () => {
                         <p> Normal vs Monthly Averages during {label} Years </p>
                       )}
                     </TabsTrigger>
-                    {location.pathname !== "/analytics-mjo" && (
-                      <TabsTrigger
-                        className="w-full text-green-600"
-                        value="correlation"
-                      >
-                        Pearson Correlation Plot | Matrix
-                      </TabsTrigger>
-                    )}
+                    <TabsTrigger
+                      className="w-full text-green-600"
+                      value="correlation"
+                    >
+                      Pearson Correlation Plot | Matrix
+                    </TabsTrigger>
                   </div>
                 </TabsList>
                 <div className="bg-white rounded-lg flex-grow flex flex-col">
@@ -197,16 +195,14 @@ const ElNinoAnalytics = () => {
                       />
                     </div>
                   </TabsContent>
-                  {location.pathname !== "/analytics-mjo" && (
-                    <TabsContent
-                      value="correlation"
-                      className="flex-grow flex flex-col"
-                    >
-                      <>
-                        <AnalyticsCorrelation filterData={filterData} />
-                      </>
-                    </TabsContent>
-                  )}
+                  <TabsContent
+                    value="correlation"
+                    className="flex-grow flex flex-col"
+                  >
+                    <>
+                      <AnalyticsCorrelation filterData={filterData} />
+                    </>
+                  </TabsContent>
                 </div>
               </Tabs>
             </div>
