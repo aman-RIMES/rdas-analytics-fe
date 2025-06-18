@@ -70,7 +70,7 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
     const requestBody = {
       indic:
         climatePattern !== toolType.mjo
-          ? ` ${filterData.dataVariable.join(",")}`
+          ? `${filterData.dataVariable.join(",")}`
           : `rainfall`,
       months: `${correlationFilter.chosenMonths.join(",")}`,
       area: [`${filterData.districtValue}`],
