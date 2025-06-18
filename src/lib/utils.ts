@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { requestStatus, toolType } from "@/constants";
+import {
+  COLOR_SCALES,
+  MJO_COLOR_SCALE,
+  requestStatus,
+  toolType,
+} from "@/constants";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -157,3 +162,47 @@ export const getAnalyticsToolType = (path) => {
 
   return climatePattern;
 };
+
+export function getFillColor(mapFilter, value, climatePattern) {
+  const scale =
+    climatePattern === toolType.mjo
+      ? MJO_COLOR_SCALE
+      : COLOR_SCALES[mapFilter?.dataVariable];
+
+  if (!scale) {
+    return "#fff";
+  }
+
+  // Handle exact match for 0 first
+  const exactZeroMatch = scale.find(
+    (item) => item.exact && item.threshold === value
+  );
+  if (exactZeroMatch) {
+    return exactZeroMatch.color;
+  }
+
+  // Find the first threshold that the value is less than
+  for (let i = 0; i < scale.length; i++) {
+    const item = scale[i];
+    // Skip exact matches already handled
+    if (item.exact) continue;
+
+    if (value < item.threshold) {
+      return item.color;
+    }
+  }
+
+  // If value is greater than or equal to all thresholds,
+  // return the color for the last (largest) threshold.
+  // This assumes the scale is sorted in ascending order of thresholds.
+  const lastThresholdItem = scale[scale.length - 1];
+  if (
+    lastThresholdItem &&
+    !lastThresholdItem.exact &&
+    value >= lastThresholdItem.threshold
+  ) {
+    return lastThresholdItem.color;
+  }
+
+  return null;
+}

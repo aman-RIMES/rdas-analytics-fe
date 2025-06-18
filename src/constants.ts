@@ -211,3 +211,70 @@ export const ElNinoCategories = [
   { value: "strong", label: "Strong El Niño Events" },
   { value: "very_strong", label: "Very strong El Niño Events" },
 ];
+
+export const RAINFALL_COLOR_SCALE = [
+  { threshold: -1100, color: "#450A0A" },
+  { threshold: -900, color: "#7F1D1D" },
+  { threshold: -600, color: "#991B1B" },
+  { threshold: -300, color: "#B91C1C" },
+  { threshold: -150, color: "#DC2626" },
+  { threshold: -100, color: "#EF4444" },
+  { threshold: -75, color: "#f87171" },
+  { threshold: -50, color: "#fca5a5" },
+  { threshold: -25, color: "#fecaca" },
+  { threshold: 0, color: "#fee2e2" },
+  { threshold: 0, color: "#fff", exact: true }, // For value === 0
+  { threshold: 25, color: "#dcfce7" },
+  { threshold: 50, color: "#bbf7d0" },
+  { threshold: 75, color: "#86efac" },
+  { threshold: 100, color: "#4ade80" },
+  { threshold: 150, color: "#22c55e" },
+  { threshold: 300, color: "#16a34a" },
+  { threshold: 450, color: "#16a34a" },
+  { threshold: 600, color: "#15803d" },
+  { threshold: 900, color: "#166534" },
+  { threshold: 1100, color: "#14532d" },
+];
+
+export const MJO_COLOR_SCALE = [
+  { threshold: -200, color: "#7f1d1d" },
+  { threshold: -70, color: "#991b1b" },
+  { threshold: -25, color: "#b91c1c" },
+  { threshold: -20, color: "#dc2626" },
+  { threshold: -15, color: "#ef4444" },
+  { threshold: -10, color: "#f87171" },
+  { threshold: -5, color: "#fca5a5" },
+  { threshold: 0, color: "#fee2e2" },
+  { threshold: 0, color: "#fff", exact: true }, // For value === 0
+  { threshold: 5, color: "#86efac" },
+  { threshold: 10, color: "#4ade80" },
+  { threshold: 15, color: "#22c55e" },
+  { threshold: 20, color: "#16a34a" },
+  { threshold: 25, color: "#15803d" },
+  { threshold: 70, color: "#166534" },
+  { threshold: 200, color: "#14532d" },
+];
+
+export const TAVG_COLOR_SCALE = [
+  { threshold: -40, color: "#1e3a8a" },
+  { threshold: -25, color: "#1e40af" },
+  { threshold: -20, color: "#1d4ed8" },
+  { threshold: -15, color: "#2563eb" },
+  { threshold: -10, color: "#3b82f6" },
+  { threshold: -5, color: "#60a5fa" },
+  { threshold: 0, color: "#93c5fd" },
+  { threshold: 0, color: "#fff", exact: true }, // For value === 0
+  { threshold: 2.5, color: "#fde68a" },
+  { threshold: 5, color: "#fcd34d" },
+  { threshold: 10, color: "#fbbf24" },
+  { threshold: 15, color: "#f59e0b" },
+  { threshold: 20, color: "#d97706" },
+  { threshold: 25, color: "#b45309" },
+  { threshold: 30, color: "#92400e" },
+  { threshold: 50, color: "#78350f" },
+];
+
+export const COLOR_SCALES = {
+  rainfall: RAINFALL_COLOR_SCALE,
+  tavg: TAVG_COLOR_SCALE,
+};

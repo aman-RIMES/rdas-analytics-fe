@@ -107,32 +107,30 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
   return (
     <div className="relative rounded-lg">
       <div className="flex justify-center relative z-40">
-        <div className="grid w-2/3 gap-4 lg:grid-cols-4 grid-cols-1 mb-1 mt-2">
-          <div className="">
-            <div className="flex ">
-              <Label className="text-xs font-semibold">Data Variable</Label>
-              <HelpHoverCard
-                title={"Data Variable"}
-                content={` The Data Variable you would like to compare against each El Niño category. `}
+        <div className="grid gap-5 lg:grid-cols-4 grid-cols-1 mb-1 mt-2 ">
+          {climatePattern !== toolType.mjo && (
+            <div className="">
+              <div className="flex ">
+                <Label className="text-xs font-semibold">Data Variable</Label>
+                <HelpHoverCard
+                  title={"Data Variable"}
+                  content={` The Data Variable you would like to compare against each El Niño category. `}
+                />
+              </div>
+              <Combobox
+                name="correlationVariable"
+                label={"Data Variable"}
+                array={transformObject(ElNinoToolDataIndicators).filter((e) =>
+                  filterData.dataVariable.includes(e.value)
+                )}
+                state={{
+                  value: correlationFilter.correlationVariable,
+                  setValue: handleChange,
+                }}
+                height={31}
               />
             </div>
-            <Combobox
-              name="correlationVariable"
-              label={"Data Variable"}
-              array={
-                climatePattern !== toolType.mjo
-                  ? transformObject(ElNinoToolDataIndicators).filter((e) =>
-                      filterData.dataVariable.includes(e.value)
-                    )
-                  : [{ value: "rainfall", label: "Rainfall" }]
-              }
-              state={{
-                value: correlationFilter.correlationVariable,
-                setValue: handleChange,
-              }}
-              height={31}
-            />
-          </div>
+          )}
 
           <div className="col-span-2">
             <div className="flex">
@@ -159,8 +157,10 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
               label={"Generate Correlation"}
               submitFunction={generateCorrelationMap}
               verifyFilters={
+                (climatePattern !== toolType.mjo
+                  ? correlationFilter.correlationVariable !== ""
+                  : true) &&
                 correlationFilter.chosenMonths.length > 0 &&
-                correlationFilter.correlationVariable !== "" &&
                 isFinished(correlationStatus)
               }
               height={30}
