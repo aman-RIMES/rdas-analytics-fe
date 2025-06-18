@@ -18,10 +18,10 @@ const ElNinoAnalytics = () => {
 
   const label =
     location.pathname === "/lanina-analytics"
-      ? "La Nina"
+      ? "La Niña"
       : location.pathname === "/analytics-mjo"
       ? "MJO"
-      : "El Nino";
+      : "El Niño";
 
   const [selected, setSelected] = useState<[]>([]);
   const [loadAnalysisData, setLoadAnalysisData] = useState(false);
@@ -117,25 +117,27 @@ const ElNinoAnalytics = () => {
                       loadingStatus={dynamicChartStatus}
                     />
 
-                    <SubmitButton
-                      className="mt-2 border border-green-600 text-green-800 bg-transparent hover:text-gray-800 hover:border-yellow-300"
-                      label="Move to Prediction"
-                      verifyFilters={isFinished(dynamicChartStatus)}
-                      submitFunction={() =>
-                        navigate(
-                          location.pathname === "/lanina-analytics"
-                            ? "/lanina-predictive-tools"
-                            : "/predictive-tools",
-                          {
-                            state: {
-                              ...filterData,
-                              selected,
-                            },
-                          }
-                        )
-                      }
-                      loadingStatus={dynamicChartStatus}
-                    />
+                    {label !== "MJO" && (
+                      <SubmitButton
+                        className="mt-2 border border-green-600 text-green-800 bg-transparent hover:text-gray-800 hover:border-yellow-300"
+                        label="Move to Prediction"
+                        verifyFilters={isFinished(dynamicChartStatus)}
+                        submitFunction={() =>
+                          navigate(
+                            location.pathname === "/lanina-analytics"
+                              ? "/lanina-predictive-tools"
+                              : "/predictive-tools",
+                            {
+                              state: {
+                                ...filterData,
+                                selected,
+                              },
+                            }
+                          )
+                        }
+                        loadingStatus={dynamicChartStatus}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
@@ -171,14 +173,12 @@ const ElNinoAnalytics = () => {
                         <p> Normal vs Monthly Averages during {label} Years </p>
                       )}
                     </TabsTrigger>
-                    {location.pathname !== "/analytics-mjo" && (
-                      <TabsTrigger
-                        className="w-full text-green-600"
-                        value="correlation"
-                      >
-                        Pearson Correlation Plot | Matrix
-                      </TabsTrigger>
-                    )}
+                    <TabsTrigger
+                      className="w-full text-green-600"
+                      value="correlation"
+                    >
+                      Pearson Correlation Plot | Matrix
+                    </TabsTrigger>
                   </div>
                 </TabsList>
                 <div className="bg-white rounded-lg flex-grow flex flex-col">
@@ -195,16 +195,14 @@ const ElNinoAnalytics = () => {
                       />
                     </div>
                   </TabsContent>
-                  {location.pathname !== "/analytics-mjo" && (
-                    <TabsContent
-                      value="correlation"
-                      className="flex-grow flex flex-col"
-                    >
-                      <>
-                        <AnalyticsCorrelation filterData={filterData} />
-                      </>
-                    </TabsContent>
-                  )}
+                  <TabsContent
+                    value="correlation"
+                    className="flex-grow flex flex-col"
+                  >
+                    <>
+                      <AnalyticsCorrelation filterData={filterData} />
+                    </>
+                  </TabsContent>
                 </div>
               </Tabs>
             </div>

@@ -33,12 +33,12 @@ export function NavMenubar() {
         <MenubarContent className="bg-green-700 text-white border-0 p-2">
           <NavLink to="/elnino-analytics">
             <MenubarItem className="font-medium text-sm ">
-              El Nino and Local Climate
+              El Niño and Local Climate
             </MenubarItem>
           </NavLink>
           <NavLink to="/lanina-analytics">
             <MenubarItem className="font-medium text-sm ">
-              La Nina and Local Climate
+              La Niña and Local Climate
             </MenubarItem>
           </NavLink>
           <NavLink to="/analytics-mjo">
@@ -79,12 +79,12 @@ export function NavMenubar() {
         <MenubarContent className="bg-green-700 text-white border-0 p-2">
           <NavLink to="/predictive-tools">
             <MenubarItem className="font-medium text-sm ">
-              El Nino Impacts Prediction
+              El Niño Impacts Prediction
             </MenubarItem>
           </NavLink>
           <NavLink to="/lanina-predictive-tools">
             <MenubarItem className="font-medium text-sm ">
-              La Nina Impacts Prediction
+              La Niña Impacts Prediction
             </MenubarItem>
           </NavLink>
           <NavLink to="/predictive-gdd-tools">

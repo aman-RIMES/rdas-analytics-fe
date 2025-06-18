@@ -260,7 +260,7 @@ const OpenLayersMap = ({
         <p className="text-center text-xs">{`${formatTitle(
           mapType || ""
         )} ${formatTitle(mapFilter?.dataVariable || "rainfall")} ${
-          mapFilter?.dataVariable === "rainfall" ? "(mm)" : "(°C)"
+          mapFilter?.dataVariable === "tavg" ? "(°C)" : "(mm)"
         }`}</p>
       </div>
     </div>

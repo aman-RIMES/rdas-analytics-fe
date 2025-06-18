@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import Combobox from "../ui/combobox";
-import { transformObject, isError, isFinished, isIdle } from "@/lib/utils";
+import {
+  transformObject,
+  isError,
+  isFinished,
+  isIdle,
+  getAnalyticsToolType,
+  cn,
+} from "@/lib/utils";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts/highmaps";
 import axios from "axios";
@@ -38,10 +45,7 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
     setCorrelationFilter((prev: any) => ({ ...prev, [name]: value }));
   };
 
-  const climatePattern =
-    location.pathname === "/lanina-analytics"
-      ? toolType.lanina
-      : toolType.elnino;
+  const climatePattern = getAnalyticsToolType(location.pathname);
 
   const verifyFilters = () => {
     return (
@@ -55,8 +59,6 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
   };
 
   useEffect(() => {
-    console.log(verifyFilters());
-
     if (verifyFilters()) {
       generateCorrelationMap();
     }
@@ -98,23 +100,27 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
   };
 
   return (
-    <div className=" rounded-lg">
-      <div className="flex justify-center">
+    <div className="relative rounded-lg">
+      <div className="flex justify-center relative z-40">
         <div className="grid w-2/3 gap-4 lg:grid-cols-4 grid-cols-1 mb-1 mt-2">
           <div className="">
             <div className="flex ">
               <Label className="text-xs font-semibold">Data Variable</Label>
               <HelpHoverCard
                 title={"Data Variable"}
-                content={` The Data Variable you would like to compare against each El Nino category. `}
+                content={` The Data Variable you would like to compare against each El Niño category. `}
               />
             </div>
             <Combobox
               name="correlationVariable"
               label={"Data Variable"}
-              array={transformObject(ElNinoToolDataIndicators).filter((e) =>
-                filterData.dataVariable.includes(e.value)
-              )}
+              array={
+                climatePattern !== toolType.mjo
+                  ? transformObject(ElNinoToolDataIndicators).filter((e) =>
+                      filterData.dataVariable.includes(e.value)
+                    )
+                  : [{ value: "rainfall", label: "Rainfall" }]
+              }
               state={{
                 value: correlationFilter.correlationVariable,
                 setValue: handleChange,
@@ -128,7 +134,7 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
               <Label className="text-xs font-semibold">Months</Label>
               <HelpHoverCard
                 title={"Months"}
-                content={`The month used to compare against the El Nino
+                content={`The month used to compare against the El Niño
               variable.`}
               />
             </div>
@@ -139,15 +145,19 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
               setSelected={setSelected}
               setState={handleChange}
               array={monthsList}
-              ScrollAreaHeight="200"
               orientation="horizontal"
+              ScrollAreaHeight="180"
             />
           </div>
           <div className="lg:mt-[17px] ">
             <SubmitButton
               label={"Generate Correlation"}
               submitFunction={generateCorrelationMap}
-              verifyFilters={correlationFilter.chosenMonths.length > 0}
+              verifyFilters={
+                correlationFilter.chosenMonths.length > 0 &&
+                correlationFilter.correlationVariable !== "" &&
+                isFinished(correlationStatus)
+              }
               height={30}
             />
           </div>
@@ -155,7 +165,14 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
       </div>
 
       <div className="px-2">
-        <div className="grid gap-4 md:grid-cols-4 grid-cols-1 ">
+        <div
+          className={cn(
+            "grid gap-4 grid-cols-1",
+            climatePattern === toolType.mjo
+              ? "md:grid-cols-3"
+              : "md:grid-cols-4"
+          )}
+        >
           {isFinished(correlationStatus)
             ? correlationChartData[correlationFilter.correlationVariable]?.map(
                 (chartData, index) => (
@@ -170,40 +187,42 @@ const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
                   </div>
                 )
               )
-            : [0, 1, 2, 3].map((i) => (
-                <div className="relative">
-                  <div key={i}>
-                    <HighchartsReact
-                      containerProps={{ style: { height: "250px" } }}
-                      highcharts={Highcharts}
-                      options={sampleCharts?.scatter_chart[climatePattern]}
-                    />
-                  </div>
-
-                  {!isFinished(correlationStatus) && (
-                    <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
-                      {isIdle(correlationStatus) ? (
-                        <p className="text-xl font-bold text-green-800">
-                          {IDLE_ANALYTICS_CHART_MESSAGE}
-                        </p>
-                      ) : isError(correlationStatus) ? (
-                        <ErrorMessage />
-                      ) : (
-                        <Loading
-                          animation={
-                            <l-quantum
-                              color="green"
-                              // @ts-ignore
-                              stroke={8}
-                              size="50"
-                            ></l-quantum>
-                          }
-                        />
-                      )}
+            : (climatePattern === toolType.mjo ? [0, 1, 2] : [0, 1, 2, 3]).map(
+                (i) => (
+                  <div className="relative">
+                    <div key={i}>
+                      <HighchartsReact
+                        containerProps={{ style: { height: "250px" } }}
+                        highcharts={Highcharts}
+                        options={sampleCharts?.scatter_chart[climatePattern]}
+                      />
                     </div>
-                  )}
-                </div>
-              ))}
+
+                    {!isFinished(correlationStatus) && (
+                      <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
+                        {isIdle(correlationStatus) ? (
+                          <p className="text-xl font-bold text-green-800">
+                            {IDLE_ANALYTICS_CHART_MESSAGE}
+                          </p>
+                        ) : isError(correlationStatus) ? (
+                          <ErrorMessage />
+                        ) : (
+                          <Loading
+                            animation={
+                              <l-quantum
+                                color="green"
+                                // @ts-ignore
+                                stroke={8}
+                                size="50"
+                              ></l-quantum>
+                            }
+                          />
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )
+              )}
         </div>
       </div>
     </div>

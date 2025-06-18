@@ -106,7 +106,7 @@ const ElNinoCommonFilter = ({
             <Label className=" text-xs font-semibold">Data</Label>
             <HelpHoverCard
               title={"Data"}
-              content={`Data used to compare against an El Nino
+              content={`Data used to compare against an El Niño
               variable.`}
             />
           </div>

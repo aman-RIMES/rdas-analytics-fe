@@ -1,23 +1,18 @@
 import { Grid } from "lucide-react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  zeroRightClassName,
-  fullWidthClassName,
-  noScrollbarsClassName,
-} from "react-remove-scroll-bar";
 
 const Landing = () => {
   const navigate = useNavigate();
   const analyticsTools = [
     {
       route: "/elnino-analytics",
-      name: "El Nino and Local Climate",
+      name: "El Niño and Local Climate",
       image: "src/assets/elnino-analytics.png",
     },
     {
       route: "/lanina-analytics",
-      name: "La Nina and Local Climate",
+      name: "La Niña and Local Climate",
       image: "src/assets/lanina-analytics.png",
     },
     {
@@ -46,12 +41,12 @@ const Landing = () => {
   const predictiveTools = [
     {
       route: "/predictive-tools",
-      name: "El Nino Impacts Prediction",
+      name: "El Niño Impacts Prediction",
       image: "src/assets/elnino-prediction.png",
     },
     {
       route: "/lanina-predictive-tools",
-      name: "La Nina Impacts Prediction",
+      name: "La Niña Impacts Prediction",
       image: "src/assets/lanina-prediction.png",
     },
     {

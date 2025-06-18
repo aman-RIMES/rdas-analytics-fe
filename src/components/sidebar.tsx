@@ -17,14 +17,14 @@ export function Sidebar() {
               icon={
                 <Icons.climate_behaviors className="w-7 h-7 mr-2 bg-yellow-500 text-gray-800 rounded-sm p-1" />
               }
-              title={"El Nino and Local Climate"}
+              title={"El Niño and Local Climate"}
             />
             <MenuButton
               url={"/lanina-analytics"}
               icon={
                 <Icons.report className="w-7 h-7 mr-2 bg-yellow-500 text-gray-800 rounded-sm p-1" />
               }
-              title={"La Nina and Local Climate"}
+              title={"La Niña and Local Climate"}
             />
             <MenuButton
               url={"/analytics-crop"}
@@ -52,14 +52,14 @@ export function Sidebar() {
               icon={
                 <Icons.climate_and_crops className="w-7 h-7 mr-2 bg-yellow-500 text-gray-800 rounded-sm p-1" />
               }
-              title={"El Nino Impacts Prediction"}
+              title={"El Niño Impacts Prediction"}
             />
             <MenuButton
               url={"/lanina-predictive-tools"}
               icon={
                 <Icons.report className="w-7 h-7 mr-2 bg-yellow-500 text-gray-800 rounded-sm p-1" />
               }
-              title={"La Nina Impacts Prediction"}
+              title={"La Niña Impacts Prediction"}
             />
             <MenuButton
               url={"/predictive-temps"}

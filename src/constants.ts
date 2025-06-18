@@ -1,5 +1,5 @@
-// export const BASE_URL = "https://analytics-api.rimes.int";
-export const BASE_URL = "http://203.156.108.75:11170";
+export const BASE_URL = "https://analytics-api.rimes.int";
+// export const BASE_URL = "http://203.156.108.75:11170";
 export const BODY_PARAMS_URL = `${BASE_URL}/body_params`;
 export const NEW_BODY_PARAMS_URL = `https://apis.rimes.int/data/get-available-metadata?level=2&period=monthly`;
 export const NEW_BODY_PARAMS_URL_LEVEL_1 = `https://apis.rimes.int/data/get-available-metadata?level=1&period=monthly`;
@@ -187,11 +187,11 @@ export const geoJsonStructure = {
 
 export const routeDefinitions = {
   "/analytics-crop": "Crop Calendar Suitability to Observed Climate",
-  "/predictive-tools": "El Nino Impacts Prediction",
-  "/lanina-predictive-tools": "La Nina Impacts Prediction",
-  "/elnino-analytics": "El Nino and Local Climate",
+  "/predictive-tools": "El Niño Impacts Prediction",
+  "/lanina-predictive-tools": "La Niña Impacts Prediction",
+  "/elnino-analytics": "El Niño and Local Climate",
   "/analytics-mjo": "MJO and Local Climate",
-  "/lanina-analytics": "La Nina and Local Climate",
+  "/lanina-analytics": "La Niña and Local Climate",
   "/analytics-land": "Land Use & Land Cover Change",
   "/predictive-temps": "Temperature Sensitivity Alert System (TEMPs)",
   "/predictive-gdd-tools": "Growing Degree Days",
@@ -206,8 +206,8 @@ export const ElNinoToolDataIndicators = {
 };
 
 export const ElNinoCategories = [
-  { value: "moderate", label: "Moderate El Nino Events" },
-  { value: "weak", label: "Weak El Nino Events" },
-  { value: "strong", label: "Strong El Nino Events" },
-  { value: "very_strong", label: "Very strong El Nino Events" },
+  { value: "moderate", label: "Moderate El Niño Events" },
+  { value: "weak", label: "Weak El Niño Events" },
+  { value: "strong", label: "Strong El Niño Events" },
+  { value: "very_strong", label: "Very strong El Niño Events" },
 ];
