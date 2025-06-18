@@ -32,7 +32,7 @@ import Loading from "../ui/loading";
 
 const AnalyticsCorrelation = ({ filterData }: FilterProps) => {
   const [correlationFilter, setCorrelationFilter] = useState({
-    correlationVariable: filterData?.dataVariable[0],
+    correlationVariable: filterData?.dataVariable[0] || "rainfall",
     chosenMonths: [],
   });
   const [correlationStatus, setCorrelationStatus] = useState<requestStatus>(
