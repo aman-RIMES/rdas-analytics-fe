@@ -75,9 +75,6 @@ export const transformGDDCropArray = (array: Array<object>) =>
     label: e.crop_name,
   }));
 
-export const getAverage = (array: any) =>
-  array.reduce((a: any, b: any) => a + b) / array.length;
-
 export const transformDistrictParams = (array: Array<object>) => {
   const districts = array.map((e: any) => ({
     value: `${e.district_code}+${e.district_name}`,
