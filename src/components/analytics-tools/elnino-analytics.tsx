@@ -168,7 +168,7 @@ const ElNinoAnalytics = () => {
                       value="charts"
                     >
                       {label === "MJO" ? (
-                        <p> Normal vs Daily Averages during MJO Years </p>
+                        <p> Normal vs Daily Averages during MJO Events </p>
                       ) : (
                         <p> Normal vs Monthly Averages during {label} Years </p>
                       )}
