@@ -80,7 +80,7 @@ const OpenLayersMap = ({
 
           return new Style({
             fill: new Fill({
-              color: fillColor,
+              color: fillColor || "transparent",
             }),
             stroke: new Stroke({
               color: districtCode === chosenDistrict ? "blue" : "black",
