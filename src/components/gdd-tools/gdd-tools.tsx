@@ -161,11 +161,11 @@ const GddPredictiveTools = () => {
             <div className="col-span-5 w-full h-full flex flex-col rounded-lg">
               <div className="flex-grow flex flex-col">
                 <div className="flex-grow flex flex-col">
-                  <div className="flex flex-col gap-3 flex-grow">
+                  <div className="grid grid-cols-2 gap-3 flex-grow">
                     <div className="relative z-0 flex-grow flex flex-col">
                       <div className="p-5 mt-2 bg-white rounded-lg flex-grow flex flex-col">
                         <Table className="flex-grow">
-                          <ScrollArea className="h-[380px] flex-grow">
+                          <ScrollArea className="h-[380px] flex-grow mt-5">
                             <TableHeader>
                               <TableRow>
                                 <TableHead className="text-black text-md text-center">
@@ -254,8 +254,8 @@ const GddPredictiveTools = () => {
                         </Dialog>
                       </div>
 
-                      <div className="flex flex-col flex-grow">
-                        <div className="rounded-lg bg-white p-1 flex-grow">
+                      <div className="flex flex-col flex-grow bg-white ">
+                        <div className="rounded-lg bg-white p-1 flex-grow mt-5 ">
                           <HighchartsReact
                             containerProps={{ style: { height: "100%" } }}
                             highcharts={Highcharts}
@@ -291,6 +291,19 @@ const GddPredictiveTools = () => {
                       )}
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full border-500 rounded-lg">
+            <div className="w-full">
+              <div className="rounded-lg">
+                <div className="">
+                  <GddToolsData
+                    gddData={GDDAnalysisData}
+                    gddStatus={GDDAnalysisStatus}
+                  />
                 </div>
               </div>
             </div>
