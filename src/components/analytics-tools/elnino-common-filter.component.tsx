@@ -27,6 +27,7 @@ import CustomDatasetGuide from "../custom-dataset-guide";
 import newBodyParams from "../../data/new_body_params.json";
 import axios from "axios";
 import MultipleDatasetsDialog from "../multiple-datasets-dialog";
+import MJODataUploadGuide from "../mjo-dataset-guide";
 
 const ElNinoCommonFilter = ({
   filterData,
@@ -222,8 +223,11 @@ const ElNinoCommonFilter = ({
                 content={` The custom dataset that you want to upload and use for the current
               analysis. You can upload CSV files only`}
               />
-
-              <CustomDatasetGuide title="View Template Guide" />
+              {location.pathname === "/analytics-mjo" ? (
+                <MJODataUploadGuide title="View Template Guide" />
+              ) : (
+                <CustomDatasetGuide title="View Template Guide" />
+              )}
             </div>
             <Input
               onChange={(e) => {
