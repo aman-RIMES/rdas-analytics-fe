@@ -21,6 +21,7 @@ import { Input } from "../ui/input";
 import CustomDatasetGuide from "../custom-dataset-guide";
 import newBodyParams from "../../data/new_body_params.json";
 import axios from "axios";
+import GDDDataUploadGuide from "../gdd-dataset-guide";
 
 const GddToolsFilter = ({
   filterData,
@@ -229,7 +230,7 @@ const GddToolsFilter = ({
               analysis. You can upload CSV files only`}
               />
 
-              <CustomDatasetGuide title="View Template Guide" />
+              <GDDDataUploadGuide title="View Template Guide" />
             </div>
             <Input
               onChange={(e) => {
