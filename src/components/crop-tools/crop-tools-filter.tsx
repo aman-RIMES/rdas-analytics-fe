@@ -3,6 +3,7 @@ import {
   countries,
   CROP_PARAMS_URL,
   croppingTimeline,
+  DOCS_BASE_URL,
   NEW_BODY_PARAMS_URL,
   NEW_BODY_PARAMS_URL_LEVEL_1,
 } from "@/constants";
@@ -172,7 +173,7 @@ const CropToolsFilter = ({ filterData, handleChange }: FilterProps) => {
 
           <a
             className="text-green-600 text-xs font-semibold ml-2 text-decoration-line: underline"
-            href={"http://203.156.108.67:1681/en/new-page"}
+            href={`${DOCS_BASE_URL}/en/new-page`}
             target="_blank"
           >
             Dataset Guide

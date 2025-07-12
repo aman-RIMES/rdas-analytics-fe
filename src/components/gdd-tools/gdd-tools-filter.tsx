@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   countries,
   CROP_PARAMS_URL,
+  DOCS_BASE_URL,
   elNinoYearsList,
   filterType,
   gddYearsList,
@@ -176,7 +177,7 @@ const GddToolsFilter = ({
 
           <a
             className="text-green-600 text-xs font-semibold ml-2 text-decoration-line: underline"
-            href={"http://203.156.108.67:1681/en/new-page"}
+            href={`${DOCS_BASE_URL}/en/new-page`}
             target="_blank"
           >
             Dataset Guide

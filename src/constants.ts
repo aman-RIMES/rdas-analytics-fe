@@ -1,3 +1,4 @@
+export const DOCS_BASE_URL = "http://203.156.108.75:11155";
 export const BASE_URL = "https://analytics-api.rimes.int";
 // export const BASE_URL = "http://203.156.108.75:11170";
 export const BODY_PARAMS_URL = `${BASE_URL}/body_params`;
