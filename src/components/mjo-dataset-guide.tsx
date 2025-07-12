@@ -36,7 +36,7 @@ const MJODataUploadGuide = ({ title, className = "" }) => {
                 <br />
                 <a
                   className="text-white text-lg font-semibold bg-green-800 py-2 px-5 rounded-md mt-1 hover:bg-yellow-300 hover:text-black"
-                  href={"src/data/rdas_analytics_dataset_template.csv"}
+                  href={"src/data/rdas_analytics_mjo_template.csv"}
                   download
                 >
                   Download Here
@@ -60,7 +60,13 @@ const MJODataUploadGuide = ({ title, className = "" }) => {
                 <div className="flex flex-col items-center justify-center m-10 mb-5 mt-5">
                   <img
                     className="h-50px"
-                    src="src/assets/custom-dataset-guide.png"
+                    src="src/assets/mjo-dataset-guide-1.png"
+                    alt=""
+                  />
+                  <br />
+                  <img
+                    className="h-50px"
+                    src="src/assets/mjo-dataset-guide-2.png"
                     alt=""
                   />
                 </div>
@@ -83,7 +89,7 @@ const MJODataUploadGuide = ({ title, className = "" }) => {
                 </ul>
 
                 <div className="flex flex-col items-center justify-center m-10 mb-5 mt-5">
-                  <img src="src/assets/filter-form.png" alt="" />
+                  <img src="src/assets/mjo-filter.png" alt="" />
                 </div>
 
                 <p className="mt-5 text-lg text-black">
@@ -91,7 +97,7 @@ const MJODataUploadGuide = ({ title, className = "" }) => {
                 </p>
 
                 <div className="flex flex-col items-center justify-center  my-5 ">
-                  <img src="src/assets/upload-field.png" alt="" />
+                  <img src="src/assets/upload-field-2.png" alt="" />
                 </div>
 
                 <p className="mt-5 text-lg text-black">
