@@ -36,7 +36,7 @@ const GDDDataUploadGuide = ({ title, className = "" }) => {
                 <br />
                 <a
                   className="text-white text-lg font-semibold bg-green-800 py-2 px-5 rounded-md mt-1 hover:bg-yellow-300 hover:text-black"
-                  href={"src/data/rdas_analytics_gdd_template.csv"}
+                  href={"src/data/rdas_analytics_gdd_dataset_template.csv"}
                   download
                 >
                   Download Here

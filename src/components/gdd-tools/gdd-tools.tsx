@@ -8,10 +8,9 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FilterData } from "@/types";
-import { isError, isFinished, isIdle } from "@/lib/utils";
+import { isError, isFinished, isIdle, isLoading } from "@/lib/utils";
 import SubmitButton from "../submit-button";
 import CustomDatasetGuide from "../custom-dataset-guide";
-import GddToolsData from "./gdd-tools-data";
 import GddToolsFilter from "./gdd-tools-filter";
 import {
   Dialog,
@@ -161,7 +160,7 @@ const GddPredictiveTools = () => {
             <div className="col-span-5 w-full h-full flex flex-col rounded-lg">
               <div className="flex-grow flex flex-col">
                 <div className="flex-grow flex flex-col">
-                  <div className="grid grid-cols-2 gap-3 flex-grow">
+                  <div className="flex gap-3 flex-grow">
                     <div className="relative z-0 flex-grow flex flex-col">
                       <div className="p-5 mt-2 bg-white rounded-lg flex-grow flex flex-col">
                         <Table className="flex-grow">
@@ -207,6 +206,57 @@ const GddPredictiveTools = () => {
 
                       {!isFinished(GDDAnalysisStatus) && (
                         <div className="absolute inset-0 flex justify-center items-center z-30 bg-white bg-opacity-70 ">
+                          {isIdle(GDDAnalysisStatus) ? (
+                            <p className="text-xl font-bold text-green-800">
+                              {IDLE_ANALYTICS_CHART_MESSAGE}
+                            </p>
+                          ) : isError(GDDAnalysisStatus) ? (
+                            <ErrorMessage />
+                          ) : (
+                            <Loading
+                              animation={
+                                <l-reuleaux
+                                  color="green"
+                                  stroke={8}
+                                  size="50"
+                                ></l-reuleaux>
+                              }
+                            />
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full border-500 rounded-lg">
+            <div className="w-full">
+              <div className="rounded-lg">
+                <div className="">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 flex-grow">
+                    <div className="bg-white rounded-lg flex-grow relative z-0 flex flex-col">
+                      <div className="bg-green-800 text-white text-md p-1 rounded-t-lg font-medium">
+                        <p className="ml-2"> Recommendation</p>
+                      </div>
+                      <div className="flex-grow">
+                        <ScrollArea className="h-[400px] p-2 flex-grow">
+                          <p
+                            className="p-2"
+                            style={{ whiteSpace: "break-spaces" }}
+                          >
+                            {isFinished(GDDAnalysisStatus)
+                              ? GDDAnalysisData?.recommendation || "..."
+                              : sampleCharts?.gdd_recommendation}
+                          </p>
+                        </ScrollArea>
+                      </div>
+                      {(isIdle(GDDAnalysisStatus) ||
+                        isLoading(GDDAnalysisStatus) ||
+                        isError(GDDAnalysisStatus)) && (
+                        <div className="absolute inset-0 flex justify-center items-center z-10 bg-white bg-opacity-70 ">
                           {isIdle(GDDAnalysisStatus) ? (
                             <p className="text-xl font-bold text-green-800">
                               {IDLE_ANALYTICS_CHART_MESSAGE}
@@ -291,19 +341,6 @@ const GddPredictiveTools = () => {
                       )}
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-full border-500 rounded-lg">
-            <div className="w-full">
-              <div className="rounded-lg">
-                <div className="">
-                  <GddToolsData
-                    gddData={GDDAnalysisData}
-                    gddStatus={GDDAnalysisStatus}
-                  />
                 </div>
               </div>
             </div>
