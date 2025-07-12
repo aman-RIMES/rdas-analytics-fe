@@ -36,7 +36,7 @@ const GDDDataUploadGuide = ({ title, className = "" }) => {
                 <br />
                 <a
                   className="text-white text-lg font-semibold bg-green-800 py-2 px-5 rounded-md mt-1 hover:bg-yellow-300 hover:text-black"
-                  href={"src/data/rdas_analytics_dataset_template.csv"}
+                  href={"src/data/rdas_analytics_gdd_template.csv"}
                   download
                 >
                   Download Here
@@ -53,7 +53,13 @@ const GDDDataUploadGuide = ({ title, className = "" }) => {
                 <div className="flex flex-col items-center justify-center m-10 mb-5 mt-5">
                   <img
                     className="h-50px"
-                    src="src/assets/custom-dataset-guide.png"
+                    src="src/assets/gdd-dataset-guide-1.png"
+                    alt=""
+                  />
+                  <br />
+                  <img
+                    className="h-50px"
+                    src="src/assets/gdd-dataset-guide-2.png"
                     alt=""
                   />
                 </div>
@@ -76,7 +82,7 @@ const GDDDataUploadGuide = ({ title, className = "" }) => {
                 </ul>
 
                 <div className="flex flex-col items-center justify-center m-10 mb-5 mt-5">
-                  <img src="src/assets/filter-form.png" alt="" />
+                  <img src="src/assets/gdd-filter.png" alt="" />
                 </div>
 
                 <p className="mt-5 text-lg text-black">
