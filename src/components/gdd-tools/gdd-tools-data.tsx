@@ -1,4 +1,4 @@
-import { isError, isIdle, isLoading } from "@/lib/utils";
+import { isError, isFinished, isIdle, isLoading } from "@/lib/utils";
 import { GDDDataProps } from "@/types";
 import { grid, reuleaux } from "ldrs";
 import { IDLE_ANALYTICS_CHART_MESSAGE } from "@/constants";
@@ -26,7 +26,9 @@ const GddToolsData = ({ gddData, gddStatus }: GDDDataProps) => {
                 {/* //TODO: Replace with a proper analysis placeholder text */}
                 <ScrollArea className="h-[400px] p-2 flex-grow">
                   <p className="p-2" style={{ whiteSpace: "break-spaces" }}>
-                    {gddData?.analysis || sampleCharts?.crop_recommendation}{" "}
+                    {isFinished(gddStatus)
+                      ? gddData?.analysis || "..."
+                      : sampleCharts?.crop_recommendation}
                   </p>
                 </ScrollArea>
               </div>
@@ -61,8 +63,9 @@ const GddToolsData = ({ gddData, gddStatus }: GDDDataProps) => {
               <div className="flex-grow">
                 <ScrollArea className="h-[400px] p-2 flex-grow">
                   <p className="p-2" style={{ whiteSpace: "break-spaces" }}>
-                    {gddData?.recommendation ||
-                      sampleCharts?.gdd_recommendation}
+                    {isFinished(gddStatus)
+                      ? gddData?.recommendation || "..."
+                      : sampleCharts?.gdd_recommendation}
                   </p>
                 </ScrollArea>
               </div>
